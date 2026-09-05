@@ -2,15 +2,12 @@
  * Seamless cloud rolling loop.
  *
  * The original cloud artwork is never redrawn or restyled. Two exact clones
- * move in phase and cross-blend at the wrap point so a non-tileable source can
- * reset without a visible jump. Wrapper-only opacity/transform changes are
- * used; the clone contents remain untouched.
+ * alternate visibility and cross-blend only at the handoff so a non-tileable
+ * source can reset without a visible jump or duplicated cloud field.
  */
 export function installCloudLoop(sourceLayer, options = {}) {
   if (!sourceLayer) throw new Error('Cloud layer not found.');
-  if (sourceLayer.dataset.cloudLoopInstalled === 'true') {
-    return sourceLayer.__cloudLoopController || null;
-  }
+  if (sourceLayer.dataset.cloudLoopInstalled === 'true') return sourceLayer.__cloudLoopController || null;
 
   const {
     duration = 72000,
@@ -69,20 +66,31 @@ export function installCloudLoop(sourceLayer, options = {}) {
   let raf = 0;
   let startedAt = performance.now();
   let pausedAt = null;
-  const fade = Math.max(0.02, Math.min(0.45, crossfadeFraction));
+  const fade = Math.max(0.01, Math.min(0.22, crossfadeFraction));
   const sign = direction < 0 ? -1 : 1;
-
   const smoothstep = x => x * x * (3 - 2 * x);
-  function opacityFor(phase) {
-    if (phase < 1 - fade) return 1;
-    return 1 - smoothstep((phase - (1 - fade)) / fade);
+
+  function visibilityFor(phase) {
+    // Each clone owns half the cycle. It fades in just before phase 0 and
+    // fades out just before phase .5, remaining hidden while it resets.
+    if (phase < fade) return smoothstep(phase / fade);
+    if (phase < 0.5 - fade) return 1;
+    if (phase < 0.5) return 1 - smoothstep((phase - (0.5 - fade)) / fade);
+    if (phase > 1 - fade) return smoothstep((phase - (1 - fade)) / fade);
+    return 0;
+  }
+
+  function motionPhase(phase) {
+    if (phase < 0.5) return phase * 2;
+    return 0;
   }
 
   function apply(wrapper, phase) {
-    const x = sign * travelPercent * phase;
-    const y = Math.sin(phase * Math.PI * 2 * verticalCycles) * verticalDrift;
+    const m = motionPhase(phase);
+    const x = sign * travelPercent * m;
+    const y = Math.sin(m * Math.PI * 2 * verticalCycles) * verticalDrift;
     wrapper.style.transform = `translate3d(${x.toFixed(4)}%, ${y.toFixed(3)}px, 0)`;
-    wrapper.style.opacity = opacityFor(phase).toFixed(4);
+    wrapper.style.opacity = visibilityFor(phase).toFixed(4);
   }
 
   function frame(now) {
@@ -97,9 +105,6 @@ export function installCloudLoop(sourceLayer, options = {}) {
     const p = ((now - startedAt) % duration) / duration;
     apply(copyA, p);
     apply(copyB, (p + 0.5) % 1);
-    // Whichever clone is nearer its reset is below the other clone.
-    copyA.style.zIndex = p > 0.5 ? '0' : '1';
-    copyB.style.zIndex = p > 0.5 ? '1' : '0';
     raf = requestAnimationFrame(frame);
   }
 
