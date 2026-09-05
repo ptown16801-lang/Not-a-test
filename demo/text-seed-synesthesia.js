@@ -1,0 +1,21 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import { InfomaxRecurrentNetwork } from '../src/neural-synesthesia.js';
+import { projectTextThroughNetwork } from '../src/text-neural-bridge.js';
+import { ShapeCognitionEngine } from '../src/engine.js';
+import { bakeShapePaths } from '../src/dirt-renderer.js';
+
+const seed=process.argv.slice(2).join(' ')||'The ducks in the park are free, i have forty of them';
+const checkpoint=JSON.parse(readFileSync(new URL('../assets/neural-preview-checkpoint.json',import.meta.url),'utf8'));
+const network=InfomaxRecurrentNetwork.fromJSON(checkpoint.network||checkpoint);
+const projected=projectTextThroughNetwork(seed,network,{response:{integrationStep:.5,tolerance:1e-8},projection:{maxWeavePaths:12}});
+const engine=new ShapeCognitionEngine();engine.add(projected.shape);
+const paths=bakeShapePaths(projected.shape.id,engine.library);
+const points=paths.flat();
+const bounds=points.reduce((b,[x,y])=>[Math.min(b[0],x),Math.min(b[1],y),Math.max(b[2],x),Math.max(b[3],y)],[Infinity,Infinity,-Infinity,-Infinity]);
+const width=1000,height=720,pad=40,s=Math.min((width-2*pad)/Math.max(1e-9,bounds[2]-bounds[0]),(height-2*pad)/Math.max(1e-9,bounds[3]-bounds[1]));
+const d=paths.map(p=>`<path d="${p.map(([x,y],i)=>`${i?'L':'M'} ${(pad+(x-bounds[0])*s).toFixed(2)} ${(height-pad-(y-bounds[1])*s).toFixed(2)}`).join(' ')}"/>`).join('\n');
+const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><defs><filter id="soil" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".025 .08" numOctaves="2" seed="40" result="soil"/><feDisplacementMap in="SourceGraphic" in2="soil" scale="3"/><feGaussianBlur stdDeviation="3"/></filter></defs><rect width="100%" height="100%" fill="#3a2012"/><g fill="none" stroke="#d99038" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" filter="url(#soil)">${d}</g><g fill="none" stroke="#f3bd61" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">${d}</g></svg>\n`;
+const out={seed,schema:projected.schema,dimensions:projected.perception.dimensions,quantity:projected.perception.quantity,quantitySalience:projected.perception.quantitySalience,semanticPopulations:projected.perception.populations,neuralPopulations:projected.populations,pathCount:paths.length};
+writeFileSync(new URL('./text-seed-synesthesia.svg',import.meta.url),svg);
+writeFileSync(new URL('./text-seed-synesthesia-output.json',import.meta.url),JSON.stringify(out,null,2)+'\n');
+console.log(JSON.stringify(out,null,2));
