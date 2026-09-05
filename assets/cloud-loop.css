@@ -1,16 +1,21 @@
-/* Seamless cloud-loop motion layer. Cloud artwork remains unchanged. */
-.cloud-loop-track {
+/* Motion wrappers only; source cloud artwork remains unchanged. */
+.cloud-loop-host {
   position: absolute;
   inset: 0;
-  width: 200%;
-  height: 100%;
-  display: flex;
-  will-change: transform;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cloud-loop-copy {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cloud-loop-track {
+  .cloud-loop-copy {
     transform: none !important;
+    transition: none !important;
   }
 }
