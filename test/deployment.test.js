@@ -22,12 +22,16 @@ async function startDeployment(ledgerPath,overrides={}){
 
 async function stopDeployment(child){child.kill('SIGTERM');await once(child,'exit');}
 
-test('deployment serves gallery, accepts a thought, and resumes sequence after restart',async()=>{
+test('deployment serves gallery, text renderer, accepts a thought, and resumes sequence after restart',async()=>{
   const ledgerPath=join(mkdtempSync(join(tmpdir(),'thought-deploy-')),'ledger.jsonl');
   let deployment=await startDeployment(ledgerPath);
   try{
-    const health=await fetch(`${deployment.base}/ready`);assert.equal(health.status,200);const ready=await health.json();assert.equal(ready.authMode,'local');assert.equal(ready.visualization,'neural');assert.deepEqual(ready.capabilities,{thermalTouch:false,sound:false});
+    const health=await fetch(`${deployment.base}/ready`);assert.equal(health.status,200);const ready=await health.json();assert.equal(ready.authMode,'local');assert.equal(ready.visualization,'neural');assert.deepEqual(ready.capabilities,{thermalTouch:false,sound:false,textSeedRendering:true});
     const page=await fetch(`${deployment.base}/`);assert.equal(page.status,200);assert.match(page.headers.get('content-security-policy'),/default-src/);
+
+    const render=await fetch(`${deployment.base}/v1/render-text`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text:'The ducks in the park are free, i have forty of them'})});
+    assert.equal(render.status,200);const rendered=await render.json();assert.equal(rendered.schema,'text-seed-render/v1');assert.equal(rendered.perception.quantity,40);assert.ok(rendered.paths.length>0);assert.equal(rendered.neuralPopulations.length,2);
+
     const rejected=await fetch(`${deployment.base}/v1/thoughts`,{method:'POST',headers:{authorization:'Bearer deployment-token'},body:submission});assert.equal(rejected.status,415);
     const accepted=await fetch(`${deployment.base}/v1/thoughts`,{method:'POST',headers:{authorization:'Bearer deployment-token','content-type':'application/json'},body:submission});assert.equal(accepted.status,201);assert.equal((await accepted.json()).receipt.sequence,1);
     const gallery=await fetch(`${deployment.base}/v1/gallery`).then(r=>r.json());assert.equal(gallery.thoughts.length,1);assert.equal(gallery.thoughts[0].visualization.mode,'neural');assert.equal(gallery.thoughts[0].visualization.populations.length,2);assert.notEqual(gallery.thoughts[0].shapeId,gallery.thoughts[0].displayShapeId);
@@ -42,7 +46,7 @@ test('deployment flips to Moltbook identity without a source change',async()=>{
   const ledgerPath=join(mkdtempSync(join(tmpdir(),'thought-moltbook-')),'ledger.jsonl');
   const deployment=await startDeployment(ledgerPath,{THOUGHT_AUTH_MODE:'moltbook',MOLTBOOK_APP_KEY:'moltdev_placeholder',MOLTBOOK_AUDIENCE:'thoughts.example'});
   try{
-    const health=await fetch(`${deployment.base}/ready`).then(r=>r.json());assert.equal(health.authMode,'moltbook');
-    const tool=await fetch(`${deployment.base}/v1/tool-schema`).then(r=>r.json());assert.equal(tool.authentication.header,'X-Moltbook-Identity');
+    const health=await fetch(`${deployment.base}/ready`).then(r=>r.json());assert.equal(health.authMode,'moltbook');assert.equal(health.capabilities.textSeedRendering,true);
+    const tool=await fetch(`${deployment.base}/v1/tool-schema`).then(r=>r.json());assert.equal(tool.authentication.header,'X-Moltbook-Identity');assert.equal(tool.capabilities.textSeedRendering,true);
   }finally{await stopDeployment(deployment.child);}
 });
