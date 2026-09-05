@@ -54,15 +54,26 @@ export class ThoughtIntakeService {
   });}
 }
 
-export function createThoughtIntakeServer(service,{maxBodyBytes=service.resourcePolicy.bytes,browserHtml=null}={}){
+export function createThoughtIntakeServer(service,{maxBodyBytes=service.resourcePolicy.bytes,browserHtml=null,textRenderer=null}={}){
   const server=createServer((req,res)=>{
     if(req.method==='GET'&&req.url==='/'){
-      if(!browserHtml)return json(res,200,{service:'thought-intake',gallery:'/v1/gallery',toolSchema:'/v1/tool-schema'});
-      res.writeHead(200,{...SECURITY_HEADERS,'content-security-policy':"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'",'content-type':'text/html; charset=utf-8','content-length':Buffer.byteLength(browserHtml)});return res.end(browserHtml);
+      if(!browserHtml)return json(res,200,{service:'thought-intake',gallery:'/v1/gallery',toolSchema:'/v1/tool-schema',textRenderer:textRenderer?'/v1/render-text':null});
+      res.writeHead(200,{...SECURITY_HEADERS,'content-security-policy':"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'self'",'content-type':'text/html; charset=utf-8','content-length':Buffer.byteLength(browserHtml)});return res.end(browserHtml);
     }
-    if(req.method==='GET'&&(req.url==='/health'||req.url==='/ready'))return json(res,200,{status:'ok',schema:'thought-intake/v1',authMode:service.identityVerifier?'moltbook':'local',visualization:service.shapeProjector?'neural':'geometric',capabilities:{thermalTouch:service.sensory.thermalTouch,sound:service.sensory.sound}});
-    if(req.method==='GET'&&req.url==='/v1/tool-schema')return json(res,200,{...THOUGHT_TOOL,capabilities:{thermalTouch:service.sensory.thermalTouch,sound:service.sensory.sound},authentication:service.identityVerifier?{type:'moltbook-identity',header:'X-Moltbook-Identity',tokenLifetimeSeconds:3600}: {type:'bearer'}});
+    if(req.method==='GET'&&(req.url==='/health'||req.url==='/ready'))return json(res,200,{status:'ok',schema:'thought-intake/v1',authMode:service.identityVerifier?'moltbook':'local',visualization:service.shapeProjector?'neural':'geometric',capabilities:{thermalTouch:service.sensory.thermalTouch,sound:service.sensory.sound,textSeedRendering:Boolean(textRenderer)}});
+    if(req.method==='GET'&&req.url==='/v1/tool-schema')return json(res,200,{...THOUGHT_TOOL,capabilities:{thermalTouch:service.sensory.thermalTouch,sound:service.sensory.sound,textSeedRendering:Boolean(textRenderer)},authentication:service.identityVerifier?{type:'moltbook-identity',header:'X-Moltbook-Identity',tokenLifetimeSeconds:3600}: {type:'bearer'}});
     if(req.method==='GET'&&req.url==='/v1/gallery')return json(res,200,{schema:'thought-gallery/v1',thoughts:service.gallery()});
+
+    if(req.method==='POST'&&req.url==='/v1/render-text'){
+      if(!textRenderer)return json(res,503,{error:'text_renderer_unavailable'});
+      if(!(req.headers['content-type']||'').toLowerCase().startsWith('application/json'))return json(res,415,{error:'unsupported_media_type',message:'Content-Type must be application/json'});
+      let size=0,body='',tooLarge=false;req.setEncoding('utf8');
+      req.on('data',chunk=>{size+=Buffer.byteLength(chunk);if(size>Math.min(maxBodyBytes,16*1024)){tooLarge=true;body='';return;}if(!tooLarge)body+=chunk;});
+      req.on('error',()=>json(res,400,{error:'request_error'}));
+      req.on('end',()=>{if(res.writableEnded)return;if(tooLarge)return json(res,413,{error:'payload_too_large'});try{const input=JSON.parse(body),text=typeof input?.text==='string'?input.text.trim():'';if(!text||text.length>240)return json(res,422,{error:'invalid_text',message:'text must contain 1–240 characters'});return json(res,200,textRenderer(text));}catch(error){return json(res,error instanceof SyntaxError?400:422,{error:error.code||'render_failed',message:error.message});}});
+      return;
+    }
+
     if(req.method!=='POST'||req.url!=='/v1/thoughts')return json(res,404,{error:'not_found'});
     if(!(req.headers['content-type']||'').toLowerCase().startsWith('application/json'))return json(res,415,{error:'unsupported_media_type',message:'Content-Type must be application/json'});
     const auth=req.headers.authorization||'',token=auth.startsWith('Bearer ')?auth.slice(7):'',moltbookToken=req.headers['x-moltbook-identity'];let size=0,body='';
