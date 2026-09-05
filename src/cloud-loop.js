@@ -71,9 +71,8 @@ export function installCloudLoop(sourceLayer, options = {}) {
   const smoothstep = x => x * x * (3 - 2 * x);
 
   function visibilityFor(phase) {
-    // Each clone owns half the cycle. It fades in just before phase 0 and
-    // fades out just before phase .5, remaining hidden while it resets.
-    if (phase < fade) return smoothstep(phase / fade);
+    // Visible through the active half-cycle, fade out before reset, stay
+    // hidden while reset, then fade back in just before wrapping to phase 0.
     if (phase < 0.5 - fade) return 1;
     if (phase < 0.5) return 1 - smoothstep((phase - (0.5 - fade)) / fade);
     if (phase > 1 - fade) return smoothstep((phase - (1 - fade)) / fade);
