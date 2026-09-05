@@ -1,0 +1,19 @@
+{
+  "name": "shape-cognition-prototype",
+  "version": "0.7.0",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "start": "node demo/intake-server.js",
+    "test": "node --test test/*.test.js",
+    "smoke:deployment": "node --test test/deployment.test.js",
+    "demo": "node demo/balance.js",
+    "demo:dirt": "node demo/dirt-balance.js",
+    "demo:synesthesia": "node demo/projective-synesthesia.js",
+    "demo:neural": "node demo/neural-synesthesia.js",
+    "train:neural-preview": "node demo/train-neural-checkpoint.js",
+    "experiment:neural": "node demo/run-neural-experiment.js",
+    "intake": "node demo/intake-server.js"
+  }
+}

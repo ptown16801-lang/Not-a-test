@@ -1,0 +1,133 @@
+{
+  "schema": "neural-synesthetic-thought-demo/v1",
+  "checkpoint": {
+    "notice": "Compact visualization checkpoint; not a digitized or exact reproduction of a published figure.",
+    "reconstruction": {
+      "paperDoi": "10.1371/journal.pcbi.1004959",
+      "config": {
+        "neuronsPerModality": 7,
+        "networkSeed": 17,
+        "initialRecurrentScale": 0.00001,
+        "inputSeed": 99,
+        "meanRadii": [
+          0.2,
+          2
+        ],
+        "radiusSdFraction": 0.1,
+        "steps": 20000,
+        "batchSize": 1,
+        "learningRate": 0.001,
+        "policy": "fixed-best"
+      },
+      "bestObjective": -0.4867981050186756,
+      "crossTalk": {
+        "from1To2": {
+          "meanAbsolute": 0.03135894409845081,
+          "meanSigned": -0.03135894409845081
+        },
+        "from2To1": {
+          "meanAbsolute": 0.10190246380823595,
+          "meanSigned": 0.10190246380823595
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "sequence": 1,
+      "shapeId": "shape_13a5d7fc",
+      "input": [
+        0,
+        0,
+        0.518202,
+        -0.302435
+      ],
+      "populations": [
+        {
+          "magnitude": 0.104087,
+          "angleRadians": 5.527459,
+          "angleDegrees": 316.700068
+        },
+        {
+          "magnitude": 0.080287,
+          "angleRadians": 5.74308,
+          "angleDegrees": 329.054245
+        }
+      ],
+      "weavePathCount": 12,
+      "pathCount": 17
+    },
+    {
+      "sequence": 2,
+      "shapeId": "shape_ef48296c",
+      "input": [
+        0,
+        0,
+        -0.52525,
+        -0.966495
+      ],
+      "populations": [
+        {
+          "magnitude": 0.105857,
+          "angleRadians": 5.711399,
+          "angleDegrees": 327.239073
+        },
+        {
+          "magnitude": 0.135411,
+          "angleRadians": 4.233684,
+          "angleDegrees": 242.572203
+        }
+      ],
+      "weavePathCount": 12,
+      "pathCount": 29
+    },
+    {
+      "sequence": 3,
+      "shapeId": "shape_c5312236",
+      "input": [
+        0,
+        0,
+        0.398269,
+        0.693817
+      ],
+      "populations": [
+        {
+          "magnitude": 0.106605,
+          "angleRadians": 5.373418,
+          "angleDegrees": 307.87415
+        },
+        {
+          "magnitude": 0.100089,
+          "angleRadians": 1.023413,
+          "angleDegrees": 58.637226
+        }
+      ],
+      "weavePathCount": 12,
+      "pathCount": 22
+    },
+    {
+      "sequence": 4,
+      "shapeId": "shape_cbaa2b9d",
+      "input": [
+        0,
+        0,
+        -0.064361,
+        0.917746
+      ],
+      "populations": [
+        {
+          "magnitude": 0.107523,
+          "angleRadians": 5.375698,
+          "angleDegrees": 308.004794
+        },
+        {
+          "magnitude": 0.113002,
+          "angleRadians": 1.63054,
+          "angleDegrees": 93.423045
+        }
+      ],
+      "weavePathCount": 12,
+      "pathCount": 23
+    }
+  ]
+}

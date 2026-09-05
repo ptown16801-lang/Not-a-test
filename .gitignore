@@ -1,0 +1,9 @@
+# Credentials and local runtime data stay out of source control.
+.env
+.env.*
+!.env.example
+*.jsonl
+node_modules/
+coverage/
+*.log
+.DS_Store

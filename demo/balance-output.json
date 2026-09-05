@@ -1,0 +1,689 @@
+{
+  "schema": "shape-cognition/v1",
+  "seed": 20260904,
+  "operators": [
+    "transform",
+    "morph",
+    "combine",
+    "replicateArrange",
+    "projectSlice",
+    "dualPolar",
+    "subdivideSimplify",
+    "compose"
+  ],
+  "shapes": [
+    {
+      "id": "shape_4ca35c9d",
+      "geometry": {
+        "kind": "disk",
+        "center": [
+          0,
+          0
+        ],
+        "radius": 0.18
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 1,
+        "edges": [],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          5.555556
+        ],
+        "symmetry": [
+          "radial"
+        ],
+        "bounds": [
+          -0.18,
+          -0.18,
+          0.18,
+          0.18
+        ]
+      },
+      "provenance": {
+        "operator": "primitive",
+        "parents": [],
+        "params": {
+          "kind": "disk"
+        }
+      },
+      "depth": 0,
+      "tags": [
+        "mass",
+        "equal",
+        "balance"
+      ],
+      "createdAtStep": 0
+    },
+    {
+      "id": "shape_c61c2ebd",
+      "geometry": {
+        "kind": "derived",
+        "operation": "transform",
+        "params": {
+          "matrix": [
+            1,
+            0,
+            0,
+            1,
+            -0.42,
+            0.22
+          ]
+        }
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 1,
+        "edges": [],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          5.555556
+        ],
+        "symmetry": [
+          "radial"
+        ],
+        "bounds": [
+          -0.18,
+          -0.18,
+          0.18,
+          0.18
+        ]
+      },
+      "provenance": {
+        "operator": "transform",
+        "parents": [
+          "shape_4ca35c9d"
+        ],
+        "params": {
+          "matrix": [
+            1,
+            0,
+            0,
+            1,
+            -0.42,
+            0.22
+          ]
+        }
+      },
+      "depth": 1,
+      "tags": [
+        "mass",
+        "equal",
+        "balance"
+      ],
+      "createdAtStep": 0
+    },
+    {
+      "id": "shape_63627cf7",
+      "geometry": {
+        "kind": "derived",
+        "operation": "transform",
+        "params": {
+          "matrix": [
+            1,
+            0,
+            0,
+            1,
+            0.42,
+            0.22
+          ]
+        }
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 1,
+        "edges": [],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          5.555556
+        ],
+        "symmetry": [
+          "radial"
+        ],
+        "bounds": [
+          -0.18,
+          -0.18,
+          0.18,
+          0.18
+        ]
+      },
+      "provenance": {
+        "operator": "transform",
+        "parents": [
+          "shape_4ca35c9d"
+        ],
+        "params": {
+          "matrix": [
+            1,
+            0,
+            0,
+            1,
+            0.42,
+            0.22
+          ]
+        }
+      },
+      "depth": 1,
+      "tags": [
+        "mass",
+        "equal",
+        "balance"
+      ],
+      "createdAtStep": 0
+    },
+    {
+      "id": "shape_2ff94969",
+      "geometry": {
+        "kind": "segment",
+        "a": [
+          -0.62,
+          0
+        ],
+        "b": [
+          0.62,
+          0
+        ]
+      },
+      "topology": {
+        "dimension": 1,
+        "nodes": 2,
+        "edges": [
+          [
+            0,
+            1
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0
+        ],
+        "symmetry": [],
+        "bounds": [
+          -0.62,
+          0,
+          0.62,
+          0
+        ]
+      },
+      "provenance": {
+        "operator": "primitive",
+        "parents": [],
+        "params": {
+          "kind": "segment"
+        }
+      },
+      "depth": 0,
+      "tags": [
+        "support",
+        "balance",
+        "equilibrium"
+      ],
+      "createdAtStep": 0
+    },
+    {
+      "id": "shape_ba3b8848",
+      "geometry": {
+        "kind": "derived",
+        "operation": "combine",
+        "params": {
+          "mode": "union"
+        }
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 2,
+        "edges": [],
+        "components": 2
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          5.555556
+        ],
+        "symmetry": [
+          "radial"
+        ],
+        "bounds": [
+          -0.18,
+          -0.18,
+          0.18,
+          0.18
+        ]
+      },
+      "provenance": {
+        "operator": "combine",
+        "parents": [
+          "shape_c61c2ebd",
+          "shape_63627cf7"
+        ],
+        "params": {
+          "mode": "union"
+        }
+      },
+      "depth": 2,
+      "tags": [
+        "mass",
+        "equal",
+        "balance"
+      ],
+      "createdAtStep": 0
+    },
+    {
+      "id": "shape_edde187a",
+      "geometry": {
+        "kind": "derived",
+        "operation": "compose",
+        "params": {
+          "anchor": "center"
+        }
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0
+        ],
+        "symmetry": [],
+        "bounds": [
+          -0.62,
+          0,
+          0.62,
+          0
+        ]
+      },
+      "provenance": {
+        "operator": "compose",
+        "parents": [
+          "shape_2ff94969",
+          "shape_ba3b8848"
+        ],
+        "params": {
+          "anchor": "center"
+        }
+      },
+      "depth": 3,
+      "tags": [
+        "support",
+        "balance",
+        "equilibrium",
+        "mass",
+        "equal",
+        "nested"
+      ],
+      "createdAtStep": 0
+    },
+    {
+      "id": "shape_d6103807",
+      "geometry": {
+        "kind": "derived",
+        "operation": "replicateArrange",
+        "params": {
+          "count": 5,
+          "arrangement": "bilateral"
+        }
+      },
+      "topology": {
+        "dimension": 1,
+        "nodes": 10,
+        "edges": [],
+        "components": 5
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0
+        ],
+        "symmetry": [
+          "bilateral"
+        ],
+        "bounds": [
+          -0.62,
+          0,
+          0.62,
+          0
+        ]
+      },
+      "provenance": {
+        "operator": "replicateArrange",
+        "parents": [
+          "shape_2ff94969"
+        ],
+        "params": {
+          "count": 5,
+          "arrangement": "bilateral"
+        }
+      },
+      "depth": 1,
+      "tags": [
+        "support",
+        "balance",
+        "equilibrium",
+        "multiplicity"
+      ],
+      "createdAtStep": 1
+    },
+    {
+      "id": "shape_9b71da32",
+      "geometry": {
+        "kind": "derived",
+        "operation": "replicateArrange",
+        "params": {
+          "count": 3,
+          "arrangement": "bilateral"
+        }
+      },
+      "topology": {
+        "dimension": 1,
+        "nodes": 6,
+        "edges": [],
+        "components": 3
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0
+        ],
+        "symmetry": [
+          "bilateral"
+        ],
+        "bounds": [
+          -0.62,
+          0,
+          0.62,
+          0
+        ]
+      },
+      "provenance": {
+        "operator": "replicateArrange",
+        "parents": [
+          "shape_2ff94969"
+        ],
+        "params": {
+          "count": 3,
+          "arrangement": "bilateral"
+        }
+      },
+      "depth": 1,
+      "tags": [
+        "support",
+        "balance",
+        "equilibrium",
+        "multiplicity"
+      ],
+      "createdAtStep": 1
+    },
+    {
+      "id": "shape_7dceac11",
+      "geometry": {
+        "kind": "derived",
+        "operation": "replicateArrange",
+        "params": {
+          "count": 2,
+          "arrangement": "bilateral"
+        }
+      },
+      "topology": {
+        "dimension": 1,
+        "nodes": 4,
+        "edges": [],
+        "components": 2
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0
+        ],
+        "symmetry": [
+          "bilateral"
+        ],
+        "bounds": [
+          -0.62,
+          0,
+          0.62,
+          0
+        ]
+      },
+      "provenance": {
+        "operator": "replicateArrange",
+        "parents": [
+          "shape_2ff94969"
+        ],
+        "params": {
+          "count": 2,
+          "arrangement": "bilateral"
+        }
+      },
+      "depth": 1,
+      "tags": [
+        "support",
+        "balance",
+        "equilibrium",
+        "multiplicity"
+      ],
+      "createdAtStep": 0
+    },
+    {
+      "id": "shape_93ea4170",
+      "geometry": {
+        "kind": "derived",
+        "operation": "compose",
+        "params": {
+          "anchor": "edge"
+        }
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 5,
+        "edges": [],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0
+        ],
+        "symmetry": [
+          "bilateral"
+        ],
+        "bounds": [
+          -0.62,
+          0,
+          0.62,
+          0
+        ]
+      },
+      "provenance": {
+        "operator": "compose",
+        "parents": [
+          "shape_7dceac11",
+          "shape_63627cf7"
+        ],
+        "params": {
+          "anchor": "edge"
+        }
+      },
+      "depth": 2,
+      "tags": [
+        "support",
+        "balance",
+        "equilibrium",
+        "multiplicity",
+        "mass",
+        "equal",
+        "nested"
+      ],
+      "createdAtStep": 2
+    }
+  ],
+  "steps": [
+    {
+      "index": 1,
+      "goalId": "goal_balance",
+      "selected": [
+        {
+          "shapeId": "shape_d6103807",
+          "fitness": {
+            "novelty": 0.458604,
+            "coherence": 0.673858,
+            "simplicity": 0.645161,
+            "goalRelevance": 0.74,
+            "symmetry": 1,
+            "predictivePower": 0.4,
+            "total": 0.652693
+          }
+        },
+        {
+          "shapeId": "shape_9b71da32",
+          "fitness": {
+            "novelty": 0.30989,
+            "coherence": 0.737823,
+            "simplicity": 0.689655,
+            "goalRelevance": 0.74,
+            "symmetry": 1,
+            "predictivePower": 0.4,
+            "total": 0.642027
+          }
+        },
+        {
+          "shapeId": "shape_7dceac11",
+          "fitness": {
+            "novelty": 0.270508,
+            "coherence": 0.757945,
+            "simplicity": 0.714286,
+            "goalRelevance": 0.74,
+            "symmetry": 1,
+            "predictivePower": 0.4,
+            "total": 0.64196
+          }
+        }
+      ],
+      "candidateCount": 24,
+      "workingSet": [
+        "shape_d6103807",
+        "shape_9b71da32",
+        "shape_7dceac11",
+        "shape_c61c2ebd",
+        "shape_63627cf7",
+        "shape_2ff94969",
+        "shape_ba3b8848",
+        "shape_edde187a"
+      ],
+      "rngState": 3842072515
+    },
+    {
+      "index": 2,
+      "goalId": "goal_balance",
+      "selected": [
+        {
+          "shapeId": "shape_93ea4170",
+          "fitness": {
+            "novelty": 0.136277,
+            "coherence": 0.809002,
+            "simplicity": 0.57971,
+            "goalRelevance": 0.721429,
+            "symmetry": 1,
+            "predictivePower": 0.8,
+            "total": 0.623855
+          }
+        },
+        {
+          "shapeId": "shape_58aa04ca",
+          "fitness": {
+            "novelty": 0.062994,
+            "coherence": 0.816183,
+            "simplicity": 0.617284,
+            "goalRelevance": 0.74,
+            "symmetry": 1,
+            "predictivePower": 0.4,
+            "total": 0.59445
+          }
+        },
+        {
+          "shapeId": "shape_9ea5428f",
+          "fitness": {
+            "novelty": 0.062994,
+            "coherence": 0.8102,
+            "simplicity": 0.598802,
+            "goalRelevance": 0.74,
+            "symmetry": 1,
+            "predictivePower": 0.4,
+            "total": 0.590231
+          }
+        }
+      ],
+      "candidateCount": 24,
+      "workingSet": [
+        "shape_93ea4170",
+        "shape_58aa04ca",
+        "shape_9ea5428f",
+        "shape_d6103807",
+        "shape_9b71da32",
+        "shape_7dceac11",
+        "shape_c61c2ebd",
+        "shape_63627cf7",
+        "shape_2ff94969",
+        "shape_ba3b8848"
+      ],
+      "rngState": 2283254294
+    }
+  ],
+  "active": [
+    "shape_93ea4170",
+    "shape_58aa04ca",
+    "shape_9ea5428f",
+    "shape_d6103807",
+    "shape_9b71da32",
+    "shape_7dceac11",
+    "shape_c61c2ebd",
+    "shape_63627cf7",
+    "shape_2ff94969",
+    "shape_ba3b8848"
+  ],
+  "render": {
+    "coordinateSystem": "normalized-tramline",
+    "projection": "ground-plane",
+    "order": "createdAtStep"
+  }
+}

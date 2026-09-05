@@ -1,0 +1,1152 @@
+{
+  "schema": "synesthetic-thought-demo/v0",
+  "thoughtId": "shape_8fac38ac",
+  "shapeCount": 19,
+  "pathCount": 47,
+  "visualStyle": {
+    "blurStdDeviationPx": 3.2,
+    "blurStrokeWidthPx": 11,
+    "coreStrokeWidthPx": 5.5,
+    "opacity": 1
+  },
+  "stream": {
+    "schema": "shape-cognition/v1",
+    "seed": 2026,
+    "operators": [
+      "transform",
+      "morph",
+      "combine",
+      "replicateArrange",
+      "projectSlice",
+      "dualPolar",
+      "subdivideSimplify",
+      "compose"
+    ],
+    "shapes": [
+      {
+        "id": "shape_6fb8ba01",
+        "geometry": {
+          "kind": "ray",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        },
+        "topology": {
+          "dimension": 1,
+          "nodes": 2,
+          "edges": [
+            [
+              0,
+              1
+            ]
+          ],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [],
+          "bounds": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "primitive",
+          "parents": [],
+          "params": {
+            "kind": "ray"
+          }
+        },
+        "depth": 0,
+        "tags": [
+          "form-constant",
+          "spiral"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_9890603b",
+        "geometry": {
+          "kind": "derived",
+          "operation": "morph",
+          "params": {
+            "parameters": {
+              "kind": "logarithmicSpiral",
+              "turns": 3.25,
+              "growth": 0.18,
+              "startRadius": 0.06,
+              "phase": 0,
+              "clockwise": false,
+              "samples": 160
+            }
+          }
+        },
+        "topology": {
+          "dimension": 1,
+          "nodes": 2,
+          "edges": [
+            [
+              0,
+              1
+            ]
+          ],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [],
+          "bounds": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "morph",
+          "parents": [
+            "shape_6fb8ba01"
+          ],
+          "params": {
+            "parameters": {
+              "kind": "logarithmicSpiral",
+              "turns": 3.25,
+              "growth": 0.18,
+              "startRadius": 0.06,
+              "phase": 0,
+              "clockwise": false,
+              "samples": 160
+            }
+          }
+        },
+        "depth": 1,
+        "tags": [
+          "form-constant",
+          "spiral"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_bd0bb3f1",
+        "geometry": {
+          "kind": "disk",
+          "center": [
+            0,
+            0
+          ],
+          "radius": 1
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 1,
+          "edges": [],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            1
+          ],
+          "symmetry": [
+            "radial"
+          ],
+          "bounds": [
+            -1,
+            -1,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "primitive",
+          "parents": [],
+          "params": {
+            "kind": "disk"
+          }
+        },
+        "depth": 0,
+        "tags": [
+          "form-constant",
+          "tunnel"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_62ca0c97",
+        "geometry": {
+          "kind": "derived",
+          "operation": "replicateArrange",
+          "params": {
+            "count": 7,
+            "arrangement": "concentric",
+            "minScale": 0.16,
+            "maxScale": 1
+          }
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 7,
+          "edges": [],
+          "components": 7
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            1
+          ],
+          "symmetry": [
+            "concentric"
+          ],
+          "bounds": [
+            -1,
+            -1,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "replicateArrange",
+          "parents": [
+            "shape_bd0bb3f1"
+          ],
+          "params": {
+            "count": 7,
+            "arrangement": "concentric",
+            "minScale": 0.16,
+            "maxScale": 1
+          }
+        },
+        "depth": 1,
+        "tags": [
+          "form-constant",
+          "tunnel",
+          "multiplicity"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_470ad4ab",
+        "geometry": {
+          "kind": "derived",
+          "operation": "projectSlice",
+          "params": {
+            "dimension": 2,
+            "mode": "perspective",
+            "homography": [
+              1,
+              0.16,
+              0,
+              -0.055999999999999994,
+              1,
+              0,
+              0.18,
+              0.08,
+              1
+            ]
+          }
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 7,
+          "edges": [],
+          "components": 7
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            1
+          ],
+          "symmetry": [
+            "concentric"
+          ],
+          "bounds": [
+            -1,
+            -1,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "projectSlice",
+          "parents": [
+            "shape_62ca0c97"
+          ],
+          "params": {
+            "dimension": 2,
+            "mode": "perspective",
+            "homography": [
+              1,
+              0.16,
+              0,
+              -0.055999999999999994,
+              1,
+              0,
+              0.18,
+              0.08,
+              1
+            ]
+          }
+        },
+        "depth": 2,
+        "tags": [
+          "form-constant",
+          "tunnel",
+          "multiplicity",
+          "abstraction"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_c84334ce",
+        "geometry": {
+          "kind": "derived",
+          "operation": "combine",
+          "params": {
+            "mode": "overlay"
+          }
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 9,
+          "edges": [
+            [
+              0,
+              1
+            ]
+          ],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [],
+          "bounds": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "combine",
+          "parents": [
+            "shape_9890603b",
+            "shape_470ad4ab"
+          ],
+          "params": {
+            "mode": "overlay"
+          }
+        },
+        "depth": 3,
+        "tags": [
+          "form-constant",
+          "spiral",
+          "tunnel",
+          "multiplicity",
+          "abstraction"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_17baa721",
+        "geometry": {
+          "kind": "disk",
+          "center": [
+            0,
+            0
+          ],
+          "radius": 1
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 1,
+          "edges": [],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            1
+          ],
+          "symmetry": [
+            "radial"
+          ],
+          "bounds": [
+            -1,
+            -1,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "primitive",
+          "parents": [],
+          "params": {
+            "kind": "disk"
+          }
+        },
+        "depth": 0,
+        "tags": [
+          "form-constant",
+          "cobweb"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_5dc41527",
+        "geometry": {
+          "kind": "derived",
+          "operation": "replicateArrange",
+          "params": {
+            "count": 6,
+            "arrangement": "concentric",
+            "minScale": 0.18,
+            "maxScale": 1
+          }
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 6,
+          "edges": [],
+          "components": 6
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            1
+          ],
+          "symmetry": [
+            "concentric"
+          ],
+          "bounds": [
+            -1,
+            -1,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "replicateArrange",
+          "parents": [
+            "shape_17baa721"
+          ],
+          "params": {
+            "count": 6,
+            "arrangement": "concentric",
+            "minScale": 0.18,
+            "maxScale": 1
+          }
+        },
+        "depth": 1,
+        "tags": [
+          "form-constant",
+          "cobweb",
+          "multiplicity"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_078c674b",
+        "geometry": {
+          "kind": "segment",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        },
+        "topology": {
+          "dimension": 1,
+          "nodes": 2,
+          "edges": [
+            [
+              0,
+              1
+            ]
+          ],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [],
+          "bounds": [
+            0,
+            0,
+            1,
+            0
+          ]
+        },
+        "provenance": {
+          "operator": "primitive",
+          "parents": [],
+          "params": {
+            "kind": "segment"
+          }
+        },
+        "depth": 0,
+        "tags": [
+          "form-constant",
+          "cobweb"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_41744bf4",
+        "geometry": {
+          "kind": "derived",
+          "operation": "replicateArrange",
+          "params": {
+            "count": 12,
+            "arrangement": "radialRotate",
+            "radius": 0
+          }
+        },
+        "topology": {
+          "dimension": 1,
+          "nodes": 24,
+          "edges": [],
+          "components": 12
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [
+            "radialRotate"
+          ],
+          "bounds": [
+            0,
+            0,
+            1,
+            0
+          ]
+        },
+        "provenance": {
+          "operator": "replicateArrange",
+          "parents": [
+            "shape_078c674b"
+          ],
+          "params": {
+            "count": 12,
+            "arrangement": "radialRotate",
+            "radius": 0
+          }
+        },
+        "depth": 1,
+        "tags": [
+          "form-constant",
+          "cobweb",
+          "multiplicity"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_4761be1f",
+        "geometry": {
+          "kind": "derived",
+          "operation": "combine",
+          "params": {
+            "mode": "overlay"
+          }
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 30,
+          "edges": [],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            1
+          ],
+          "symmetry": [
+            "concentric"
+          ],
+          "bounds": [
+            -1,
+            -1,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "combine",
+          "parents": [
+            "shape_5dc41527",
+            "shape_41744bf4"
+          ],
+          "params": {
+            "mode": "overlay"
+          }
+        },
+        "depth": 2,
+        "tags": [
+          "form-constant",
+          "cobweb",
+          "multiplicity"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_b3c49969",
+        "geometry": {
+          "kind": "derived",
+          "operation": "combine",
+          "params": {
+            "mode": "overlay"
+          }
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 39,
+          "edges": [
+            [
+              0,
+              1
+            ]
+          ],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [],
+          "bounds": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "combine",
+          "parents": [
+            "shape_c84334ce",
+            "shape_4761be1f"
+          ],
+          "params": {
+            "mode": "overlay"
+          }
+        },
+        "depth": 4,
+        "tags": [
+          "form-constant",
+          "spiral",
+          "tunnel",
+          "multiplicity",
+          "abstraction",
+          "cobweb"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_48fe2863",
+        "geometry": {
+          "kind": "polygon",
+          "vertices": [
+            [
+              0.5,
+              0
+            ],
+            [
+              0.25,
+              0.433013
+            ],
+            [
+              -0.25,
+              0.433013
+            ],
+            [
+              -0.5,
+              0
+            ],
+            [
+              -0.25,
+              -0.433013
+            ],
+            [
+              0.25,
+              -0.433013
+            ]
+          ]
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 6,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              0
+            ]
+          ],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [
+            "dihedral-6"
+          ],
+          "bounds": [
+            -0.5,
+            -0.5,
+            0.5,
+            0.5
+          ]
+        },
+        "provenance": {
+          "operator": "primitive",
+          "parents": [],
+          "params": {
+            "kind": "polygon",
+            "sides": 6,
+            "radius": 0.5
+          }
+        },
+        "depth": 0,
+        "tags": [
+          "form-constant",
+          "lattice"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_e4cb99c8",
+        "geometry": {
+          "kind": "derived",
+          "operation": "replicateArrange",
+          "params": {
+            "count": 12,
+            "arrangement": "lattice2d",
+            "rows": 3,
+            "columns": 4,
+            "spacingX": 1.55,
+            "spacingY": 1.35,
+            "stagger": true
+          }
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 72,
+          "edges": [],
+          "components": 12
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [
+            "lattice2d"
+          ],
+          "bounds": [
+            -0.5,
+            -0.5,
+            0.5,
+            0.5
+          ]
+        },
+        "provenance": {
+          "operator": "replicateArrange",
+          "parents": [
+            "shape_48fe2863"
+          ],
+          "params": {
+            "count": 12,
+            "arrangement": "lattice2d",
+            "rows": 3,
+            "columns": 4,
+            "spacingX": 1.55,
+            "spacingY": 1.35,
+            "stagger": true
+          }
+        },
+        "depth": 1,
+        "tags": [
+          "form-constant",
+          "lattice",
+          "multiplicity"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_82a4c314",
+        "geometry": {
+          "kind": "derived",
+          "operation": "combine",
+          "params": {
+            "mode": "overlay"
+          }
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 111,
+          "edges": [
+            [
+              0,
+              1
+            ]
+          ],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [],
+          "bounds": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "combine",
+          "parents": [
+            "shape_b3c49969",
+            "shape_e4cb99c8"
+          ],
+          "params": {
+            "mode": "overlay"
+          }
+        },
+        "depth": 5,
+        "tags": [
+          "form-constant",
+          "spiral",
+          "tunnel",
+          "multiplicity",
+          "abstraction",
+          "cobweb",
+          "lattice"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_09680000",
+        "geometry": {
+          "kind": "disk",
+          "center": [
+            0,
+            0
+          ],
+          "radius": 0.075
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 1,
+          "edges": [],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            13.333333
+          ],
+          "symmetry": [
+            "radial"
+          ],
+          "bounds": [
+            -0.075,
+            -0.075,
+            0.075,
+            0.075
+          ]
+        },
+        "provenance": {
+          "operator": "primitive",
+          "parents": [],
+          "params": {
+            "kind": "disk"
+          }
+        },
+        "depth": 0,
+        "tags": [
+          "sequence-space",
+          "projected"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_b59e26cc",
+        "geometry": {
+          "kind": "derived",
+          "operation": "replicateArrange",
+          "params": {
+            "count": 9,
+            "arrangement": "sequenceCurve",
+            "amplitude": 0.35,
+            "frequency": 1.5,
+            "spacing": 0.25
+          }
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 9,
+          "edges": [],
+          "components": 9
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            13.333333
+          ],
+          "symmetry": [
+            "sequenceCurve"
+          ],
+          "bounds": [
+            -0.075,
+            -0.075,
+            0.075,
+            0.075
+          ]
+        },
+        "provenance": {
+          "operator": "replicateArrange",
+          "parents": [
+            "shape_09680000"
+          ],
+          "params": {
+            "count": 9,
+            "arrangement": "sequenceCurve",
+            "amplitude": 0.35,
+            "frequency": 1.5,
+            "spacing": 0.25
+          }
+        },
+        "depth": 1,
+        "tags": [
+          "sequence-space",
+          "projected",
+          "multiplicity"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_2d5d38af",
+        "geometry": {
+          "kind": "derived",
+          "operation": "projectSlice",
+          "params": {
+            "dimension": 2,
+            "mode": "perspective",
+            "homography": [
+              1,
+              0.08,
+              0,
+              0,
+              1,
+              0,
+              0.12,
+              0.04,
+              1
+            ]
+          }
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 9,
+          "edges": [],
+          "components": 9
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            13.333333
+          ],
+          "symmetry": [
+            "sequenceCurve"
+          ],
+          "bounds": [
+            -0.075,
+            -0.075,
+            0.075,
+            0.075
+          ]
+        },
+        "provenance": {
+          "operator": "projectSlice",
+          "parents": [
+            "shape_b59e26cc"
+          ],
+          "params": {
+            "dimension": 2,
+            "mode": "perspective",
+            "homography": [
+              1,
+              0.08,
+              0,
+              0,
+              1,
+              0,
+              0.12,
+              0.04,
+              1
+            ]
+          }
+        },
+        "depth": 2,
+        "tags": [
+          "sequence-space",
+          "projected",
+          "multiplicity",
+          "abstraction"
+        ],
+        "createdAtStep": 0
+      },
+      {
+        "id": "shape_8fac38ac",
+        "geometry": {
+          "kind": "derived",
+          "operation": "combine",
+          "params": {
+            "mode": "overlay"
+          }
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 120,
+          "edges": [
+            [
+              0,
+              1
+            ]
+          ],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [],
+          "bounds": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "provenance": {
+          "operator": "combine",
+          "parents": [
+            "shape_82a4c314",
+            "shape_2d5d38af"
+          ],
+          "params": {
+            "mode": "overlay"
+          }
+        },
+        "depth": 6,
+        "tags": [
+          "form-constant",
+          "spiral",
+          "tunnel",
+          "multiplicity",
+          "abstraction",
+          "cobweb",
+          "lattice",
+          "sequence-space",
+          "projected"
+        ],
+        "createdAtStep": 0
+      }
+    ],
+    "steps": [],
+    "active": [
+      "shape_8fac38ac"
+    ],
+    "render": {
+      "coordinateSystem": "normalized-tramline",
+      "projection": "ground-plane",
+      "order": "createdAtStep"
+    }
+  }
+}

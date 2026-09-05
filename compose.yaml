@@ -1,0 +1,16 @@
+services:
+  thought-intake:
+    build: .
+    env_file: .env
+    environment:
+      HOST: 0.0.0.0
+      PORT: "8787"
+      THOUGHT_LEDGER_PATH: /data/thought-ledger.jsonl
+    ports:
+      - "127.0.0.1:8787:8787"
+    volumes:
+      - thought-data:/data
+    restart: unless-stopped
+
+volumes:
+  thought-data:

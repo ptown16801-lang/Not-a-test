@@ -1,0 +1,11 @@
+{
+  "schema": "thought-intake/v1",
+  "concept": "cooperation under uncertainty",
+  "publicRationale": "Separate trajectories converge without becoming identical.",
+  "nodes": [
+    {"id":"seed","primitive":{"kind":"segment","args":{"a":[0,0],"b":[0.72,0]}}},
+    {"id":"spiral","operator":"morph","parents":["seed"],"params":{"parameters":{"kind":"logarithmicSpiral","turns":3.4,"growth":0.16,"startRadius":0.05,"samples":144}}},
+    {"id":"cooperation","operator":"replicateArrange","parents":["spiral"],"params":{"count":7,"arrangement":"radialRotate","radius":0.12}}
+  ],
+  "root": "cooperation"
+}
