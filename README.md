@@ -48,6 +48,14 @@ could last weeks. Exact equations, fidelity boundaries, reconstruction choices,
 and test coverage are documented in
 [`docs/shriki-2016-reconstruction.md`](docs/shriki-2016-reconstruction.md).
 
+The complete executable Wolfram Language rewrite lives in
+[`mathematica/`](mathematica/README.md). It includes a Mathematica notebook,
+Figure 1–7 builders, the S1 symbolic stability result, MUnit tests, headless
+runners, allocation-free size estimates, and a low-rank-plus-diagonal backend
+for output populations larger than the paper's 142 neurons. Its separate
+scaling audit labels every optimization as exact, tolerance-equivalent,
+approximate, or model-changing and does not assume access to unpublished code.
+
 ## Research-inspired synesthetic geometry
 
 `src/synesthetic-geometry.js` adds deterministic complex-pattern macros without

@@ -1,0 +1,135 @@
+Notebook[{
+  Cell["The Emergence of Synaesthesia in a Recurrent Neural Network", "Title"],
+  Cell["A complete Wolfram Language reconstruction of Shriki, Sadeh & Ward (2016)", "Subtitle"],
+  Cell["This notebook rewrites the paper as an executable argument. It reconstructs the published equations, analytical appendix, simulations, probes, and figure logic in Mathematica. The explanatory prose is original; the scientific source remains the cited CC BY article. The authors' MATLAB code was not released, so unreported numerical choices are exposed and labeled.", "Abstract"],
+
+  Cell[CellGroupData[{
+    Cell["0. Reproduction contract", "Section"],
+    Cell["Reported equations and printed parameter values are treated as authoritative. Random seeds, integration details, exact training duration, and several grid limits were not reported. The machine-readable ledger below separates those categories before any result is evaluated.", "Text"],
+    Cell[BoxData["projectDirectory = NotebookDirectory[];\nGet[FileNameJoin[{projectDirectory, \"SynesthesiaModel.wl\"}]];\nGet[FileNameJoin[{projectDirectory, \"PaperFigures.wl\"}]];\npaperSpec = Import[FileNameJoin[{projectDirectory, \"paper-spec.json\"}], \"RawJSON\"];"], "Input"],
+    Cell[BoxData["Dataset[KeyTake[paperSpec, {\"paper\", \"architecture\", \"unreportedByAuthors\"}]]"], "Input"],
+    Cell["The paper's claim is computational: recurrent cross-talk can become useful when a network maximizes sensory information under deprivation, flooding, or sufficiently aggressive plasticity. It is not a model of text-to-image rendering. The repository's artistic projection is outside this notebook's scientific model.", "Text"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["1. Research question and operational definition", "Section"],
+    Cell["Two initially separate modalities receive statistically independent inputs. Their output populations are allowed recurrent connections within and across modalities. A synaesthesia-like state requires more than nonzero weights: stimulation of one input population must cause a systematic response in the other output population. The stimulated side is the inducer and the additional response is the concurrent.", "Text"],
+    Cell[BoxData["PaperFigure1[]"], "Input"],
+    Cell["The learning mechanism does not insert cross-modal associations. It asks whether maximizing the total representational sensitivity can itself make pre-existing near-zero cross-talk functional.", "Text"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["2. Rate dynamics and equilibrium", "Section"],
+    Cell["Let x be an N-dimensional fixed input, s the M-dimensional output activity, W the feed-forward matrix, and K the recurrent matrix. Each output follows a first-order rate equation with time constant one and logistic nonlinearity.", "Text"],
+    Cell[BoxData["rateEquation = HoldForm[D[s[t], t] == -s[t] + LogisticActivation[W.x + K.s[t]]];\nfixedPointEquation = HoldForm[sStar == LogisticActivation[W.x + K.sStar]];\nColumn[{TraditionalForm[rateEquation], TraditionalForm[fixedPointEquation]}]"], "Input"],
+    Cell["SettleNetwork uses synchronous explicit Euler for strict reconstruction. The alternative Anderson method solves the same fixed-point equation with a short residual history and is a labeled modern acceleration.", "Text"],
+    Cell[BoxData["simple = CreateSimplePaperNetwork[\"Weights\" -> {1.1, .8}, \"CrossTalk\" -> {.12, -.07}];\neuler = SettleNetwork[simple, {.35, -.22}, \"IntegrationStep\" -> .8, \"Tolerance\" -> 10^-12];\nanderson = SettleNetwork[simple, {.35, -.22}, \"Method\" -> \"Anderson\", \"Tolerance\" -> 10^-12];\nDataset[{KeyTake[euler, {\"State\", \"Iterations\", \"MaxDelta\", \"Method\"}], KeyTake[anderson, {\"State\", \"Iterations\", \"MaxDelta\", \"Method\"}]}]"], "Input"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["3. Information objective and learning rule", "Section"],
+    Cell["For a deterministic response with small output noise, maximizing mutual information reduces to maximizing output entropy. In the formulation used by the paper, this is equivalent to minimizing the negative log-volume induced by the input-to-output Jacobian χ.", "Text"],
+    Cell[BoxData["definitions = Column[{\n  HoldForm[G == DiagonalMatrix[gPrime]],\n  HoldForm[phi == Inverse[Inverse[G] - K]],\n  HoldForm[chi == phi.W],\n  HoldForm[epsilon == -1/2 Expectation[Log[Det[Transpose[chi].chi]], x]]\n}] // TraditionalForm"], "Input"],
+    Cell["The susceptibility χ measures how much the steady output moves under an infinitesimal input change. The recurrent update is the negative gradient of ε. Gamma and a are intermediate quantities that keep the expression compact.", "Text"],
+    Cell[BoxData["learningRule = Column[{\n  HoldForm[Gamma == Inverse[Transpose[chi].chi].Transpose[chi].phi],\n  HoldForm[a[[k]] == (chi.Gamma)[[k, k]] gSecond[[k]]/gPrime[[k]]^3],\n  HoldForm[DeltaK == eta Expectation[Transpose[chi.Gamma] + Outer[Times, Transpose[phi].a, s], x]]\n}] // TraditionalForm"], "Input"],
+    Cell["AnalyzeNetwork evaluates these equations directly. The MUnit suite compares its two cross-talk derivatives with central finite differences of the objective.", "Text"],
+    Cell[BoxData["analysis = AnalyzeNetwork[simple, {.35, -.22}, \"IntegrationStep\" -> .8, \"Tolerance\" -> 10^-12];\nKeyTake[analysis, {\"Objective\", \"State\", \"Susceptibility\", \"UpdateDirection\"}]"], "Input"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["4. The two-unit model (Figure 2)", "Section"],
+    Cell["The analytically tractable network has one input and one output in each modality. W is diagonal, self-connections are absent, and K12 and K21 are the only adaptive recurrent terms. Both inputs are independent zero-mean Gaussians. Logistic symmetry then fixes E[s_i]=1/2 at zero cross-talk.", "Text"],
+    Cell[BoxData["PaperFigure2[]"], "Input"],
+    Cell["Because the output is bounded between zero and one, each output variance lies between zero and one quarter. Write alpha_i = E[s_i^2] = Var[s_i] + 1/4. These second moments are sufficient to linearize the expected two-weight learning dynamics.", "Text"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["5. S1 Appendix reconstructed symbolically", "Section"],
+    Cell["At K12=K21=0, differentiate the expected recurrent update with respect to those two weights. Independence and logistic symmetry reduce every expectation to alpha1 and alpha2. In the ordering {K12,K21}, the resulting Jacobian is symmetric.", "Text"],
+    Cell[BoxData["s1Jacobian = SimpleStabilityJacobian[v1, v2] // Simplify;\nMatrixForm[s1Jacobian]"], "Input"],
+    Cell[BoxData["s1Invariants = SimpleStabilityInvariants[v1, v2];\nColumn[{\n  HoldForm[traceJ == s1Invariants[\"Trace\"]],\n  HoldForm[detJ == s1Invariants[\"Determinant\"]],\n  FullSimplify[Det[s1Jacobian] == s1Invariants[\"Determinant\"]]\n}]"], "Input"],
+    Cell["The discrete learning map is δK_(t+1)=(I+ηJ)δK_t. The no-cross-talk point is stable exactly when every eigenvalue of I+ηJ lies inside the unit circle. Infinitesimal gradient stability requires Tr[J]<0 and Det[J]>0; within that region the finite-step critical learning rate is the first η for which an eigenvalue reaches -1.", "Text"],
+    Cell[BoxData["central = SimpleNoCrossTalkStability[.05, .05];\ndeprivedEdge = SimpleNoCrossTalkStability[0., .24];\nDataset[{KeyTake[central, {\"Trace\", \"Determinant\", \"Eigenvalues\", \"CriticalLearningRate\", \"Stable\"}], KeyTake[deprivedEdge, {\"Trace\", \"Determinant\", \"Eigenvalues\", \"CriticalLearningRate\", \"Stable\"}]}]"], "Input"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["6. Stability, plasticity, and response curves (Figure 3)", "Section"],
+    Cell["The central variance region returns small cross-talk perturbations to zero. Moving one modality toward low variance models deprivation; pushing one toward high variance models flooding. Even inside the infinitesimally stable region, a finite learning step can cross its critical value and destabilize learning.", "Text"],
+    Cell[BoxData["PaperFigure3[]"], "Input"],
+    Cell["The response example uses the paper's printed endpoint K12=-2.91 and K21=14.34. It is a reported endpoint, not regenerated by an invented seed.", "Text"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["7. Numerical phase sweep (Figure 4)", "Section"],
+    Cell["The paper reports 729 runs on a 27×27 grid, near-zero weights on a small random ring, Gaussian inputs, and about 0.01 resolution in output variance. It does not publish the exact input standard deviations, seed, learning duration, or classification threshold. RunFigure4Simulation exposes all four omissions. The default below is disabled because a faithful convergence study should be long.", "Text"],
+    Cell[BoxData["runFigure4 = False;\nfigure4Result = If[runFigure4, RunFigure4Simulation[\"TrainingSteps\" -> 5000], Missing[\"NotRun\"]];\nIf[AssociationQ[figure4Result], PaperFigure4[figure4Result], Style[\"Set runFigure4=True to execute the 27x27 sweep.\", Italic]]"], "Input"],
+    Cell["Points close to the analytical boundary converge slowly, so disagreement at finite training time is expected. A numerical marker is evidence about a finite run; the symbolic boundary remains the exact local result under the appendix assumptions.", "Text"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["8. Population representation (Figure 5)", "Section"],
+    Cell["Each modality now has a two-dimensional input written in Cartesian coordinates but interpreted as angle φ and radius r. Seventy-one output neurons per modality have evenly spaced preferred angles θ_i. Their fixed feed-forward weights are unit vectors, so neuron i receives r cos(θ_i-φ). The two modality draws are independent; angles are uniform and radius is Gaussian with standard deviation ten percent of its mean.", "Text"],
+    Cell[BoxData["PaperFigure5[]"], "Input"],
+    Cell[BoxData["paperNetwork = CreateTwoModalityPaperNetwork[];\n{paperNetwork[\"InputSize\"], paperNetwork[\"OutputSize\"], Dimensions[paperNetwork[\"W\"]], Dimensions[paperNetwork[\"K\"]]}"], "Input"],
+    Cell["The endpoint 2π is excluded so the zero-degree neuron is not duplicated. That implementation choice preserves uniform circular spacing.", "Text"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["9. Learned connectivity and a unidirectional mapping (Figure 6)", "Section"],
+    Cell["For mean radii {0.2,2}, modality 1 is deprived. The reported learned network strengthens its within-modality amplification and receives mainly excitatory cross-talk from modality 2, while the reverse cross-talk is mainly inhibitory. A 30-degree modality-2 probe elicits a finite modality-1 population vector; the reverse direction is effectively absent. The concurrent angle changes systematically with inducer angle even though training inputs were uncorrelated.", "Text"],
+    Cell["The next cell uses the repository's explicitly labeled seven-neuron preview checkpoint only to exercise all Mathematica analyses quickly. It is not presented as the paper's Figure 6 matrix. Set runLongPopulationTraining below to generate a new 142-neuron run.", "Text"],
+    Cell[BoxData["previewCheckpoint = ImportJavaScriptNetwork[FileNameJoin[{projectDirectory, \"..\", \"assets\", \"neural-preview-checkpoint.json\"}]];\nPaperFigure6[previewCheckpoint]"], "Input"],
+    Cell[BoxData["runLongPopulationTraining = False;\nfigure6Training = If[runLongPopulationTraining, TrainPaperScenario[\"deprivedHighPlasticity\", \"TotalNeurons\" -> 142, \"Steps\" -> 10000], Missing[\"NotRun\"]];\nIf[AssociationQ[figure6Training], PaperFigure6[figure6Training[\"Model\"]], Style[\"Set runLongPopulationTraining=True for a new paper-sized training run.\", Italic]]"], "Input"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["10. Five routes through parameter space (Figure 7)", "Section"],
+    Cell["The five printed regimes separate ordinary, deprived, high-input, and high-plasticity cases. The first three were reported without synaesthesia-like population vectors. Balanced high plasticity produced cross-modal responses in both directions; deprived high plasticity produced a modality-2-to-modality-1 mapping.", "Text"],
+    Cell[BoxData["Dataset[$PaperFigure7Scenarios]"], "Input"],
+    Cell[BoxData["runAllFiveTrainings = False;\nfigure7Trainings = If[runAllFiveTrainings, TrainPaperScenarios[\"TotalNeurons\" -> 142, \"Steps\" -> 10000], Missing[\"NotRun\"]];\nIf[AssociationQ[figure7Trainings], PaperFigure7[figure7Trainings], Style[\"Set runAllFiveTrainings=True to train and probe all five regimes.\", Italic]]"], "Input"],
+    Cell["A learned cross-modal weight is not by itself enough for this classification. The population-vector magnitude establishes whether the unstimulated modality responds, and the angle curve establishes whether that response carries a mapping.", "Text"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["11. Scaling the population beyond the 2016 experiment", "Section"],
+    Cell["Increasing angular resolution is straightforward: choose any even total of at least six. A literal unrestricted recurrent matrix costs O(M²) storage. The published update, however, has hidden low-rank structure: χΓ contributes at most N ranks and the second term is one outer product. With N=4, a sample update adds no more than five factor columns.", "Text"],
+    Cell[BoxData["largeExact = CreateScalablePaperNetwork[2048, \"MaximumRank\" -> Infinity];\nlargeBounded = CreateScalablePaperNetwork[8192, \"MaximumRank\" -> 192];\nDataset[NetworkScaleReport /@ {paperNetwork, largeExact, largeBounded}]"], "Input"],
+    Cell[BoxData["Dataset[{EstimateNetworkScale[1000000, 192], EstimateNetworkScale[86000000000, 192]}]"], "Input"],
+    Cell["EstimateNetworkScale performs arithmetic only and does not allocate either network. The 86-billion-output row is a cost thought experiment, not a claim of brain equivalence: these are homogeneous rate units in two circular populations, not biological neurons with realistic cell types and anatomy.", "Text"],
+    Cell["The low-rank-plus-diagonal backend applies K without constructing it and solves (G^-1-K) against only the required right-hand sides through the Woodbury identity. It reuses each operator factorization and does not materialize the full M-by-M phi matrix. With an infinite rank cap this is algebraically equivalent to dense updates. A finite cap applies a factor-space truncated SVD; the model records every truncation and is then an explicit approximation.", "Text"],
+    Cell["Additional public scaling routes were audited in SCALING_AUDIT.md. Anderson acceleration and warm-started angular sweeps preserve the fixed-point equation to the requested residual tolerance and are implemented. Independent scenarios can run as separate kernel jobs. Compiled machine-real loops and distributed dense linear algebra are backend improvements. Matrix-free Krylov methods could replace the rank-cubed Woodbury-core solve at high rank. Sparse or block-circulant FFT networks impose connectivity constraints because the published gradient is generally dense. Randomized SVD, pruning, mixed precision, and truncated settling are approximations, not hidden changes to the strict paper model.", "Text"],
+    Cell[BoxData["acceleratedProbe = ProbeCrossModalMapping[previewCheckpoint, 2, 1, \"Method\" -> \"Anderson\", \"WarmStart\" -> True, \"ProbeRadius\" -> 2.];\nDataset[Take[acceleratedProbe, 5]]"], "Input"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["12. Interpretation and predictions", "Section"],
+    Cell["Information maximization balances two pressures: individual units should use their dynamic range, while redundant correlations should remain low. Cross-talk usually increases correlations and is therefore costly. Under deprivation, variation borrowed from an intact modality can raise the deprived population's entropy enough to outweigh that cost. Under high plasticity, a finite learning step can destabilize an otherwise normal fixed point.", "Text"],
+    Cell["The model therefore links acquired synaesthesia-like behavior to deprivation or flooding, and developmental forms to heightened or prolonged plasticity. It also predicts stronger unimodal sensitivity in the concurrent population and critical slowing near learned optima. These are model consequences, not diagnoses of individuals.", "Text"],
+    Cell["The monotonic mappings are especially informative: they emerge without correlated cross-modal training data. Their direction and phase can vary because random realizations break symmetry, matching the idea of consistency within a model instance but idiosyncrasy between instances.", "Text"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["13. Limits", "Section"],
+    Cell["The units are simplified rates rather than spiking neurons. The gradient is nonlocal and is best interpreted as long-term adaptation, not a moment-to-moment synaptic mechanism. The architecture contains direct cross-talk rather than a mediating multisensory hub or top-down predictive hierarchy. Close to criticality, convergence can become extremely slow and numerical choices matter. Enlarging the population improves angular resolution but does not make these biological assumptions more realistic by itself.", "Text"],
+    Cell["No unpublished algorithm or private source is assumed here. Truly non-public scaling methods cannot be audited. The scaling extensions are derived from the displayed equations or cited public numerical methods, and every model-changing approximation is marked in metadata.", "Text"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["14. Verification", "Section"],
+    Cell["The Wolfram tests check derivatives, architecture, the project-compatible random stream, fixed-point residuals, finite-difference gradients, the complete S1 determinant identity, stable and unstable cases, dense/low-rank equality, rank truncation metadata, zero self-coupling, and Figure 7 values.", "Text"],
+    Cell[BoxData["TestReport[FileNameJoin[{projectDirectory, \"tests\", \"SynesthesiaModel.wlt\"}]]"], "Input"],
+    Cell["A separate Node test statically validates this notebook and package, compares paper-spec.json with the tested JavaScript reconstruction, and runs the Wolfram suite automatically whenever wolframscript and an activated local kernel are available.", "Text"]
+  }, Open]],
+
+  Cell[CellGroupData[{
+    Cell["15. Citation and license", "Section"],
+    Cell["Scientific source: Oren Shriki, Yaniv Sadeh, and Jamie Ward, “The Emergence of Synaesthesia in a Neuronal Network Model via Changes in Perceptual Sensitivity and Plasticity,” PLOS Computational Biology 12(7), e1004959 (2016), doi:10.1371/journal.pcbi.1004959. The article and supplement are licensed CC BY 4.0. This reconstruction cites that source and uses newly written code and exposition.", "Text"]
+  }, Open]]
+},
+WindowSize -> {1350, 900},
+WindowMargins -> {{Automatic, 60}, {Automatic, 30}},
+TaggingRules -> <|"PaperDOI" -> "10.1371/journal.pcbi.1004959",
+  "ReproductionSchema" -> "shriki-2016-mathematica-reproduction/v1"|>,
+FrontEndVersion -> "14.0 for Wolfram Cloud",
+StyleDefinitions -> "Default.nb"
+]

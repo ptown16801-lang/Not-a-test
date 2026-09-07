@@ -8,6 +8,7 @@
     "dev": "node demo/dev-server.js",
     "start": "node demo/intake-server.js",
     "test": "node --test test/*.test.js",
+    "test:mathematica": "node --test test/mathematica-rewrite.test.js",
     "smoke:deployment": "node --test test/deployment.test.js",
     "demo": "node demo/balance.js",
     "demo:dirt": "node demo/dirt-balance.js",

@@ -1,0 +1,126 @@
+{
+  "schema": "shriki-2016-mathematica-reproduction/v1",
+  "paper": {
+    "title": "The Emergence of Synaesthesia in a Neuronal Network Model via Changes in Perceptual Sensitivity and Plasticity",
+    "authors": ["Oren Shriki", "Yaniv Sadeh", "Jamie Ward"],
+    "journal": "PLOS Computational Biology",
+    "year": 2016,
+    "doi": "10.1371/journal.pcbi.1004959",
+    "license": "CC BY 4.0"
+  },
+  "architecture": {
+    "simple": {"inputNeurons": 2, "outputNeurons": 2},
+    "population": {
+      "inputNeurons": 4,
+      "reportedOutputNeurons": 142,
+      "reportedNeuronsPerModality": 71,
+      "scalable": true,
+      "minimumTotalNeurons": 6,
+      "totalNeuronsMustBeEven": true
+    },
+    "activation": "logistic",
+    "timeConstant": 1,
+    "feedForward": "equally spaced unit vectors",
+    "selfCoupling": false
+  },
+  "inputDistribution": {
+    "modalitiesIndependent": true,
+    "angle": "Uniform[0,2 Pi)",
+    "radius": "Normal[mean, 0.1 mean]"
+  },
+  "figure7Scenarios": {
+    "balancedLowPlasticity": {
+      "panel": "7A",
+      "meanRadii": [0.2, 0.2],
+      "learningRate": 0.00006,
+      "reported": "no-synaesthesia"
+    },
+    "deprivedLowPlasticity": {
+      "panel": "7B",
+      "meanRadii": [0.2, 2.0],
+      "learningRate": 0.0001,
+      "reported": "no-synaesthesia"
+    },
+    "balancedHighInput": {
+      "panel": "7C",
+      "meanRadii": [2.0, 2.0],
+      "learningRate": 0.00015,
+      "reported": "no-synaesthesia"
+    },
+    "balancedHighPlasticity": {
+      "panel": "7D",
+      "meanRadii": [0.2, 0.2],
+      "learningRate": 0.0001,
+      "reported": "bidirectional"
+    },
+    "deprivedHighPlasticity": {
+      "panel": "7E",
+      "meanRadii": [0.2, 2.0],
+      "learningRate": 0.00015,
+      "reported": "modality-2-to-1"
+    }
+  },
+  "reportedFigureCoverage": {
+    "1": "general two-modality architecture",
+    "2": "minimal two-unit model and Gaussian inputs",
+    "3": "analytic stability, critical plasticity, and response curves",
+    "4": "27 by 27 numerical stability sweep",
+    "5": "four-input, 142-output circular population code",
+    "6": "learned blocks, response, population vectors, and mapping",
+    "7": "five input/plasticity scenarios",
+    "S1": "linearized two-unit learning dynamics and stability conditions"
+  },
+  "reportedParameters": {
+    "figure4GridSize": 27,
+    "figure4Runs": 729,
+    "figure5ExampleMeanRadius": 0.1,
+    "figure6MeanRadii": [0.2, 2.0],
+    "figure6ProbeDegrees": 30,
+    "figure3EvolvedCrossTalk": [-2.91, 14.34]
+  },
+  "reconstructionChoices": {
+    "integrationMethod": "synchronous explicit Euler",
+    "integrationStep": 0.5,
+    "equilibriumTolerance": 1e-9,
+    "stableIterations": 2,
+    "maximumIterations": 50000,
+    "derivativeFloor": 1e-12,
+    "pivotTolerance": 1e-13,
+    "defaultSeed": 1,
+    "preferredAngleEndpoint": "exclude 2 Pi",
+    "paperTrainingPolicy": "fixed learning rate, retain minimum-objective checkpoint"
+  },
+  "unreportedByAuthors": [
+    "MATLAB source code",
+    "random seeds",
+    "exact integration scheme and step",
+    "exact equilibrium tolerance",
+    "exact Figure 4 input grid",
+    "exact training lengths",
+    "machine-precision safeguards"
+  ],
+  "scaling": {
+    "denseMode": "literal unrestricted recurrent matrix; O(M^2) storage and conventional dense solves",
+    "lowRankMode": "matrix-free low-rank-plus-diagonal recurrent operator with Woodbury solves",
+    "rankAddedPerSampleUpdate": 5,
+    "whyFive": "four input susceptibility directions plus one recurrent state outer product",
+    "exactUntilCompression": true,
+    "compression": "optional truncated factor SVD; recorded as an approximation",
+    "factorizationReuse": true,
+    "fullPhiMaterializedInScalableMode": false,
+    "allocationFreeEstimator": "EstimateNetworkScale[total,rank]",
+    "biologicalEquivalenceFromNeuronCountAlone": false,
+    "implementedAccelerators": [
+      "Anderson fixed-point acceleration",
+      "warm-started angular probes",
+      "independent scenario jobs",
+      "factor-space SVD compression"
+    ],
+    "modelChangingAlternatives": [
+      "sparse or pruned recurrent connectivity",
+      "block-circulant FFT recurrent blocks",
+      "surrogate or incompletely settled dynamics"
+    ],
+    "nonPublicBoundary": "Trade secrets and unpublished methods cannot be independently enumerated or ruled out; this project assumes none."
+  }
+}
