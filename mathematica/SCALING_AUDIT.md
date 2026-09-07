@@ -1,117 +1,204 @@
-# Scaling audit for the recurrent Infomax model
+# Scaling-method audit for the Shriki reconstruction
 
-This audit answers a narrower question than “how can a modern neural network be
-made larger?” The 2016 model is a fixed-point rate network with four inputs,
-`M` logistic output neurons, and an unrestricted `M × M` recurrent matrix. A
-method counts as a strict reproduction only if it preserves that fixed-point
-equation and the published recurrent update.
+This audit treats the target model as four inputs, (M=142) outputs, an
+unrestricted recurrent matrix, and the published Infomax update. Only 142 is
+author-specified. Other even (M\ge6) values are a declared circular-grid
+project extension.
 
-`TotalNeurons` in this implementation means total **output** neurons. The four
-input coordinates remain fixed at two Cartesian coordinates per modality.
-`EstimateNetworkScale[total, rank]` calculates storage and connection counts
-without allocating arrays, so even extreme targets can be examined safely.
+## Classification rule
 
-## The leverage that is specific to this model
+| Class | Meaning | Permitted in current exact cohort? |
+|---|---|---:|
+| Equation-preserving | Same finite-dimensional equations; only algebraic evaluation order/representation changes | Yes |
+| Tolerance-equivalent | Solves the same equation only up to a stated residual/error policy | Separate cohort only |
+| Approximate | Deliberately discards numerical information | No |
+| Model-changing | Changes architecture, dynamics, statistics, objective, or learning rule | No |
 
-For one input sample the published update is
+“Algebraically exact” does not mean bitwise-identical floating-point
+accumulation.
 
-```text
-ΔK / η = (χ Γ)^T + (φ^T a) s^T.
-```
+## Current exact method
 
-Here `χ` is `M × 4`, `Γ` is `4 × M`, and the second term is an outer
-product. Consequently, the update rank is at most `4 + 1 = 5`; a batch of `B`
-samples adds at most `5B` factor columns. This is why the implementation can
-store
+For one input sample, the recurrent descent direction factors as
 
-```text
-K = Diagonal[d] + U V^T
-```
+\[
+(\chi\Gamma)^T+(\phi^Ta)s^T
+=[\Gamma^T,\ b][\chi,\ s]^T,\qquad b=\phi^Ta,
+\]
 
-and use the Woodbury identity without first creating `K`. For the general
-high-dimensional rule, `d` starts at zero and the factor product retains its
-diagonal. When the optional simple-model/project zero-diagonal constraint is
-requested, `d` is the exact cancelling correction. With no rank cap either
-policy is algebraically the same as its dense counterpart. With a finite cap it
-becomes an explicitly recorded truncated-SVD approximation.
+so it has algebraic rank at most (N+1=5). Concatenating the factor pairs for
+a predetermined batch and scaling one side represents the batch mean exactly.
 
-The susceptibility objective never needs a large determinant: `χ^T χ` is
-always only `4 × 4`. The package also avoids constructing the full `M × M`
-matrix `φ` in scalable mode and reuses factorizations for its several
-right-hand sides.
+From (K=D+LR^T), the fixed-point operator is
 
-## Audited routes
+\[
+I-GK=B-GLR^T,\qquad B=I-GD,
+\]
 
-| Route | Classification | Included here | Practical consequence |
-|---|---|---:|---|
-| Increase the endpoint-exclusive preferred-angle grid | Exact model extension | Yes | Raises circular population resolution at any even output count ≥ 6. |
-| Low-rank update history plus diagonal correction | Exact until compression | Yes | Recurrent storage is `O(Mr)`, and a sample adds at most five columns. |
-| Woodbury susceptibility solves | Exact until compression | Yes | Replaces an `M × M` solve by diagonal operations and an `r × r` solve. |
-| Materialize dense K once factor count reaches M | Exact | Yes | Preserves every entry while preventing redundant factor history from exceeding dense storage. |
-| Reuse forward, transpose, and Gram factorizations | Exact | Yes | Avoids refactoring the same operator for each right-hand side. |
-| Do not materialize `φ` | Exact | Yes | Removes an unnecessary `M × M` result; set `"ReturnPhi" -> True` when explicitly needed. |
-| Warm-start nearby probe angles | Tolerance-equivalent | Yes | Usually cuts fixed-point iterations; it must converge to the same root. |
-| Anderson fixed-point acceleration | Tolerance-equivalent | Yes | Addresses critical slowing while retaining a residual/tolerance check. |
-| Separate-kernel scenario and seed jobs | Exact apart from floating-point ordering | Yes | `RunAll.wls --scenario=...` supports job arrays; the five scenarios do not share state. |
-| Packed machine reals and compiled inner loops | Tolerance-equivalent | Partly | Arrays are machine real; `Compile` is a further backend optimization, not a changed equation. |
-| Incrementally update the small Woodbury factorization | Exact | Not yet | Can avoid rebuilding the `r × r` factorization after each five-column append. Worth adding if unbounded-rank runs dominate. |
-| Matrix-free GMRES/BiCGSTAB | Tolerance-equivalent | Not yet | Can replace the `r^3` Woodbury core cost at high rank, but needs residual monitoring and preconditioning. |
-| Distributed dense factorization/matrix multiplication | Exact apart from floating-point ordering | Not built in | Retains unrestricted dense `K`; useful on an HPC linear-algebra stack when memory is distributed. |
-| Finite-rank SVD compression | Approximate | Yes, opt-in | Bounds memory; truncation count and discarded singular-value mass are stored in the model. |
-| Randomized SVD or sketching | Approximate | No | Helps only when the factor core itself becomes large; adds stochastic error. |
-| Sparse `K`, pruning, or local receptive fields | Model-changing | No | The exact gradient is generally dense, so sparsity is not preserved without a constraint. |
-| Four block-circulant recurrent kernels with FFTs | Model-changing, symmetry-restricted | No | Gives roughly `O(M log M)` multiplication and `O(M)` parameters, but ties weights that were unrestricted in the paper. |
-| GPU dense algebra | Hardware strategy | No repository-specific kernel | Can accelerate large dense runs without a conceptual change; results still depend on backend and precision. |
-| Mixed precision or quantization | Approximate | No | Saves memory/bandwidth but is risky near singular susceptibility and criticality. |
-| Unroll fewer rate iterations or use a surrogate network | Approximate/model-changing | No | Faster, but no longer evaluates the paper's converged steady state. |
-| Deep-equilibrium implicit differentiation | Already embodied by the paper's rule | N/A | Modern DEQ work validates the strategy, but it does not remove an additional matrix beyond those already eliminated here. |
-| Stochastic log-determinant estimators | Not useful here | No | The determinant is only `4 × 4`; estimation would add error without solving the scaling bottleneck. |
+and the implementation uses
 
-An arbitrary, fully trained dense `M × M` matrix contains `M²` independent
-numbers. No exact general-purpose format can promise subquadratic storage for
-every such matrix. The factorized path wins because early update history is
-low rank; indefinite exact training can eventually reach rank `M`, at which
-point dense or distributed dense algebra is the honest fallback. A finite rank
-cap stays scalable by changing that guarantee from exact to approximate.
+\[
+(B-GLR^T)^{-1}=B^{-1}+B^{-1}GL
+(I-R^TB^{-1}GL)^{-1}R^TB^{-1}.
+\]
 
-## Measured boundary on the Work machine
+Swapping (L) and (R) gives the required transpose operator. The signs and
+ordering match the [Sherman–Morrison–Woodbury identity](https://doi.org/10.1137/1031049).
+Every solve is checked by a backward residual, and moderate pathological
+diagonal-base cases fall back to a dense solve.
 
-The publication-first verification and corrected test suite were completed
-before measurements. `ExactBenchmarkPoint.wls` subsequently ran the requested
-142-to-9,088 ladder with no finite rank cap and continued through an actually
-executed 72,704-neuron one-update feasibility point. The literal dense path was
-measured through 4,544 neurons. The exact rank-50 path was approximately linear
-in M; dense time and storage were approximately quadratic over the measured
-range. A controlled critical construction reached 30,823 equilibrium iterations
-at `rho=0.9995` and 115,820 at `rho=0.9999`.
+The implementation also:
 
-This worker exposed 9 AMD EPYC vCPUs, 16.79 GB RAM, no swap, and no GPU.
-Accordingly, no GPU result is claimed. Full raw values and the practical
-1,136–2,272-neuron sustained-training conclusion are in
-`../docs/modern-compute-scaling-results.md` and `benchmark-results/`.
+- solves ((I-GK)\phi R=GR) without forming (G^{-1});
+- reuses each constructed solver across multiple right-hand sides;
+- computes (\Gamma) by scaled QR/least squares rather than an explicit Gram
+  inverse;
+- computes (Ga) directly to avoid cubic derivative underflow;
+- avoids materializing the full (M\times M\) (\phi) in scalable mode;
+- retains all factor columns until exact dense handoff; and
+- records source hashes, residuals, exactness switches, and OS peak RSS.
 
-## Public-source check
+[Wolfram `LinearSolve`](https://reference.wolfram.com/language/ref/LinearSolve.html)
+supports reusable solver objects, while [LAPACK `DGETRS`](https://www.netlib.org/lapack/explore-html/df/d36/group__getrs_gaacd7a8465c8cc0e4e8b88ba4b453630c.html)
+formalizes reuse of an LU factorization for (A) and (A^T) with matrix right
+hand sides. [LAPACK `DGELSY`](https://www.netlib.org/lapack/explore-html/d6/d4b/dgelsy_8f_source.html)
+uses pivoted QR and supports several least-squares right-hand sides.
 
-The audit covers the model paper and supplement, Wolfram's documented numerical
-and parallel facilities, fixed-point acceleration, implicit differentiation,
-randomized factorization, and structured circulant networks:
+## Applicability boundary
 
-- [Shriki, Sadeh & Ward model](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004959)
-- [PLOS supplementary-material record](https://plos.figshare.com/articles/journal_contribution/The_Emergence_of_Synaesthesia_in_a_Neuronal_Network_Model_via_Changes_in_Perceptual_Sensitivity_and_Plasticity/3907575)
-- [Wolfram `LinearSolve`](https://reference.wolfram.com/language/ref/LinearSolve.html), [`Compile`](https://reference.wolfram.com/language/ref/Compile.html), and [`ParallelTable`](https://reference.wolfram.com/language/ref/ParallelTable.html)
-- [Walker & Ni, Anderson acceleration](https://doi.org/10.1137/10078356X)
-- [Bai, Kolter & Koltun, deep equilibrium models](https://arxiv.org/abs/1909.01377)
-- [Blondel et al., modular implicit differentiation](https://proceedings.neurips.cc/paper_files/paper/2022/file/228b9279ecf9bbafe582406850c57115-Paper-Conference.pdf)
-- [Halko, Martinsson & Tropp, randomized matrix decompositions](https://arxiv.org/abs/0909.4061)
-- [Cheng et al., circulant neural networks](https://arxiv.org/abs/1502.03436)
+Factor history is equation-preserving only when the initial recurrent matrix is
+already diagonal-plus-low-rank—especially full (K=0). A generic near-zero
+dense matrix is normally full rank. Thus the scalable runs exactly execute the
+declared full-(K=0) reconstruction condition, not every initialization
+consistent with the target paper's unspecified “near-zero cross-talk.”
 
-## Boundary on “non-public” methods
+No exact general-purpose representation can guarantee subquadratic storage for
+an unrestricted matrix after arbitrary updates. Two (M\times r) factors plus
+a diagonal use (M(2r+1)) values, so dense storage becomes no larger at
 
-There is no reproducible way to enumerate trade secrets, unpublished lab code,
-or confidential hardware methods. They are unobservable until their owners
-disclose them. This project therefore makes the strongest check that can be
-independently verified: it audits public primary sources and documented
-software capabilities, derives model-specific algebra from the published
-equations, and assumes no secret method. If a private method is later supplied
-under appropriate authority, it can be evaluated against the exact/approximate
-criteria above; its existence cannot honestly be certified or ruled out now.
+\[
+r_{\rm cross}=\left\lceil\frac{M-1}{2}\right\rceil.
+\]
+
+For batch-one updates appending at most five columns, handoff occurs at
+
+\[
+t_{\rm cross}=\left\lceil\frac{M-1}{10}\right\rceil.
+\]
+
+The handoff is update 15 at (M=142), not update 29; it is update 909 at
+(M=9{,}088). This is a storage criterion, not necessarily the runtime-optimal
+crossover.
+
+## Complexity and evidence boundary
+
+At factor-column count (r), recurrent matrix-vector products cost
+(O(M(r+1))), and the Woodbury factor solve has leading work
+(O(Mr^2+r^3)). Since (r\le5t) for batch-one training, a 10-update/rank-50
+fit cannot be extrapolated to 1,000 updates. After exact dense handoff, storage
+is (O(M^2)) and general factorization is cubic.
+
+The current experiment supports:
+
+- one 1,000-update trajectory at (M=142);
+- a matched 10-update early window through (M=9{,}088);
+- one/two-update feasibility through (M=72{,}704).
+
+It does not measure a sustained cross-size limit or a failed resource boundary.
+
+## Critical conditioning
+
+At (\(\rho=0.9999\)), the controlled critical test reaches fixed-point residual
+(9.999\times10^{-10}) but has state error (9.999\times10^{-6}) and
+gradient relative error 0.62176. Locally,
+
+\[
+e_s\approx(I-GK)^{-1}r_f,
+\]
+
+so residual alone cannot bound forward or gradient error as the operator
+approaches singularity. The current exact cohort records its fixed policy; it
+does not assert that this policy is fidelity-safe for critical endpoint
+training. Condition-aware tolerance, higher precision, or direct gradient
+error checks are required there. LAPACK's expert drivers explicitly expose
+condition estimates and forward/backward error information
+([`DGESVXX`](https://www.netlib.org/lapack/explore-html/df/d38/group__gesvxx_ga4b2a7e11fe7425c012ca9eba6c06877f.html)).
+
+## Post-expansion efficiency review
+
+### Equation-preserving opportunities
+
+| Technique | Audit verdict |
+|---|---|
+| Reuse one factorization for matrix right-hand sides and transpose solves | Correct; current duplicate transpose factorization was removed |
+| Combine compatible right-hand sides into a block solve | Correct and still available as a low-level optimization |
+| Derive singular values from the small (4\times4) QR factor rather than separately processing the tall susceptibility | Correct; not yet implemented |
+| Avoid returning the diagnostic Gram matrix when a caller does not request it | Correct; not yet implemented |
+| Empirically choose an earlier dense handoff when memory permits | Same equations, different representation; benchmark separately |
+| Parallelize predetermined independent samples/seeds with ordered reduction | Correct; current benchmarks did not use actual sample parallelism |
+| FP64 GPU dense algebra after handoff | Correct in model terms; validate residuals and deterministic mode |
+| Distributed dense FP64 algebra | Correct in model terms; communication becomes a first-class cost |
+
+NVIDIA documents dense solver support and a deterministic cuSOLVER mode
+([cuSOLVER](https://docs.nvidia.com/cuda/cusolver/index.html)); cuBLAS documents
+that bitwise reproducibility can change across toolkit versions or concurrent
+streams ([cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html)).
+[ScaLAPACK](https://www.netlib.org/scalapack/slug/node4.html) provides
+distributed-memory dense BLAS/LAPACK. Communication-avoiding QR is relevant to
+tall susceptibility matrices and distributed dense handoff
+([Demmel et al.](https://arxiv.org/abs/0808.2664)).
+
+### Tolerance-equivalent techniques
+
+| Technique | Required qualification |
+|---|---|
+| Anderson acceleration | Same fixed point and basin must be demonstrated; it is not the temporal Euler trajectory |
+| GMRES/BiCGSTAB | Preconditioned residual plus condition-aware forward/gradient error gate |
+| Warm starts | Root/branch invariance in multistable regimes |
+| Mixed-precision iterative refinement | Final FP64 backward and forward error comparable to reference |
+
+Anderson's fixed-point role is established by
+[Walker & Ni](https://doi.org/10.1137/10078356X); safeguarded variants exist for
+nonexpansive problems, so unsafeguarded success on one fixture is insufficient.
+[GMRES](https://doi.org/10.1137/0907058) minimizes a Krylov residual, which is
+not itself a forward-error guarantee near singularity. LAPACK's
+[`DSGESV`](https://www.netlib.org/lapack/explore-html/d8/dc6/group__gesv__mixed_ga2dd852850de165b9150bb7ee4f4ca3e9.html)
+falls back to double precision when single-precision iterative refinement
+fails; mixed precision is therefore conditional, not automatically equivalent.
+
+### Approximate or model-changing techniques
+
+The current exact cohort excludes:
+
+- finite-rank truncation, randomized compression, and sketching;
+- sparsification, pruning, or block-circulant constraints;
+- altered recurrent normalization or cross-size learning rules;
+- derivative floors, clipping, and surrogate/incompletely settled dynamics;
+- changed activation, input statistics, batch objective, or learning rule; and
+- mean-normalized population vectors presented as the publication metric.
+
+The companion ring model's continuum argument and plots of (MK_{ij}) support
+individual ring weights of order (1/M), but that is evidence for a related
+single-ring model, not a published Figure 7 scaling law. Equal-grid
+near-invariance in the current 10-update cohort is therefore a diagnostic. Its
+rapid agreement is consistent with geometric convergence of periodic
+trapezoidal quadrature for analytic functions
+([Trefethen & Weideman](https://doi.org/10.1137/130932132)), not proof of
+cross-size biological equivalence.
+
+## Previously overstated techniques
+
+- Earlier documentation implied actual compilation, batching, or parallel
+  execution. The current measurements use Wolfram packed numerical arrays and
+  matrix operations, but no GPU and no parallel sample execution.
+- Earlier text treated an incremental Woodbury core update as reusable across
+  samples. Because (G) changes with the equilibrium, every old–old core entry
+  changes; prior factors may be a preconditioner, not an exact bordered update.
+- Earlier 1,136–2,272 “practical limit” and long-horizon projections were based
+  on heterogeneous windows and are withdrawn.
+
+## Boundary on unpublished methods
+
+No public author code or complete numerical protocol was located. Unpublished
+or proprietary methods cannot be enumerated or ruled out. This audit evaluates
+the published equations and the transparent methods in this repository only.

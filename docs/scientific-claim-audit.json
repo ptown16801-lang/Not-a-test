@@ -1,0 +1,265 @@
+{
+  "schema": "shriki-2016-scientific-claim-audit/v1",
+  "generatedAtUtc": "2026-09-07T12:44:00Z",
+  "authorityOrder": [
+    "target paper and S1 Appendix for reported scientific claims",
+    "foundational and companion publications for derivations and explicitly labeled conventions",
+    "independent Wolfram derivation and repeated numerical tests",
+    "current source-fingerprinted benchmark cohort",
+    "primary numerical-analysis papers and official software manuals for prospective methods"
+  ],
+  "statusDefinitions": {
+    "verified": "Directly supported and independently checked where checkable.",
+    "verified-with-scope": "Supported only under an explicit mathematical or experimental scope.",
+    "project-choice": "Required for execution but not reported by the publication.",
+    "unresolved": "The publication record does not uniquely determine the choice.",
+    "rejected": "Contradicted by the authority or current evidence.",
+    "prospective": "Supported as a method worth testing but not yet measured in this project."
+  },
+  "claims": [
+    {
+      "id": "C01",
+      "claim": "The high-dimensional target architecture has four inputs and 142 outputs, with 71 circularly tuned outputs per modality.",
+      "status": "verified",
+      "sourceIds": ["SSW2016"],
+      "projectEvidence": ["mathematica/paper-spec.json", "mathematica/verification/results/wolfram-validation.json"]
+    },
+    {
+      "id": "C02",
+      "claim": "At a regular fixed point, chi=(G^-1-K)^-1 W with chi shaped M by N; transpose ordering in the implemented susceptibility is correct.",
+      "status": "verified",
+      "sourceIds": ["SHRIKI-SOMPOLINSKY-LEE2000", "SSW2016"],
+      "projectEvidence": ["mathematica/verification/PublicationDerivation.wls", "mathematica/verification/results/wolfram-validation.json", "mathematica/verification/results/repeated-validation.json"]
+    },
+    {
+      "id": "C03",
+      "claim": "The objective -1/2 log det(chi^T chi) is a zero-output-noise embedded-manifold volume objective equivalent to maximizing output entropy under regularity assumptions.",
+      "status": "verified-with-scope",
+      "sourceIds": ["SHRIKI-SOMPOLINSKY-LEE2000", "SSW2016"],
+      "projectEvidence": ["docs/paper-fidelity-audit.md", "mathematica/verification/results/wolfram-validation.json"],
+      "scope": "continuous deterministic single-valued locally invertible response map with full-column-rank susceptibility; not general finite-noise mutual information"
+    },
+    {
+      "id": "C04",
+      "claim": "The implemented recurrent update has the published sign and factor ordering and is the negative gradient of the objective.",
+      "status": "verified",
+      "sourceIds": ["SHRIKI-SOMPOLINSKY-LEE2000"],
+      "projectEvidence": ["mathematica/verification/PublicationDerivation.wls", "mathematica/verification/results/wolfram-validation.json", "mathematica/verification/results/repeated-validation.json", "mathematica/verification/results/javascript-adversarial-validation.json"],
+      "metrics": {
+        "independentFiniteDifferenceMaxAbsoluteError": 3.183847907539672e-10,
+        "repeatedFiniteDifferenceMaxAbsoluteError": 7.851521377499893e-10,
+        "javascriptFiniteDifferenceMaxAbsoluteError": 4.6374472317811666e-10
+      }
+    },
+    {
+      "id": "C05",
+      "claim": "The population vector is an unnormalized complex sum, not a neuron-count mean.",
+      "status": "verified",
+      "sourceIds": ["SHRIKI2016-CRITICALITY", "SSW2016"],
+      "projectEvidence": ["src/neural-synesthesia.js", "mathematica/SynesthesiaModel.wl", "mathematica/tests/SynesthesiaModel.wlt"]
+    },
+    {
+      "id": "C06",
+      "claim": "A logistic activation is the best-supported reconstruction convention for Figure 7.",
+      "status": "verified-with-scope",
+      "sourceIds": ["SSW2016", "SHRIKI2016-CRITICALITY"],
+      "projectEvidence": ["mathematica/paper-spec.json", "docs/figure-7-publication-audit.md"],
+      "scope": "the target Methods says only squashing function; the logistic formula is explicit in the companion model and S1 simple model, so it remains a labeled convention rather than a printed Figure 7 parameter"
+    },
+    {
+      "id": "C07",
+      "claim": "The simple two-unit appendix forbids self-coupling, but the high-dimensional publication does not separately report a zero diagonal.",
+      "status": "verified",
+      "sourceIds": ["SSW2016", "SSW2016-S1"],
+      "projectEvidence": ["mathematica/paper-spec.json", "docs/paper-fidelity-audit.md"]
+    },
+    {
+      "id": "C08",
+      "claim": "Deleting the high-dimensional recurrent diagonal is publication-exact.",
+      "status": "rejected",
+      "sourceIds": ["SSW2016", "SSW2016-S1"],
+      "projectEvidence": ["src/neural-synesthesia.js", "mathematica/SynesthesiaModel.wl"],
+      "reason": "The restriction is explicit only for the two-unit appendix model. The reference path now retains high-dimensional diagonal updates; zero-diagonal behavior is optional and labeled."
+    },
+    {
+      "id": "C09",
+      "claim": "Exact-zero full recurrent initialization is the uniquely published Figure 7 initialization.",
+      "status": "rejected",
+      "sourceIds": ["SSW2016", "SHRIKI2016-CRITICALITY"],
+      "projectEvidence": ["mathematica/verification/results/numerical-policy-sensitivity.json", "mathematica/paper-spec.json"],
+      "reason": "The target says cross-talk was near zero and does not report its distribution/scale or the within-modality initialization. Exact-zero full K is a declared benchmark condition, not a recovered author parameter."
+    },
+    {
+      "id": "C10",
+      "claim": "The publication uniquely specifies the integration method, step, equilibrium tolerance, and stability window.",
+      "status": "rejected",
+      "sourceIds": ["SSW2016", "SHRIKI2016-CRITICALITY"],
+      "projectEvidence": ["mathematica/verification/results/numerical-policy-sensitivity.json", "docs/paper-fidelity-audit.md"],
+      "reason": "Only continuous first-order dynamics and qualitative step-difference stability are reported; numerical thresholds are absent."
+    },
+    {
+      "id": "C11",
+      "claim": "All fifteen displayed Figure 7 panel parameters are transcribed, but seeds, repetitions, input-radius SD coefficient, update count, root-selection policy, and checkpoint rule are not recoverable from the publication.",
+      "status": "verified",
+      "sourceIds": ["SSW2016"],
+      "projectEvidence": ["docs/figure-7-publication-audit.md", "mathematica/paper-spec.json"]
+    },
+    {
+      "id": "C12",
+      "claim": "The project can report a controlled numeric speedup over the authors' weeks-scale experience.",
+      "status": "rejected",
+      "sourceIds": ["SSW2016", "SHRIKI2016-CRITICALITY"],
+      "projectEvidence": ["mathematica/benchmark-results/scaling-summary.json", "mathematica/benchmark-results/benchmark-qualification.json"],
+      "reason": "The authors did not report a matched update count, trajectory, solver, tolerances, seed, machine, or checkpoint rule. The qualitative contrast is valid; a ratio is not."
+    },
+    {
+      "id": "C13",
+      "claim": "Neuron counts above 142 are scientifically equivalent architectures specified by the paper.",
+      "status": "rejected",
+      "sourceIds": ["SSW2016", "TREFETHEN-WEIDEMAN2014"],
+      "projectEvidence": ["mathematica/benchmark-results/scaling-summary.json", "mathematica/paper-spec.json"],
+      "reason": "The paper specifies M=142 only. Circular grid refinement is a scientifically motivated project model family, not an author-reported scaling rule."
+    },
+    {
+      "id": "C14",
+      "claim": "Uncompressed factor history is algebraically exact for the declared K=0 trajectory until exact dense handoff.",
+      "status": "verified-with-scope",
+      "sourceIds": ["HAGER1989", "MA-ET-AL2026"],
+      "projectEvidence": ["mathematica/verification/results/repeated-validation.json", "mathematica/tests/SynesthesiaModel.wlt"],
+      "scope": "not generally applicable to an unreported generic dense near-zero K, which is normally full rank"
+    },
+    {
+      "id": "C15",
+      "claim": "With four inputs, one single-sample recurrent update adds algebraic rank at most five, not necessarily exactly five.",
+      "status": "verified",
+      "sourceIds": ["SHRIKI-SOMPOLINSKY-LEE2000"],
+      "projectEvidence": ["mathematica/SynesthesiaModel.wl", "mathematica/benchmark-results/factorhistory-142-train1000-v2.json"]
+    },
+    {
+      "id": "C16",
+      "claim": "Exact factor-history storage is eventually quadratic: storage crossover occurs when M(2r+1) >= M^2, with r=ceil((M-1)/2).",
+      "status": "verified",
+      "sourceIds": ["HAGER1989"],
+      "projectEvidence": ["mathematica/SynesthesiaModel.wl", "mathematica/benchmark-results/scaling-summary.json", "mathematica/tests/SynesthesiaModel.wlt"]
+    },
+    {
+      "id": "C17",
+      "claim": "The observed ten-update exponent 0.9911232047804769 is the asymptotic complexity of full training.",
+      "status": "rejected",
+      "sourceIds": [],
+      "projectEvidence": ["mathematica/benchmark-results/scaling-summary.json"],
+      "reason": "It is a descriptive fit over M=284 through 9,088 at a fixed ten-update factor rank. Rank grows with training, so it cannot establish the long-horizon asymptote."
+    },
+    {
+      "id": "C18",
+      "claim": "A fixed-point residual of 1e-9 is sufficient for fidelity near every stable critical point.",
+      "status": "rejected",
+      "sourceIds": ["SSW2016", "SHRIKI2016-CRITICALITY", "LAPACK-DGESVXX"],
+      "projectEvidence": ["mathematica/benchmark-results/critical-slowing-142.json", "mathematica/verification/results/repeated-validation.json"],
+      "metrics": {
+        "rho": 0.9999,
+        "iterations": 129683,
+        "stateErrorFromKnownFixedPoint": 9.998654081688763e-6,
+        "policySettledGradientRelativeFrobeniusError": 0.6217628983059277,
+        "exactKnownStateGradientRelativeFrobeniusError": 3.561120967362471e-16
+      }
+    },
+    {
+      "id": "C19",
+      "claim": "Factorization reuse, transpose solves, multiple right-hand sides, scaling, and error estimates are equation-preserving efficiency improvements.",
+      "status": "prospective",
+      "sourceIds": ["WOLFRAM-LINEARSOLVE", "LAPACK-DGETRS", "LAPACK-DGESVXX"],
+      "projectEvidence": ["mathematica/SCALING_AUDIT.md"],
+      "condition": "compare results, residuals, and conditioning against the validated reference before accepting a new backend"
+    },
+    {
+      "id": "C20",
+      "claim": "Scaled QR/SVD can avoid forming chi^T chi while preserving the regular full-rank objective.",
+      "status": "verified-with-scope",
+      "sourceIds": ["WOLFRAM-QR", "WOLFRAM-SVD", "LAPACK-DGELSY"],
+      "projectEvidence": ["mathematica/SynesthesiaModel.wl", "src/neural-synesthesia.js", "mathematica/verification/results/wolfram-test-report.json"],
+      "scope": "rank loss remains a scientific singularity; silently substituting a pseudoinverse objective would change the model"
+    },
+    {
+      "id": "C21",
+      "claim": "FP64 GPU LU/QR/SVD is equation-preserving in model definition and is a plausible future backend.",
+      "status": "prospective",
+      "sourceIds": ["NVIDIA-CUSOLVER13.3", "NVIDIA-CUBLAS13.3"],
+      "projectEvidence": ["mathematica/SCALING_AUDIT.md"],
+      "condition": "must measure transfers, residuals, conditioning, deterministic configuration, and end-to-end speed; no GPU was available in the recorded environment"
+    },
+    {
+      "id": "C22",
+      "claim": "Mixed precision is automatically publication-faithful.",
+      "status": "rejected",
+      "sourceIds": ["LAPACK-DSGESV", "HIGHAM-MARY2022"],
+      "projectEvidence": ["mathematica/SCALING_AUDIT.md"],
+      "reason": "It is tolerance-equivalent only with explicit backward/forward-error gates, refinement, and FP64 fallback."
+    },
+    {
+      "id": "C23",
+      "claim": "Anderson acceleration can be used as an exact simulation of the published continuous-time trajectory.",
+      "status": "rejected",
+      "sourceIds": ["WALKER-NI2011", "ZHANG-ODONOGHUE-BOYD2020"],
+      "projectEvidence": ["mathematica/verification/results/numerical-policy-sensitivity.json"],
+      "reason": "It is a root-finding convenience. It may be accepted only as a separately labeled, safeguarded, basin-checked tolerance-equivalent solver."
+    },
+    {
+      "id": "C24",
+      "claim": "Distributed dense and communication-avoiding algebra can postpone hardware limits without changing model equations.",
+      "status": "prospective",
+      "sourceIds": ["SCALAPACK-USERS-GUIDE", "DEMMEL-ET-AL2008"],
+      "projectEvidence": ["mathematica/SCALING_AUDIT.md"],
+      "condition": "it changes implementation and reduction order, not the mathematical model; communication, reproducibility, and error must be measured"
+    },
+    {
+      "id": "C25",
+      "claim": "Imposed sparsity, finite-rank truncation, low-rank approximation, altered normalization, derivative floors, clipping, or changed learning rules belong in the exact-model benchmark.",
+      "status": "rejected",
+      "sourceIds": ["SSW2016", "SHRIKI-SOMPOLINSKY-LEE2000"],
+      "projectEvidence": ["mathematica/SCALING_AUDIT.md", "mathematica/benchmark-results/benchmark-qualification.json"],
+      "reason": "Each changes equations, constraints, or the scientific trajectory and must be a separately labeled project experiment."
+    },
+    {
+      "id": "C26",
+      "claim": "The current measurements establish a sustained practical scaling limit.",
+      "status": "rejected",
+      "sourceIds": [],
+      "projectEvidence": ["mathematica/benchmark-results/scaling-summary.json", "mathematica/benchmark-results/benchmark-qualification.json"],
+      "reason": "The strongest measured bounds are 1,000 updates at M=142, ten updates through M=9,088, and one or two updates through M=72,704. No failure boundary or matched long-horizon large-M training was measured."
+    },
+    {
+      "id": "C27",
+      "claim": "The publication uniquely resolves whether high-dimensional self-couplings were learned.",
+      "status": "unresolved",
+      "sourceIds": ["SSW2016", "SSW2016-S1", "SHRIKI2016-CRITICALITY"],
+      "projectEvidence": ["docs/paper-fidelity-audit.md", "mathematica/paper-spec.json"],
+      "reason": "The target describes recurrent interactions among all output neurons but does not separately state a diagonal policy. The reference retains the diagonal, while an optional zero-diagonal mode remains labeled."
+    },
+    {
+      "id": "C28",
+      "claim": "The exact-zero full-K initialization used by the current benchmark is a declared reconstruction condition.",
+      "status": "project-choice",
+      "sourceIds": ["SSW2016", "SHRIKI2016-CRITICALITY"],
+      "projectEvidence": ["mathematica/benchmark-results/factorhistory-142-train1000-v2.json", "mathematica/verification/results/numerical-policy-sensitivity.json"],
+      "reason": "It is reproducible and supported by a related model, but the target paper reports only near-zero cross-talk and leaves other entries unspecified."
+    },
+    {
+      "id": "C29",
+      "claim": "Euler step 0.5, delta tolerance 1e-9, residual tolerance 1e-9, and a three-step stability window are declared benchmark numerical policies.",
+      "status": "project-choice",
+      "sourceIds": ["SSW2016", "SHRIKI2016-CRITICALITY"],
+      "projectEvidence": ["mathematica/benchmark-results/factorhistory-142-train1000-v2.json", "mathematica/verification/results/numerical-policy-sensitivity.json"],
+      "reason": "The authors do not report these values, so they cannot be labeled recovered publication parameters."
+    }
+  ],
+  "summary": {
+    "claimCount": 29,
+    "verifiedOrScoped": 12,
+    "projectChoice": 2,
+    "unresolved": 1,
+    "rejected": 11,
+    "prospective": 3,
+    "centralConclusion": "The mathematical reconstruction is strongly validated, but the publication does not uniquely determine several numerical and initialization choices. The expansion demonstrates exact early-trajectory feasibility, not a paper-specified scaling law or sustained practical limit."
+  }
+}

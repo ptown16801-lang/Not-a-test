@@ -52,6 +52,40 @@ VerificationTest[
 ]
 
 VerificationTest[
+  With[{result = SettleNetwork[CreateSimplePaperNetwork[], {1., 1.},
+      "IntegrationStep" -> 1.*^-12, "Tolerance" -> 1.*^-9,
+      "ResidualTolerance" -> 1.*^-9, "StableIterations" -> 2,
+      "MaxIterations" -> 2, "AllowUnconverged" -> True]},
+    {!result["Converged"], result["FixedPointResidual"] > .2,
+      result["ConvergenceCriterion"]}
+  ],
+  {True, True, "StepAndResidual"},
+  TestID -> "tiny Euler step cannot cause false convergence"
+]
+
+VerificationTest[
+  With[{model = CreateSimplePaperNetwork["CrossTalk" -> {8., 8.}],
+      input = {-4., -4.}},
+    With[{settled = SettleNetwork[model, input, "Tolerance" -> 1.*^-12]},
+      With[{stability = LocalStabilityReport[model, input, settled["State"]]},
+        {settled["Converged"], settled["StabilityAssessed"],
+          Chop[stability["LargestRealPart"]],
+          stability["LocallyAsymptoticallyStable"]}
+      ]
+    ]
+  ],
+  {True, False, 1., False},
+  TestID -> "fixed-point convergence and dynamical stability are distinct"
+]
+
+VerificationTest[
+  FailureQ[LocalStabilityReport[CreateSimplePaperNetwork[], {0., 0.},
+    {.6, .5}, "ResidualTolerance" -> 1.*^-12]],
+  True,
+  TestID -> "local fixed-point stability rejects a non-equilibrium state"
+]
+
+VerificationTest[
   With[{model = CreateSimplePaperNetwork["Weights" -> {1.1, .8},
       "CrossTalk" -> {.12, -.07}], input = {.35, -.22}},
     With[{euler = SettleNetwork[model, input, "IntegrationStep" -> .8,
@@ -132,6 +166,122 @@ VerificationTest[
 ]
 
 VerificationTest[
+  With[{dense = CreateTwoModalityPaperNetwork["TotalNeurons" -> 18],
+      factored = CreateScalablePaperNetwork[18, "MaximumRank" -> Infinity],
+      inputs = {PolarProbe[1, .2, .8], PolarProbe[2, .7, 1.2]}},
+    With[{denseBatch = RecurrentUpdateDirection[dense, inputs],
+        factorBatch = RecurrentUpdateDirection[factored, inputs]},
+      With[{direction = factorBatch["UpdateDirection"]},
+        {Dimensions[direction["LeftFactors"]],
+          Dimensions[direction["RightFactors"]],
+          Max[Abs[Flatten[denseBatch["UpdateDirection"] -
+            direction["LeftFactors"].Transpose[direction["RightFactors"]]]]] < 5.*^-10,
+          FailureQ[ApplyRecurrentUpdate[factored, direction, 1.*^-4]]}
+      ]
+    ]
+  ],
+  {{18, 10}, {18, 10}, True, False},
+  TestID -> "factorized mini-batch joins columns and matches dense mean"
+]
+
+VerificationTest[
+  With[{dense = CreateTwoModalityPaperNetwork["TotalNeurons" -> 18],
+      factored = CreateScalablePaperNetwork[18, "MaximumRank" -> Infinity],
+      inputs = {PolarProbe[1, .2, .8], PolarProbe[2, .7, 1.2],
+        PolarProbe[1, 1.3, .5], PolarProbe[2, 2.1, 1.7]}},
+    And @@ Table[With[{denseBatch = RecurrentUpdateDirection[dense,
+            Take[inputs, batchSize]],
+          factorBatch = RecurrentUpdateDirection[factored,
+            Take[inputs, batchSize]]},
+        With[{direction = factorBatch["UpdateDirection"]},
+          Dimensions[direction["LeftFactors"]] === {18, 5 batchSize} &&
+          Dimensions[direction["RightFactors"]] === {18, 5 batchSize} &&
+          Max[Abs[Flatten[denseBatch["UpdateDirection"] -
+            direction["LeftFactors"].Transpose[direction["RightFactors"]]]]] <
+            8.*^-10]], {batchSize, {1, 2, 4}}]
+  ],
+  True,
+  TestID -> "factorized batch sizes one two and four are exact"
+]
+
+VerificationTest[
+  With[{scaled = AnalyzeNetwork[
+      CreateSimplePaperNetwork["Weights" -> {1.*^-6, 1.*^-6}], {0., 0.},
+      "IntegrationStep" -> 1., "Tolerance" -> 1.*^-14,
+      "ResidualTolerance" -> 1.*^-14]},
+    {!FailureQ[scaled], scaled["SusceptibilityConditionNumber"],
+      Max[Abs[Diagonal[scaled["Gram"]] - 6.25*^-14]] < 1.*^-26}
+  ],
+  {True, 1., True},
+  TestID -> "relative susceptibility test accepts tiny well-conditioned scale"
+]
+
+VerificationTest[
+  With[{model = <|"InputSize" -> 2, "OutputSize" -> 3,
+      "W" -> {{100., 0.}, {0., 1.}, {1., 0.}},
+      "K" -> ConstantArray[0., {3, 3}], "Modalities" -> {},
+      "Metadata" -> <|"ExcludeSelfCoupling" -> False|>|>},
+    With[{analysis = AnalyzeNetwork[model, {1., 0.},
+        "IntegrationStep" -> 1., "Tolerance" -> 1.*^-12,
+        "ResidualTolerance" -> 1.*^-12]},
+      {!FailureQ[analysis], analysis["FirstDerivative"][[1]] > 0,
+        Abs[analysis["Objective"] - 3.012817736156336] < 2.*^-12}
+    ]
+  ],
+  {True, True, True},
+TestID -> "field derivatives retain representable saturated sensitivity"
+]
+
+VerificationTest[
+  With[{model = <|"InputSize" -> 2, "OutputSize" -> 3,
+      "W" -> {{300., 0.}, {0., 1.}, {1., 0.}},
+      "K" -> ConstantArray[0., {3, 3}], "Modalities" -> {},
+      "Metadata" -> <|"ExcludeSelfCoupling" -> False|>|>},
+    With[{analysis = AnalyzeNetwork[model, {1., 0.},
+        "IntegrationStep" -> 1., "Tolerance" -> 1.*^-12,
+        "ResidualTolerance" -> 1.*^-12]},
+      {!FailureQ[analysis],
+        VectorQ[analysis["ScaledA"], Internal`RealValuedNumberQ],
+        MatrixQ[analysis["UpdateDirection"], Internal`RealValuedNumberQ] &&
+          Dimensions[analysis["UpdateDirection"]] === {3, 3}}
+    ]
+  ],
+  {True, True, True},
+  TestID -> "scaled curvature avoids cubic derivative underflow"
+]
+
+VerificationTest[
+  With[{model = <|"InputSize" -> 1, "OutputSize" -> 1,
+      "W" -> {{1.}}, "K" -> {{0.}}, "Modalities" -> {},
+      "Metadata" -> <|"ExcludeSelfCoupling" -> False|>|>},
+    With[{analysis = AnalyzeNetwork[model, {400.},
+        "IntegrationStep" -> 1., "Tolerance" -> 1.*^-12,
+        "ResidualTolerance" -> 1.*^-12]},
+      {!FailureQ[analysis], Abs[analysis["Objective"] - 400.] < 2.*^-12,
+        analysis["Gram"][[1, 1]] == 0.,
+        Abs[analysis["UpdateDirection"][[1, 1]] + 1.] < 2.*^-12}
+    ]
+  ],
+  {True, True, True, True},
+  TestID -> "scaled QR survives Gram underflow"
+]
+
+VerificationTest[
+  With[{model = <|"InputSize" -> 1, "OutputSize" -> 1,
+      "W" -> {{1.}}, "K" -> {{0.}}, "Modalities" -> {},
+      "Metadata" -> <|"ExcludeSelfCoupling" -> False|>|>},
+    With[{analysis = AnalyzeNetwork[model, {3.}, "DerivativeFloor" -> .2,
+        "IntegrationStep" -> 1., "Tolerance" -> 1.*^-12,
+        "ResidualTolerance" -> 1.*^-12]},
+      {analysis["DerivativeFloorApplied"], analysis["EquationSemantics"],
+        Abs[analysis["UpdateDirection"][[1, 1]] - .005238719864787106] < 2.*^-14}
+    ]
+  ],
+  {True, "ProjectSurrogateDerivativeFloor", True},
+  TestID -> "derivative floor is labeled and keeps literal curvature ratio"
+]
+
+VerificationTest[
   With[{dense = CreateTwoModalityPaperNetwork["NeuronsPerModality" -> 9],
       lowRank = CreateTwoModalityPaperNetwork["TotalNeurons" -> 18,
         "RecurrentRepresentation" -> "LowRank"], input = PolarProbe[1, .4, 1.], eta = 1.*^-4},
@@ -150,7 +300,7 @@ VerificationTest[
 VerificationTest[
   With[{model = CreateScalablePaperNetwork[2048]},
     With[{report = NetworkScaleReport[model]},
-      {model["OutputSize"], KeyExistsQ[model, "K"], report["CurrentRank"],
+      {model["OutputSize"], KeyExistsQ[model, "K"], report["FactorColumns"],
         report["CompressionRatio"], report["AlgebraicallyExactSoFar"]}
     ]
   ],
@@ -239,7 +389,29 @@ VerificationTest[
     ]
   ],
   {True, True, True},
-  TestID -> "full-rank factor history densifies without truncation"
+  TestID -> "factor history densifies at exact storage crossover"
+]
+
+VerificationTest[
+  With[{dense = CreateTwoModalityPaperNetwork["TotalNeurons" -> 6],
+      factored0 = CreateScalablePaperNetwork[6, "MaximumRank" -> Infinity]},
+    With[{factored = Join[factored0, <|"Recurrent" -> <|
+          "Representation" -> "LowRankPlusDiagonal",
+          "Diagonal" -> {4., 0., 0., 0., 0., 0.},
+          "LeftFactors" -> Transpose[{{-4., 0., 0., 0., 0., 0.}}],
+          "RightFactors" -> Transpose[{{1., 0., 0., 0., 0., 0.}}],
+          "MaximumRank" -> Infinity, "Truncations" -> 0,
+          "DiscardedSingularValueMass" -> 0.|>|>]},
+      With[{denseResult = AnalyzeNetwork[dense, {0., 0., 0., 0.}],
+          factorResult = AnalyzeNetwork[factored, {0., 0., 0., 0.}]},
+        {!FailureQ[factorResult],
+          Max[Abs[Flatten[denseResult["Susceptibility"] -
+            factorResult["Susceptibility"]]]] < 1.*^-12}
+      ]
+    ]
+  ],
+  {True, True},
+  TestID -> "singular Woodbury base falls back to equivalent dense operator"
 ]
 
 VerificationTest[
@@ -260,6 +432,30 @@ VerificationTest[
   ],
   {True, "fixed-ensemble", True},
   TestID -> "best checkpoint compares one fixed objective ensemble"
+]
+
+VerificationTest[
+  Module[{path = FileNameJoin[{$TemporaryDirectory,
+        "shriki-interop-" <> CreateUUID[] <> ".json"}],
+      base, model, imported, result},
+    base = CreateSimplePaperNetwork[];
+    model = Join[base, <|
+      "W" -> {{N[1/10], N[-1/3]}, {N[Pi/17], N[Sqrt[2]/9]}},
+      "K" -> {{N[2^-47], N[-7/123]}, {N[11/257], N[-2^-49]}},
+      "Metadata" -> Join[base["Metadata"], <|
+        "Binary64RoundTripFixture" -> True|>]|>];
+    result = Quiet@Check[
+      ExportJavaScriptNetwork[model, path];
+      imported = ImportJavaScriptNetwork[path];
+      {SameQ[model["W"], imported["W"]],
+        SameQ[model["K"], imported["K"]],
+        imported["Metadata"]["ExcludeSelfCoupling"],
+        imported["Metadata"]["Binary64RoundTripFixture"]}, $Failed];
+    If[FileExistsQ[path], DeleteFile[path]];
+    result
+  ],
+  {True, True, True, True},
+  TestID -> "Wolfram JavaScript checkpoint preserves binary64 and metadata policy"
 ]
 
 VerificationTest[

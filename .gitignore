@@ -5,6 +5,8 @@
 *.jsonl
 node_modules/
 coverage/
+__pycache__/
+*.pyc
 *.log
 .DS_Store
 mathematica/output/

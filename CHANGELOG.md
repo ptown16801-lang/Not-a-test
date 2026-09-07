@@ -9,6 +9,16 @@ on which they landed in `main`.
 ### Documentation
 
 - Added this changelog and a consolidated project-change summary.
+- Added a project-wide machine-readable history and JSON artifact registry in
+  `PROJECT_LOG.json`, with tests that detect missing, invalid, or unindexed
+  scientific logs.
+- Added a publication-grade source/claim ledger, benchmark qualification gate,
+  and manuscript-style scientific audit report.
+- Corrected extreme-scale susceptibility evaluation with scaled QR, corrected
+  the optional derivative-floor curvature path, and added explicit surrogate
+  semantics plus Gram-underflow regression tests.
+- Isolated live Wolfram test outputs from committed evidence files so parallel
+  manifest verification cannot race with validation-report regeneration.
 
 ## [0.7.0] - 2026-09-07
 
@@ -34,14 +44,18 @@ on which they landed in `main`.
 ### Scaling and benchmarks
 
 - Added dense and exact factor-history implementations for scaling experiments.
-- Benchmarked the publication-faithful 142-neuron model and completed 1,000
-  learning updates in 3.98 minutes on the recorded Work machine.
-- Measured dense behavior through 4,544 output neurons, the exact early-training
-  ladder through 9,088 neurons, and feasibility probes through 72,704 neurons.
-- Added a controlled critical-slowing benchmark reaching 115,820 equilibrium
-  iterations near the critical point.
+- Benchmarked the paper-sized declared reconstruction and completed 1,000
+  learning updates in 4.03 minutes including validation on the recorded Work
+  machine.
+- Preserved historical exploratory dense runs through 4,544 output neurons;
+  current source-qualified evidence comprises the exact early-training ladder
+  through 9,088 neurons and feasibility probes through 72,704 neurons.
+- Added a controlled critical-slowing benchmark reaching 129,683 equilibrium
+  iterations near the critical point and showing that a nominal `1e-9`
+  residual can still yield 62.2% gradient error.
 - Published raw JSON/CSV benchmark results, environment metadata, exactness
-  labels, and a practical scaling analysis.
+  labels, source fingerprints, and an evidence-qualified scaling analysis; no
+  unsupported sustained cross-size practical limit is claimed.
 
 ## [0.7.0] - 2026-09-06
 

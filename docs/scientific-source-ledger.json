@@ -1,0 +1,301 @@
+{
+  "schema": "shriki-2016-scientific-source-ledger/v1",
+  "generatedAtUtc": "2026-09-07T12:44:00Z",
+  "researchQuestion": "How far can the original Shriki model be scaled with 2026 computing before its mathematical scaling, rather than the computational limitations of 2016, becomes the dominant barrier?",
+  "scope": {
+    "included": [
+      "the published model, its S1 Appendix, and the directly related recurrent-infomax papers",
+      "primary numerical-analysis literature and official library documentation relevant to an equation-preserving expansion",
+      "conditioning, fixed-point acceleration, dense linear solves, low-rank updates, precision, GPU execution, distributed dense algebra, reproducibility, and periodic circular discretization"
+    ],
+    "excluded": [
+      "secondary summaries where a primary paper or official manual was available",
+      "model-changing acceleration such as imposed sparsity or rank truncation as evidence for the exact-model benchmark",
+      "hardware price comparisons and unexecuted performance claims"
+    ],
+    "searchDate": "2026-09-07",
+    "searchPolicy": "Primary papers and official technical documentation only. Claims are limited to what each source establishes and are cross-checked against executable project artifacts.",
+    "exhaustivenessBoundary": "The search covers the method families implicated by the published equations and the implemented expansion. It is not a claim that every paper ever published on numerical linear algebra was enumerated."
+  },
+  "sources": [
+    {
+      "id": "SSW2016",
+      "type": "authoritative-publication",
+      "citation": "Shriki O, Sadeh Y, Ward J. The Emergence of Synaesthesia in a Neuronal Network Model via Changes in Perceptual Sensitivity and Plasticity. PLOS Computational Biology 12(7): e1004959 (2016).",
+      "doi": "10.1371/journal.pcbi.1004959",
+      "url": "https://doi.org/10.1371/journal.pcbi.1004959",
+      "roles": ["scientific authority", "architecture", "dynamics", "objective", "Figure 7", "reported runtime"],
+      "supports": [
+        "N=4 and M=142 for the high-dimensional model",
+        "71 output neurons per modality and unit-vector cosine-tuned feedforward rows",
+        "continuous first-order recurrent dynamics with a squashing nonlinearity",
+        "near-zero initial cross-talk, a single recurrent learning rate, and five displayed Figure 7 simulations",
+        "weeks-scale runs near critical slowing on a standard PC"
+      ],
+      "limitations": [
+        "does not report the integrator, integration step, equilibrium tolerance, stability window, random seeds, checkpoint rule, or total update count",
+        "calls the high-dimensional nonlinearity a squashing function without printing a Figure 7-specific formula",
+        "does not define a cross-size normalization law"
+      ],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "SSW2016-S1",
+      "type": "authoritative-supporting-information",
+      "citation": "Shriki O, Sadeh Y, Ward J. S1 Appendix: Analytical derivation of the conditions for the evolution of cross-talk in the simple model (2016).",
+      "doi": "10.1371/journal.pcbi.1004959.s001",
+      "url": "https://doi.org/10.1371/journal.pcbi.1004959.s001",
+      "roles": ["simple-model derivation", "stability boundary", "critical learning rate"],
+      "supports": [
+        "the two-unit no-self-coupling analytical model",
+        "linearized recurrent learning dynamics and stability classification"
+      ],
+      "limitations": [
+        "does not specify the 142-neuron numerical protocol",
+        "the displayed Eq. 95 plus branch conflicts algebraically with Eqs. 93 and 97; no published erratum was located",
+        "some manuscript statements require symbolic qualification recorded in the claim audit"
+      ],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "SHRIKI2016-CRITICALITY",
+      "type": "primary-related-publication",
+      "citation": "Shriki O, Yellin D. Optimal Information Representation and Criticality in an Adaptive Sensory Recurrent Neuronal Network. PLOS Computational Biology 12(2): e1004698 (2016).",
+      "doi": "10.1371/journal.pcbi.1004698",
+      "url": "https://doi.org/10.1371/journal.pcbi.1004698",
+      "roles": ["logistic convention", "population vector", "critical slowing", "related initialization"],
+      "supports": [
+        "the logistic g(x)=1/(1+exp(-x)) convention for the companion hypercolumn model",
+        "the population vector as an unnormalized complex sum",
+        "zero recurrent initialization in the related single-hypercolumn experiment",
+        "long runtimes near criticality and a step-difference convergence criterion"
+      ],
+      "limitations": [
+        "is a companion model, not a substitute for missing Figure 7 parameters",
+        "its 141-output single-modality architecture is not the target 142-output two-modality architecture"
+      ],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "SHRIKI-SOMPOLINSKY-LEE2000",
+      "type": "primary-foundational-publication",
+      "citation": "Shriki O, Sompolinsky H, Lee DD. An Information Maximization Approach to Overcomplete and Recurrent Representations. Advances in Neural Information Processing Systems 13 (2000).",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2000/file/09fb05dd477d4ae6479985ca56c5a12d-Paper.pdf",
+      "roles": ["objective derivation", "susceptibility", "learning rule"],
+      "supports": [
+        "the embedded-manifold volume factor sqrt(det(chi^T chi))",
+        "the objective -1/2 log det(chi^T chi)",
+        "chi=(G^-1-K)^-1 W and the recurrent gradient ordering"
+      ],
+      "limitations": [
+        "the mutual-information equivalence is a deterministic/zero-output-noise manifold result requiring a regular locally invertible mapping with full-column-rank susceptibility",
+        "it does not establish a general finite-output-noise mutual-information formula"
+      ],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "WOLFRAM-LINEARSOLVE",
+      "type": "official-software-documentation",
+      "citation": "Wolfram Research. LinearSolve documentation, Wolfram Language.",
+      "url": "https://reference.wolfram.com/language/ref/LinearSolve.html",
+      "roles": ["factorization reuse", "multiple right-hand sides", "symbolic and numerical solves"],
+      "supports": ["reusing a LinearSolveFunction for repeated right-hand sides instead of forming an explicit inverse"],
+      "limitations": ["does not by itself guarantee a particular backend, conditioning, or cross-version bitwise identity"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "WOLFRAM-QR",
+      "type": "official-software-documentation",
+      "citation": "Wolfram Research. QRDecomposition documentation, Wolfram Language.",
+      "url": "https://reference.wolfram.com/language/ref/QRDecomposition.html",
+      "roles": ["stable rectangular factorization", "objective evaluation"],
+      "supports": ["QR factorization as an equation-preserving route for the tall susceptibility matrix"],
+      "limitations": ["rank and conditioning still require explicit diagnostics"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "WOLFRAM-SVD",
+      "type": "official-software-documentation",
+      "citation": "Wolfram Research. SingularValueDecomposition documentation, Wolfram Language.",
+      "url": "https://reference.wolfram.com/language/ref/SingularValueDecomposition.html",
+      "roles": ["rank diagnostics", "singular-value objective"],
+      "supports": ["singular values as a direct diagnostic for susceptibility rank and log-volume"],
+      "limitations": ["a full SVD may be more expensive than QR for routine full-rank objective evaluation"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "LAPACK-DGETRS",
+      "type": "official-library-documentation",
+      "citation": "LAPACK 3.12.1. DGETRS: solve a system using an existing LU factorization.",
+      "url": "https://www.netlib.org/lapack/explore-html/df/d36/group__getrs_gaacd7a8465c8cc0e4e8b88ba4b453630c.html",
+      "roles": ["dense solve", "factorization reuse", "transpose solve", "multiple right-hand sides"],
+      "supports": ["one LU factorization can serve normal and transposed systems with one or more right-hand sides"],
+      "limitations": ["accuracy depends on conditioning and the quality of the factorization"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "LAPACK-DGESVXX",
+      "type": "official-library-documentation",
+      "citation": "LAPACK 3.12.1. DGESVXX: expert dense linear solve with equilibration, condition estimates, iterative refinement, and error bounds.",
+      "url": "https://www.netlib.org/lapack/explore-html/df/d38/group__gesvxx_ga4b2a7e11fe7425c012ca9eba6c06877f.html",
+      "roles": ["conditioning", "backward error", "iterative refinement"],
+      "supports": ["equilibration, reciprocal-condition diagnostics, residual refinement, and normwise/componentwise error estimates"],
+      "limitations": ["warnings and bounds must be propagated; ill-conditioned problems are not made well-conditioned by the interface"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "LAPACK-DGELSY",
+      "type": "official-library-documentation",
+      "citation": "LAPACK 3.12.1. DGELSY: complete orthogonal factorization for minimum-norm least squares.",
+      "url": "https://www.netlib.org/lapack/explore-html/d6/d4b/dgelsy_8f_source.html",
+      "roles": ["rank-revealing least squares", "susceptibility diagnostics"],
+      "supports": ["pivoted QR-based rank handling for rectangular systems"],
+      "limitations": ["using a pseudoinverse continuation at rank loss changes the publication's regular full-rank objective and must not be silently substituted"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "LAPACK-DSGESV",
+      "type": "official-library-documentation",
+      "citation": "LAPACK 3.12.1. DSGESV: mixed-precision dense solve with iterative refinement.",
+      "url": "https://www.netlib.org/lapack/explore-html/d8/dc6/group__gesv__mixed_ga2dd852850de165b9150bb7ee4f4ca3e9.html",
+      "roles": ["mixed precision", "iterative refinement"],
+      "supports": ["single-precision factorization can be refined toward double-precision backward-error quality with fallback to double precision"],
+      "limitations": ["the method is conditional and may not win or converge; an error/residual gate and double-precision fallback are required"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "HAGER1989",
+      "type": "primary-numerical-analysis-publication",
+      "citation": "Hager WW. Updating the Inverse of a Matrix. SIAM Review 31:221-239 (1989).",
+      "doi": "10.1137/1031049",
+      "url": "https://doi.org/10.1137/1031049",
+      "roles": ["inverse updates", "Sherman-Morrison-Woodbury context"],
+      "supports": ["classical algebra for low-rank matrix-inverse updates"],
+      "limitations": ["a mathematically exact identity is not an unconditional floating-point stability guarantee"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "MA-ET-AL2026",
+      "type": "primary-numerical-analysis-publication",
+      "citation": "Ma L, Boutsikas C, Ghadiri M, Drineas P. A Note on the Stability of the Sherman-Morrison-Woodbury Formula. SIAM Journal on Matrix Analysis and Applications 47(2):702-723 (2026).",
+      "doi": "10.1137/25M1747087",
+      "url": "https://doi.org/10.1137/25M1747087",
+      "roles": ["low-rank solve stability", "error bounds"],
+      "supports": ["forward/backward error bounds for SMW with approximate inverses"],
+      "limitations": ["factor conditioning and the small inner system still require monitoring"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "GOUDAS-ET-AL2026",
+      "type": "primary-preprint",
+      "citation": "Goudas T et al. Instability of the Sherman-Morrison formula and stabilization by iterative refinement. arXiv:2510.01696v1 (revised 2026).",
+      "url": "https://arxiv.org/html/2510.01696v1",
+      "roles": ["rank-one update instability", "iterative refinement"],
+      "supports": ["explicit instability constructions and a refinement-based stabilization strategy"],
+      "limitations": ["preprint evidence; its refinement result is conditional rather than a universal guarantee"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "WALKER-NI2011",
+      "type": "primary-numerical-analysis-publication",
+      "citation": "Walker HF, Ni P. Anderson Acceleration for Fixed-Point Iterations. SIAM Journal on Numerical Analysis 49(4):1715-1735 (2011).",
+      "doi": "10.1137/10078356X",
+      "url": "https://doi.org/10.1137/10078356X",
+      "roles": ["fixed-point acceleration", "GMRES relationship"],
+      "supports": ["Anderson acceleration as a general fixed-point method and its linear-problem relationship to GMRES"],
+      "limitations": ["an accelerated root finder is not the published ODE trajectory and can reach a different basin without safeguards"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "ZHANG-ODONOGHUE-BOYD2020",
+      "type": "primary-numerical-analysis-publication",
+      "citation": "Zhang J, O'Donoghue B, Boyd S. Globally Convergent Type-I Anderson Acceleration for Non-Smooth Fixed-Point Iterations. SIAM Journal on Optimization 30(4):3170-3197 (2020).",
+      "url": "https://web.stanford.edu/~boyd/papers/nonexp_global_aa1.html",
+      "roles": ["safeguarded Anderson acceleration"],
+      "supports": ["safeguarding, regularization, and restart policies for nonexpansive fixed-point maps"],
+      "limitations": ["the target network need not satisfy every convergence assumption throughout learning"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "SAAD-SCHULTZ1986",
+      "type": "primary-numerical-analysis-publication",
+      "citation": "Saad Y, Schultz MH. GMRES: A Generalized Minimal Residual Algorithm for Solving Nonsymmetric Linear Systems. SIAM Journal on Scientific and Statistical Computing 7(3):856-869 (1986).",
+      "doi": "10.1137/0907058",
+      "url": "https://doi.org/10.1137/0907058",
+      "roles": ["Krylov solve", "nonsymmetric systems"],
+      "supports": ["residual-minimizing Krylov solves as a possible tolerance-equivalent alternative to direct dense solves"],
+      "limitations": ["preconditioning, restart, stopping error, and conditioning determine whether the method is useful and scientifically adequate"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "NVIDIA-CUSOLVER13.3",
+      "type": "official-library-documentation",
+      "citation": "NVIDIA. cuSOLVER 13.3 documentation.",
+      "url": "https://docs.nvidia.com/cuda/cusolver/index.html",
+      "roles": ["GPU dense linear algebra", "LU", "QR", "SVD"],
+      "supports": ["GPU implementations of dense nonsymmetric LU, QR, and SVD suitable for equation-preserving FP64 kernels"],
+      "limitations": ["availability does not constitute a measured speedup; transfers, sizes, conditioning, and determinism must be benchmarked"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "NVIDIA-CUBLAS13.3",
+      "type": "official-library-documentation",
+      "citation": "NVIDIA. cuBLAS 13.3 documentation, Results Reproducibility.",
+      "url": "https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility",
+      "roles": ["GPU BLAS", "reproducibility", "parallel streams"],
+      "supports": ["conditions and workspace controls for within-version bitwise reproducibility on matching GPU architectures"],
+      "limitations": ["bitwise identity is not guaranteed across toolkit versions and can be lost under some multistream or atomics configurations"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "SCALAPACK-USERS-GUIDE",
+      "type": "official-library-documentation",
+      "citation": "Blackford LS et al. ScaLAPACK Users' Guide. Society for Industrial and Applied Mathematics (1997).",
+      "url": "https://www.netlib.org/scalapack/slug/node4.html",
+      "roles": ["distributed dense algebra", "block-partitioned algorithms", "PBLAS"],
+      "supports": ["distributed-memory dense linear algebra using block-partitioned algorithms and PBLAS/BLACS"],
+      "limitations": ["communication and implementation quality can dominate; distribution does not alter the dense model's mathematical storage/work lower pressures"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "DEMMEL-ET-AL2008",
+      "type": "primary-numerical-analysis-publication",
+      "citation": "Demmel J, Grigori L, Hoemmen M, Langou J. Communication-optimal parallel and sequential QR and LU factorizations. arXiv:0808.2664 (2008).",
+      "url": "https://arxiv.org/abs/0808.2664",
+      "roles": ["communication-avoiding LU", "communication-avoiding QR"],
+      "supports": ["communication costs and lower bounds matter for large dense factorizations; stable communication-avoiding QR algorithms exist"],
+      "limitations": ["a system-specific implementation and benchmark are still required"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "HIGHAM-MARY2022",
+      "type": "primary-review-publication",
+      "citation": "Higham NJ, Mary T. Mixed precision algorithms in numerical linear algebra. Acta Numerica 31:347-414 (2022).",
+      "url": "https://www.cambridge.org/core/journals/acta-numerica/article/mixed-precision-algorithms-in-numerical-linear-algebra/43CA701BA29251B5790C653E66F46197",
+      "roles": ["mixed precision", "stability", "iterative refinement"],
+      "supports": ["mixed precision can reduce cost while retaining target-quality results when backed by appropriate error analysis and refinement"],
+      "limitations": ["precision reduction without residual/forward-error gates is not fidelity-preserving"],
+      "accessedUtc": "2026-09-07"
+    },
+    {
+      "id": "TREFETHEN-WEIDEMAN2014",
+      "type": "primary-numerical-analysis-publication",
+      "citation": "Trefethen LN, Weideman JAC. The Exponentially Convergent Trapezoidal Rule. SIAM Review 56(3):385-458 (2014).",
+      "doi": "10.1137/130932132",
+      "url": "https://doi.org/10.1137/130932132",
+      "roles": ["periodic discretization", "circular refinement"],
+      "supports": ["rapid convergence of the trapezoidal rule for analytic periodic functions"],
+      "limitations": ["does not supply a Shriki-specific neuron-count normalization; singularities or loss of smoothness alter convergence"],
+      "accessedUtc": "2026-09-07"
+    }
+  ],
+  "coverage": {
+    "publicationInterpretation": ["SSW2016", "SSW2016-S1", "SHRIKI2016-CRITICALITY", "SHRIKI-SOMPOLINSKY-LEE2000"],
+    "denseSolvesAndConditioning": ["WOLFRAM-LINEARSOLVE", "LAPACK-DGETRS", "LAPACK-DGESVXX", "LAPACK-DGELSY"],
+    "lowRankUpdates": ["HAGER1989", "MA-ET-AL2026", "GOUDAS-ET-AL2026"],
+    "fixedPointAndKrylovMethods": ["WALKER-NI2011", "ZHANG-ODONOGHUE-BOYD2020", "SAAD-SCHULTZ1986"],
+    "gpuAndDistributedAlgebra": ["NVIDIA-CUSOLVER13.3", "NVIDIA-CUBLAS13.3", "SCALAPACK-USERS-GUIDE", "DEMMEL-ET-AL2008"],
+    "precisionAndErrorControl": ["LAPACK-DGESVXX", "LAPACK-DSGESV", "HIGHAM-MARY2022"],
+    "periodicModelFamily": ["TREFETHEN-WEIDEMAN2014"]
+  }
+}

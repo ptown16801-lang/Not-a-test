@@ -34,12 +34,12 @@ No visual projection choice is attributed to the paper.
 ## Reconstructed equations
 
 For input \(x\in\mathbb R^N\), activity \(s\in\mathbb R^M\), feed-forward
-weights \(W\), recurrent weights \(K\), and logistic nonlinearity \(g\), the
+weights \(W\), recurrent weights \(K\), and squashing nonlinearity \(g\), the
 rate dynamics are
 
 \[
 \tau\frac{ds_i}{dt}=-s_i+g\!\left(\sum_j W_{ij}x_j+\sum_k K_{ik}s_k\right),
-\qquad g(h)=\frac{1}{1+e^{-h}}.
+\qquad g(h)=\frac{1}{1+e^{-h}}\quad\text{(reference convention)}.
 \]
 
 At equilibrium,
@@ -54,11 +54,19 @@ Define \(G_{ij}=g'_i\delta_{ij}\),
 \phi=(G^{-1}-K)^{-1},\qquad \chi=\frac{\partial s}{\partial x}=\phi W.
 \]
 
-The information objective minimized by the model is
+The zero-output-noise manifold-volume objective minimized by the model is
 
 \[
 \varepsilon=-\frac12\left\langle\ln\det(\chi^T\chi)\right\rangle_x.
 \]
+
+The foundational derivation relates this expression to mutual information only
+in the zero-noise limit, with a continuous, single-valued, locally invertible
+mapping and full-column-rank susceptibility. It is not a general finite-noise
+mutual-information estimator. The target high-dimensional Methods specify only
+a nonlinear squashing function; logistic is a supported reconstruction
+convention from the S1 simple analysis and companion model, not a separately
+printed Figure 7 parameter.
 
 For
 
@@ -77,12 +85,14 @@ the recurrent update is
 The implementation evaluates this equation directly. The S1 Appendix forbids
 self-coupling in the 2-neuron model, but the high-dimensional publication does
 not state that restriction and its general sum includes \(K_{ii}\). The
-high-dimensional reference therefore keeps diagonal updates; zero diagonal is
-an explicit optional project constraint.
+high-dimensional reference therefore keeps diagonal updates as a supported
+convention; zero diagonal is an explicit optional project constraint. The exact
+target simulation policy remains unreported.
 
 ## High-dimensional architecture
 
-`createTwoModalityPaperNetwork()` defaults to the paper's full configuration:
+`createTwoModalityPaperNetwork()` defaults to the paper-sized reference
+configuration:
 
 - four input components: two polar coordinates expressed in Cartesian form for
   each of two modalities;
@@ -118,22 +128,23 @@ therefore parameters rather than hidden assumptions:
 | Equilibrium tolerance | `1e-9`, two consecutive steps | Paper describes a small threshold but gives no value |
 | Maximum settling iterations | 50,000 | Operational guard |
 | Random seed | User supplied, default 1 | Original seeds not reported |
-| Initial recurrent jitter | 0 unless requested | Paper says zero or “near-zero” in different experiments |
+| Initial recurrent jitter | full \(K=0\) unless requested | Reproducible project condition; target body specifies near-zero cross-talk, while within-modality initialization is unreported |
 | Input-radius standard deviation | 0.1 × mean | Proportionality reported; coefficient borrowed from companion paper |
 | Preferred-angle endpoint | 360° excluded to avoid duplicate 0° unit | Necessary implementation choice |
 | Numerical pivot floor | `1e-13` | Floating-point guard |
-| Logistic-derivative floor | `0` | Paper-exact derivative; a positive floor is opt-in |
+| Logistic-derivative floor | `0` | Publication derivative; a positive floor is a labeled project surrogate |
 | High-dimensional diagonal | retained | General equation; explicit simulation constraint unreported |
 
 Time is measured in units of \(\tau\). This is nondimensionalization, not a
 claim that the authors reported a numeric time constant of 1.
 
 Training supports two policies. `fixed-best` keeps the learning rate constant and
-restores the minimum-objective checkpoint, matching the synaesthesia paper.
+restores the minimum-objective checkpoint, implementing the synaesthesia
+paper's qualitative policy rather than an exact unreported algorithm.
 Every candidate checkpoint is compared on the same caller-supplied fixed input
-ensemble; comparing values from changing training samples is invalid because
-the published objective is an expectation over inputs. Ensemble size and
-checkpoint interval are exposed reconstruction choices.
+ensemble; comparing values from changing training samples is not a controlled
+comparison of the published expected objective and can select sampling noise.
+Ensemble size and checkpoint interval are exposed reconstruction choices.
 `backtrack` halves the learning rate when a proposed update raises the objective,
 matching the companion criticality paper.
 
@@ -179,9 +190,11 @@ Each circular population code becomes a radial contour:
 \]
 
 Periodic smoothing and interpolation turn these samples into a continuous path.
-The project visualization explicitly mean-normalizes the population vector
-before using it as a radial mark, while scientific response APIs default to the
-publication's unnormalized sum. The strongest learned cross-talk
+The radial-contour visualization centers and rescales individual activities
+before using them as marks; that display transform is not the population-vector
+estimator. Scientific response APIs default to the publication's unnormalized
+population-vector sum, with mean normalization available only as a labeled
+visualization convenience. The strongest learned cross-talk
 weights become curved paths between the two modality contours. These are all
 implemented as ordinary `morph` and `combine(overlay)` derivations from existing
 primitives, so closure, content addressing, and the full provenance DAG remain

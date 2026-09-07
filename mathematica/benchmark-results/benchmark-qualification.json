@@ -1,0 +1,1108 @@
+{
+	"schema":"shriki-2016-benchmark-qualification\/v1",
+	"generatedAtUtc":"2026-09-07T11:53:38Z",
+	"provenance":{
+		"script":"mathematica\/AggregateScalingResults.wls",
+		"scriptSha256":"09fe6d36a7590a74474b5a64d9e13ad57d8649df8db2ca27fa62ed50048cf9b5",
+		"inputFiles":{
+			"factorhistory-142-train1000-v2.json":"c5bedb5364c561ca6fb0079eb6aae11a3d1ae192b60430ff945a9b010051ec8b",
+			"factorhistory-284-v2.json":"53cd3328e3a160ac5ace9db40c6714b76a9017611772bbada4d40fc048e45ed6",
+			"factorhistory-568-v2.json":"803e1c1e1d935ab4ede45086d84004cbe6c731043a36af9c2ffda616da9617a1",
+			"factorhistory-1136-v2.json":"3556cbc7ab45c1e50994aed63018ef71a008c9bf6a35e90cbe625ac7dcb1087d",
+			"factorhistory-2272-v2.json":"9130191466ad3e2b62c01d04d1c44f977cac6c2ab6ca7ddb4649795b74a02f15",
+			"factorhistory-4544-v2.json":"99501a4d10e6e86f2853216ccae0d6eb547cdff21b4941a6be72d214cc4ba165",
+			"factorhistory-9088-v2.json":"79d6f617d3847c9006d526e4435f7999c9882fbe9a41bc9ce7437cd4233c22d4",
+			"factorhistory-18176-v2.json":"11c379cfe79d2debe2b7921c391616c17d8ab71e8f822f1857b4a95bde500b1f",
+			"factorhistory-36352-v2.json":"4c45968b62dc3a8d634af47ffeef87e6f342012c4cedafeede7553777124ac15",
+			"factorhistory-72704-v2.json":"f5e36fb02db33b40fe1442e2d64e67b646a7b1ce1761e9347ea6c1a54bbc635d",
+			"factorhistory-142-window10.json":"2713fd3e20d25edbbffbd86a6f464369d44ad964d35700a3f5dd47b9b2534bf7",
+			"factorhistory-142.json":"eed85f7e0e4bca0cfb64d04129bc903e96e1ec0fa81de610f3a056fba4892052",
+			"factorhistory-142-train1000.json":"3c95b001a8b26a2cc01a9d4f9569eadc402e7f0e059597b8e9b1621946d55f5c",
+			"factorhistory-284.json":"4faeb3a9e7041c0e4e9fde54c9935991a789b498e3a5995bec7acd7366e7a804",
+			"factorhistory-568.json":"b1f8359cceb396cfb79edc32954539bed379b5e4e26b9486d2d3b6c0f26f523d",
+			"factorhistory-568-train50.json":"4994e0bc6c1888f8961cd29bcd63cdbc02d4da72fe013314f43e7a0d14351948",
+			"factorhistory-1136.json":"4b048639e0e5884849b96c31144a54f1facae38f382951f95f974908be731486",
+			"factorhistory-2272.json":"80062b425f81b26656fde022e07f6f38b00ae00c0dc4014af30de02ab97bb192",
+			"factorhistory-4544.json":"2b3263bd4264166b1bf285e401f2639a5aa20defda466cf4ff15df1bc0b9209c",
+			"factorhistory-9088.json":"58ba2301f5de344c78df4fa5449c904277c93d4f654de359281ef943076141a9",
+			"factorhistory-18176.json":"97111e8b8af049f501c1822beffd84e33f5f3406c34621b911c827414bdc57ae",
+			"factorhistory-36352.json":"ab42fa2f440ea30750dd9fdd017f52e90c8e8221053d088a290990a45f38c783",
+			"factorhistory-72704.json":"1713e4838306690495e1b2b46c3eb9705aea09fa4eee55557bb2d8f33ceea5fb",
+			"dense-142.json":"43dd97f04d504318327c856fc85e91c1024c4e894d86f15bdcc9b2fb51f79736",
+			"dense-284.json":"3087f070604dc0de3faf166f8c62f3c1ca10e894ebcc6bc19db1be8f63daffcc",
+			"dense-568.json":"381337e59988d02e6bf3ded084988630cf30a8f3e49801aeaec4d9e44223c5bb",
+			"dense-1136.json":"cf4eddca7ddb396084477972a4d9eb8f4e19fec25dc2ff4624254827a6a423ad",
+			"dense-2272.json":"ad5b595aaa278833f0b4fab29e86292cb2a77b1abebae64ca47ac6b5e80c42a9",
+			"dense-4544.json":"76b1cb38fe2afec9b41681ef9b41e9deb1c6bc8d9c4a398033f1f5a421ba93aa",
+			"critical-slowing-142.json":"571b358d2839839131101f1c175bd10ff6d37eec50fd521b94dc0132f5a33e08"
+		},
+		"qualifiedBenchmarkScriptSha256":"fa8036ee16f40850cfe4fa806d5d342dc37552b8f7e3b80dc13e5599ab2e8ca8",
+		"qualifiedModelSourceSha256":"5f0ef5d0e64532effc04f478d6d3e1b4bad42bd0fecf6a2880f98d8174ef497c",
+		"qualifiedCriticalScriptSha256":"b6a67be1254207b76f32ca8d57e97e8f6769a70d85df323ea5368a0dde39cc25"
+	},
+	"rules":{
+		"paperSpecifiedNetworkSize":142,
+		"crossSizeScientificEquivalence":false,
+		"crossSizeClassification":"scientifically motivated project model-family extension",
+		"controlledSpeedupRelativeToAuthorsComputable":false,
+		"speedupReason":"The paper reports a couple of weeks of computation but not a matched machine, update count, integrator, step, tolerance, random seed or checkpoint trajectory.",
+		"practicalLimitInferenceAllowed":false,
+		"limitReason":"Heterogeneous short horizons and one-update probes establish execution feasibility, not sustained end-to-end training limits."
+	},
+	"runs":[
+		{
+			"file":"factorhistory-142-train1000-v2.json",
+			"fileSha256":"c5bedb5364c561ca6fb0079eb6aae11a3d1ae192b60430ff945a9b010051ec8b",
+			"schema":"shriki-2016-exact-benchmark-point\/v2",
+			"cohort":"current",
+			"status":"current-qualified",
+			"checks":{
+				"expectedCurrentFile":true,
+				"schema":true,
+				"scriptFingerprint":true,
+				"modelFingerprint":true,
+				"fileCohortIdentity":true,
+				"declaredHorizon":true,
+				"stepAndResidualConvergence":true,
+				"residualWithinDeclaredTolerance":true,
+				"exactnessFlags":true,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":true
+			},
+			"stepAndResidualConvergence":true,
+			"sourceFingerprintsPresent":true,
+			"usableFor":[
+				"observed runtime",
+				"observed memory",
+				"declared exact-model execution"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"The target paper specifies only M=142; other sizes are a declared project model-family extension.",
+				"Exact factor history depends on exact-zero or explicitly low-rank initialization.",
+				"Integrator, step and tolerances are project numerical policies because the paper does not report them."
+			]
+		},
+		{
+			"file":"factorhistory-284-v2.json",
+			"fileSha256":"53cd3328e3a160ac5ace9db40c6714b76a9017611772bbada4d40fc048e45ed6",
+			"schema":"shriki-2016-exact-benchmark-point\/v2",
+			"cohort":"current",
+			"status":"current-qualified",
+			"checks":{
+				"expectedCurrentFile":true,
+				"schema":true,
+				"scriptFingerprint":true,
+				"modelFingerprint":true,
+				"fileCohortIdentity":true,
+				"declaredHorizon":true,
+				"stepAndResidualConvergence":true,
+				"residualWithinDeclaredTolerance":true,
+				"exactnessFlags":true,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":true
+			},
+			"stepAndResidualConvergence":true,
+			"sourceFingerprintsPresent":true,
+			"usableFor":[
+				"observed runtime",
+				"observed memory",
+				"declared exact-model execution"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"The target paper specifies only M=142; other sizes are a declared project model-family extension.",
+				"Exact factor history depends on exact-zero or explicitly low-rank initialization.",
+				"Integrator, step and tolerances are project numerical policies because the paper does not report them."
+			]
+		},
+		{
+			"file":"factorhistory-568-v2.json",
+			"fileSha256":"803e1c1e1d935ab4ede45086d84004cbe6c731043a36af9c2ffda616da9617a1",
+			"schema":"shriki-2016-exact-benchmark-point\/v2",
+			"cohort":"current",
+			"status":"current-qualified",
+			"checks":{
+				"expectedCurrentFile":true,
+				"schema":true,
+				"scriptFingerprint":true,
+				"modelFingerprint":true,
+				"fileCohortIdentity":true,
+				"declaredHorizon":true,
+				"stepAndResidualConvergence":true,
+				"residualWithinDeclaredTolerance":true,
+				"exactnessFlags":true,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":true
+			},
+			"stepAndResidualConvergence":true,
+			"sourceFingerprintsPresent":true,
+			"usableFor":[
+				"observed runtime",
+				"observed memory",
+				"declared exact-model execution"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"The target paper specifies only M=142; other sizes are a declared project model-family extension.",
+				"Exact factor history depends on exact-zero or explicitly low-rank initialization.",
+				"Integrator, step and tolerances are project numerical policies because the paper does not report them."
+			]
+		},
+		{
+			"file":"factorhistory-1136-v2.json",
+			"fileSha256":"3556cbc7ab45c1e50994aed63018ef71a008c9bf6a35e90cbe625ac7dcb1087d",
+			"schema":"shriki-2016-exact-benchmark-point\/v2",
+			"cohort":"current",
+			"status":"current-qualified",
+			"checks":{
+				"expectedCurrentFile":true,
+				"schema":true,
+				"scriptFingerprint":true,
+				"modelFingerprint":true,
+				"fileCohortIdentity":true,
+				"declaredHorizon":true,
+				"stepAndResidualConvergence":true,
+				"residualWithinDeclaredTolerance":true,
+				"exactnessFlags":true,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":true
+			},
+			"stepAndResidualConvergence":true,
+			"sourceFingerprintsPresent":true,
+			"usableFor":[
+				"observed runtime",
+				"observed memory",
+				"declared exact-model execution"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"The target paper specifies only M=142; other sizes are a declared project model-family extension.",
+				"Exact factor history depends on exact-zero or explicitly low-rank initialization.",
+				"Integrator, step and tolerances are project numerical policies because the paper does not report them."
+			]
+		},
+		{
+			"file":"factorhistory-2272-v2.json",
+			"fileSha256":"9130191466ad3e2b62c01d04d1c44f977cac6c2ab6ca7ddb4649795b74a02f15",
+			"schema":"shriki-2016-exact-benchmark-point\/v2",
+			"cohort":"current",
+			"status":"current-qualified",
+			"checks":{
+				"expectedCurrentFile":true,
+				"schema":true,
+				"scriptFingerprint":true,
+				"modelFingerprint":true,
+				"fileCohortIdentity":true,
+				"declaredHorizon":true,
+				"stepAndResidualConvergence":true,
+				"residualWithinDeclaredTolerance":true,
+				"exactnessFlags":true,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":true
+			},
+			"stepAndResidualConvergence":true,
+			"sourceFingerprintsPresent":true,
+			"usableFor":[
+				"observed runtime",
+				"observed memory",
+				"declared exact-model execution"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"The target paper specifies only M=142; other sizes are a declared project model-family extension.",
+				"Exact factor history depends on exact-zero or explicitly low-rank initialization.",
+				"Integrator, step and tolerances are project numerical policies because the paper does not report them."
+			]
+		},
+		{
+			"file":"factorhistory-4544-v2.json",
+			"fileSha256":"99501a4d10e6e86f2853216ccae0d6eb547cdff21b4941a6be72d214cc4ba165",
+			"schema":"shriki-2016-exact-benchmark-point\/v2",
+			"cohort":"current",
+			"status":"current-qualified",
+			"checks":{
+				"expectedCurrentFile":true,
+				"schema":true,
+				"scriptFingerprint":true,
+				"modelFingerprint":true,
+				"fileCohortIdentity":true,
+				"declaredHorizon":true,
+				"stepAndResidualConvergence":true,
+				"residualWithinDeclaredTolerance":true,
+				"exactnessFlags":true,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":true
+			},
+			"stepAndResidualConvergence":true,
+			"sourceFingerprintsPresent":true,
+			"usableFor":[
+				"observed runtime",
+				"observed memory",
+				"declared exact-model execution"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"The target paper specifies only M=142; other sizes are a declared project model-family extension.",
+				"Exact factor history depends on exact-zero or explicitly low-rank initialization.",
+				"Integrator, step and tolerances are project numerical policies because the paper does not report them."
+			]
+		},
+		{
+			"file":"factorhistory-9088-v2.json",
+			"fileSha256":"79d6f617d3847c9006d526e4435f7999c9882fbe9a41bc9ce7437cd4233c22d4",
+			"schema":"shriki-2016-exact-benchmark-point\/v2",
+			"cohort":"current",
+			"status":"current-qualified",
+			"checks":{
+				"expectedCurrentFile":true,
+				"schema":true,
+				"scriptFingerprint":true,
+				"modelFingerprint":true,
+				"fileCohortIdentity":true,
+				"declaredHorizon":true,
+				"stepAndResidualConvergence":true,
+				"residualWithinDeclaredTolerance":true,
+				"exactnessFlags":true,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":true
+			},
+			"stepAndResidualConvergence":true,
+			"sourceFingerprintsPresent":true,
+			"usableFor":[
+				"observed runtime",
+				"observed memory",
+				"declared exact-model execution"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"The target paper specifies only M=142; other sizes are a declared project model-family extension.",
+				"Exact factor history depends on exact-zero or explicitly low-rank initialization.",
+				"Integrator, step and tolerances are project numerical policies because the paper does not report them."
+			]
+		},
+		{
+			"file":"factorhistory-18176-v2.json",
+			"fileSha256":"11c379cfe79d2debe2b7921c391616c17d8ab71e8f822f1857b4a95bde500b1f",
+			"schema":"shriki-2016-exact-benchmark-point\/v2",
+			"cohort":"current-farther",
+			"status":"current-qualified",
+			"checks":{
+				"expectedCurrentFile":true,
+				"schema":true,
+				"scriptFingerprint":true,
+				"modelFingerprint":true,
+				"fileCohortIdentity":true,
+				"declaredHorizon":true,
+				"stepAndResidualConvergence":true,
+				"residualWithinDeclaredTolerance":true,
+				"exactnessFlags":true,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":true
+			},
+			"stepAndResidualConvergence":true,
+			"sourceFingerprintsPresent":true,
+			"usableFor":[
+				"observed runtime",
+				"observed memory",
+				"declared exact-model execution"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"The target paper specifies only M=142; other sizes are a declared project model-family extension.",
+				"Exact factor history depends on exact-zero or explicitly low-rank initialization.",
+				"Integrator, step and tolerances are project numerical policies because the paper does not report them."
+			]
+		},
+		{
+			"file":"factorhistory-36352-v2.json",
+			"fileSha256":"4c45968b62dc3a8d634af47ffeef87e6f342012c4cedafeede7553777124ac15",
+			"schema":"shriki-2016-exact-benchmark-point\/v2",
+			"cohort":"current-farther",
+			"status":"current-qualified",
+			"checks":{
+				"expectedCurrentFile":true,
+				"schema":true,
+				"scriptFingerprint":true,
+				"modelFingerprint":true,
+				"fileCohortIdentity":true,
+				"declaredHorizon":true,
+				"stepAndResidualConvergence":true,
+				"residualWithinDeclaredTolerance":true,
+				"exactnessFlags":true,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":true
+			},
+			"stepAndResidualConvergence":true,
+			"sourceFingerprintsPresent":true,
+			"usableFor":[
+				"observed runtime",
+				"observed memory",
+				"declared exact-model execution"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"The target paper specifies only M=142; other sizes are a declared project model-family extension.",
+				"Exact factor history depends on exact-zero or explicitly low-rank initialization.",
+				"Integrator, step and tolerances are project numerical policies because the paper does not report them."
+			]
+		},
+		{
+			"file":"factorhistory-72704-v2.json",
+			"fileSha256":"f5e36fb02db33b40fe1442e2d64e67b646a7b1ce1761e9347ea6c1a54bbc635d",
+			"schema":"shriki-2016-exact-benchmark-point\/v2",
+			"cohort":"current-farther",
+			"status":"current-qualified",
+			"checks":{
+				"expectedCurrentFile":true,
+				"schema":true,
+				"scriptFingerprint":true,
+				"modelFingerprint":true,
+				"fileCohortIdentity":true,
+				"declaredHorizon":true,
+				"stepAndResidualConvergence":true,
+				"residualWithinDeclaredTolerance":true,
+				"exactnessFlags":true,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":true
+			},
+			"stepAndResidualConvergence":true,
+			"sourceFingerprintsPresent":true,
+			"usableFor":[
+				"observed runtime",
+				"observed memory",
+				"declared exact-model execution"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"The target paper specifies only M=142; other sizes are a declared project model-family extension.",
+				"Exact factor history depends on exact-zero or explicitly low-rank initialization.",
+				"Integrator, step and tolerances are project numerical policies because the paper does not report them."
+			]
+		},
+		{
+			"file":"factorhistory-142-window10.json",
+			"fileSha256":"2713fd3e20d25edbbffbd86a6f464369d44ad964d35700a3f5dd47b9b2534bf7",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-142.json",
+			"fileSha256":"eed85f7e0e4bca0cfb64d04129bc903e96e1ec0fa81de610f3a056fba4892052",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-142-train1000.json",
+			"fileSha256":"3c95b001a8b26a2cc01a9d4f9569eadc402e7f0e059597b8e9b1621946d55f5c",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-284.json",
+			"fileSha256":"4faeb3a9e7041c0e4e9fde54c9935991a789b498e3a5995bec7acd7366e7a804",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-568.json",
+			"fileSha256":"b1f8359cceb396cfb79edc32954539bed379b5e4e26b9486d2d3b6c0f26f523d",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-568-train50.json",
+			"fileSha256":"4994e0bc6c1888f8961cd29bcd63cdbc02d4da72fe013314f43e7a0d14351948",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-1136.json",
+			"fileSha256":"4b048639e0e5884849b96c31144a54f1facae38f382951f95f974908be731486",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-2272.json",
+			"fileSha256":"80062b425f81b26656fde022e07f6f38b00ae00c0dc4014af30de02ab97bb192",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-4544.json",
+			"fileSha256":"2b3263bd4264166b1bf285e401f2639a5aa20defda466cf4ff15df1bc0b9209c",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-9088.json",
+			"fileSha256":"58ba2301f5de344c78df4fa5449c904277c93d4f654de359281ef943076141a9",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-18176.json",
+			"fileSha256":"97111e8b8af049f501c1822beffd84e33f5f3406c34621b911c827414bdc57ae",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-36352.json",
+			"fileSha256":"ab42fa2f440ea30750dd9fdd017f52e90c8e8221053d088a290990a45f38c783",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"factorhistory-72704.json",
+			"fileSha256":"1713e4838306690495e1b2b46c3eb9705aea09fa4eee55557bb2d8f33ceea5fb",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-factor",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"dense-142.json",
+			"fileSha256":"43dd97f04d504318327c856fc85e91c1024c4e894d86f15bdcc9b2fb51f79736",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-dense",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"dense-284.json",
+			"fileSha256":"3087f070604dc0de3faf166f8c62f3c1ca10e894ebcc6bc19db1be8f63daffcc",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-dense",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"dense-568.json",
+			"fileSha256":"381337e59988d02e6bf3ded084988630cf30a8f3e49801aeaec4d9e44223c5bb",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-dense",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"dense-1136.json",
+			"fileSha256":"cf4eddca7ddb396084477972a4d9eb8f4e19fec25dc2ff4624254827a6a423ad",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-dense",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":true,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"dense-2272.json",
+			"fileSha256":"ad5b595aaa278833f0b4fab29e86292cb2a77b1abebae64ca47ac6b5e80c42a9",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-dense",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":false,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		},
+		{
+			"file":"dense-4544.json",
+			"fileSha256":"76b1cb38fe2afec9b41681ef9b41e9deb1c6bc8d9c4a398033f1f5a421ba93aa",
+			"schema":"shriki-2016-exact-benchmark-point\/v1",
+			"cohort":"historical-dense",
+			"status":"historical-qualified-only",
+			"checks":{
+				"expectedCurrentFile":false,
+				"schema":false,
+				"scriptFingerprint":false,
+				"modelFingerprint":false,
+				"fileCohortIdentity":false,
+				"declaredHorizon":false,
+				"stepAndResidualConvergence":false,
+				"residualWithinDeclaredTolerance":false,
+				"exactnessFlags":false,
+				"successfulFiniteTraining":false,
+				"fixedExperimentalProtocol":false
+			},
+			"stepAndResidualConvergence":false,
+			"sourceFingerprintsPresent":false,
+			"usableFor":[
+				"historical context",
+				"exploratory timing"
+			],
+			"notUsableFor":[
+				"controlled speedup relative to the authors",
+				"a paper-specified cross-size normalization claim",
+				"an evidence-free practical scaling limit"
+			],
+			"limitations":[
+				"Historical run predates the mandatory fixed-point-residual convergence gate.",
+				"Historical run lacks complete source fingerprints.",
+				"May support implementation history or exploratory timing only; it is not the current benchmark baseline."
+			]
+		}
+	]
+}

@@ -30,8 +30,12 @@ kExact = {{0, 1/13, -1/17}, {2/19, 0, 1/23}, {-1/29, 3/31, 0}};
 wExact = {{2/3, -1/5}, {1/7, 3/4}, {-2/9, 5/8}};
 phiLeft = Inverse[IdentityMatrix[3] - gExact.kExact].gExact;
 phiPublished = Inverse[Inverse[gExact] - kExact];
+phiRight = gExact.Inverse[IdentityMatrix[3] - kExact.gExact];
 record["susceptibility-factorization", Together[phiLeft - phiPublished],
   Together[phiLeft - phiPublished] === ConstantArray[0, {3, 3}]];
+record["susceptibility-factorization-right-ordered-form",
+  Together[phiRight - phiPublished],
+  Together[phiRight - phiPublished] === ConstantArray[0, {3, 3}]];
 chiExact = phiPublished.wExact;
 record["published-dimensions", <|
     "W" -> Dimensions[wExact], "K" -> Dimensions[kExact],
@@ -149,6 +153,14 @@ record["appendix-trace", Expand[traceDerived - traceAppendix],
   Expand[traceDerived - traceAppendix] === 0];
 record["appendix-determinant", Expand[detDerived - detAppendix],
   Expand[detDerived - detAppendix] === 0];
+learningDiscriminant = Expand[traceDerived^2 - 4 detDerived];
+symmetricDiscriminant = Expand[(j11Mean - j22Mean)^2 + 4 j12Mean^2];
+record["learning-Jacobian-discriminant-is-nonnegative-square-sum",
+  Expand[learningDiscriminant - symmetricDiscriminant],
+  Expand[learningDiscriminant - symmetricDiscriminant] === 0];
+record["appendix-strict-discriminant-claim-has-equality-case",
+  learningDiscriminant /. {u -> 3/10, v -> 3/10},
+  (learningDiscriminant /. {u -> 3/10, v -> 3/10}) === 0];
 
 stabilityRootAppendix[sign_] := (36 v^2 - 29 v + 6 +
     sign Sqrt[-6 v (2 v - 1)^3])/(84 v^2 - 72 v + 16);
@@ -165,7 +177,7 @@ etaEquation95AsPrinted = -tr/det + Sqrt[disc]/det;
 record["real-critical-learning-rate-final-expression",
   FullSimplify[etaRealDerived - etaRealAppendixFinal],
   FullSimplify[etaRealDerived - etaRealAppendixFinal] === 0];
-record["appendix-equation-95-sign-discrepancy",
+record["appendix-manuscript-line-95-sign-discrepancy",
   FullSimplify[etaEquation95AsPrinted - etaRealDerived],
   FullSimplify[etaEquation95AsPrinted - etaRealDerived] =!= 0];
 complexMagnitudeSquared = 1 + eta tr + eta^2 det;
@@ -181,6 +193,15 @@ record["population-vector-normalization-effect",
     Assumptions -> neuronCount > 0],
   FullSimplify[Abs[populationMean]/Abs[populationSum],
     Assumptions -> neuronCount > 0] === 1/neuronCount];
+
+(* Duplicating every output row is not a neutral cross-size operation for the
+   unnormalized volume objective.  For N input dimensions it adds
+   -(N/2) log 2 even when the represented local map is merely duplicated. *)
+qReplicated = Transpose[Join[chiExact, chiExact]].Join[chiExact, chiExact];
+replicationShift = FullSimplify[-1/2 Log[Det[qReplicated]] +
+  1/2 Log[Det[qExact]]];
+record["objective-baseline-changes-under-row-replication", replicationShift,
+  replicationShift === -Log[2]];
 
 (* Numerical validation uses FindRoot, avoiding the project's unreported Euler
    step and stopping convention. *)
@@ -261,10 +282,21 @@ record["gradient-sign-decreases-objective", <|
 jsonChecks = Map[<|"name" -> #["Name"],
       "value" -> ToString[#["Value"], InputForm], "pass" -> #["Pass"]|> &, checks];
 report = <|
-  "schema" -> "shriki-2016-publication-verification/v1",
+  "schema" -> "shriki-2016-publication-verification/v2",
+  "generatedAtUtc" -> DateString[TimeZoneConvert[Now, 0],
+    {"Year", "-", "Month", "-", "Day", "T", "Hour", ":", "Minute", ":", "Second", "Z"}],
   "authority" -> <|"paperDoi" -> "10.1371/journal.pcbi.1004959",
     "appendixDoi" -> "10.1371/journal.pcbi.1004959.s001"|>,
+  "provenance" -> <|
+    "script" -> "mathematica/verification/PublicationDerivation.wls",
+    "scriptSha256" -> IntegerString[FileHash[$InputFileName, "SHA256"], 16, 64],
+    "sourceManifest" -> "mathematica/verification/source-manifest.json",
+    "sourceManifestSha256" -> IntegerString[FileHash[
+      FileNameJoin[{DirectoryName[$InputFileName], "source-manifest.json"}],
+      "SHA256"], 16, 64],
+    "projectModelImported" -> False|>,
   "independence" -> "Written from the paper and S1 Appendix before inspecting project implementations; imports no project model code.",
+  "objectiveScope" -> "The displayed log-volume objective is the publication's low-noise approximation; this artifact does not reinterpret it as a general finite-noise mutual-information estimator.",
   "kernel" -> $Version,
   "allPassed" -> And @@ checks[[All, "Pass"]],
   "checkCount" -> Length[checks],
@@ -282,9 +314,14 @@ report = <|
     "descentDirection" -> First[quantities]["DescentDirection"]|>,
   "checks" -> jsonChecks|>;
 
-outputDirectory = FileNameJoin[{DirectoryName[$InputFileName], "results"}];
+requestedOutputPath = Replace[
+  Environment["SHRIKI_WOLFRAM_VALIDATION_OUTPUT"], Except[_String] -> ""];
+defaultOutputPath = FileNameJoin[{DirectoryName[$InputFileName], "results",
+  "wolfram-validation.json"}];
+outputPath = If[StringLength[requestedOutputPath] > 0,
+  ExpandFileName[requestedOutputPath], defaultOutputPath];
+outputDirectory = DirectoryName[outputPath];
 If[!DirectoryQ[outputDirectory], CreateDirectory[outputDirectory]];
-outputPath = FileNameJoin[{outputDirectory, "wolfram-validation.json"}];
 If[Quiet@Check[Export[outputPath, report, "RawJSON"], $Failed] === $Failed,
   Print["Could not export " <> outputPath]; Exit[1]];
 Print[ExportString[KeyTake[report, {"kernel", "allPassed", "checkCount", "metrics"}],

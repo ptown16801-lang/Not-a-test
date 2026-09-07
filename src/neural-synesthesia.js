@@ -17,7 +17,8 @@ export const PAPER_DOI = '10.1371/journal.pcbi.1004959';
  */
 export const PROJECT_NUMERICAL_DEFAULTS = Object.freeze({
   integrationMethod:'synchronous-explicit-euler',integrationStep:0.5,
-  tolerance:1e-9,stableIterations:2,maxIterations:50000,
+  tolerance:1e-9,residualTolerance:1e-9,
+  convergenceCriterion:'step-and-residual',stableIterations:2,maxIterations:50000,
   pivotTolerance:1e-13,derivativeFloor:0
 });
 
@@ -32,7 +33,6 @@ export const PAPER_FIGURE_7_SCENARIOS = Object.freeze({
 const TWO_PI = Math.PI * 2;
 const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
 const finite = (x) => typeof x === 'number' && Number.isFinite(x);
-const rounded = (x, digits=12) => Number(x.toFixed(digits));
 
 export class NeuralModelError extends Error {
   constructor(message, code='neural_model_error') { super(message); this.name='NeuralModelError'; this.code=code; }
@@ -47,6 +47,18 @@ export function logistic(x) {
 /** First and second derivatives, evaluated from s = logistic(h). */
 export const logisticPrimeFromOutput = s => s*(1-s);
 export const logisticSecondFromOutput = s => s*(1-s)*(1-2*s);
+
+/**
+ * Stable logistic derivatives evaluated from the field h.  Computing these
+ * from a binary64 output that has rounded to exactly 0 or 1 can manufacture a
+ * zero derivative even while the mathematical derivative is representable.
+ */
+export function logisticPrimeFromField(h) {
+  const z=Math.exp(-Math.abs(h));return z/((1+z)*(1+z));
+}
+export function logisticSecondFromField(h) {
+  return -logisticPrimeFromField(h)*Math.tanh(h/2);
+}
 
 class GaussianRandom {
   constructor(seed=1) { this.state=(seed>>>0)||1; this.spare=null; }
@@ -87,12 +99,16 @@ const matrixVector = (a, rows, cols, vector) => {
 /** Partial-pivoted Gauss-Jordan inverse. Sizes in the paper top out at 142. */
 export function invertSquareMatrix(input, n, pivotTolerance=1e-13) {
   assertMatrix(input,n,n,'matrix');
+  if(!finite(pivotTolerance)||pivotTolerance<=0)throw new NeuralModelError('pivotTolerance must be positive','invalid_matrix');
+  let coefficientScale=0;
+  for(let i=0;i<n;i++){let rowSum=0;for(let j=0;j<n;j++)rowSum+=Math.abs(Number(input[i*n+j]));coefficientScale=Math.max(coefficientScale,rowSum);}
+  const absolutePivotTolerance=pivotTolerance*Math.max(coefficientScale,Number.MIN_VALUE);
   const width=n*2,aug=new Float64Array(n*width);
   for(let i=0;i<n;i++){for(let j=0;j<n;j++)aug[i*width+j]=Number(input[i*n+j]);aug[i*width+n+i]=1;}
   for(let col=0;col<n;col++){
     let pivot=col,pivotAbs=Math.abs(aug[col*width+col]);
     for(let row=col+1;row<n;row++){const value=Math.abs(aug[row*width+col]);if(value>pivotAbs){pivot=row;pivotAbs=value;}}
-    if(!(pivotAbs>pivotTolerance))throw new NeuralModelError('matrix is singular or ill-conditioned','singular_matrix');
+    if(!(pivotAbs>absolutePivotTolerance))throw new NeuralModelError('matrix is singular or ill-conditioned','singular_matrix');
     if(pivot!==col)for(let j=0;j<width;j++){const a=col*width+j,b=pivot*width+j,t=aug[a];aug[a]=aug[b];aug[b]=t;}
     const divisor=aug[col*width+col];for(let j=0;j<width;j++)aug[col*width+j]/=divisor;
     for(let row=0;row<n;row++)if(row!==col){const factor=aug[row*width+col];if(factor===0)continue;for(let j=0;j<width;j++)aug[row*width+j]-=factor*aug[col*width+j];}
@@ -100,14 +116,66 @@ export function invertSquareMatrix(input, n, pivotTolerance=1e-13) {
   const out=new Float64Array(n*n);for(let i=0;i<n;i++)for(let j=0;j<n;j++)out[i*n+j]=aug[i*width+n+j];return out;
 }
 
-function positiveLogDet(a,n,tolerance=1e-14){
-  const lower=new Float64Array(n*n);let sumLogs=0;
-  for(let i=0;i<n;i++)for(let j=0;j<=i;j++){
-    let value=a[i*n+j];for(let k=0;k<j;k++)value-=lower[i*n+k]*lower[j*n+k];
-    if(i===j){if(!(value>tolerance))throw new NeuralModelError('susceptibility Gram matrix is not positive definite','singular_susceptibility');lower[i*n+j]=Math.sqrt(value);sumLogs+=Math.log(lower[i*n+j]);}
-    else lower[i*n+j]=value/lower[j*n+j];
+/*
+ * Column-pivoted, twice-reorthogonalized modified Gram-Schmidt.  The paper
+ * writes the objective and Gamma through chi^T chi, but explicitly forming
+ * that normal matrix squares the condition number and can underflow even when
+ * chi and the published quantities are representable.  A thin QR factorization
+ * is algebraically equivalent:
+ *
+ *   chi P = Q R,
+ *   epsilon = -log |det R|,
+ *   Gamma = P R^-1 Q^T phi.
+ *
+ * Scaling chi before QR protects both very small and very large homogeneous
+ * sensitivities; its exact logarithmic contribution is restored explicitly.
+ */
+function susceptibilityQR(chi,rows,cols,tolerance){
+  let scale=0;
+  for(const value of chi)scale=Math.max(scale,Math.abs(value));
+  if(!(scale>0)&&finite(scale))throw new NeuralModelError('susceptibility has zero column rank','singular_susceptibility');
+  if(!finite(scale))throw new NeuralModelError('susceptibility is not finite','singular_susceptibility');
+  const work=new Float64Array(chi.length),q=new Float64Array(chi.length),r=new Float64Array(cols*cols),permutation=Array.from({length:cols},(_,index)=>index);
+  for(let i=0;i<chi.length;i++)work[i]=chi[i]/scale;
+  let leadingDiagonal=0,logVolume=0;
+  for(let k=0;k<cols;k++){
+    let pivot=k,pivotNorm=-1;
+    for(let candidate=k;candidate<cols;candidate++){
+      let norm=0;for(let i=0;i<rows;i++)norm=Math.hypot(norm,work[i*cols+candidate]);
+      if(norm>pivotNorm){pivotNorm=norm;pivot=candidate;}
+    }
+    if(pivot!==k){
+      [permutation[k],permutation[pivot]]=[permutation[pivot],permutation[k]];
+      for(let i=0;i<rows;i++){const a=i*cols+k,b=i*cols+pivot,tmp=work[a];work[a]=work[b];work[b]=tmp;}
+      for(let i=0;i<k;i++){const a=i*cols+k,b=i*cols+pivot,tmp=r[a];r[a]=r[b];r[b]=tmp;}
+    }
+    let diagonal=0;for(let i=0;i<rows;i++)diagonal=Math.hypot(diagonal,work[i*cols+k]);
+    if(k===0)leadingDiagonal=diagonal;
+    if(!(diagonal>tolerance*leadingDiagonal)||!finite(diagonal))throw new NeuralModelError('susceptibility lacks full column rank at the requested relative tolerance','singular_susceptibility');
+    r[k*cols+k]=diagonal;logVolume+=Math.log(diagonal)+Math.log(scale);
+    for(let i=0;i<rows;i++)q[i*cols+k]=work[i*cols+k]/diagonal;
+    for(let j=k+1;j<cols;j++){
+      let coefficient=0;for(let i=0;i<rows;i++)coefficient+=q[i*cols+k]*work[i*cols+j];
+      r[k*cols+j]=coefficient;for(let i=0;i<rows;i++)work[i*cols+j]-=coefficient*q[i*cols+k];
+      let correction=0;for(let i=0;i<rows;i++)correction+=q[i*cols+k]*work[i*cols+j];
+      r[k*cols+j]+=correction;for(let i=0;i<rows;i++)work[i*cols+j]-=correction*q[i*cols+k];
+    }
   }
-  return 2*sumLogs;
+  return {q,r,permutation,scale,objective:-logVolume};
+}
+
+function solveSusceptibilityLeastSquares(qr,right,rows,rightCols){
+  const cols=qr.permutation.length,qtRight=new Float64Array(cols*rightCols),permutedSolution=new Float64Array(cols*rightCols),solution=new Float64Array(cols*rightCols);
+  for(let i=0;i<cols;i++)for(let j=0;j<rightCols;j++){
+    let dot=0;for(let row=0;row<rows;row++)dot+=qr.q[row*cols+i]*right[row*rightCols+j];
+    qtRight[i*rightCols+j]=dot/qr.scale;
+  }
+  for(let i=cols-1;i>=0;i--)for(let j=0;j<rightCols;j++){
+    let value=qtRight[i*rightCols+j];for(let k=i+1;k<cols;k++)value-=qr.r[i*cols+k]*permutedSolution[k*rightCols+j];
+    permutedSolution[i*rightCols+j]=value/qr.r[i*cols+i];
+  }
+  for(let i=0;i<cols;i++)for(let j=0;j<rightCols;j++)solution[qr.permutation[i]*rightCols+j]=permutedSolution[i*rightCols+j];
+  return solution;
 }
 
 const matrixMaxAbs = a => {let out=0;for(const x of a)out=Math.max(out,Math.abs(x));return out;};
@@ -149,31 +217,37 @@ export function simpleNoCrossTalkStability({variance1,variance2,learningRate=1e-
 export class InfomaxRecurrentNetwork {
   constructor({inputSize,outputSize,W,K,modalities=[],metadata={}}){
     assertMatrix(W,outputSize,inputSize,'W');assertMatrix(K,outputSize,outputSize,'K');
-    this.inputSize=inputSize;this.outputSize=outputSize;this.W=Float64Array.from(W);this.K=Float64Array.from(K);this.modalities=modalities.map(x=>Object.freeze({...x,preferredAngles:Object.freeze([...(x.preferredAngles||[])])}));this.metadata=Object.freeze({...metadata});
+    const normalizedMetadata={...metadata};
+    if(!Object.hasOwn(normalizedMetadata,'excludeSelfCoupling')&&typeof normalizedMetadata.ExcludeSelfCoupling==='boolean')normalizedMetadata.excludeSelfCoupling=normalizedMetadata.ExcludeSelfCoupling;
+    delete normalizedMetadata.ExcludeSelfCoupling;
+    this.inputSize=inputSize;this.outputSize=outputSize;this.W=Float64Array.from(W);this.K=Float64Array.from(K);this.modalities=modalities.map(x=>Object.freeze({...x,preferredAngles:Object.freeze([...(x.preferredAngles||[])])}));this.metadata=Object.freeze(normalizedMetadata);
   }
 
   clone(){return new InfomaxRecurrentNetwork({inputSize:this.inputSize,outputSize:this.outputSize,W:this.W,K:this.K,modalities:this.modalities,metadata:this.metadata});}
 
   /** Numerically integrate tau ds/dt = -s + logistic(Wx + Ks). */
-  settle(input,{initialState=null,integrationStep=0.5,tolerance=1e-9,stableIterations=2,maxIterations=50000,allowUnconverged=false}={}){
+  settle(input,{initialState=null,integrationStep=0.5,tolerance=1e-9,residualTolerance=tolerance,convergenceCriterion='step-and-residual',stableIterations=2,maxIterations=50000,allowUnconverged=false}={}){
     if(!input||input.length!==this.inputSize||[...input].some(x=>!finite(Number(x))))throw new NeuralModelError(`input must contain ${this.inputSize} finite values`,'invalid_input');
     if(!finite(integrationStep)||integrationStep<=0||integrationStep>1)throw new NeuralModelError('integrationStep must lie in (0, 1]','invalid_integrator');
+    if(!finite(tolerance)||tolerance<=0||!finite(residualTolerance)||residualTolerance<=0||!Number.isInteger(stableIterations)||stableIterations<1||!Number.isInteger(maxIterations)||maxIterations<1||!['fixed-point-residual','step-and-residual'].includes(convergenceCriterion))throw new NeuralModelError('settling tolerances, iteration counts, or convergenceCriterion are invalid','invalid_integrator');
     const state=initialState===null?new Float64Array(this.outputSize).fill(0.5):Float64Array.from(initialState);
     if(state.length!==this.outputSize||[...state].some(x=>!finite(x)))throw new NeuralModelError(`initialState must contain ${this.outputSize} finite values`,'invalid_state');
-    const direct=matrixVector(this.W,this.outputSize,this.inputSize,input),field=new Float64Array(this.outputSize);let stable=0,maxDelta=Infinity,iterations=0;
+    const direct=matrixVector(this.W,this.outputSize,this.inputSize,input),field=new Float64Array(this.outputSize);let stable=0,maxDelta=Infinity,fixedPointResidual=Infinity,iterations=0;
     for(iterations=1;iterations<=maxIterations;iterations++){
-      maxDelta=0;
+      maxDelta=0;fixedPointResidual=0;
       for(let i=0;i<this.outputSize;i++){
         let h=direct[i];for(let j=0;j<this.outputSize;j++)h+=this.K[i*this.outputSize+j]*state[j];field[i]=h;
       }
-      for(let i=0;i<this.outputSize;i++){const next=state[i]+integrationStep*(logistic(field[i])-state[i]);maxDelta=Math.max(maxDelta,Math.abs(next-state[i]));state[i]=next;}
-      if(maxDelta<tolerance){stable++;if(stable>=stableIterations)break;}else stable=0;
+      for(let i=0;i<this.outputSize;i++){const residual=logistic(field[i])-state[i],next=state[i]+integrationStep*residual;fixedPointResidual=Math.max(fixedPointResidual,Math.abs(residual));maxDelta=Math.max(maxDelta,Math.abs(next-state[i]));state[i]=next;}
+      const acceptableResidual=fixedPointResidual<residualTolerance;
+      const acceptableStep=convergenceCriterion==='fixed-point-residual'||maxDelta<tolerance;
+      if(acceptableResidual&&acceptableStep){stable++;if(stable>=stableIterations)break;}else stable=0;
     }
-    const converged=iterations<=maxIterations;
     for(let i=0;i<this.outputSize;i++){let h=direct[i];for(let j=0;j<this.outputSize;j++)h+=this.K[i*this.outputSize+j]*state[j];field[i]=h;}
-    let fixedPointResidual=0;for(let i=0;i<this.outputSize;i++)fixedPointResidual=Math.max(fixedPointResidual,Math.abs(state[i]-logistic(field[i])));
+    fixedPointResidual=0;for(let i=0;i<this.outputSize;i++)fixedPointResidual=Math.max(fixedPointResidual,Math.abs(state[i]-logistic(field[i])));
+    const converged=iterations<=maxIterations&&stable>=stableIterations&&fixedPointResidual<residualTolerance&&(convergenceCriterion==='fixed-point-residual'||maxDelta<tolerance);
     if(!converged&&!allowUnconverged)throw new NeuralModelError(`network did not settle in ${maxIterations} iterations`,'did_not_converge');
-    return Object.freeze({state,field,iterations:Math.min(iterations,maxIterations),maxDelta,fixedPointResidual,converged});
+    return Object.freeze({state,field,iterations:Math.min(iterations,maxIterations),maxDelta,fixedPointResidual,residualTolerance,convergenceCriterion,converged,stabilityAssessed:false});
   }
 
   /** Fast inference path: settle the rate dynamics without matrix inversions. */
@@ -191,21 +265,38 @@ export class InfomaxRecurrentNetwork {
     if(!finite(derivativeFloor)||derivativeFloor<0)throw new NeuralModelError('derivativeFloor must be non-negative','invalid_analysis');
     if(!finite(pivotTolerance)||pivotTolerance<=0)throw new NeuralModelError('pivotTolerance must be positive','invalid_analysis');
     const equilibrium=this.settle(input,settleOptions),m=this.outputSize,n=this.inputSize,s=equilibrium.state;
-    const first=new Float64Array(m),second=new Float64Array(m),operator=new Float64Array(m*m);
+    const first=new Float64Array(m),rawFirst=new Float64Array(m),second=new Float64Array(m),fixedPointOperator=new Float64Array(m*m);let derivativeFloorApplied=false;
     for(let i=0;i<m;i++){
-      first[i]=Math.max(derivativeFloor,logisticPrimeFromOutput(s[i]));second[i]=logisticSecondFromOutput(s[i]);
-      for(let j=0;j<m;j++)operator[i*m+j]=-this.K[i*m+j];operator[i*m+i]=1/first[i]-this.K[i*m+i];
+      rawFirst[i]=logisticPrimeFromField(equilibrium.field[i]);first[i]=Math.max(derivativeFloor,rawFirst[i]);second[i]=logisticSecondFromField(equilibrium.field[i]);derivativeFloorApplied||=first[i]!==rawFirst[i];
+      if(!(first[i]>0)&&derivativeFloor===0)throw new NeuralModelError('a logistic derivative underflowed to zero; the exact binary64 susceptibility is not representable','saturated_derivative');
+      for(let j=0;j<m;j++)fixedPointOperator[i*m+j]=-first[i]*this.K[i*m+j];fixedPointOperator[i*m+i]+=1;
     }
-    const phi=invertSquareMatrix(operator,m,pivotTolerance),chi=multiply(phi,m,m,this.W,n),chiT=transpose(chi,m,n),gram=multiply(chiT,n,m,chi,n);
-    const objective=-0.5*positiveLogDet(gram,n,pivotTolerance);
-    const result={...equilibrium,input:Float64Array.from(input),firstDerivative:first,secondDerivative:second,phi,susceptibility:chi,gram,objective};
+    // phi=(G^-1-K)^-1=(I-GK)^-1 G.  This equivalent orientation avoids
+    // artificial overflow and ill scaling from explicitly forming G^-1.
+    const inverseFixedPointOperator=invertSquareMatrix(fixedPointOperator,m,pivotTolerance),phi=new Float64Array(m*m);
+    for(let i=0;i<m;i++)for(let j=0;j<m;j++)phi[i*m+j]=inverseFixedPointOperator[i*m+j]*first[j];
+    const chi=multiply(phi,m,m,this.W,n),chiT=transpose(chi,m,n),gram=multiply(chiT,n,m,chi,n),qr=susceptibilityQR(chi,m,n,pivotTolerance);
+    const objective=qr.objective,equationSemantics=derivativeFloorApplied?'project-surrogate-derivative-floor':'publication-equations';
+    const result={...equilibrium,input:Float64Array.from(input),firstDerivative:first,unflooredFirstDerivative:rawFirst,secondDerivative:second,derivativeFloor,derivativeFloorApplied,equationSemantics,phi,susceptibility:chi,gram,gramNumericallyUnderflowed:matrixMaxAbs(gram)===0&&matrixMaxAbs(chi)>0,objective};
     if(!gradient)return Object.freeze(result);
-    const gramInverse=invertSquareMatrix(gram,n,pivotTolerance),chiTPhi=multiply(chiT,n,m,phi,m),gamma=multiply(gramInverse,n,n,chiTPhi,m),chiGamma=multiply(chi,m,n,gamma,m);
-    const a=new Float64Array(m);
-    for(let i=0;i<m;i++)a[i]=chiGamma[i*m+i]*second[i]/(first[i]*first[i]*first[i]);
-    const phiT=transpose(phi,m,m),phiTa=matrixVector(phiT,m,m,a),updateDirection=new Float64Array(m*m);
+    const gamma=solveSusceptibilityLeastSquares(qr,phi,m,m),chiGamma=multiply(chi,m,n,gamma,m);
+    // The paper defines a_i=(chi Gamma)_ii g''_i/g'^3_i, but forming g'^3
+    // can underflow while the required product phi^T a is still finite.  Solve
+    // with G a instead: phi^T a=(I-GK^T)^-1(Ga), and
+    // (Ga)_i=((chi Gamma)_ii/g'_i)(g''_i/g'_i).
+    const scaledA=new Float64Array(m),aCandidate=new Float64Array(m),phiT=transpose(phi,m,m),phiTa=new Float64Array(m);
+    let aMaterialized=true;
+    for(let i=0;i<m;i++){
+      const curvatureRatio=derivativeFloorApplied?second[i]/first[i]:-Math.tanh(equilibrium.field[i]/2);
+      scaledA[i]=(chiGamma[i*m+i]/first[i])*curvatureRatio;
+      aCandidate[i]=scaledA[i]/first[i];
+      if(!finite(aCandidate[i]))aMaterialized=false;
+    }
+    for(let i=0;i<m;i++)for(let j=0;j<m;j++)phiTa[i]+=(phiT[i*m+j]/first[j])*scaledA[j];
+    const updateDirection=new Float64Array(m*m);
     for(let i=0;i<m;i++)for(let j=0;j<m;j++)updateDirection[i*m+j]=chiGamma[j*m+i]+phiTa[i]*s[j];
-    return Object.freeze({...result,gamma,chiGamma,a,updateDirection});
+    if([...scaledA,...phiTa,...updateDirection].some(value=>!finite(value)))throw new NeuralModelError('the recurrent gradient is not representable at binary64 precision','unrepresentable_gradient');
+    return Object.freeze({...result,gamma,chiGamma,a:aMaterialized?aCandidate:null,scaledA,aMaterialized,updateDirection});
   }
 
   objective(input,options={}){return this.analyze(input,{...options,gradient:false}).objective;}
@@ -272,7 +363,7 @@ export class InfomaxRecurrentNetwork {
     return Object.freeze({from1To2:meanBlock(b,a),from2To1:meanBlock(a,b)});
   }
 
-  toJSON(){return {schema:NEURAL_SYNAESTHESIA_SCHEMA,paper:{doi:PAPER_DOI},inputSize:this.inputSize,outputSize:this.outputSize,W:Array.from(this.W,x=>rounded(x)),K:Array.from(this.K,x=>rounded(x)),modalities:this.modalities.map(x=>({...x,preferredAngles:[...x.preferredAngles]})),metadata:this.metadata};}
+  toJSON(){return {schema:NEURAL_SYNAESTHESIA_SCHEMA,paper:{doi:PAPER_DOI},inputSize:this.inputSize,outputSize:this.outputSize,W:Array.from(this.W),K:Array.from(this.K),modalities:this.modalities.map(x=>({...x,preferredAngles:[...x.preferredAngles]})),metadata:{...this.metadata}};}
   static fromJSON(value){if(value?.schema!==NEURAL_SYNAESTHESIA_SCHEMA)throw new NeuralModelError(`expected ${NEURAL_SYNAESTHESIA_SCHEMA}`,'invalid_schema');return new InfomaxRecurrentNetwork(value);}
 }
 

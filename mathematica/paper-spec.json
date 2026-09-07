@@ -24,11 +24,15 @@
       "generalEquation": "sum over k=1..M includes K_ii",
       "referenceDefault": "retain diagonal updates",
       "optionalProjectConstraint": "exclude diagonal updates",
-      "scalable": true,
+      "sizeExtension": "project-defined circular-grid refinement; only 142 outputs are specified by the target paper",
       "minimumTotalNeurons": 6,
       "totalNeuronsMustBeEven": true
     },
-    "activation": "logistic",
+    "activation": {
+      "targetHighDimensionalStatement": "unspecified nonlinear squashing function",
+      "referenceConvention": "logistic",
+      "conventionAuthority": "target S1 simple analysis and related Shriki-Yellin ring model"
+    },
     "timeConstant": {
       "symbol": "tau",
       "reportedNumericValue": null,
@@ -47,10 +51,22 @@
   },
   "initialization": {
     "targetPaperStatement": "cross-talk connections initially near-zero",
+    "targetWithinModalityInitialization": null,
     "reportedScale": null,
     "reportedDistribution": null,
-    "exactZeroCondition": "explicit reproducible reconstruction condition",
-    "seededNearZeroCondition": "explicit sensitivity condition"
+    "exactZeroFullMatrixCondition": "explicit reproducible reconstruction condition; not uniquely author-specified",
+    "seededAllMatrixNearZeroCondition": "explicit project sensitivity condition distinct from the target's cross-talk-only statement",
+    "crossTalkOnlyNearZeroCondition": "required separate sensitivity condition when testing the target wording"
+  },
+  "objectiveScope": {
+    "formula": "epsilon = -1/2 E_x[log det(chi^T chi)]",
+    "publishedInterpretation": "zero-output-noise manifold-volume limit of mutual information",
+    "requiredLocalConditions": [
+      "continuous single-valued input-output map",
+      "local invertibility on the input manifold",
+      "full column rank susceptibility"
+    ],
+    "notClaimed": "general finite-noise mutual-information estimator"
   },
   "populationVector": {
     "publicationDefinition": "unnormalized complex sum",
@@ -90,13 +106,13 @@
     "stableIterations": 2,
     "maximumIterations": 50000,
     "derivativeFloor": 0,
-    "optionalDerivativeFloor": "nonzero values are a labeled numerical safeguard",
+    "optionalDerivativeFloor": "nonzero values define a labeled project surrogate and are excluded from publication-equation benchmarks",
     "pivotTolerance": 1e-13,
     "defaultSeed": 1,
     "preferredAngleEndpoint": "exclude 2 Pi",
-    "paperTrainingPolicy": "fixed learning rate, retain minimum-objective checkpoint",
-    "checkpointObjective": "same fixed input ensemble for every candidate K",
-    "legacyChangingSampleCheckpoint": "project visualization only; not scientifically valid"
+    "paperTrainingPolicy": "fixed learning rate and qualitative retention of a saved minimum-objective pattern",
+    "checkpointObjective": "same fixed input ensemble for every candidate K; project estimator because ensemble size and cadence are unreported",
+    "legacyChangingSampleCheckpoint": "project visualization heuristic; not a controlled comparison of the expected objective"
   },
   "unreportedByAuthors": [
     "MATLAB source code",
@@ -116,14 +132,22 @@
   "independentVerification": {
     "script": "mathematica/verification/PublicationDerivation.wls",
     "importsProjectImplementation": false,
-    "symbolicAndNumericChecks": 24,
-    "appendixInternalDiscrepancy": "Eq. 95 has a branch sign inconsistent with direct derivation and final Eq. 97; Eq. 97 is correct"
+    "symbolicAndNumericChecks": 28,
+    "appendixInternalDiscrepancy": "Eq. 95 has an apparent real-branch sign error relative to direct eigenvalue algebra and Eqs. 93 and 97; no author-confirmed erratum was found",
+    "appendixAdjacentFindings": [
+      "the symmetric Jacobian makes the complex-eigenvalue branch unreachable",
+      "Eq. 96's discriminant is nonnegative rather than strictly positive, with equality at u1=u2=0.3",
+      "Eq. 92's statement that gamma1 does not depend on eta is not generally literal"
+    ]
   },
   "scaling": {
     "denseMode": "literal unrestricted recurrent matrix; O(M^2) storage",
     "factorHistoryMode": "unbounded update-factor history with exact Woodbury solves",
-    "exactFullRankHandoff": "materialize unrestricted dense K when factor count reaches M",
-    "rankAddedPerSampleUpdate": 5,
+    "factorHistoryInitializationDomain": "exact only from K=0 or an explicitly diagonal-plus-low-rank K; generic near-zero dense K is normally full rank",
+    "exactDenseHandoff": "materialize unrestricted dense K when M(2r+1) >= M^2",
+    "storageCrossoverFactorColumns": "ceil((M-1)/2)",
+    "batchOneStorageCrossoverUpdate": "ceil((M-1)/10)",
+    "maximumRankAddedPerSampleUpdate": 5,
     "whyFive": "four input susceptibility directions plus one recurrent-state outer product",
     "exactUntilCompression": true,
     "finiteRankCompression": "model-changing approximation excluded from exact benchmarks",
@@ -131,6 +155,7 @@
     "fullPhiMaterializedInScalableMode": false,
     "allocationFreeEstimator": "EstimateNetworkScale[total,rank]",
     "biologicalEquivalenceFromNeuronCountAlone": false,
+    "crossSizeStatus": "scientifically motivated project model-family extension, not a paper-specified equivalence",
     "modelChangingAlternatives": [
       "finite-rank truncation",
       "sparse or pruned recurrent connectivity",

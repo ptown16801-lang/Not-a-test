@@ -33,8 +33,10 @@ the pipeline.
 
 - A complete Wolfram Language/Mathematica implementation, notebook, figure
   builders, and tests were added.
-- An independent derivation verified the fixed point, susceptibility,
-  information objective, and recurrent-learning direction before benchmarking.
+- An independent derivation verified the fixed point, susceptibility, the
+  publication's zero-output-noise manifold-volume objective, and the
+  recurrent-learning direction before benchmarking. That objective is not
+  presented as general finite-noise mutual information.
 - Finite-difference and JavaScript/Wolfram comparisons found sub-nanoscopic
   numerical errors on the verification fixtures.
 - The audit corrected population-vector normalization, recurrent diagonal
@@ -45,13 +47,15 @@ the pipeline.
 
 ### 4. Scaling was measured instead of guessed
 
-- The literal dense model was benchmarked through 4,544 output neurons.
-- Exact early-training factor history was benchmarked through 9,088 neurons,
-  with short feasibility probes reaching 72,704 neurons.
+- The current controlled ten-update model-family ladder was executed through
+  9,088 output neurons, with one- or two-update feasibility probes reaching
+  72,704 neurons. Those larger sizes are project extensions, not architectures
+  specified by the publication.
 - The publication-sized 142-neuron model completed 1,000 updates in 3.98 minutes
   on the recorded Work machine.
 - Separate critical-slowing tests showed that proximity to instability—not only
-  neuron count—can dominate runtime.
+  neuron count—can dominate runtime, and that a nominal fixed-point residual can
+  be too loose for an accurate recurrent gradient near criticality.
 
 ### 5. Text and sensory inputs were added
 

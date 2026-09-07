@@ -1,0 +1,1902 @@
+{
+  "schema": "neural-engine-project-log/v2",
+  "scope": "entire-repository",
+  "project": {
+    "name": "Shape Cognition Prototype / Neural Engine",
+    "package": "shape-cognition-prototype",
+    "version": "0.7.0",
+    "repository": "https://github.com/ptown16801-lang/Not-a-test",
+    "defaultBranch": "main",
+    "currentBranch": "main"
+  },
+  "snapshot": {
+    "generatedAtUtc": "2026-09-07T13:02:15.630Z",
+    "worktreeBaseCommit": "50a4ca808e34f6e02ff691172d76b4ba716e4ad8",
+    "historyStartsAtCommit": "bbc232c285b92d95c2722d7c33f6838cf10a711d",
+    "historyThroughCommit": "50a4ca808e34f6e02ff691172d76b4ba716e4ad8",
+    "commitCount": 25,
+    "fileCount": 137,
+    "totalBytes": 1722468,
+    "aggregateSha256": "c8fc3eefd5d8cba7c56ba8493456e8f12ca62462cf8593e87c1c97f986fefbc3",
+    "contentSnapshotIncludesWorkingTree": true,
+    "worktreeChangeCountExcludingThisLog": 58,
+    "exclusions": [
+      {
+        "path": ".git/",
+        "reason": "Git object database and local metadata are represented by commit history, not copied into the content manifest."
+      },
+      {
+        "path": "ignored files",
+        "reason": "Credentials, dependencies, coverage, and local runtime outputs are excluded by .gitignore."
+      },
+      {
+        "path": "PROJECT_LOG.json",
+        "reason": "The manifest excludes itself to avoid an impossible self-referential SHA-256 fixed point."
+      },
+      {
+        "path": "tmp/",
+        "reason": "Ephemeral render and diagnostic files are not project artifacts."
+      }
+    ],
+    "purpose": "Machine-readable whole-project history, SHA-256 file manifest, subsystem inventory, scientific evidence snapshot, and complete JSON artifact index."
+  },
+  "generation": {
+    "generator": "scripts/generate-project-log.js",
+    "generatorSha256": "db1fa115d793a2b320fb9cc2bc2a56f269742dc11d8f3de9c7361544af942f96",
+    "ordering": "UTF-8 path lexical order",
+    "aggregateDigestRecord": "path NUL byte-count NUL sha256 LF for every indexed file",
+    "regenerate": "npm run logs:project"
+  },
+  "history": [
+    {
+      "commit": "bbc232c285b92d95c2722d7c33f6838cf10a711d",
+      "authoredAt": "2026-09-05T00:33:11-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Initialize Shape Cognition v0.7.0"
+    },
+    {
+      "commit": "ca9f69350b003b391ec39a611fdf6a4c27ee7e80",
+      "authoredAt": "2026-09-05T00:37:30-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Assemble Shape Cognition v0.7.0 web server, sensory art, dirt renderer and tests"
+    },
+    {
+      "commit": "ecb019f947341a38b376b79ff3da1751d4aed59b",
+      "authoredAt": "2026-09-05T02:34:01-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add seamless cloud rolling loop"
+    },
+    {
+      "commit": "2cd5e4c167311c1b5ec2a30fa03460de10859638",
+      "authoredAt": "2026-09-05T02:34:05-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add cloud loop motion layer styles"
+    },
+    {
+      "commit": "875d89d858c26a4808dd1838c0f0b8cf3b660cc2",
+      "authoredAt": "2026-09-05T02:41:20-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add deterministic text perceptual mapper"
+    },
+    {
+      "commit": "00f03408565002a9c4c37c6cc68aa3742c6dd98a",
+      "authoredAt": "2026-09-05T02:41:27-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Test text perceptual mapper"
+    },
+    {
+      "commit": "aa340001d811f513ce2c05736c3d976d4f3da25a",
+      "authoredAt": "2026-09-05T02:41:36-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Bridge text perception into neural visualizer"
+    },
+    {
+      "commit": "082b6dd6e5d450420a79a88263b45082db1667a8",
+      "authoredAt": "2026-09-05T02:41:48-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add runnable text seed synesthesia demo"
+    },
+    {
+      "commit": "76155ec5a42ae1cc637a0480895aba4a707343f3",
+      "authoredAt": "2026-09-05T02:45:19-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Wire text seed renderer into intake server"
+    },
+    {
+      "commit": "02e89a7876a3d063ca9a099fb9a83d5cd1e0a1ba",
+      "authoredAt": "2026-09-05T02:45:42-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add text seed render endpoint"
+    },
+    {
+      "commit": "47af19e31c5dfdf4a8fe7d1e7e5f4d2c268b0621",
+      "authoredAt": "2026-09-05T02:46:19-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add floating text seed render test window"
+    },
+    {
+      "commit": "970a0b8e029d18d3f6b755909738e4bf4e45b054",
+      "authoredAt": "2026-09-05T02:47:34-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Harden seamless cloud loop and cleanup"
+    },
+    {
+      "commit": "85b964726b5a83ccc12acf400c283b68d08a4ae3",
+      "authoredAt": "2026-09-05T02:47:41-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Update cloud loop wrapper styles"
+    },
+    {
+      "commit": "7d38a51a1b98c874cb65ded2eb62253f47193729",
+      "authoredAt": "2026-09-05T02:47:53-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add subtle randomized corn breeze animation"
+    },
+    {
+      "commit": "cb4c6f575cea22c2ec6312bc8d4d32a431dd0aa3",
+      "authoredAt": "2026-09-05T02:48:47-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Test text seed render endpoint and updated capabilities"
+    },
+    {
+      "commit": "6f521a4a152800aa481a0f0d360a9854d72ec81f",
+      "authoredAt": "2026-09-05T02:49:04-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add environment motion integration controller"
+    },
+    {
+      "commit": "696e7592c0db7cca11fe91064a43228fff4aab98",
+      "authoredAt": "2026-09-05T02:49:35-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Fix renderer window sizing and fullscreen behavior"
+    },
+    {
+      "commit": "a67e1b40aa3790ee58becdbf4f6299cebb9e8930",
+      "authoredAt": "2026-09-05T02:50:00-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Limit cloud overlap to seam crossfade"
+    },
+    {
+      "commit": "2decd5c180df92780c88b6cbd022465a5b266713",
+      "authoredAt": "2026-09-05T02:50:24-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Fix cloud loop opacity at reset boundary"
+    },
+    {
+      "commit": "335302c77d1ea28a7d5dbfa6b638f72991fde887",
+      "authoredAt": "2026-09-06T22:50:14-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Fix cloud preview and renderer window state"
+    },
+    {
+      "commit": "91bac517333a1232076ea1da4b485fdd8856f00a",
+      "authoredAt": "2026-09-07T00:14:00-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add scalable Mathematica paper reconstruction"
+    },
+    {
+      "commit": "9f3e163e469be40c5d5248be8e66ef3b7945b672",
+      "authoredAt": "2026-09-07T00:15:39-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "docs: add Shriki paper fidelity audit gate"
+    },
+    {
+      "commit": "0c6618228a17b4c98dbb9030088c8cfc70519a1a",
+      "authoredAt": "2026-09-07T03:57:00-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "fix: establish Shriki publication fidelity"
+    },
+    {
+      "commit": "d5ada19065c756743e7cea2d574f0ca61f6cf727",
+      "authoredAt": "2026-09-07T03:58:20-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "bench: measure exact Shriki scaling limits"
+    },
+    {
+      "commit": "50a4ca808e34f6e02ff691172d76b4ba716e4ad8",
+      "authoredAt": "2026-09-07T04:07:52-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "docs: summarize neural engine evolution"
+    }
+  ],
+  "subsystems": [
+    {
+      "id": "shape-cognition",
+      "purpose": "Immutable content-addressed thought geometry and deterministic operator DAG.",
+      "paths": [
+        "src/engine.js",
+        "src/types.js"
+      ],
+      "indexedFiles": [
+        "src/engine.js",
+        "src/types.js"
+      ]
+    },
+    {
+      "id": "neural-synesthesia-javascript",
+      "purpose": "JavaScript recurrent-infomax reference, training, and checkpoint interoperability.",
+      "paths": [
+        "src/neural-synesthesia.js",
+        "test/neural-synesthesia.test.js"
+      ],
+      "indexedFiles": [
+        "src/neural-synesthesia.js",
+        "test/neural-synesthesia.test.js"
+      ]
+    },
+    {
+      "id": "wolfram-reconstruction",
+      "purpose": "Independent publication derivation, Wolfram model, figures, tests, and benchmarks.",
+      "paths": [
+        "mathematica/"
+      ],
+      "indexedFiles": [
+        "mathematica/AggregateScalingResults.wls",
+        "mathematica/CriticalSlowingBenchmark.wls",
+        "mathematica/ExactBenchmarkPoint.wls",
+        "mathematica/PaperFigures.wl",
+        "mathematica/README.md",
+        "mathematica/RunAll.wls",
+        "mathematica/SCALING_AUDIT.md",
+        "mathematica/ScalingBenchmark.wls",
+        "mathematica/Shriki2016Reproduction.nb",
+        "mathematica/SynesthesiaModel.wl",
+        "mathematica/benchmark-results/README.md",
+        "mathematica/benchmark-results/benchmark-qualification.json",
+        "mathematica/benchmark-results/critical-slowing-142.json",
+        "mathematica/benchmark-results/dense-1136.json",
+        "mathematica/benchmark-results/dense-142.json",
+        "mathematica/benchmark-results/dense-2272.json",
+        "mathematica/benchmark-results/dense-284.json",
+        "mathematica/benchmark-results/dense-4544.json",
+        "mathematica/benchmark-results/dense-568.json",
+        "mathematica/benchmark-results/environment.json",
+        "mathematica/benchmark-results/factorhistory-1136-v2.json",
+        "mathematica/benchmark-results/factorhistory-1136.json",
+        "mathematica/benchmark-results/factorhistory-142-train1000-v2.json",
+        "mathematica/benchmark-results/factorhistory-142-train1000.json",
+        "mathematica/benchmark-results/factorhistory-142-window10.json",
+        "mathematica/benchmark-results/factorhistory-142.json",
+        "mathematica/benchmark-results/factorhistory-18176-v2.json",
+        "mathematica/benchmark-results/factorhistory-18176.json",
+        "mathematica/benchmark-results/factorhistory-2272-v2.json",
+        "mathematica/benchmark-results/factorhistory-2272.json",
+        "mathematica/benchmark-results/factorhistory-284-v2.json",
+        "mathematica/benchmark-results/factorhistory-284.json",
+        "mathematica/benchmark-results/factorhistory-36352-v2.json",
+        "mathematica/benchmark-results/factorhistory-36352.json",
+        "mathematica/benchmark-results/factorhistory-4544-v2.json",
+        "mathematica/benchmark-results/factorhistory-4544.json",
+        "mathematica/benchmark-results/factorhistory-568-train50.json",
+        "mathematica/benchmark-results/factorhistory-568-v2.json",
+        "mathematica/benchmark-results/factorhistory-568.json",
+        "mathematica/benchmark-results/factorhistory-72704-v2.json",
+        "mathematica/benchmark-results/factorhistory-72704.json",
+        "mathematica/benchmark-results/factorhistory-9088-v2.json",
+        "mathematica/benchmark-results/factorhistory-9088.json",
+        "mathematica/benchmark-results/scaling-measurements.csv",
+        "mathematica/benchmark-results/scaling-summary.json",
+        "mathematica/paper-spec.json",
+        "mathematica/tests/RunTests.wls",
+        "mathematica/tests/SynesthesiaModel.wlt",
+        "mathematica/verification/NumericalPolicySensitivity.wls",
+        "mathematica/verification/PublicationDerivation.wls",
+        "mathematica/verification/RepeatedValidation.wls",
+        "mathematica/verification/results/javascript-adversarial-validation.json",
+        "mathematica/verification/results/numerical-policy-sensitivity.json",
+        "mathematica/verification/results/repeated-validation.json",
+        "mathematica/verification/results/wolfram-test-report.json",
+        "mathematica/verification/results/wolfram-validation.json",
+        "mathematica/verification/source-manifest.json"
+      ]
+    },
+    {
+      "id": "text-perception",
+      "purpose": "Deterministic text-to-perception feature mapping and neural bridge.",
+      "paths": [
+        "src/text-perception.js",
+        "src/text-neural-bridge.js"
+      ],
+      "indexedFiles": [
+        "src/text-neural-bridge.js",
+        "src/text-perception.js"
+      ]
+    },
+    {
+      "id": "sensory-inputs",
+      "purpose": "Optional bounded thermal and PCM sound encoders.",
+      "paths": [
+        "src/sensory-encoders.js",
+        "src/sensory-art.js"
+      ],
+      "indexedFiles": [
+        "src/sensory-art.js",
+        "src/sensory-encoders.js"
+      ]
+    },
+    {
+      "id": "synesthetic-geometry",
+      "purpose": "Neural response to contours, weave paths, and visual motifs.",
+      "paths": [
+        "src/synesthetic-geometry.js",
+        "src/neural-shape-bridge.js"
+      ],
+      "indexedFiles": [
+        "src/neural-shape-bridge.js",
+        "src/synesthetic-geometry.js"
+      ]
+    },
+    {
+      "id": "dirt-inscription",
+      "purpose": "Physical tram-line plan and deterministic soil rendering.",
+      "paths": [
+        "src/dirt-renderer.js",
+        "src/dirt-texture.js"
+      ],
+      "indexedFiles": [
+        "src/dirt-renderer.js",
+        "src/dirt-texture.js"
+      ]
+    },
+    {
+      "id": "identity-and-steganography",
+      "purpose": "Thought/agent identity carriers, integrity checks, and watermarking.",
+      "paths": [
+        "src/stego.js"
+      ],
+      "indexedFiles": [
+        "src/stego.js"
+      ]
+    },
+    {
+      "id": "gateway-and-deployment",
+      "purpose": "Validated intake, signed receipts, gallery, server configuration, and containers.",
+      "paths": [
+        "src/thought-gateway.js",
+        "src/thought-intake.js",
+        "demo/intake-server.js",
+        "Dockerfile"
+      ],
+      "indexedFiles": [
+        "Dockerfile",
+        "demo/intake-server.js",
+        "src/thought-gateway.js",
+        "src/thought-intake.js"
+      ]
+    },
+    {
+      "id": "moltbook",
+      "purpose": "Optional external identity participation with safe inactive default.",
+      "paths": [
+        "src/moltbook-identity.js",
+        "docs/moltbook-participation.md"
+      ],
+      "indexedFiles": [
+        "docs/moltbook-participation.md",
+        "src/moltbook-identity.js"
+      ]
+    },
+    {
+      "id": "environment-motion",
+      "purpose": "Corn-breeze and seamless-cloud motion controllers.",
+      "paths": [
+        "src/environment-motion.js",
+        "src/corn-breeze.js",
+        "src/cloud-loop.js"
+      ],
+      "indexedFiles": [
+        "src/cloud-loop.js",
+        "src/corn-breeze.js",
+        "src/environment-motion.js"
+      ]
+    },
+    {
+      "id": "browser-demo",
+      "purpose": "Interactive test window and runnable visual demonstrations.",
+      "paths": [
+        "demo/intake-browser.html",
+        "demo/"
+      ],
+      "indexedFiles": [
+        "demo/balance-output.json",
+        "demo/balance.js",
+        "demo/dev-server.js",
+        "demo/dirt-balance-output.json",
+        "demo/dirt-balance.js",
+        "demo/intake-browser.html",
+        "demo/intake-server.js",
+        "demo/neural-synesthesia-output.json",
+        "demo/neural-synesthesia.js",
+        "demo/neural-synesthesia.svg",
+        "demo/projective-synesthesia-output.json",
+        "demo/projective-synesthesia.js",
+        "demo/projective-synesthesia.svg",
+        "demo/run-neural-experiment.js",
+        "demo/text-seed-synesthesia.js",
+        "demo/thought-submission.json",
+        "demo/train-neural-checkpoint.js"
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": ".dockerignore",
+      "bytes": 68,
+      "sha256": "4f4ed94fa18ce6cc0dc965779fdb595d043cf1ffe9919c42bbf3d7cdbbb80d86",
+      "category": "project-infrastructure"
+    },
+    {
+      "path": ".env.example",
+      "bytes": 919,
+      "sha256": "6149b540a1bae67c1e6ea80bc19c535ed249347763623308256abf76399ecae0",
+      "category": "project-infrastructure"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 213,
+      "sha256": "3849ef63601a2a9dfd5e232d346f1682ef0e72bac2aca8b324eb080f4983c586",
+      "category": "project-infrastructure"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 6032,
+      "sha256": "d8ffc40081a61d516d85f85fbce68536b4dbe7ffec097d83436627e5d0e9d114",
+      "category": "documentation"
+    },
+    {
+      "path": "Dockerfile",
+      "bytes": 440,
+      "sha256": "3a0e681bc3209bbec18d1bd75cdd1bbee9177be9bc728877846e60153a0bec28",
+      "category": "project-infrastructure"
+    },
+    {
+      "path": "README.md",
+      "bytes": 18853,
+      "sha256": "71cc4930759d711e0601eeead54da09e705f728544398804bda22374cbfe1859",
+      "category": "documentation"
+    },
+    {
+      "path": "RELEASE.md",
+      "bytes": 2658,
+      "sha256": "6b7a36763f1c81dd1c919aa0fad071e302542836bafbd6ca79ae568694de3bc4",
+      "category": "documentation"
+    },
+    {
+      "path": "assets/cloud-loop.css",
+      "bytes": 417,
+      "sha256": "1d5dc15f09b17f186fababfb06e7274d44a78a62177167f3ddb2600f304112c8",
+      "category": "asset"
+    },
+    {
+      "path": "assets/neural-preview-checkpoint.json",
+      "bytes": 7175,
+      "sha256": "f602c53c398305b5aa6d66442063f1ee26a6f169a6454035f7497d48810a0044",
+      "category": "asset"
+    },
+    {
+      "path": "compose.yaml",
+      "bytes": 305,
+      "sha256": "c1c8f77de3c6591a115cafb2cbf0b3a9bc9572241701df0dc51c6879c0d20a42",
+      "category": "configuration-or-data"
+    },
+    {
+      "path": "demo/balance-output.json",
+      "bytes": 13495,
+      "sha256": "653b53858666680f1b4fc4e4a84fd2bda5ec242a1c02fe4ee57aa78df181ee1e",
+      "category": "demo"
+    },
+    {
+      "path": "demo/balance.js",
+      "bytes": 1139,
+      "sha256": "700e6e3367be85c4938287667288ece174dde04d4ee2019598743bfe7582604c",
+      "category": "demo"
+    },
+    {
+      "path": "demo/dev-server.js",
+      "bytes": 791,
+      "sha256": "7b21311b4e8e679e990b1e86fe83c4fda2deb21bf30977166ec07afb64d87202",
+      "category": "demo"
+    },
+    {
+      "path": "demo/dirt-balance-output.json",
+      "bytes": 500019,
+      "sha256": "2cc3acd6e45ab909123ae1637c453d79bea2a400c50c814e70da7482d10b3491",
+      "category": "demo"
+    },
+    {
+      "path": "demo/dirt-balance.js",
+      "bytes": 680,
+      "sha256": "74977c37d98dc008328ae61c374323881b0c19761456eee910aa0de626e1cd11",
+      "category": "demo"
+    },
+    {
+      "path": "demo/intake-browser.html",
+      "bytes": 13540,
+      "sha256": "37acc9b7e9ec7a843fe4ed0766df340c82b37f3d31e724edf260232036c8feb9",
+      "category": "demo"
+    },
+    {
+      "path": "demo/intake-server.js",
+      "bytes": 3256,
+      "sha256": "37a1301868a8d36d5c48b349898c17ab7e465b4e479e4ac2676a92789962d69d",
+      "category": "demo"
+    },
+    {
+      "path": "demo/neural-synesthesia-output.json",
+      "bytes": 2913,
+      "sha256": "12e6ae2cbd610136c07549e4e36c1417ff362d39e6b16dcac15d8e5d46df8196",
+      "category": "demo"
+    },
+    {
+      "path": "demo/neural-synesthesia.js",
+      "bytes": 3690,
+      "sha256": "9d47dea0f404acd8a05418598603945c5f540fca6a5ed248c23b3a224035d55c",
+      "category": "demo"
+    },
+    {
+      "path": "demo/neural-synesthesia.svg",
+      "bytes": 74491,
+      "sha256": "d321b4f866072a784bf0c0d110b475b2512ef91645e7aa66146802760be7e310",
+      "category": "demo"
+    },
+    {
+      "path": "demo/projective-synesthesia-output.json",
+      "bytes": 23906,
+      "sha256": "da5f19eb3e1207aa33b2343a450899566cbea37af466c55d96955330c6039879",
+      "category": "demo"
+    },
+    {
+      "path": "demo/projective-synesthesia.js",
+      "bytes": 2033,
+      "sha256": "e157d585440c834599744affdddf05f73ea1fc9aa96f9ceef7ed62c4359e8425",
+      "category": "demo"
+    },
+    {
+      "path": "demo/projective-synesthesia.svg",
+      "bytes": 39079,
+      "sha256": "820b4633cfca9b10d57a3df9b71d896cd757a4c2c5e245f955caf9e196164dbb",
+      "category": "demo"
+    },
+    {
+      "path": "demo/run-neural-experiment.js",
+      "bytes": 5638,
+      "sha256": "88289f8cd3b54b8ac05ef92031fbd4eb9c5fde3f9918747b0af8659566c4de88",
+      "category": "demo"
+    },
+    {
+      "path": "demo/text-seed-synesthesia.js",
+      "bytes": 2590,
+      "sha256": "59ec4f4ae973858dc200a3b2a76549adc9c36364cf6ea5443f2aa7e63296fdc1",
+      "category": "demo"
+    },
+    {
+      "path": "demo/thought-submission.json",
+      "bytes": 601,
+      "sha256": "607d3ea017aacd8337ea3ec6cfa6187d9e035d60bd4590a1aa41efbf207bbd71",
+      "category": "demo"
+    },
+    {
+      "path": "demo/train-neural-checkpoint.js",
+      "bytes": 1820,
+      "sha256": "d5f2f24f28052588b7fdec502f80d5443c21456b2bde04d05129e4a3ae157b91",
+      "category": "demo"
+    },
+    {
+      "path": "docs/figure-7-publication-audit.md",
+      "bytes": 5815,
+      "sha256": "c8023de1134dbec98aa97e9b30211dd908a803687613f5e856cf5aca85286d40",
+      "category": "documentation"
+    },
+    {
+      "path": "docs/modern-compute-scaling-results.md",
+      "bytes": 10074,
+      "sha256": "cb428ab6178eb115e90e45d82482a374dc0fc9dd10061ac326e2d165ebd1f851",
+      "category": "documentation"
+    },
+    {
+      "path": "docs/moltbook-participation.md",
+      "bytes": 2332,
+      "sha256": "3a8f23fcd9358ffbe4b7ee747267aa73d589f378e3ff3b7a07e4bf80c257abd1",
+      "category": "documentation"
+    },
+    {
+      "path": "docs/paper-fidelity-audit.md",
+      "bytes": 8935,
+      "sha256": "1cc50effa74f4f96aff2254279021ebed127156c84c6a7d4f19e9c9b24486e5f",
+      "category": "documentation"
+    },
+    {
+      "path": "docs/project-change-summary.md",
+      "bytes": 5599,
+      "sha256": "ae894256bd481596ccd9d016270d06c862eefecbace6af94d447a3dc1c6cecd2",
+      "category": "documentation"
+    },
+    {
+      "path": "docs/scientific-audit-report.md",
+      "bytes": 27815,
+      "sha256": "81c0b94c690a2914a58a18dda68bd93244b2ed1f992de9cb9c70e860c2ddac65",
+      "category": "scientific-audit"
+    },
+    {
+      "path": "docs/scientific-claim-audit.json",
+      "bytes": 16128,
+      "sha256": "22e16f14d3a0a3a89ff116a2711d8428dc2dd9ccbe38409d22a724efdbab9bd2",
+      "category": "scientific-audit"
+    },
+    {
+      "path": "docs/scientific-source-ledger.json",
+      "bytes": 19219,
+      "sha256": "ef5b779143785af3aae5f8f12397bb107b91c3733614999a4c800643d9cc2abd",
+      "category": "scientific-audit"
+    },
+    {
+      "path": "docs/shriki-2016-reconstruction.md",
+      "bytes": 10721,
+      "sha256": "cb7f3c9a9a8a40a2d0156f30bb87bc65e84c8d0a50cca2c696220b30c5e9a5b9",
+      "category": "documentation"
+    },
+    {
+      "path": "mathematica/AggregateScalingResults.wls",
+      "bytes": 21320,
+      "sha256": "09fe6d36a7590a74474b5a64d9e13ad57d8649df8db2ca27fa62ed50048cf9b5",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/CriticalSlowingBenchmark.wls",
+      "bytes": 9002,
+      "sha256": "b6a67be1254207b76f32ca8d57e97e8f6769a70d85df323ea5368a0dde39cc25",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/ExactBenchmarkPoint.wls",
+      "bytes": 14415,
+      "sha256": "fa8036ee16f40850cfe4fa806d5d342dc37552b8f7e3b80dc13e5599ab2e8ca8",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/PaperFigures.wl",
+      "bytes": 20506,
+      "sha256": "cdc1362b85b9f7fdd57f015a78b81fd6478ec972930dd3582ab37899c585be16",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/README.md",
+      "bytes": 10852,
+      "sha256": "305f6bd6f9fc1ac8239de8b35abe52ded07f4f62c2a9ec04416988a93748a913",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/RunAll.wls",
+      "bytes": 5469,
+      "sha256": "b55f5212974a3f945f7fc50a97a17d46ed72d6972f03a033508789e466730105",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/SCALING_AUDIT.md",
+      "bytes": 9803,
+      "sha256": "a6c3ef8d0c4512c0917a5d8db0c35385c6242ed22571b58797b6f93530ed7614",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/ScalingBenchmark.wls",
+      "bytes": 2897,
+      "sha256": "50d17180918225a0110228199f21002335c41d2c5e14f0bb1eece3562a3981c0",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/Shriki2016Reproduction.nb",
+      "bytes": 19511,
+      "sha256": "9529df1a44b21bd1721610813be1c8701b956074228854e7eca0b4026eea20f8",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/SynesthesiaModel.wl",
+      "bytes": 68555,
+      "sha256": "5f0ef5d0e64532effc04f478d6d3e1b4bad42bd0fecf6a2880f98d8174ef497c",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/benchmark-results/README.md",
+      "bytes": 2585,
+      "sha256": "ccd34a8d71d04cf23705cc1dedd2a5ef072c0e6dcdfd192a91672dfba460bdb6",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/benchmark-qualification.json",
+      "bytes": 40846,
+      "sha256": "f69f95c9725af069cba7bce70aaa2475ae58415e54f6eb7baefd3e8fa3da66ca",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/critical-slowing-142.json",
+      "bytes": 8096,
+      "sha256": "571b358d2839839131101f1c175bd10ff6d37eec50fd521b94dc0132f5a33e08",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-1136.json",
+      "bytes": 2301,
+      "sha256": "cf4eddca7ddb396084477972a4d9eb8f4e19fec25dc2ff4624254827a6a423ad",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-142.json",
+      "bytes": 2501,
+      "sha256": "43dd97f04d504318327c856fc85e91c1024c4e894d86f15bdcc9b2fb51f79736",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-2272.json",
+      "bytes": 1519,
+      "sha256": "ad5b595aaa278833f0b4fab29e86292cb2a77b1abebae64ca47ac6b5e80c42a9",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-284.json",
+      "bytes": 2441,
+      "sha256": "3087f070604dc0de3faf166f8c62f3c1ca10e894ebcc6bc19db1be8f63daffcc",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-4544.json",
+      "bytes": 1524,
+      "sha256": "76b1cb38fe2afec9b41681ef9b41e9deb1c6bc8d9c4a398033f1f5a421ba93aa",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-568.json",
+      "bytes": 2383,
+      "sha256": "381337e59988d02e6bf3ded084988630cf30a8f3e49801aeaec4d9e44223c5bb",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/environment.json",
+      "bytes": 651,
+      "sha256": "50b6b17f876320a98d3bb0d101c1c2466231c0d2fb2289c3f12db5a0ba703164",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-1136-v2.json",
+      "bytes": 4627,
+      "sha256": "3556cbc7ab45c1e50994aed63018ef71a008c9bf6a35e90cbe625ac7dcb1087d",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-1136.json",
+      "bytes": 2453,
+      "sha256": "4b048639e0e5884849b96c31144a54f1facae38f382951f95f974908be731486",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-142-train1000-v2.json",
+      "bytes": 4638,
+      "sha256": "c5bedb5364c561ca6fb0079eb6aae11a3d1ae192b60430ff945a9b010051ec8b",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-142-train1000.json",
+      "bytes": 2394,
+      "sha256": "3c95b001a8b26a2cc01a9d4f9569eadc402e7f0e059597b8e9b1621946d55f5c",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-142-window10.json",
+      "bytes": 2468,
+      "sha256": "2713fd3e20d25edbbffbd86a6f464369d44ad964d35700a3f5dd47b9b2534bf7",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-142.json",
+      "bytes": 2515,
+      "sha256": "eed85f7e0e4bca0cfb64d04129bc903e96e1ec0fa81de610f3a056fba4892052",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-18176-v2.json",
+      "bytes": 4553,
+      "sha256": "11c379cfe79d2debe2b7921c391616c17d8ab71e8f822f1857b4a95bde500b1f",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-18176.json",
+      "bytes": 2308,
+      "sha256": "97111e8b8af049f501c1822beffd84e33f5f3406c34621b911c827414bdc57ae",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-2272-v2.json",
+      "bytes": 4624,
+      "sha256": "9130191466ad3e2b62c01d04d1c44f977cac6c2ab6ca7ddb4649795b74a02f15",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-2272.json",
+      "bytes": 2448,
+      "sha256": "80062b425f81b26656fde022e07f6f38b00ae00c0dc4014af30de02ab97bb192",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-284-v2.json",
+      "bytes": 4626,
+      "sha256": "53cd3328e3a160ac5ace9db40c6714b76a9017611772bbada4d40fc048e45ed6",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-284.json",
+      "bytes": 2455,
+      "sha256": "4faeb3a9e7041c0e4e9fde54c9935991a789b498e3a5995bec7acd7366e7a804",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-36352-v2.json",
+      "bytes": 4554,
+      "sha256": "4c45968b62dc3a8d634af47ffeef87e6f342012c4cedafeede7553777124ac15",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-36352.json",
+      "bytes": 2315,
+      "sha256": "ab42fa2f440ea30750dd9fdd017f52e90c8e8221053d088a290990a45f38c783",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-4544-v2.json",
+      "bytes": 4615,
+      "sha256": "99501a4d10e6e86f2853216ccae0d6eb547cdff21b4941a6be72d214cc4ba165",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-4544.json",
+      "bytes": 2382,
+      "sha256": "2b3263bd4264166b1bf285e401f2639a5aa20defda466cf4ff15df1bc0b9209c",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-568-train50.json",
+      "bytes": 2310,
+      "sha256": "4994e0bc6c1888f8961cd29bcd63cdbc02d4da72fe013314f43e7a0d14351948",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-568-v2.json",
+      "bytes": 4626,
+      "sha256": "803e1c1e1d935ab4ede45086d84004cbe6c731043a36af9c2ffda616da9617a1",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-568.json",
+      "bytes": 2483,
+      "sha256": "b1f8359cceb396cfb79edc32954539bed379b5e4e26b9486d2d3b6c0f26f523d",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-72704-v2.json",
+      "bytes": 4566,
+      "sha256": "f5e36fb02db33b40fe1442e2d64e67b646a7b1ce1761e9347ea6c1a54bbc635d",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-72704.json",
+      "bytes": 2330,
+      "sha256": "1713e4838306690495e1b2b46c3eb9705aea09fa4eee55557bb2d8f33ceea5fb",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-9088-v2.json",
+      "bytes": 4625,
+      "sha256": "79d6f617d3847c9006d526e4435f7999c9882fbe9a41bc9ce7437cd4233c22d4",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-9088.json",
+      "bytes": 2387,
+      "sha256": "58ba2301f5de344c78df4fa5449c904277c93d4f654de359281ef943076141a9",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/scaling-measurements.csv",
+      "bytes": 16955,
+      "sha256": "ff39cd037aa6cafc24f6c0ab24b7054615e329e31e359ad09d68829a89c808ec",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/benchmark-results/scaling-summary.json",
+      "bytes": 49782,
+      "sha256": "1ac1bfa4edf422294be0fb9d5161e0638fe0f5a408c977f4700985155c94a29a",
+      "category": "benchmark"
+    },
+    {
+      "path": "mathematica/paper-spec.json",
+      "bytes": 8305,
+      "sha256": "9231eed0f3e4e43cdbc516e62d46984b3e560c0082150c9b24e2360c647779c2",
+      "category": "scientific-audit"
+    },
+    {
+      "path": "mathematica/tests/RunTests.wls",
+      "bytes": 3249,
+      "sha256": "ef6a6bdddd5aa165c5dbc030e012f68229928d34dd49452117cf774cafd3e5d0",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/tests/SynesthesiaModel.wlt",
+      "bytes": 18977,
+      "sha256": "8375cd2e9515c07a3a0afe4d7b2f91c83b02ee0032b06cf8e8ba0073d49f323d",
+      "category": "wolfram-source"
+    },
+    {
+      "path": "mathematica/verification/NumericalPolicySensitivity.wls",
+      "bytes": 7158,
+      "sha256": "3f06e6a117398efea9640ec795981601787688ff4eda377dadc80b5eaf11b526",
+      "category": "scientific-validation"
+    },
+    {
+      "path": "mathematica/verification/PublicationDerivation.wls",
+      "bytes": 15749,
+      "sha256": "c64f329c83e69119abd16d0c7e3fb0bc119563176f78976530451daebdcf7f56",
+      "category": "scientific-validation"
+    },
+    {
+      "path": "mathematica/verification/RepeatedValidation.wls",
+      "bytes": 16777,
+      "sha256": "efae92d99288a19af900e28fc51c3f2f3ebfcd3b22c69cb133d4ba4c94991f6b",
+      "category": "scientific-validation"
+    },
+    {
+      "path": "mathematica/verification/results/javascript-adversarial-validation.json",
+      "bytes": 5116,
+      "sha256": "0524a0677e58da69c825ed0c9b569fd961f3b770a2b2147d70213b343bfae026",
+      "category": "scientific-validation"
+    },
+    {
+      "path": "mathematica/verification/results/numerical-policy-sensitivity.json",
+      "bytes": 18578,
+      "sha256": "7406c38e664e9df0e49976f5d5d7aa13a9ce448cd0bb15bb333b03cd40da8b47",
+      "category": "scientific-validation"
+    },
+    {
+      "path": "mathematica/verification/results/repeated-validation.json",
+      "bytes": 8603,
+      "sha256": "03340e541cf4b58f41b47641bb766396688e1f13affa875d50a081a7ecacf499",
+      "category": "scientific-validation"
+    },
+    {
+      "path": "mathematica/verification/results/wolfram-test-report.json",
+      "bytes": 5550,
+      "sha256": "f6f4657451a2cff6349eda9094658316ce5b2b79aa6426b61c72cb21aa5aafc9",
+      "category": "scientific-validation"
+    },
+    {
+      "path": "mathematica/verification/results/wolfram-validation.json",
+      "bytes": 5340,
+      "sha256": "7fd44ce413f4448950a03a1a49890695709a772fc9f2ab3c515faac82b22a835",
+      "category": "scientific-validation"
+    },
+    {
+      "path": "mathematica/verification/source-manifest.json",
+      "bytes": 781,
+      "sha256": "73040da225d266c013f74d28c609e652ec54f30123850de776e6af11bc465584",
+      "category": "scientific-validation"
+    },
+    {
+      "path": "output/pdf/shriki-2016-publication-grade-audit.pdf",
+      "bytes": 40189,
+      "sha256": "063808b20561299d929010367df2854e9c63f9dc8050f892c76febe78e43a2bd",
+      "category": "publication-output"
+    },
+    {
+      "path": "package.json",
+      "bytes": 978,
+      "sha256": "e3aa4d46ca340e867946fa476653d3034792e254594a4bb4b4a3fce1e32527c3",
+      "category": "configuration-or-data"
+    },
+    {
+      "path": "scripts/generate-neural-validation-log.js",
+      "bytes": 12551,
+      "sha256": "8fdecfac15120223798078ec69b723e7695bf8fc5b143e326b00007ebac042dd",
+      "category": "reproducibility-tooling"
+    },
+    {
+      "path": "scripts/generate-project-log.js",
+      "bytes": 15800,
+      "sha256": "db1fa115d793a2b320fb9cc2bc2a56f269742dc11d8f3de9c7361544af942f96",
+      "category": "reproducibility-tooling"
+    },
+    {
+      "path": "scripts/generate-scientific-audit-pdf.py",
+      "bytes": 18474,
+      "sha256": "0b2d94d224d79ae7227a9cbba890f193868da4d256c41151d495fce5a52cac71",
+      "category": "reproducibility-tooling"
+    },
+    {
+      "path": "scripts/run-tests-with-json-log.js",
+      "bytes": 2729,
+      "sha256": "e88b3a6eba76779e593b76317bd49457fcadc5978af5f117c3d8106dacb043fb",
+      "category": "reproducibility-tooling"
+    },
+    {
+      "path": "src/cloud-loop.js",
+      "bytes": 5045,
+      "sha256": "d9c6d24caa97741e5aa4f23168ba05ec775751cc8133ea6e55fab25b66f1bcb8",
+      "category": "application-source"
+    },
+    {
+      "path": "src/corn-breeze.js",
+      "bytes": 2910,
+      "sha256": "cde1c1112ad3983083ab1753e7b4188a042311e63867c8462f039438cb9ef89b",
+      "category": "application-source"
+    },
+    {
+      "path": "src/dirt-renderer.js",
+      "bytes": 16932,
+      "sha256": "6d52ab17847f8b74cb71b81204989198af28f05169329d30c8cc3743b928e707",
+      "category": "application-source"
+    },
+    {
+      "path": "src/dirt-texture.js",
+      "bytes": 3022,
+      "sha256": "15d9ccd49ef33adb97fb51add5f51043db7b3104d13860d5c52aec6e0cfdede0",
+      "category": "application-source"
+    },
+    {
+      "path": "src/engine.js",
+      "bytes": 12392,
+      "sha256": "d5cbb62ad829ca6c50b192d3a1aa33b603b8bca6b006a2c9da02946b9ff95a02",
+      "category": "application-source"
+    },
+    {
+      "path": "src/environment-motion.js",
+      "bytes": 1077,
+      "sha256": "15411223ecf18242c687ff053633a9443e128160b4900fe8945dd87dec08d09b",
+      "category": "application-source"
+    },
+    {
+      "path": "src/moltbook-identity.js",
+      "bytes": 2037,
+      "sha256": "b49a558bd24b39a228501aadf683ccfc5ae608178b6c36b38e04a17b576b4e1c",
+      "category": "application-source"
+    },
+    {
+      "path": "src/neural-shape-bridge.js",
+      "bytes": 6302,
+      "sha256": "5bc079be7c001b84e614c76fc554c22ae8ccf21fb1fed6c89feefcd830b83a36",
+      "category": "application-source"
+    },
+    {
+      "path": "src/neural-synesthesia.js",
+      "bytes": 32324,
+      "sha256": "4b636f5c71b8bc0bed3dc7ac4aab8e3cface14bb7eb47a50029f561e345b33e4",
+      "category": "application-source"
+    },
+    {
+      "path": "src/sensory-art.js",
+      "bytes": 2370,
+      "sha256": "4e51a1e9541c17362b6da4bc47e7af7d37abbdc15ab99b7000a6c821702f19d8",
+      "category": "application-source"
+    },
+    {
+      "path": "src/sensory-encoders.js",
+      "bytes": 4469,
+      "sha256": "5c678ac62360d11efb98d8d05441d8c7c820e87ab4b09b099aa5b4e15a94e3e0",
+      "category": "application-source"
+    },
+    {
+      "path": "src/server-config.js",
+      "bytes": 2704,
+      "sha256": "2d62de7f7d8e4fd62e33935ff1aca45c312665ebb48c2f935344bead736b4083",
+      "category": "application-source"
+    },
+    {
+      "path": "src/stego.js",
+      "bytes": 10546,
+      "sha256": "748370e96bb7383c450d8ec87f11fbecdc2b57c34998b6d807da0c9aeb673674",
+      "category": "application-source"
+    },
+    {
+      "path": "src/synesthetic-geometry.js",
+      "bytes": 2775,
+      "sha256": "1834760951d24a577b0b3cf2412f0107c08776fb5be3e4455e7d490862c56bcc",
+      "category": "application-source"
+    },
+    {
+      "path": "src/text-neural-bridge.js",
+      "bytes": 1198,
+      "sha256": "2f19697610e943b2d11d6557800ba3336877e61cd75441a0f6d276d67cfb2a5b",
+      "category": "application-source"
+    },
+    {
+      "path": "src/text-perception.js",
+      "bytes": 5557,
+      "sha256": "7fbb4d2a1801c10e473ef9b7a90523804c1d62c9c97618f9de4a67ba63888236",
+      "category": "application-source"
+    },
+    {
+      "path": "src/thought-gateway.js",
+      "bytes": 10828,
+      "sha256": "e55eca4cd5ad37488f7ded4a5a3d8adbebcc1669a619ed061cd6b5a6e56a5859",
+      "category": "application-source"
+    },
+    {
+      "path": "src/thought-intake.js",
+      "bytes": 11773,
+      "sha256": "dd7523ef36a18fafb90469b7e47754b836f1f71d82751b8d7b9b713ce216cb1c",
+      "category": "application-source"
+    },
+    {
+      "path": "src/types.js",
+      "bytes": 1649,
+      "sha256": "d1f2b220a073f5d116cbe773e6fe27a721fef9b410650c1aacd55fec11c1ffa8",
+      "category": "application-source"
+    },
+    {
+      "path": "test/deployment.test.js",
+      "bytes": 5792,
+      "sha256": "809be8a34bedff583623dec12d2a7629785cb08fcd2f903ace97d2300c4df411",
+      "category": "test-source"
+    },
+    {
+      "path": "test/dirt-renderer.test.js",
+      "bytes": 2733,
+      "sha256": "f606b2685b25f59b7a62c9fd84ce781ab42f25aabc18919e1f1f07634ea1b4e0",
+      "category": "test-source"
+    },
+    {
+      "path": "test/dirt-texture.test.js",
+      "bytes": 975,
+      "sha256": "9b315c9ce57c640a36f5dab2205b7959019c4cf39a285adb4273ace3993a4623",
+      "category": "test-source"
+    },
+    {
+      "path": "test/engine.test.js",
+      "bytes": 1788,
+      "sha256": "9094474d2c2a88ecbe5f05fa518045d27ce55fab430d7f269e3843a5b9634bb7",
+      "category": "test-source"
+    },
+    {
+      "path": "test/jpeg_roundtrip.py",
+      "bytes": 382,
+      "sha256": "fb442838a24d9270158e0012f19cfa2ea716dedfbe2b0a8ec89b5712efd3013d",
+      "category": "test-source"
+    },
+    {
+      "path": "test/mathematica-rewrite.test.js",
+      "bytes": 14805,
+      "sha256": "83f6932fce0c1ccd00785c28cf765e52b6d0bf0797d427acfe7aeaed7d822052",
+      "category": "test-source"
+    },
+    {
+      "path": "test/moltbook-identity.test.js",
+      "bytes": 2515,
+      "sha256": "d8731a3b687daaa80f6b3dd842fec4a06245a27934a0f2a501cdcee4e6f97996",
+      "category": "test-source"
+    },
+    {
+      "path": "test/neural-synesthesia.test.js",
+      "bytes": 15019,
+      "sha256": "60b6b0037162fb4c18842d862ff5b7075f634bc4326f4980e928846cba744d4d",
+      "category": "test-source"
+    },
+    {
+      "path": "test/project-log.test.js",
+      "bytes": 6026,
+      "sha256": "fbd39f196e548268019eb655c53da2361c4679be53edcc181b389d8dfde16382",
+      "category": "test-source"
+    },
+    {
+      "path": "test/scientific-validation-log.test.js",
+      "bytes": 5609,
+      "sha256": "e6c20cfe45e3d148351971e90936f8df016f57c3888bbbf34e601e711fb39e16",
+      "category": "test-source"
+    },
+    {
+      "path": "test/sensory-encoders.test.js",
+      "bytes": 3420,
+      "sha256": "3a6636650db1799f5a0c8bc1e370c95fb1550acbecc407d49c8eb15b29d0a027",
+      "category": "test-source"
+    },
+    {
+      "path": "test/server-config.test.js",
+      "bytes": 2288,
+      "sha256": "8b8e19b543f937589b3fb0b3b3b061565c6fe698b365c271be3a3af8310e57f8",
+      "category": "test-source"
+    },
+    {
+      "path": "test/stego.test.js",
+      "bytes": 5598,
+      "sha256": "b86ff8b98b5eb0d09d5bcdc8ec00bf664304cafd0b7d301875c088997cd23702",
+      "category": "test-source"
+    },
+    {
+      "path": "test/synesthetic-geometry.test.js",
+      "bytes": 2030,
+      "sha256": "7b31c55d38b9717efb1587357448099607f2b9baba7801e86fcd764f4775a5f5",
+      "category": "test-source"
+    },
+    {
+      "path": "test/text-perception.test.js",
+      "bytes": 974,
+      "sha256": "c77f54472ea9ec8341c9f1b08010ce3799729f690e8535d6ba10b713009464b0",
+      "category": "test-source"
+    },
+    {
+      "path": "test/thought-intake.test.js",
+      "bytes": 6227,
+      "sha256": "16ee3469d5552a926b9168db8b725e05bd56255f34074f7a4e0e886b0638a219",
+      "category": "test-source"
+    },
+    {
+      "path": "verification/results/node-test-report-attempt1.json",
+      "bytes": 34934,
+      "sha256": "87f0927ed8f17db00fd2fe6363c26e7fc32af4be1980f00569aadf3c5b637938",
+      "category": "scientific-validation"
+    },
+    {
+      "path": "verification/results/node-test-report-attempt2.json",
+      "bytes": 23392,
+      "sha256": "da4665cb3b4dba2a0e0c1f5ffb358305f7f29d7c8b977128312b7ab04ad80b83",
+      "category": "scientific-validation"
+    },
+    {
+      "path": "verification/results/node-test-report.json",
+      "bytes": 22532,
+      "sha256": "f6f6b2fee36978ada309c04a2b52b23900c241412fcc6df2415e22415309d578",
+      "category": "scientific-validation"
+    }
+  ],
+  "jsonArtifacts": {
+    "scientificAudits": [
+      "docs/scientific-claim-audit.json",
+      "docs/scientific-source-ledger.json"
+    ],
+    "scientificSpecifications": [
+      "mathematica/paper-spec.json",
+      "mathematica/verification/source-manifest.json"
+    ],
+    "scientificValidationLogs": [
+      "mathematica/verification/results/javascript-adversarial-validation.json",
+      "mathematica/verification/results/numerical-policy-sensitivity.json",
+      "mathematica/verification/results/repeated-validation.json",
+      "mathematica/verification/results/wolfram-test-report.json",
+      "mathematica/verification/results/wolfram-validation.json",
+      "verification/results/node-test-report-attempt1.json",
+      "verification/results/node-test-report-attempt2.json",
+      "verification/results/node-test-report.json"
+    ],
+    "benchmarkLogs": [
+      "mathematica/benchmark-results/benchmark-qualification.json",
+      "mathematica/benchmark-results/critical-slowing-142.json",
+      "mathematica/benchmark-results/dense-1136.json",
+      "mathematica/benchmark-results/dense-142.json",
+      "mathematica/benchmark-results/dense-2272.json",
+      "mathematica/benchmark-results/dense-284.json",
+      "mathematica/benchmark-results/dense-4544.json",
+      "mathematica/benchmark-results/dense-568.json",
+      "mathematica/benchmark-results/environment.json",
+      "mathematica/benchmark-results/factorhistory-1136-v2.json",
+      "mathematica/benchmark-results/factorhistory-1136.json",
+      "mathematica/benchmark-results/factorhistory-142-train1000-v2.json",
+      "mathematica/benchmark-results/factorhistory-142-train1000.json",
+      "mathematica/benchmark-results/factorhistory-142-window10.json",
+      "mathematica/benchmark-results/factorhistory-142.json",
+      "mathematica/benchmark-results/factorhistory-18176-v2.json",
+      "mathematica/benchmark-results/factorhistory-18176.json",
+      "mathematica/benchmark-results/factorhistory-2272-v2.json",
+      "mathematica/benchmark-results/factorhistory-2272.json",
+      "mathematica/benchmark-results/factorhistory-284-v2.json",
+      "mathematica/benchmark-results/factorhistory-284.json",
+      "mathematica/benchmark-results/factorhistory-36352-v2.json",
+      "mathematica/benchmark-results/factorhistory-36352.json",
+      "mathematica/benchmark-results/factorhistory-4544-v2.json",
+      "mathematica/benchmark-results/factorhistory-4544.json",
+      "mathematica/benchmark-results/factorhistory-568-train50.json",
+      "mathematica/benchmark-results/factorhistory-568-v2.json",
+      "mathematica/benchmark-results/factorhistory-568.json",
+      "mathematica/benchmark-results/factorhistory-72704-v2.json",
+      "mathematica/benchmark-results/factorhistory-72704.json",
+      "mathematica/benchmark-results/factorhistory-9088-v2.json",
+      "mathematica/benchmark-results/factorhistory-9088.json",
+      "mathematica/benchmark-results/scaling-summary.json"
+    ],
+    "projectFixtures": [
+      "assets/neural-preview-checkpoint.json",
+      "demo/balance-output.json",
+      "demo/dirt-balance-output.json",
+      "demo/neural-synesthesia-output.json",
+      "demo/projective-synesthesia-output.json",
+      "demo/thought-submission.json"
+    ],
+    "other": [
+      "package.json"
+    ]
+  },
+  "jsonArtifactIndex": [
+    {
+      "path": "assets/neural-preview-checkpoint.json",
+      "sha256": "f602c53c398305b5aa6d66442063f1ee26a6f169a6454035f7497d48810a0044",
+      "bytes": 7175,
+      "schema": "neural-preview-checkpoint/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "demo/balance-output.json",
+      "sha256": "653b53858666680f1b4fc4e4a84fd2bda5ec242a1c02fe4ee57aa78df181ee1e",
+      "bytes": 13495,
+      "schema": "shape-cognition/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "demo/dirt-balance-output.json",
+      "sha256": "2cc3acd6e45ab909123ae1637c453d79bea2a400c50c814e70da7482d10b3491",
+      "bytes": 500019,
+      "schema": "dirt-inscription/v0",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "demo/neural-synesthesia-output.json",
+      "sha256": "12e6ae2cbd610136c07549e4e36c1417ff362d39e6b16dcac15d8e5d46df8196",
+      "bytes": 2913,
+      "schema": "neural-synesthetic-thought-demo/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "demo/projective-synesthesia-output.json",
+      "sha256": "da5f19eb3e1207aa33b2343a450899566cbea37af466c55d96955330c6039879",
+      "bytes": 23906,
+      "schema": "synesthetic-thought-demo/v0",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "demo/thought-submission.json",
+      "sha256": "607d3ea017aacd8337ea3ec6cfa6187d9e035d60bd4590a1aa41efbf207bbd71",
+      "bytes": 601,
+      "schema": "thought-intake/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "docs/scientific-claim-audit.json",
+      "sha256": "22e16f14d3a0a3a89ff116a2711d8428dc2dd9ccbe38409d22a724efdbab9bd2",
+      "bytes": 16128,
+      "schema": "shriki-2016-scientific-claim-audit/v1",
+      "generatedAtUtc": "2026-09-07T12:44:00Z",
+      "validJson": true
+    },
+    {
+      "path": "docs/scientific-source-ledger.json",
+      "sha256": "ef5b779143785af3aae5f8f12397bb107b91c3733614999a4c800643d9cc2abd",
+      "bytes": 19219,
+      "schema": "shriki-2016-scientific-source-ledger/v1",
+      "generatedAtUtc": "2026-09-07T12:44:00Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/benchmark-qualification.json",
+      "sha256": "f69f95c9725af069cba7bce70aaa2475ae58415e54f6eb7baefd3e8fa3da66ca",
+      "bytes": 40846,
+      "schema": "shriki-2016-benchmark-qualification/v1",
+      "generatedAtUtc": "2026-09-07T11:53:38Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/critical-slowing-142.json",
+      "sha256": "571b358d2839839131101f1c175bd10ff6d37eec50fd521b94dc0132f5a33e08",
+      "bytes": 8096,
+      "schema": "shriki-2016-critical-slowing/v2",
+      "generatedAtUtc": "2026-09-07T11:28:27Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-1136.json",
+      "sha256": "cf4eddca7ddb396084477972a4d9eb8f4e19fec25dc2ff4624254827a6a423ad",
+      "bytes": 2301,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-142.json",
+      "sha256": "43dd97f04d504318327c856fc85e91c1024c4e894d86f15bdcc9b2fb51f79736",
+      "bytes": 2501,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-2272.json",
+      "sha256": "ad5b595aaa278833f0b4fab29e86292cb2a77b1abebae64ca47ac6b5e80c42a9",
+      "bytes": 1519,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-284.json",
+      "sha256": "3087f070604dc0de3faf166f8c62f3c1ca10e894ebcc6bc19db1be8f63daffcc",
+      "bytes": 2441,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-4544.json",
+      "sha256": "76b1cb38fe2afec9b41681ef9b41e9deb1c6bc8d9c4a398033f1f5a421ba93aa",
+      "bytes": 1524,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/dense-568.json",
+      "sha256": "381337e59988d02e6bf3ded084988630cf30a8f3e49801aeaec4d9e44223c5bb",
+      "bytes": 2383,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/environment.json",
+      "sha256": "50b6b17f876320a98d3bb0d101c1c2466231c0d2fb2289c3f12db5a0ba703164",
+      "bytes": 651,
+      "schema": "shriki-2016-benchmark-environment/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-1136-v2.json",
+      "sha256": "3556cbc7ab45c1e50994aed63018ef71a008c9bf6a35e90cbe625ac7dcb1087d",
+      "bytes": 4627,
+      "schema": "shriki-2016-exact-benchmark-point/v2",
+      "generatedAtUtc": "2026-09-07T11:35:43Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-1136.json",
+      "sha256": "4b048639e0e5884849b96c31144a54f1facae38f382951f95f974908be731486",
+      "bytes": 2453,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-142-train1000-v2.json",
+      "sha256": "c5bedb5364c561ca6fb0079eb6aae11a3d1ae192b60430ff945a9b010051ec8b",
+      "bytes": 4638,
+      "schema": "shriki-2016-exact-benchmark-point/v2",
+      "generatedAtUtc": "2026-09-07T11:34:56Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-142-train1000.json",
+      "sha256": "3c95b001a8b26a2cc01a9d4f9569eadc402e7f0e059597b8e9b1621946d55f5c",
+      "bytes": 2394,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-142-window10.json",
+      "sha256": "2713fd3e20d25edbbffbd86a6f464369d44ad964d35700a3f5dd47b9b2534bf7",
+      "bytes": 2468,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-142.json",
+      "sha256": "eed85f7e0e4bca0cfb64d04129bc903e96e1ec0fa81de610f3a056fba4892052",
+      "bytes": 2515,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-18176-v2.json",
+      "sha256": "11c379cfe79d2debe2b7921c391616c17d8ab71e8f822f1857b4a95bde500b1f",
+      "bytes": 4553,
+      "schema": "shriki-2016-exact-benchmark-point/v2",
+      "generatedAtUtc": "2026-09-07T11:39:43Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-18176.json",
+      "sha256": "97111e8b8af049f501c1822beffd84e33f5f3406c34621b911c827414bdc57ae",
+      "bytes": 2308,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-2272-v2.json",
+      "sha256": "9130191466ad3e2b62c01d04d1c44f977cac6c2ab6ca7ddb4649795b74a02f15",
+      "bytes": 4624,
+      "schema": "shriki-2016-exact-benchmark-point/v2",
+      "generatedAtUtc": "2026-09-07T11:36:10Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-2272.json",
+      "sha256": "80062b425f81b26656fde022e07f6f38b00ae00c0dc4014af30de02ab97bb192",
+      "bytes": 2448,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-284-v2.json",
+      "sha256": "53cd3328e3a160ac5ace9db40c6714b76a9017611772bbada4d40fc048e45ed6",
+      "bytes": 4626,
+      "schema": "shriki-2016-exact-benchmark-point/v2",
+      "generatedAtUtc": "2026-09-07T11:35:21Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-284.json",
+      "sha256": "4faeb3a9e7041c0e4e9fde54c9935991a789b498e3a5995bec7acd7366e7a804",
+      "bytes": 2455,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-36352-v2.json",
+      "sha256": "4c45968b62dc3a8d634af47ffeef87e6f342012c4cedafeede7553777124ac15",
+      "bytes": 4554,
+      "schema": "shriki-2016-exact-benchmark-point/v2",
+      "generatedAtUtc": "2026-09-07T11:40:35Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-36352.json",
+      "sha256": "ab42fa2f440ea30750dd9fdd017f52e90c8e8221053d088a290990a45f38c783",
+      "bytes": 2315,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-4544-v2.json",
+      "sha256": "99501a4d10e6e86f2853216ccae0d6eb547cdff21b4941a6be72d214cc4ba165",
+      "bytes": 4615,
+      "schema": "shriki-2016-exact-benchmark-point/v2",
+      "generatedAtUtc": "2026-09-07T11:37:02Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-4544.json",
+      "sha256": "2b3263bd4264166b1bf285e401f2639a5aa20defda466cf4ff15df1bc0b9209c",
+      "bytes": 2382,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-568-train50.json",
+      "sha256": "4994e0bc6c1888f8961cd29bcd63cdbc02d4da72fe013314f43e7a0d14351948",
+      "bytes": 2310,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-568-v2.json",
+      "sha256": "803e1c1e1d935ab4ede45086d84004cbe6c731043a36af9c2ffda616da9617a1",
+      "bytes": 4626,
+      "schema": "shriki-2016-exact-benchmark-point/v2",
+      "generatedAtUtc": "2026-09-07T11:35:29Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-568.json",
+      "sha256": "b1f8359cceb396cfb79edc32954539bed379b5e4e26b9486d2d3b6c0f26f523d",
+      "bytes": 2483,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-72704-v2.json",
+      "sha256": "f5e36fb02db33b40fe1442e2d64e67b646a7b1ce1761e9347ea6c1a54bbc635d",
+      "bytes": 4566,
+      "schema": "shriki-2016-exact-benchmark-point/v2",
+      "generatedAtUtc": "2026-09-07T11:42:22Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-72704.json",
+      "sha256": "1713e4838306690495e1b2b46c3eb9705aea09fa4eee55557bb2d8f33ceea5fb",
+      "bytes": 2330,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-9088-v2.json",
+      "sha256": "79d6f617d3847c9006d526e4435f7999c9882fbe9a41bc9ce7437cd4233c22d4",
+      "bytes": 4625,
+      "schema": "shriki-2016-exact-benchmark-point/v2",
+      "generatedAtUtc": "2026-09-07T11:38:48Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/factorhistory-9088.json",
+      "sha256": "58ba2301f5de344c78df4fa5449c904277c93d4f654de359281ef943076141a9",
+      "bytes": 2387,
+      "schema": "shriki-2016-exact-benchmark-point/v1",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/benchmark-results/scaling-summary.json",
+      "sha256": "1ac1bfa4edf422294be0fb9d5161e0638fe0f5a408c977f4700985155c94a29a",
+      "bytes": 49782,
+      "schema": "shriki-2016-scaling-summary/v2",
+      "generatedAtUtc": "2026-09-07T11:53:38Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/paper-spec.json",
+      "sha256": "9231eed0f3e4e43cdbc516e62d46984b3e560c0082150c9b24e2360c647779c2",
+      "bytes": 8305,
+      "schema": "shriki-2016-publication-ledger/v2",
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "mathematica/verification/results/javascript-adversarial-validation.json",
+      "sha256": "0524a0677e58da69c825ed0c9b569fd961f3b770a2b2147d70213b343bfae026",
+      "bytes": 5116,
+      "schema": "shriki-2016-javascript-adversarial-validation/v1",
+      "generatedAtUtc": "2026-09-07T11:23:16.273Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/verification/results/numerical-policy-sensitivity.json",
+      "sha256": "7406c38e664e9df0e49976f5d5d7aa13a9ce448cd0bb15bb333b03cd40da8b47",
+      "bytes": 18578,
+      "schema": "shriki-2016-numerical-policy-sensitivity/v2",
+      "generatedAtUtc": "2026-09-07T11:24:31Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/verification/results/repeated-validation.json",
+      "sha256": "03340e541cf4b58f41b47641bb766396688e1f13affa875d50a081a7ecacf499",
+      "bytes": 8603,
+      "schema": "shriki-2016-repeated-adversarial-validation/v1",
+      "generatedAtUtc": "2026-09-07T11:24:17Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/verification/results/wolfram-test-report.json",
+      "sha256": "f6f4657451a2cff6349eda9094658316ce5b2b79aa6426b61c72cb21aa5aafc9",
+      "bytes": 5550,
+      "schema": "shriki-2016-wolfram-test-report/v1",
+      "generatedAtUtc": "2026-09-07T12:57:36Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/verification/results/wolfram-validation.json",
+      "sha256": "7fd44ce413f4448950a03a1a49890695709a772fc9f2ab3c515faac82b22a835",
+      "bytes": 5340,
+      "schema": "shriki-2016-publication-verification/v2",
+      "generatedAtUtc": "2026-09-07T12:57:38Z",
+      "validJson": true
+    },
+    {
+      "path": "mathematica/verification/source-manifest.json",
+      "sha256": "73040da225d266c013f74d28c609e652ec54f30123850de776e6af11bc465584",
+      "bytes": 781,
+      "schema": null,
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "package.json",
+      "sha256": "e3aa4d46ca340e867946fa476653d3034792e254594a4bb4b4a3fce1e32527c3",
+      "bytes": 978,
+      "schema": null,
+      "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "verification/results/node-test-report-attempt1.json",
+      "sha256": "87f0927ed8f17db00fd2fe6363c26e7fc32af4be1980f00569aadf3c5b637938",
+      "bytes": 34934,
+      "schema": "neural-engine-node-test-report/v1",
+      "generatedAtUtc": "2026-09-07T12:44:32.864Z",
+      "validJson": true
+    },
+    {
+      "path": "verification/results/node-test-report-attempt2.json",
+      "sha256": "da4665cb3b4dba2a0e0c1f5ffb358305f7f29d7c8b977128312b7ab04ad80b83",
+      "bytes": 23392,
+      "schema": "neural-engine-node-test-report/v1",
+      "generatedAtUtc": "2026-09-07T12:52:23.644Z",
+      "validJson": true
+    },
+    {
+      "path": "verification/results/node-test-report.json",
+      "sha256": "f6f6b2fee36978ada309c04a2b52b23900c241412fcc6df2415e22415309d578",
+      "bytes": 22532,
+      "schema": "neural-engine-node-test-report/v1",
+      "generatedAtUtc": "2026-09-07T12:57:55.560Z",
+      "validJson": true
+    }
+  ],
+  "validationSnapshot": {
+    "node": {
+      "source": "verification/results/node-test-report.json",
+      "allPassed": true,
+      "tests": 93,
+      "suites": 0,
+      "passed": 93,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "elapsedSeconds": 5.866933948
+    },
+    "wolframMUnit": {
+      "source": "mathematica/verification/results/wolfram-test-report.json",
+      "tests": 31,
+      "passed": 31,
+      "failed": 0,
+      "allPassed": true,
+      "kernel": "15.0.0 for Linux x86 (64-bit) (May 31, 2026)"
+    },
+    "independentPublicationDerivation": {
+      "source": "mathematica/verification/results/wolfram-validation.json",
+      "checks": 28,
+      "allPassed": true,
+      "fixedPointMaxAbsoluteResidual": 1.1102230246251565e-16,
+      "susceptibilityFiniteDifferenceMaxAbsoluteError": 6.161771093360358e-11,
+      "objectiveGradientFiniteDifferenceMaxAbsoluteError": 3.183847907539672e-10,
+      "objectiveGradientFiniteDifferenceRelativeError": 1.7310086133732343e-9
+    },
+    "repeatedWolframAdversarial": {
+      "source": "mathematica/verification/results/repeated-validation.json",
+      "randomFixtures": 9,
+      "allPassed": true,
+      "maximumGradientFiniteDifferenceAbsoluteError": 7.851521377499893e-10,
+      "maximumGradientFiniteDifferenceRelativeError": 3.7267859967787474e-9,
+      "maximumSusceptibilityFiniteDifferenceAbsoluteError": 8.649167493324228e-11,
+      "maximumDenseFactorUpdateAbsoluteError": 1.6940658945086007e-21,
+      "maximumCriticalGradientRelativeError": 5.310685834419339e-16
+    },
+    "javascriptAdversarial": {
+      "source": "mathematica/verification/results/javascript-adversarial-validation.json",
+      "fixtures": 6,
+      "allPassed": true,
+      "finiteDifferenceFixtures": 6,
+      "maximumGradientFiniteDifferenceAbsoluteError": 4.6374472317811666e-10,
+      "maximumGradientFiniteDifferenceRelativeError": 2.942842535354231e-9,
+      "maximumSusceptibilityFiniteDifferenceAbsoluteError": 8.884942781506311e-11
+    },
+    "numericalPolicySensitivity": {
+      "source": "mathematica/verification/results/numerical-policy-sensitivity.json",
+      "settlingPolicyCases": 27,
+      "initializationCases": 10,
+      "maxStateErrorVsTightEuler": 5.10505137468753e-7,
+      "maxAndersonVsTightEulerStateError": 3.863576125695545e-14,
+      "maxFixedPointResidual": 5.105051760628809e-7,
+      "iterationRange": [
+        3,
+        95
+      ],
+      "allOneStepObjectivesDecreased": true
+    }
+  },
+  "scalingSnapshot": {
+    "source": "mathematica/benchmark-results/scaling-summary.json",
+    "environment": {
+      "schema": "shriki-2016-benchmark-environment/v1",
+      "dateUtc": "2026-09-07",
+      "baseCommit": "9f3e163e469be40c5d5248be8e66ef3b7945b672",
+      "wolframKernel": "15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+      "wolframProcessorCount": 9,
+      "architecture": "x86_64",
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "onlineLogicalCpus": 9,
+      "threadsPerCore": 1,
+      "numaNodes": 1,
+      "memoryBytes": 16793292800,
+      "swapBytes": 0,
+      "gpu": null,
+      "gpuProbe": "nvidia-smi and rocm-smi unavailable",
+      "operatingSystem": "Linux 6.18.35 x86_64 GNU/Linux",
+      "node": "v24.19.0",
+      "notes": "Shared Work cloud CPU; no GPU device was exposed to this session."
+    },
+    "paperSpecifiedOutputNeurons": 142,
+    "requestedProjectFamilyLadder": [
+      142,
+      284,
+      568,
+      1136,
+      2272,
+      4544,
+      9088
+    ],
+    "currentRunSetComplete": true,
+    "currentQualifiedRuns": 10,
+    "currentQualificationCount": 10,
+    "paperSizedReference": {
+      "outputNeurons": 142,
+      "updates": 1000,
+      "trainingSeconds": 239.80460200000002,
+      "secondsPerUpdate": 0.239804602,
+      "totalSecondsIncludingValidation": 241.65858,
+      "operatingSystemPeakResidentSetBytes": 358629376
+    },
+    "evidenceBoundaries": {
+      "sustained1000UpdateOutputNeurons": 142,
+      "largestUniformTenUpdateOutputNeurons": 9088,
+      "largestOneOrTwoUpdateOutputNeurons": 72704,
+      "sustainedPracticalLimitMeasured": false,
+      "controlledSpeedupRelativeToAuthorsComputable": false
+    },
+    "fixedWindowLogLogExponent": 0.9911232047804769,
+    "fixedWindowInterpretation": "Descriptive fit over current ten-update factor-history runs only; factor-history cost grows with accumulated columns and this is not an asymptotic training-law estimate.",
+    "criticalSlowing": {
+      "source": "mathematica/benchmark-results/critical-slowing-142.json",
+      "worstRho": 0.9999,
+      "iterations": 129683,
+      "seconds": 71.389184,
+      "fixedPointResidual": 9.998670225108697e-10,
+      "stateErrorFromKnownFixedPoint": 0.000009998654081688763,
+      "exactKnownStateGradientRelativeFrobeniusError": 3.561120967362471e-16,
+      "policySettledGradientRelativeFrobeniusError": 0.6217628983059277
+    }
+  },
+  "scientificAuditSnapshot": {
+    "sourceLedger": "docs/scientific-source-ledger.json",
+    "sourceCount": 23,
+    "searchDate": "2026-09-07",
+    "claimAudit": "docs/scientific-claim-audit.json",
+    "claimCount": 29,
+    "verifiedOrScoped": 12,
+    "projectChoice": 2,
+    "unresolved": 1,
+    "rejected": 11,
+    "prospective": 3,
+    "centralConclusion": "The mathematical reconstruction is strongly validated, but the publication does not uniquely determine several numerical and initialization choices. The expansion demonstrates exact early-trajectory feasibility, not a paper-specified scaling law or sustained practical limit.",
+    "publicationReport": "output/pdf/shriki-2016-publication-grade-audit.pdf"
+  },
+  "unresolvedScientificLimits": [
+    "The target publication does not report the exact high-dimensional diagonal policy.",
+    "Near-zero cross-talk scale/distribution and within-modality initialization are not reported.",
+    "Integrator, time step, equilibrium tolerance, stability window, seeds, update horizon, and checkpoint policy are not reported.",
+    "The target paper specifies only M=142; larger circular grids are a project model-family extension.",
+    "No controlled numeric speedup relative to the authors can be calculated from their qualitative runtime report.",
+    "No sustained cross-size practical failure boundary has been measured.",
+    "A fixed residual tolerance is not a reliable gradient-accuracy guarantee near criticality."
+  ]
+}

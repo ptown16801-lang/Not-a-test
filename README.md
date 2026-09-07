@@ -4,12 +4,25 @@ Dependency-free browser-compatible ES modules implementing a closed geometric th
 
 See [`docs/project-change-summary.md`](docs/project-change-summary.md) for a
 consolidated account of how the neural engine evolved and [`CHANGELOG.md`](CHANGELOG.md)
-for the chronological release history.
+for the chronological release history. [`PROJECT_LOG.json`](PROJECT_LOG.json)
+is the project-wide machine-readable history, subsystem inventory, validation
+snapshot, and index of every committed scientific JSON log.
+
+The publication package is anchored by the
+[`scientific audit report`](output/pdf/shriki-2016-publication-grade-audit.pdf),
+[`paper-fidelity audit`](docs/paper-fidelity-audit.md),
+[`qualified scaling results`](docs/modern-compute-scaling-results.md),
+[`source ledger`](docs/scientific-source-ledger.json), and
+[`claim audit`](docs/scientific-claim-audit.json). The PDF, machine-readable
+ledgers, raw measurements, source fingerprints, and historical failed test
+attempt are retained so the favorable and unfavorable evidence can be audited.
 
 Run:
 
 ```sh
 npm test
+npm run test:json
+npm run logs:project
 npm run demo
 npm run demo:neural
 ```
@@ -28,8 +41,11 @@ The engine accepts semantic `tags` only at the perception/goal boundary. They st
 `src/neural-synesthesia.js` is a dependency-free JavaScript reconstruction of
 the recurrent Infomax network in [Shriki, Sadeh & Ward
 (2016)](https://doi.org/10.1371/journal.pcbi.1004959). It implements the published
-rate dynamics, logistic activation, susceptibility and information objective,
-and the complete recurrent plasticity equation. The default high-dimensional
+rate dynamics, the logistic reference convention, susceptibility, the
+zero-output-noise manifold-volume objective, and the complete recurrent
+plasticity equation. The target paper does not separately specify the
+high-dimensional squashing function; logistic is supported by its S1 analysis
+and companion model. The default high-dimensional
 constructor creates the reported 4-input, 142-output network with 71 preferred
 angles in each modality. Its update direction is tested against numerical
 finite differences.
@@ -48,16 +64,17 @@ the gallery can project every accepted thought without a long startup. Set
 checkpoint with `npm run train:neural-preview`. Full 71-neuron research runs are
 supported through the resumable `npm run experiment:neural -- --steps=...`
 runner, but the authors report extreme critical slowing and simulations that
-could last weeks. Exact equations, fidelity boundaries, reconstruction choices,
-and test coverage are documented in
+could last weeks. Exact equations, objective scope, fidelity boundaries,
+reconstruction choices, and test coverage are documented in
 [`docs/shriki-2016-reconstruction.md`](docs/shriki-2016-reconstruction.md).
 
 The complete executable Wolfram Language rewrite lives in
 [`mathematica/`](mathematica/README.md). It includes a Mathematica notebook,
 Figure 1–7 builders, the S1 symbolic stability result, MUnit tests, headless
 runners, allocation-free size estimates, and a low-rank-plus-diagonal backend
-for output populations larger than the paper's 142 neurons. Its separate
-scaling audit labels every optimization as exact, tolerance-equivalent,
+for declared circular-grid project extensions larger than the paper's specified
+142 neurons. Its separate scaling audit labels every optimization as
+equation-preserving, tolerance-equivalent,
 approximate, or model-changing and does not assume access to unpublished code.
 
 ## Research-inspired synesthetic geometry

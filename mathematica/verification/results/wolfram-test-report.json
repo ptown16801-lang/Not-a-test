@@ -1,0 +1,206 @@
+{
+	"schema":"shriki-2016-wolfram-test-report\/v1",
+	"generatedAtUtc":"2026-09-07T12:57:36Z",
+	"kernel":"15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+	"systemId":"Linux-x86-64",
+	"testFile":"mathematica\/tests\/SynesthesiaModel.wlt",
+	"testFileSha256":"8375cd2e9515c07a3a0afe4d7b2f91c83b02ee0032b06cf8e8ba0073d49f323d",
+	"runnerSha256":"ef6a6bdddd5aa165c5dbc030e012f68229928d34dd49452117cf774cafd3e5d0",
+	"modelSource":"mathematica\/SynesthesiaModel.wl",
+	"modelSourceSha256":"5f0ef5d0e64532effc04f478d6d3e1b4bad42bd0fecf6a2880f98d8174ef497c",
+	"allPassed":true,
+	"testCount":31,
+	"outcomeCounts":{
+		"Success":31
+	},
+	"absoluteTimeSeconds":0.431087,
+	"memoryBytes":3005072,
+	"tests":[
+		{
+			"testId":"logistic derivatives",
+			"outcome":"Success",
+			"absoluteTimeSeconds":1.0300000000000001e-4,
+			"memoryBytes":3832
+		},
+		{
+			"testId":"reported 4-to-142 architecture",
+			"outcome":"Success",
+			"absoluteTimeSeconds":1.278e-3,
+			"memoryBytes":187648
+		},
+		{
+			"testId":"project-compatible seeded polar sampler",
+			"outcome":"Success",
+			"absoluteTimeSeconds":3.3099999999999997e-4,
+			"memoryBytes":7928
+		},
+		{
+			"testId":"recurrent fixed point",
+			"outcome":"Success",
+			"absoluteTimeSeconds":9.26e-4,
+			"memoryBytes":5856
+		},
+		{
+			"testId":"tiny Euler step cannot cause false convergence",
+			"outcome":"Success",
+			"absoluteTimeSeconds":4.66e-4,
+			"memoryBytes":5352
+		},
+		{
+			"testId":"fixed-point convergence and dynamical stability are distinct",
+			"outcome":"Success",
+			"absoluteTimeSeconds":3.711e-3,
+			"memoryBytes":108312
+		},
+		{
+			"testId":"local fixed-point stability rejects a non-equilibrium state",
+			"outcome":"Success",
+			"absoluteTimeSeconds":3.1999999999999997e-4,
+			"memoryBytes":5256
+		},
+		{
+			"testId":"Anderson and Euler solve the same fixed point",
+			"outcome":"Success",
+			"absoluteTimeSeconds":3.678e-3,
+			"memoryBytes":6240
+		},
+		{
+			"testId":"published recurrent update is negative objective gradient",
+			"outcome":"Success",
+			"absoluteTimeSeconds":1.2766e-2,
+			"memoryBytes":28608
+		},
+		{
+			"testId":"publication population vector is an unnormalized sum",
+			"outcome":"Success",
+			"absoluteTimeSeconds":4.3099999999999996e-4,
+			"memoryBytes":5240
+		},
+		{
+			"testId":"S1 Jacobian determinant identity",
+			"outcome":"Success",
+			"absoluteTimeSeconds":2.443e-2,
+			"memoryBytes":157680
+		},
+		{
+			"testId":"S1 central and deprivation classifications",
+			"outcome":"Success",
+			"absoluteTimeSeconds":4.26e-4,
+			"memoryBytes":5944
+		},
+		{
+			"testId":"matrix-free and dense gradients agree at K=0",
+			"outcome":"Success",
+			"absoluteTimeSeconds":1.5653e-2,
+			"memoryBytes":170376
+		},
+		{
+			"testId":"factorized mini-batch joins columns and matches dense mean",
+			"outcome":"Success",
+			"absoluteTimeSeconds":3.8544e-2,
+			"memoryBytes":517696
+		},
+		{
+			"testId":"factorized batch sizes one two and four are exact",
+			"outcome":"Success",
+			"absoluteTimeSeconds":7.3038e-2,
+			"memoryBytes":125832
+		},
+		{
+			"testId":"relative susceptibility test accepts tiny well-conditioned scale",
+			"outcome":"Success",
+			"absoluteTimeSeconds":1.326e-3,
+			"memoryBytes":15120
+		},
+		{
+			"testId":"field derivatives retain representable saturated sensitivity",
+			"outcome":"Success",
+			"absoluteTimeSeconds":1.296e-3,
+			"memoryBytes":13616
+		},
+		{
+			"testId":"scaled curvature avoids cubic derivative underflow",
+			"outcome":"Success",
+			"absoluteTimeSeconds":1.128e-3,
+			"memoryBytes":13616
+		},
+		{
+			"testId":"scaled QR survives Gram underflow",
+			"outcome":"Success",
+			"absoluteTimeSeconds":1.181e-3,
+			"memoryBytes":13200
+		},
+		{
+			"testId":"derivative floor is labeled and keeps literal curvature ratio",
+			"outcome":"Success",
+			"absoluteTimeSeconds":9.79e-4,
+			"memoryBytes":13032
+		},
+		{
+			"testId":"matrix-free update matches dense update",
+			"outcome":"Success",
+			"absoluteTimeSeconds":1.7819e-2,
+			"memoryBytes":29928
+		},
+		{
+			"testId":"2048-neuron model starts matrix-free",
+			"outcome":"Success",
+			"absoluteTimeSeconds":5.0224e-2,
+			"memoryBytes":7048
+		},
+		{
+			"testId":"allocation-free scale estimator",
+			"outcome":"Success",
+			"absoluteTimeSeconds":1.2799999999999997e-4,
+			"memoryBytes":6144
+		},
+		{
+			"testId":"rank cap is explicit and optional zero diagonal is preserved",
+			"outcome":"Success",
+			"absoluteTimeSeconds":1.1134e-2,
+			"memoryBytes":19336
+		},
+		{
+			"testId":"general high-dimensional rule retains diagonal updates",
+			"outcome":"Success",
+			"absoluteTimeSeconds":9.843e-3,
+			"memoryBytes":19208
+		},
+		{
+			"testId":"unbounded factors remain dense-equivalent after multiple updates",
+			"outcome":"Success",
+			"absoluteTimeSeconds":3.3036e-2,
+			"memoryBytes":44664
+		},
+		{
+			"testId":"factor history densifies at exact storage crossover",
+			"outcome":"Success",
+			"absoluteTimeSeconds":9.925e-3,
+			"memoryBytes":30672
+		},
+		{
+			"testId":"singular Woodbury base falls back to equivalent dense operator",
+			"outcome":"Success",
+			"absoluteTimeSeconds":5.471e-3,
+			"memoryBytes":28120
+		},
+		{
+			"testId":"best checkpoint compares one fixed objective ensemble",
+			"outcome":"Success",
+			"absoluteTimeSeconds":3.3722e-2,
+			"memoryBytes":44648
+		},
+		{
+			"testId":"Wolfram JavaScript checkpoint preserves binary64 and metadata policy",
+			"outcome":"Success",
+			"absoluteTimeSeconds":7.7726e-2,
+			"memoryBytes":1361096
+		},
+		{
+			"testId":"Figure 7 transcription",
+			"outcome":"Success",
+			"absoluteTimeSeconds":4.7999999999999974e-5,
+			"memoryBytes":3824
+		}
+	]
+}

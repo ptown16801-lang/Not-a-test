@@ -6,10 +6,18 @@
 directory = DirectoryName[$InputFileName];
 Get[FileNameJoin[{directory, "SynesthesiaModel.wl"}]];
 
-arguments = Rest[$ScriptCommandLine];
-argumentValue[name_, default_] := Module[{prefix = "--" <> name <> "=", match},
-  match = SelectFirst[arguments, StringStartsQ[#, prefix] &, Missing["NotFound"]];
-  If[MissingQ[match], default, StringDrop[match, StringLength[prefix]]]
+arguments = If[ListQ[$ScriptCommandLine] && Length[$ScriptCommandLine] > 0,
+  Rest[$ScriptCommandLine], {}];
+argumentValue[name_, default_] := Module[
+  {prefix = "--" <> name <> "=", match, environmentName, environmentValue},
+  match = SelectFirst[arguments, StringStartsQ[#, prefix] &,
+    Missing["NotFound"]];
+  If[!MissingQ[match], Return[StringDrop[match, StringLength[prefix]]]];
+  environmentName = "SHRIKI_" <>
+    ToUpperCase[StringReplace[name, "-" -> "_"]];
+  environmentValue = Environment[environmentName];
+  If[StringQ[environmentValue] && StringLength[environmentValue] > 0,
+    environmentValue, default]
 ];
 parsePositiveInteger[value_] := If[
   StringMatchQ[value, DigitCharacter ..] && FromDigits[value] > 0,
@@ -47,7 +55,8 @@ If[FailureQ[model], Print[model]; Exit[1]];
 sampler = CreatePaperInputSampler["MeanRadii" -> {.2, 2.}, "Seed" -> 8675309];
 probe = sampler["Next"][0, 0];
 settleOptions = {"Method" -> "Euler", "IntegrationStep" -> .5,
-  "Tolerance" -> 1.*^-9, "StableIterations" -> 2,
+  "Tolerance" -> 1.*^-9, "ResidualTolerance" -> 1.*^-9,
+  "ConvergenceCriterion" -> "StepAndResidual", "StableIterations" -> 2,
   "MaxIterations" -> 200000};
 analysisOptions = Join[settleOptions, {"DerivativeFloor" -> 0.,
   "PivotTolerance" -> 1.*^-13, "ReturnPhi" -> False}];
@@ -114,6 +123,11 @@ If[trainingSteps > 0,
   If[FailureQ[training], Print[training]; Exit[1]]
 ];
 memoryAfterTraining = MemoryInUse[];
+procStatus = Quiet@Check[Import["/proc/self/status", "Text"], ""];
+peakResidentMatches = If[StringQ[procStatus], StringCases[procStatus,
+    RegularExpression["(?m)^VmHWM:\\s+([0-9]+)\\s+kB"] -> "$1"], {}];
+operatingSystemPeakResidentSetBytes = If[peakResidentMatches === {}, Null,
+  1024 FromDigits[First[peakResidentMatches]]];
 
 (* Report exact recurrent statistics without forcing an exact factor-history
    model through an otherwise unnecessary M-by-M materialization.  The
@@ -160,21 +174,26 @@ exactRecurrentStatistics[network_] := Module[
 
 trainingSummary = If[trainingSteps == 0, Null, Module[
   {history, trainedModel, recurrentStatistics, validationAfter,
-    validationAfterSeconds},
+    validationAfterSeconds, factorColumns, algebraicRankUpperBound},
   history = training["History"]; trainedModel = training["Model"];
   validationAfterSeconds = AbsoluteTiming[
     validationAfter = Mean[InfomaxObjective[trainedModel, #,
         Sequence @@ trainingAnalysisOptions] & /@ validationInputs];
   ][[1]];
   recurrentStatistics = exactRecurrentStatistics[trainedModel];
+  factorColumns = If[KeyExistsQ[trainedModel, "Recurrent"],
+    Last@Dimensions[trainedModel["Recurrent"]["LeftFactors"]], Null];
+  algebraicRankUpperBound = Min[total, 5 trainingSteps];
   <|"steps" -> trainingSteps, "seconds" -> trainingSeconds,
     "secondsPerStep" -> trainingSeconds/trainingSteps,
     "objectiveFirst" -> First[history]["Objective"],
     "objectiveLast" -> Last[history]["Objective"],
     "settleIterationsMean" -> Mean[Lookup[history, "MeanSettleIterations"]],
     "settleIterationsMaximum" -> Max[Lookup[history, "MeanSettleIterations"]],
-    "recurrentRank" -> If[KeyExistsQ[trainedModel, "Recurrent"],
-      Last@Dimensions[trainedModel["Recurrent"]["LeftFactors"]], total],
+    "factorColumns" -> factorColumns,
+    "lowRankTermAlgebraicRankUpperBound" -> algebraicRankUpperBound,
+    "rankBoundBasis" ->
+      "Each single-sample published update has rank at most N+1=5; the sum after T batch-one updates has rank at most min(M,5T). Factor columns are representation size, not measured algebraic rank.",
     "truncations" -> If[KeyExistsQ[trainedModel, "Recurrent"],
       trainedModel["Recurrent"]["Truncations"], 0],
     "finalRepresentation" -> If[KeyExistsQ[trainedModel, "Recurrent"],
@@ -197,18 +216,52 @@ trainingSummary = If[trainingSteps == 0, Null, Module[
 ]];
 
 report = <|
-  "schema" -> "shriki-2016-exact-benchmark-point/v1",
+  "schema" -> "shriki-2016-exact-benchmark-point/v2",
+  "generatedAtUtc" -> DateString[TimeZoneConvert[Now, 0],
+    {"Year", "-", "Month", "-", "Day", "T", "Hour", ":", "Minute", ":", "Second", "Z"}],
+  "provenance" -> <|
+    "script" -> "mathematica/ExactBenchmarkPoint.wls",
+    "scriptSha256" -> IntegerString[FileHash[$InputFileName, "SHA256"], 16, 64],
+    "modelSource" -> "mathematica/SynesthesiaModel.wl",
+    "modelSourceSha256" -> IntegerString[FileHash[
+      FileNameJoin[{directory, "SynesthesiaModel.wl"}], "SHA256"], 16, 64]|>,
   "kernel" -> $Version, "backend" -> backend,
   "totalNeurons" -> total, "inputNeurons" -> 4,
   "neuronsPerModality" -> total/2,
   "exactness" -> <|
+    "exactRelativeTo" ->
+      "The declared exact-zero reconstruction condition; the target publication reports near-zero cross-talk without its scale or distribution.",
     "finiteRankCompression" -> False, "sparsification" -> False,
     "gradientClipping" -> False, "weightClipping" -> False,
     "derivativeFloor" -> 0., "zeroDiagonalConstraint" -> False,
-    "initialization" -> "exact-zero condition"|>,
+    "initialization" -> "exact-zero declared reconstruction condition",
+    "crossSizeScientificEquivalence" -> False,
+    "crossSizeReason" ->
+      "Changing neuron count defines a project model-family extension; the target publication specifies only 142 outputs and no normalization law across M.",
+    "factorHistoryApplicability" -> If[backend === "FactorHistory",
+      "Algebraically exact from this run's full K=0 condition. A generic near-zero dense K is full-rank and cannot enter this backend without changing or approximating that initialization.",
+      "Dense storage accepts a generic recurrent initialization."]|>,
+  "experimentalProtocol" -> <|
+    "trainingMeanRadii" -> {.2, 2.},
+    "radiusStandardDeviationFraction" -> .1,
+    "radiusStandardDeviationProvenance" ->
+      "Companion-paper convention; the target publication reports only proportionality.",
+    "trainingSamplerSeed" -> 424242,
+    "validationSamplerSeed" -> 515151,
+    "probeSamplerSeed" -> 8675309,
+    "batchSize" -> 1,
+    "learningRate" -> 1.5*^-4,
+    "restoreBest" -> False,
+    "checkpointSelection" -> "disabled for timing",
+    "crossSizeStatus" ->
+      "Fixed declared project protocol, not an author-specified cross-size normalization."|>,
   "numericalPolicy" -> <|"method" -> "synchronous explicit Euler",
     "integrationStepInTauUnits" -> .5, "deltaTolerance" -> 1.*^-9,
-    "stableIterations" -> 2, "maxIterations" -> 200000|>,
+    "fixedPointResidualTolerance" -> 1.*^-9,
+    "convergenceCriterion" -> "step-and-residual",
+    "stableIterations" -> 2, "maxIterations" -> 200000,
+    "publicationStatus" ->
+      "Integrator, step, tolerances and stability window are unreported project policies."|>,
   "repeats" -> repeats, "probe" -> probe,
   "settle" -> <|"seconds" -> settleMeasurement["seconds"],
     "medianSeconds" -> settleMeasurement["medianSeconds"],
@@ -221,14 +274,18 @@ report = <|
   "gradient" -> <|"secondsIncludingSettleAndObjective" -> gradientMeasurement["seconds"],
     "medianSecondsIncludingSettleAndObjective" -> gradientMeasurement["medianSeconds"],
     "directionStorageBytes" -> directionStorage,
-    "representation" -> If[AssociationQ[direction], "exact factors", "dense matrix"]|>,
+    "representation" -> If[AssociationQ[direction], "exact factors", "dense matrix"],
+    "singleSampleAlgebraicRankUpperBound" -> 5|>,
   "training" -> trainingSummary,
   "memory" -> <|"modelByteCount" -> ByteCount[model],
     "startBytes" -> memoryAtStart, "afterSettleBytes" -> memoryAfterSettle,
     "afterObjectiveBytes" -> memoryAfterObjective,
     "afterGradientBytes" -> memoryAfterGradient,
     "afterTrainingBytes" -> memoryAfterTraining,
-    "kernelMaxMemoryUsedBytes" -> MaxMemoryUsed[]|>|>;
+    "kernelMaxMemoryUsedBytes" -> MaxMemoryUsed[],
+    "operatingSystemPeakResidentSetBytes" -> operatingSystemPeakResidentSetBytes,
+    "memoryMetricCaveat" ->
+      "MemoryInUse and MaxMemoryUsed are Wolfram-kernel allocator metrics. VmHWM is the Linux operating-system high-water resident set for this kernel process when available."|>|>;
 
 If[Quiet@Check[Export[output, report, "RawJSON"], $Failed] === $Failed,
   Print["Could not export " <> output]; Exit[1]];

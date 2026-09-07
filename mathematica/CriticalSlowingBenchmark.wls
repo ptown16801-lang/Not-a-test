@@ -22,6 +22,7 @@ total = 142;
 rhos = {0.9, 0.99, 0.999, 0.9995, 0.9999};
 integrationStep = 0.5;
 tolerance = 1.*^-9;
+residualTolerance = 1.*^-9;
 stableIterations = 2;
 maximumIterations = 1000000;
 input = ConstantArray[0., 4];
@@ -54,35 +55,65 @@ makeCriticalModel[rho_] := Module[{diagonal, left, right, recurrent},
   |>]
 ];
 
+directionFrobeniusNorm[direction_Association] := Sqrt[Max[0., Tr[
+  (Transpose[direction["LeftFactors"]].direction["LeftFactors"]).
+  (Transpose[direction["RightFactors"]].direction["RightFactors"])]]];
+directionMatrix[direction_Association] :=
+  direction["LeftFactors"].Transpose[direction["RightFactors"]];
+
 measure[rho_] := Module[
-  {model, settleSeconds, settled, analysisSeconds, analysis, direction,
-    gradientFrobeniusSquared},
+  {model, settleSeconds, settled, exactAnalysisSeconds, exactAnalysis,
+    policyAnalysisSeconds, policyAnalysis, exactGradientNorm,
+    policyGradientNorm, analyticGradientNorm, analyticGradient,
+    exactGradient, policyGradient, exactMatrixError, policyMatrixError},
   model = makeCriticalModel[rho];
   settleSeconds = AbsoluteTiming[
     settled = SettleNetwork[model, input,
       "InitialState" -> initialState,
       "Method" -> "Euler", "IntegrationStep" -> integrationStep,
-      "Tolerance" -> tolerance, "StableIterations" -> stableIterations,
+      "Tolerance" -> tolerance, "ResidualTolerance" -> residualTolerance,
+      "ConvergenceCriterion" -> "StepAndResidual",
+      "StableIterations" -> stableIterations,
       "MaxIterations" -> maximumIterations];
   ][[1]];
   If[FailureQ[settled], Return[<|
     "rho" -> rho, "failure" -> ToString[settled, InputForm]|>]];
-  analysisSeconds = AbsoluteTiming[
-    analysis = AnalyzeNetwork[model, input, "Gradient" -> True,
+  exactAnalysisSeconds = AbsoluteTiming[
+    exactAnalysis = AnalyzeNetwork[model, input, "Gradient" -> True,
       "ReturnPhi" -> False, "DerivativeFloor" -> 0.,
       "PivotTolerance" -> 1.*^-13,
-      "InitialState" -> initialState,
+      "InitialState" -> ConstantArray[.5, total],
       "Method" -> "Euler", "IntegrationStep" -> integrationStep,
-      "Tolerance" -> tolerance, "StableIterations" -> stableIterations,
+      "Tolerance" -> 1.*^-13, "ResidualTolerance" -> 1.*^-13,
+      "ConvergenceCriterion" -> "StepAndResidual",
+      "StableIterations" -> stableIterations,
       "MaxIterations" -> maximumIterations];
   ][[1]];
-  If[FailureQ[analysis], Return[<|
-    "rho" -> rho, "failure" -> ToString[analysis, InputForm]|>]];
-  direction = analysis["UpdateDirection"];
-  gradientFrobeniusSquared = Tr[
-    (Transpose[direction["LeftFactors"]].direction["LeftFactors"]).
-    (Transpose[direction["RightFactors"]].direction["RightFactors"])
-  ];
+  If[FailureQ[exactAnalysis], Return[<|
+    "rho" -> rho, "failure" -> ToString[exactAnalysis, InputForm]|>]];
+  policyAnalysisSeconds = AbsoluteTiming[
+    policyAnalysis = AnalyzeNetwork[model, input, "Gradient" -> True,
+      "ReturnPhi" -> False, "DerivativeFloor" -> 0.,
+      "PivotTolerance" -> 1.*^-13, "InitialState" -> initialState,
+      "Method" -> "Euler", "IntegrationStep" -> integrationStep,
+      "Tolerance" -> tolerance, "ResidualTolerance" -> residualTolerance,
+      "ConvergenceCriterion" -> "StepAndResidual",
+      "StableIterations" -> stableIterations,
+      "MaxIterations" -> maximumIterations];
+  ][[1]];
+  If[FailureQ[policyAnalysis], Return[<|
+    "rho" -> rho, "failure" -> ToString[policyAnalysis, InputForm]|>]];
+  exactGradientNorm = directionFrobeniusNorm[exactAnalysis["UpdateDirection"]];
+  policyGradientNorm = directionFrobeniusNorm[policyAnalysis["UpdateDirection"]];
+  exactGradient = directionMatrix[exactAnalysis["UpdateDirection"]];
+  policyGradient = directionMatrix[policyAnalysis["UpdateDirection"]];
+  analyticGradient = (1/(4 (1 - rho))) model["W"].
+    LinearSolve[Transpose[model["W"]].model["W"], Transpose[model["W"]]];
+  analyticGradientNorm = 1/(2 (1 - rho));
+  exactMatrixError = Norm[exactGradient - analyticGradient, "Frobenius"]/
+    Norm[analyticGradient, "Frobenius"];
+  policyMatrixError = Norm[policyGradient - analyticGradient, "Frobenius"]/
+    Norm[analyticGradient, "Frobenius"];
   <|
     "rho" -> rho,
     "distanceToCriticality" -> 1. - rho,
@@ -95,17 +126,39 @@ measure[rho_] := Module[
     "fixedPointResidual" -> settled["FixedPointResidual"],
     "stateErrorFromKnownFixedPoint" ->
       Max[Abs[settled["State"] - 0.5]],
-    "objective" -> analysis["Objective"],
-    "objectiveAndGradientSecondsIncludingSettle" -> analysisSeconds,
-    "gradientFrobeniusNorm" -> Sqrt[Max[0., gradientFrobeniusSquared]],
-    "gradientRepresentation" -> "exact rank-five factors"
+    "continuousTimeLargestJacobianRealPart" -> rho - 1.,
+    "knownFixedPointLocallyAsymptoticallyStable" -> (rho < 1.),
+    "exactKnownStateObjective" -> exactAnalysis["Objective"],
+    "exactKnownStateObjectiveAndGradientSeconds" -> exactAnalysisSeconds,
+    "analyticExactStateGradientFrobeniusNorm" -> analyticGradientNorm,
+    "numericExactStateGradientFrobeniusNorm" -> exactGradientNorm,
+    "numericExactStateGradientNormRelativeDifference" ->
+      Abs[exactGradientNorm - analyticGradientNorm]/analyticGradientNorm,
+    "numericExactStateGradientRelativeFrobeniusError" -> exactMatrixError,
+    "exactGradientValidationPassed" -> (exactMatrixError < 2.*^-10),
+    "policySettledObjectiveAndGradientSecondsIncludingSettle" ->
+      policyAnalysisSeconds,
+    "policySettledGradientFrobeniusNorm" -> policyGradientNorm,
+    "policySettledGradientNormRelativeDifferenceVsExact" ->
+      Abs[policyGradientNorm - analyticGradientNorm]/analyticGradientNorm,
+    "policySettledGradientRelativeFrobeniusErrorVsExact" -> policyMatrixError,
+    "gradientRepresentation" ->
+      "five exact factor columns for one sample; algebraic rank at most five"
   |>
 ];
 
 results = measure /@ rhos;
 report = <|
-  "schema" -> "shriki-2016-critical-slowing/v1",
+  "schema" -> "shriki-2016-critical-slowing/v2",
+  "generatedAtUtc" -> DateString[TimeZoneConvert[Now, 0],
+    {"Year", "-", "Month", "-", "Day", "T", "Hour", ":", "Minute", ":", "Second", "Z"}],
   "kernel" -> $Version,
+  "provenance" -> <|
+    "script" -> "mathematica/CriticalSlowingBenchmark.wls",
+    "scriptSha256" -> IntegerString[FileHash[$InputFileName, "SHA256"], 16, 64],
+    "modelSource" -> "mathematica/SynesthesiaModel.wl",
+    "modelSourceSha256" -> IntegerString[FileHash[
+      FileNameJoin[{directory, "SynesthesiaModel.wl"}], "SHA256"], 16, 64]|>,
   "totalNeurons" -> total,
   "construction" -> <|
     "recurrentMatrix" -> "4 rho (I - 11^T/M)",
@@ -118,6 +171,8 @@ report = <|
     "method" -> "synchronous explicit Euler",
     "integrationStepInTauUnits" -> integrationStep,
     "deltaTolerance" -> tolerance,
+    "fixedPointResidualTolerance" -> residualTolerance,
+    "convergenceCriterion" -> "step-and-residual",
     "stableIterations" -> stableIterations,
     "maxIterations" -> maximumIterations
   |>,
@@ -127,9 +182,18 @@ report = <|
     "comparabilityCaveat" ->
       "The publication does not report its integration step or tolerance."
   |>,
+  "interpretation" -> <|
+    "settling" ->
+      "Perturbed-state iterations measure critical slowing under the declared Euler policy.",
+    "gradient" ->
+      "The valid gradient benchmark starts at the analytically known fixed point. The tolerance-settled gradient is retained only to quantify residual amplification near criticality.",
+    "crossSizeClaim" -> False|>,
+  "allExactGradientValidationsPassed" ->
+    AllTrue[Lookup[results, "exactGradientValidationPassed", False], TrueQ],
   "results" -> results
 |>;
 
 If[Quiet@Check[Export[output, report, "RawJSON"], $Failed] === $Failed,
   Print["Could not export " <> output]; Exit[1]];
 Print[ExportString[report, "RawJSON", "Compact" -> True]];
+If[!TrueQ[report["allExactGradientValidationsPassed"]], Exit[1]];

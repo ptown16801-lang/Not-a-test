@@ -1,0 +1,129 @@
+{
+	"schema":"shriki-2016-exact-benchmark-point\/v2",
+	"generatedAtUtc":"2026-09-07T11:35:29Z",
+	"provenance":{
+		"script":"mathematica\/ExactBenchmarkPoint.wls",
+		"scriptSha256":"fa8036ee16f40850cfe4fa806d5d342dc37552b8f7e3b80dc13e5599ab2e8ca8",
+		"modelSource":"mathematica\/SynesthesiaModel.wl",
+		"modelSourceSha256":"5f0ef5d0e64532effc04f478d6d3e1b4bad42bd0fecf6a2880f98d8174ef497c"
+	},
+	"kernel":"15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+	"backend":"FactorHistory",
+	"totalNeurons":568,
+	"inputNeurons":4,
+	"neuronsPerModality":284,
+	"exactness":{
+		"exactRelativeTo":"The declared exact-zero reconstruction condition; the target publication reports near-zero cross-talk without its scale or distribution.",
+		"finiteRankCompression":false,
+		"sparsification":false,
+		"gradientClipping":false,
+		"weightClipping":false,
+		"derivativeFloor":0.0,
+		"zeroDiagonalConstraint":false,
+		"initialization":"exact-zero declared reconstruction condition",
+		"crossSizeScientificEquivalence":false,
+		"crossSizeReason":"Changing neuron count defines a project model-family extension; the target publication specifies only 142 outputs and no normalization law across M.",
+		"factorHistoryApplicability":"Algebraically exact from this run's full K=0 condition. A generic near-zero dense K is full-rank and cannot enter this backend without changing or approximating that initialization."
+	},
+	"experimentalProtocol":{
+		"trainingMeanRadii":[
+			0.2,
+			2.0
+		],
+		"radiusStandardDeviationFraction":0.1,
+		"radiusStandardDeviationProvenance":"Companion-paper convention; the target publication reports only proportionality.",
+		"trainingSamplerSeed":424242,
+		"validationSamplerSeed":515151,
+		"probeSamplerSeed":8675309,
+		"batchSize":1,
+		"learningRate":1.5e-4,
+		"restoreBest":false,
+		"checkpointSelection":"disabled for timing",
+		"crossSizeStatus":"Fixed declared project protocol, not an author-specified cross-size normalization."
+	},
+	"numericalPolicy":{
+		"method":"synchronous explicit Euler",
+		"integrationStepInTauUnits":0.5,
+		"deltaTolerance":1.0e-9,
+		"fixedPointResidualTolerance":1.0e-9,
+		"convergenceCriterion":"step-and-residual",
+		"stableIterations":2,
+		"maxIterations":200000,
+		"publicationStatus":"Integrator, step, tolerances and stability window are unreported project policies."
+	},
+	"repeats":3,
+	"probe":[
+		0.13622214384283576,
+		-0.11007992123920785,
+		-1.9343484976587944,
+		0.23279347467025466
+	],
+	"settle":{
+		"seconds":[
+			6.699e-2,
+			6.7156e-2,
+			6.6995e-2
+		],
+		"medianSeconds":6.6995e-2,
+		"minimumSeconds":6.699e-2,
+		"iterations":31,
+		"fixedPointResidual":1.7474077740331495e-10
+	},
+	"objective":{
+		"secondsIncludingSettle":[
+			9.002e-2,
+			9.0278e-2,
+			9.0154e-2
+		],
+		"medianSecondsIncludingSettle":9.0154e-2,
+		"value":-3.589037013892921
+	},
+	"gradient":{
+		"secondsIncludingSettleAndObjective":[
+			7.9681e-2,
+			9.6328e-2,
+			7.2898e-2
+		],
+		"medianSecondsIncludingSettleAndObjective":7.9681e-2,
+		"directionStorageBytes":119152,
+		"representation":"exact factors",
+		"singleSampleAlgebraicRankUpperBound":5
+	},
+	"training":{
+		"steps":10,
+		"seconds":4.147986,
+		"secondsPerStep":0.4147986000000001,
+		"objectiveFirst":-3.701363133057693,
+		"objectiveLast":-3.533019072634611,
+		"settleIterationsMean":31,
+		"settleIterationsMaximum":31,
+		"factorColumns":50,
+		"lowRankTermAlgebraicRankUpperBound":50,
+		"rankBoundBasis":"Each single-sample published update has rank at most N+1=5; the sum after T batch-one updates has rank at most min(M,5T). Factor columns are representation size, not measured algebraic rank.",
+		"truncations":0,
+		"finalRepresentation":"FactorHistory",
+		"validationSamples":4,
+		"validationObjectiveBefore":-3.5337840259417637,
+		"validationObjectiveAfter":-3.5338152453017653,
+		"validationSecondsBefore":0.289448,
+		"validationSecondsAfter":0.907881,
+		"totalSecondsIncludingValidation":5.345315,
+		"recurrentFrobeniusNorm":6.229624265271906e-4,
+		"recurrentSum":-1.7863600829362774e-6,
+		"recurrentMaximumAbsolute":null,
+		"recurrentMaximumAbsoluteAvailable":false,
+		"recurrentDiagonalMaximumAbsolute":2.7320621389052844e-6,
+		"modelByteCount":1534920
+	},
+	"memory":{
+		"modelByteCount":163176,
+		"startBytes":54304816,
+		"afterSettleBytes":54685136,
+		"afterObjectiveBytes":54838312,
+		"afterGradientBytes":55188848,
+		"afterTrainingBytes":62140440,
+		"kernelMaxMemoryUsedBytes":70239760,
+		"operatingSystemPeakResidentSetBytes":196816896,
+		"memoryMetricCaveat":"MemoryInUse and MaxMemoryUsed are Wolfram-kernel allocator metrics. VmHWM is the Linux operating-system high-water resident set for this kernel process when available."
+	}
+}

@@ -31,27 +31,42 @@ models = <|
   "cross-talk-only-1e-5" -> initializedModel["cross-talk-only", 1.*^-5]|>;
 
 policies = Flatten@Table[<|"integrationStep" -> step,
-    "tolerance" -> tolerance|>,
+    "deltaTolerance" -> tolerance,
+    "fixedPointResidualTolerance" -> tolerance|>,
   {step, {1., .5, .25}}, {tolerance, {1.*^-6, 1.*^-9, 1.*^-12}}];
 
-settleRows = Flatten@KeyValueMap[Function[{name, model}, Module[{reference},
-    reference = SettleNetwork[model, input, "Method" -> "Anderson",
-      "Tolerance" -> 1.*^-13, "StableIterations" -> 3,
+settleRows = Flatten@KeyValueMap[Function[{name, model}, Module[
+    {reference, andersonReference},
+    reference = SettleNetwork[model, input, "Method" -> "Euler",
+      "IntegrationStep" -> .25, "Tolerance" -> 1.*^-13,
+      "ResidualTolerance" -> 1.*^-13,
+      "ConvergenceCriterion" -> "StepAndResidual", "StableIterations" -> 3,
       "MaxIterations" -> 200000];
     If[FailureQ[reference], Print[reference]; Exit[1]];
+    andersonReference = SettleNetwork[model, input, "Method" -> "Anderson",
+      "Tolerance" -> 1.*^-13, "ResidualTolerance" -> 1.*^-13,
+      "ConvergenceCriterion" -> "FixedPointResidual", "StableIterations" -> 3,
+      "MaxIterations" -> 200000];
+    If[FailureQ[andersonReference], Print[andersonReference]; Exit[1]];
     Map[Function[policy, Module[{result},
       result = SettleNetwork[model, input, "Method" -> "Euler",
         "IntegrationStep" -> policy["integrationStep"],
-        "Tolerance" -> policy["tolerance"], "StableIterations" -> 2,
+        "Tolerance" -> policy["deltaTolerance"],
+        "ResidualTolerance" -> policy["fixedPointResidualTolerance"],
+        "ConvergenceCriterion" -> "StepAndResidual", "StableIterations" -> 2,
         "MaxIterations" -> 200000];
       If[FailureQ[result], Print[result]; Exit[1]];
       Join[<|"initialization" -> name|>, policy, <|
         "iterations" -> result["Iterations"],
         "reportedMaxDelta" -> result["MaxDelta"],
         "fixedPointResidual" -> result["FixedPointResidual"],
-        "stateMaxAbsoluteErrorVsAnderson" ->
+        "stateMaxAbsoluteErrorVsTightEuler" ->
           Max[Abs[result["State"] - reference["State"]]],
-        "andersonFixedPointResidual" -> reference["FixedPointResidual"]|>]
+        "tightEulerFixedPointResidual" -> reference["FixedPointResidual"],
+        "andersonVsTightEulerStateMaxAbsoluteError" ->
+          Max[Abs[andersonReference["State"] - reference["State"]]],
+        "andersonFixedPointResidual" ->
+          andersonReference["FixedPointResidual"]|>]
     ]], policies]
   ]], models];
 
@@ -60,7 +75,8 @@ initializationRows = Flatten@Table[Module[{model, analysis, direction,
     updated, updatedObjective},
     model = initializedModel[scope, scale];
     analysis = AnalyzeNetwork[model, input, "IntegrationStep" -> 1.,
-      "Tolerance" -> 1.*^-12, "StableIterations" -> 2,
+      "Tolerance" -> 1.*^-12, "ResidualTolerance" -> 1.*^-12,
+      "ConvergenceCriterion" -> "StepAndResidual", "StableIterations" -> 2,
       "DerivativeFloor" -> 0., "ReturnPhi" -> False];
     If[FailureQ[analysis], Print[analysis]; Exit[1]];
     direction = analysis["UpdateDirection"];
@@ -68,6 +84,7 @@ initializationRows = Flatten@Table[Module[{model, analysis, direction,
       "ZeroDiagonal" -> False];
     updatedObjective = InfomaxObjective[updated, input,
       "IntegrationStep" -> 1., "Tolerance" -> 1.*^-12,
+      "ResidualTolerance" -> 1.*^-12,
       "DerivativeFloor" -> 0.];
     <|"scope" -> scope, "scale" -> scale,
       "initialKMaxAbsolute" -> Max[Abs[Flatten[model["K"]]]],
@@ -80,22 +97,36 @@ initializationRows = Flatten@Table[Module[{model, analysis, direction,
   ], {scope, {"all-recurrent", "cross-talk-only"}}, {scale, scales}];
 
 summary = <|
-  "maxStateErrorVsAnderson" -> Max[Lookup[settleRows,
-    "stateMaxAbsoluteErrorVsAnderson"]],
+  "maxStateErrorVsTightEuler" -> Max[Lookup[settleRows,
+    "stateMaxAbsoluteErrorVsTightEuler"]],
+  "maxAndersonVsTightEulerStateError" -> Max[Lookup[settleRows,
+    "andersonVsTightEulerStateMaxAbsoluteError"]],
   "maxFixedPointResidual" -> Max[Lookup[settleRows, "fixedPointResidual"]],
   "iterationRange" -> MinMax[Lookup[settleRows, "iterations"]],
   "allOneStepObjectivesDecreased" ->
     AllTrue[Lookup[initializationRows, "oneStepObjectiveChange"], Negative]|>;
 
 report = <|
-  "schema" -> "shriki-2016-numerical-policy-sensitivity/v1",
+  "schema" -> "shriki-2016-numerical-policy-sensitivity/v2",
+  "generatedAtUtc" -> DateString[TimeZoneConvert[Now, 0],
+    {"Year", "-", "Month", "-", "Day", "T", "Hour", ":", "Minute", ":", "Second", "Z"}],
   "kernel" -> $Version,
+  "provenance" -> <|
+    "script" -> "mathematica/verification/NumericalPolicySensitivity.wls",
+    "scriptSha256" -> IntegerString[FileHash[$InputFileName, "SHA256"], 16, 64],
+    "modelSource" -> "mathematica/SynesthesiaModel.wl",
+    "modelSourceSha256" -> IntegerString[FileHash[
+      FileNameJoin[{DirectoryName[directory], "SynesthesiaModel.wl"}],
+      "SHA256"], 16, 64]|>,
   "model" -> <|"inputNeurons" -> 4, "outputNeurons" -> 142,
     "neuronsPerModality" -> 71|>,
   "authorityBoundary" -> <|
     "reported" -> {"continuous first-order dynamics", "near-zero cross-talk"},
     "unreported" -> {"integrator", "step", "tolerance", "stability window",
-      "near-zero scale", "near-zero distribution", "within-modality initialization"}|>,
+      "near-zero scale", "near-zero distribution", "within-modality initialization",
+      "coefficient relating radius standard deviation to its mean"},
+    "solverCaveat" ->
+      "Anderson acceleration is a root-finding convenience, not a simulation of the published ODE. Agreement here is conditional on reaching the same basin; the tight Euler endpoint is the comparison reference."|>,
   "input" -> input, "summary" -> summary,
   "settlingPolicies" -> settleRows,
   "initializationConditions" -> initializationRows|>;

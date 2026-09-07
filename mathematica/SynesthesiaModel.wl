@@ -19,6 +19,8 @@ $ReconstructionDefaults::usage = "$ReconstructionDefaults lists numerical choice
 LogisticActivation::usage = "LogisticActivation[x] is the logistic squashing function used by the model.";
 LogisticPrimeFromOutput::usage = "LogisticPrimeFromOutput[s] gives g'[h] from s=g[h].";
 LogisticSecondFromOutput::usage = "LogisticSecondFromOutput[s] gives g''[h] from s=g[h].";
+LogisticPrimeFromField::usage = "LogisticPrimeFromField[h] evaluates g'[h] without first rounding g[h] to zero or one.";
+LogisticSecondFromField::usage = "LogisticSecondFromField[h] evaluates g''[h] stably from the field.";
 
 CreateSimplePaperNetwork::usage = "CreateSimplePaperNetwork[] creates the paper's two-input, two-output model.";
 CreateTwoModalityPaperNetwork::usage = "CreateTwoModalityPaperNetwork[] creates the 4-input, 142-output population model.";
@@ -27,6 +29,7 @@ CreatePaperInputSampler::usage = "CreatePaperInputSampler[] returns a seeded, st
 PolarProbe::usage = "PolarProbe[modality, angle, radius] makes a four-component probe for modality 1 or 2.";
 
 SettleNetwork::usage = "SettleNetwork[model,input] integrates the rate equation to a fixed point.";
+LocalStabilityReport::usage = "LocalStabilityReport[model,input,state] computes the continuous-time fixed-point Jacobian and its local stability; it is an explicit dense diagnostic.";
 AnalyzeNetwork::usage = "AnalyzeNetwork[model,input] evaluates equilibrium, susceptibility, objective, and recurrent gradient.";
 InfomaxObjective::usage = "InfomaxObjective[model,input] evaluates the information objective epsilon.";
 RecurrentUpdateDirection::usage = "RecurrentUpdateDirection[model,inputs] averages the published recurrent update over inputs.";
@@ -39,7 +42,7 @@ RespondNetwork::usage = "RespondNetwork[model,input] settles a model and summari
 ProbeCrossModalMapping::usage = "ProbeCrossModalMapping[model,source,target] measures population-vector responses across angles.";
 CrossTalkSummary::usage = "CrossTalkSummary[model] summarizes signed and absolute weights in both cross-modal blocks.";
 MaterializeRecurrentMatrix::usage = "MaterializeRecurrentMatrix[model] returns the dense recurrent matrix, including a low-rank model's diagonal correction.";
-NetworkScaleReport::usage = "NetworkScaleReport[model] reports neuron count, representation rank, storage, and dense-equivalent memory.";
+NetworkScaleReport::usage = "NetworkScaleReport[model] reports neuron count, factor-column count, storage, and dense-equivalent memory without mislabeling representation size as algebraic rank.";
 EstimateNetworkScale::usage = "EstimateNetworkScale[total,rank] estimates dense and low-rank storage without allocating a network.";
 
 SimpleStabilityJacobian::usage = "SimpleStabilityJacobian[v1,v2] is the S1 linearized learning Jacobian at zero cross-talk.";
@@ -75,6 +78,8 @@ $PaperFigure7Scenarios = <|
 $ReconstructionDefaults = <|
   "IntegrationStep" -> 0.5,
   "Tolerance" -> 1.*^-9,
+  "ResidualTolerance" -> 1.*^-9,
+  "ConvergenceCriterion" -> "StepAndResidual",
   "StableIterations" -> 2,
   "MaxIterations" -> 50000,
   "DerivativeFloor" -> 0.,
@@ -119,7 +124,7 @@ validModelQ[model_] := Module[{n, m, recurrent},
 ];
 
 ClearAll[lowRankModelQ, scaleRows, recurrentTimes, recurrentState, setRecurrentState,
-  recurrentDiagonal, recurrentMaxAbsBound];
+  recurrentTransposeTimes, recurrentDiagonal, recurrentMaxAbsBound];
 lowRankModelQ[model_] := AssociationQ@Lookup[model, "Recurrent", None] &&
   Lookup[model["Recurrent"], "Representation", None] === "LowRankPlusDiagonal";
 scaleRows[scales_List, matrix_?MatrixQ] := MapThread[#1 #2 &, {scales, matrix}];
@@ -130,6 +135,12 @@ recurrentTimes[model_, value_] := If[lowRankModelQ[model], Module[{r = model["Re
       r["Diagonal"] value + r["LeftFactors"].(Transpose[r["RightFactors"]].value)
     ]
   ], model["K"].value];
+recurrentTransposeTimes[model_, value_] := If[lowRankModelQ[model], Module[{r = model["Recurrent"]},
+    If[Last@Dimensions[r["LeftFactors"]] == 0,
+      r["Diagonal"] value,
+      r["Diagonal"] value + r["RightFactors"].(Transpose[r["LeftFactors"]].value)
+    ]
+  ], Transpose[model["K"]].value];
 recurrentState[model_] := If[lowRankModelQ[model], model["Recurrent"], model["K"]];
 setRecurrentState[model_, state_] := If[lowRankModelQ[model],
   Join[model, <|"Recurrent" -> state,
@@ -146,7 +157,8 @@ recurrentMaxAbsBound[model_] := If[lowRankModelQ[model], Module[{r = model["Recu
       Max[Abs[r["LeftFactors"]].(Max /@ Transpose[Abs[r["RightFactors"]]])]]
   ], Max[Abs[Flatten[model["K"]]]]];
 
-ClearAll[LogisticActivation, LogisticPrimeFromOutput, LogisticSecondFromOutput];
+ClearAll[LogisticActivation, LogisticPrimeFromOutput, LogisticSecondFromOutput,
+  LogisticPrimeFromField, LogisticSecondFromField];
 SetAttributes[LogisticActivation, Listable];
 LogisticActivation[x_?MachineNumberQ] :=
   If[x >= 0., 1./(1. + Exp[-x]), With[{z = Exp[x]}, z/(1. + z)]];
@@ -154,6 +166,12 @@ LogisticActivation[x_?NumericQ] := 1/(1 + Exp[-x]);
 LogisticActivation[x_] := 1/(1 + Exp[-x]);
 LogisticPrimeFromOutput[s_] := s (1 - s);
 LogisticSecondFromOutput[s_] := s (1 - s) (1 - 2 s);
+SetAttributes[LogisticPrimeFromField, Listable];
+LogisticPrimeFromField[h_?NumericQ] := With[{z = Exp[-Abs[h]]}, z/(1 + z)^2];
+LogisticPrimeFromField[h_] := Exp[-Abs[h]]/(1 + Exp[-Abs[h]])^2;
+SetAttributes[LogisticSecondFromField, Listable];
+LogisticSecondFromField[h_?NumericQ] := -LogisticPrimeFromField[h] Tanh[h/2];
+LogisticSecondFromField[h_] := -LogisticPrimeFromField[h] Tanh[h/2];
 
 Options[CreateSimplePaperNetwork] = {
   "Weights" -> {1., 1.}, "CrossTalk" -> {0., 0.}
@@ -380,6 +398,8 @@ Options[SettleNetwork] = {
   "AndersonDamping" -> 1.,
   "AndersonRegularization" -> 1.*^-10,
   "Tolerance" -> 1.*^-9,
+  "ResidualTolerance" -> Automatic,
+  "ConvergenceCriterion" -> "StepAndResidual",
   "StableIterations" -> 2,
   "MaxIterations" -> 50000,
   "AllowUnconverged" -> False
@@ -387,14 +407,17 @@ Options[SettleNetwork] = {
 
 SettleNetwork[model_, input_, OptionsPattern[]] := Module[
   {m, n, state, field, direct, next, step = N@OptionValue["IntegrationStep"],
-    tolerance = N@OptionValue["Tolerance"], required = OptionValue["StableIterations"],
+    tolerance = N@OptionValue["Tolerance"],
+    residualTolerance = Replace[OptionValue["ResidualTolerance"], Automatic -> OptionValue["Tolerance"]],
+    criterion = OptionValue["ConvergenceCriterion"], required = OptionValue["StableIterations"],
     maximum = OptionValue["MaxIterations"], allow = TrueQ@OptionValue["AllowUnconverged"],
     method = OptionValue["Method"], depth = OptionValue["AndersonDepth"],
     damping = N@OptionValue["AndersonDamping"],
     regularization = N@OptionValue["AndersonRegularization"],
     stable = 0, iterations = 0, maxDelta = Infinity, fixedPointResidual, converged,
     mapped, residual, mappedHistory = {}, residualHistory = {}, residualMatrix,
-    gram, coefficients, weights, candidate},
+    gram, coefficients, weights, candidate, acceptableResidual, acceptableStep},
+  residualTolerance = N@residualTolerance;
   If[!validModelQ[model], Return@modelFailure["InvalidModel", "The network association is malformed."]];
   {n, m} = Lookup[model, {"InputSize", "OutputSize"}];
   If[!finiteVectorQ[input, n],
@@ -405,6 +428,8 @@ SettleNetwork[model_, input_, OptionsPattern[]] := Module[
       !IntegerQ[depth] || depth < 1 || !finiteNumericQ[damping] || !(0 < damping <= 1) ||
       !finiteNumericQ[regularization] || regularization < 0 ||
       !finiteNumericQ[tolerance] || tolerance <= 0 ||
+      !finiteNumericQ[residualTolerance] || residualTolerance <= 0 ||
+      !MemberQ[{"FixedPointResidual", "StepAndResidual"}, criterion] ||
       !IntegerQ[required] || required < 1 || !IntegerQ[maximum] || maximum < 1,
     Return@modelFailure["InvalidIntegrator", "Integrator options are outside their valid ranges."]
   ];
@@ -418,8 +443,9 @@ SettleNetwork[model_, input_, OptionsPattern[]] := Module[
     iterations++;
     field = direct + recurrentTimes[model, state];
     mapped = LogisticActivation[field];
+    residual = mapped - state;
+    fixedPointResidual = Max[Abs[residual]];
     If[method === "Anderson",
-      residual = mapped - state;
       AppendTo[mappedHistory, mapped]; AppendTo[residualHistory, residual];
       If[Length[mappedHistory] > depth + 1, mappedHistory = Rest[mappedHistory]];
       If[Length[residualHistory] > depth + 1, residualHistory = Rest[residualHistory]];
@@ -441,41 +467,110 @@ SettleNetwork[model_, input_, OptionsPattern[]] := Module[
     ];
     maxDelta = Max[Abs[next - state]];
     state = next;
-    If[maxDelta < tolerance, stable++, stable = 0];
+    acceptableResidual = fixedPointResidual < residualTolerance;
+    acceptableStep = criterion === "FixedPointResidual" || maxDelta < tolerance;
+    If[acceptableResidual && acceptableStep, stable++, stable = 0];
   ];
-  converged = stable >= required;
   field = direct + recurrentTimes[model, state];
   fixedPointResidual = Max[Abs[state - LogisticActivation[field]]];
+  converged = stable >= required && fixedPointResidual < residualTolerance &&
+    (criterion === "FixedPointResidual" || maxDelta < tolerance);
   If[!converged && !allow,
     Return@modelFailure["DidNotConverge", "The recurrent dynamics did not settle.",
-      <|"Iterations" -> iterations, "MaxDelta" -> maxDelta|>]
+      <|"Iterations" -> iterations, "MaxDelta" -> maxDelta,
+        "FixedPointResidual" -> fixedPointResidual|>]
   ];
   <|"State" -> state, "Field" -> field, "Iterations" -> iterations,
     "MaxDelta" -> maxDelta, "FixedPointResidual" -> fixedPointResidual,
-    "Converged" -> converged, "Method" -> method|>
+    "ResidualTolerance" -> residualTolerance,
+    "ConvergenceCriterion" -> criterion,
+    "Converged" -> converged, "Method" -> method,
+    "StabilityAssessed" -> False|>
+];
+
+Options[LocalStabilityReport] = {"ResidualTolerance" -> 1.*^-9};
+LocalStabilityReport[model_, input_, state_, OptionsPattern[]] := Module[
+  {m, n, field, first, jacobian, eigenvalues, largestReal, residual,
+    residualTolerance = N@OptionValue["ResidualTolerance"]},
+  If[!validModelQ[model], Return@modelFailure["InvalidModel", "The network association is malformed."]];
+  {n, m} = Lookup[model, {"InputSize", "OutputSize"}];
+  If[!finiteVectorQ[input, n] || !finiteVectorQ[state, m] ||
+      !finiteNumericQ[residualTolerance] || residualTolerance <= 0,
+    Return@modelFailure["InvalidState", "The input or state has invalid dimensions or values."]
+  ];
+  field = model["W"].N[input] + recurrentTimes[model, N[state]];
+  residual = Max[Abs[LogisticActivation[field] - N[state]]];
+  If[residual > residualTolerance,
+    Return@modelFailure["NotFixedPoint",
+      "Local fixed-point stability is defined only at an equilibrium within the requested residual tolerance.",
+      <|"FixedPointResidual" -> residual,
+        "ResidualTolerance" -> residualTolerance|>]
+  ];
+  first = LogisticPrimeFromField[field];
+  jacobian = -IdentityMatrix[m] +
+    scaleRows[first, MaterializeRecurrentMatrix[model]];
+  eigenvalues = Quiet@Check[Eigenvalues[jacobian], $Failed];
+  If[eigenvalues === $Failed,
+    Return@modelFailure["StabilityFailure", "The local-stability eigenproblem failed."]
+  ];
+  largestReal = Max[Re[N[eigenvalues]]];
+  <|"ContinuousTimeJacobian" -> jacobian, "Eigenvalues" -> eigenvalues,
+    "LargestRealPart" -> largestReal, "LocallyAsymptoticallyStable" -> (largestReal < 0),
+    "FixedPointResidual" -> residual,
+    "ResidualTolerance" -> residualTolerance, "DenseDiagnostic" -> True|>
 ];
 
 Options[AnalyzeNetwork] = Join[
   {"Gradient" -> True, "DerivativeFloor" -> 0.,
-    "PivotTolerance" -> 1.*^-13, "ReturnPhi" -> Automatic},
+    "PivotTolerance" -> 1.*^-13, "SolveResidualTolerance" -> 1.*^-10,
+    "ReturnPhi" -> Automatic},
   Options[SettleNetwork]
 ];
 
-(* Construct one cached linear solver for phi or its transpose.  In low-rank
-   mode this is the Woodbury identity; in dense mode it reuses a single
-   factorization for every right-hand side in the analysis. *)
-ClearAll[makePhiSolver, solvePhi];
-makePhiSolver[model_, first_List, transpose_: False] := Module[
-  {recurrent, diagonal, left, right, inverseBase, scaledLeft,
-    middle, middleSolver, operator, operatorSolver},
+(* Construct one cached solver for phi or phi^T without explicitly forming
+   G^-1.  We solve
+
+     (I-G K) phi R = G R
+
+   (or (I-G K^T) phi^T R = G R).  This is algebraically identical to the
+   published phi=(G^-1-K)^-1, but it avoids artificial overflow and poor row
+   scaling when a representable logistic derivative is extremely small.
+
+   The low-rank branch uses Woodbury only when its chosen diagonal base is
+   invertible.  A dense exact fallback covers moderate pathological cases in
+   which the full operator is invertible but that particular split is not.
+   Every returned solve is checked against the unscaled fixed-point operator. *)
+ClearAll[maxAbsArray, makePhiSolver, solvePhi];
+maxAbsArray[value_] := If[Length[Flatten[value]] == 0, 0., Max[Abs[Flatten[value]]]];
+makePhiSolver[model_, first_List, transpose_: False,
+    solveTolerance_: 1.*^-10] := Module[
+  {m = model["OutputSize"], recurrent, diagonal, left, right, base,
+    inverseBase, scaledLeft, middle, middleSolver, operator, operatorSolver,
+    rawSolver, applyOperator, checkedSolver, badBase, operatorNormBound,
+    factorRowBound, denseFallbackLimit = 2048},
+  applyOperator[value_] := value - scaleRows[first,
+    If[TrueQ[transpose], recurrentTransposeTimes[model, value],
+      recurrentTimes[model, value]]];
+  checkedSolver = Function[{rightHandSide, rightAlreadyScaled}, Module[
+      {scaledRight = If[TrueQ[rightAlreadyScaled], N@rightHandSide,
+          scaleRows[first, N@rightHandSide]], solved, residual, denominator},
+      solved = Quiet@Check[rawSolver[scaledRight], $Failed];
+      If[solved === $Failed, Return[$Failed]];
+      residual = applyOperator[solved] - scaledRight;
+      denominator = Max[10.^-280,
+        operatorNormBound maxAbsArray[solved] + maxAbsArray[scaledRight]];
+      If[!finiteNumericQ[maxAbsArray[residual]] ||
+          maxAbsArray[residual] > solveTolerance denominator,
+        $Failed, solved]
+    ]];
   If[!lowRankModelQ[model],
-    operator = DiagonalMatrix[1/first] - model["K"];
-    If[TrueQ[transpose], operator = Transpose[operator]];
+    operator = IdentityMatrix[m] - scaleRows[first,
+      If[TrueQ[transpose], Transpose[model["K"]], model["K"]]];
+    operatorNormBound = Max[Total /@ Abs[operator]];
     operatorSolver = Quiet@Check[LinearSolve[operator], $Failed];
     If[operatorSolver === $Failed, Return[$Failed]];
-    Return@Function[rightHandSide,
-      Quiet@Check[operatorSolver[rightHandSide], $Failed]
-    ]
+    rawSolver = Function[scaledRight, Quiet@Check[operatorSolver[scaledRight], $Failed]];
+    Return[checkedSolver]
   ];
   recurrent = model["Recurrent"];
   diagonal = recurrent["Diagonal"];
@@ -483,64 +578,97 @@ makePhiSolver[model_, first_List, transpose_: False] := Module[
     {recurrent["RightFactors"], recurrent["LeftFactors"]},
     {recurrent["LeftFactors"], recurrent["RightFactors"]}
   ];
-  inverseBase = 1/(1/first - diagonal);
-  If[!VectorQ[inverseBase, finiteNumericQ], Return[$Failed]];
-  If[Last@Dimensions[left] == 0,
-    Return@Function[rightHandSide, scaleRows[inverseBase, rightHandSide]]
+  factorRowBound = If[Last@Dimensions[left] == 0, ConstantArray[0., m],
+    Abs[left].(Total /@ Transpose[Abs[right]])];
+  operatorNormBound = Max[Abs[1 - first diagonal] + first factorRowBound];
+  base = 1 - first diagonal;
+  badBase = !VectorQ[base, finiteNumericQ] ||
+    Min[Abs[base]] <= 100 $MachineEpsilon Max[1., Max[Abs[base]]];
+  If[badBase,
+    If[m > denseFallbackLimit, Return[$Failed]];
+    operator = IdentityMatrix[m] - scaleRows[first,
+      If[TrueQ[transpose], Transpose[MaterializeRecurrentMatrix[model]],
+        MaterializeRecurrentMatrix[model]]];
+    operatorNormBound = Max[Total /@ Abs[operator]];
+    operatorSolver = Quiet@Check[LinearSolve[operator], $Failed];
+    If[operatorSolver === $Failed, Return[$Failed]];
+    rawSolver = Function[scaledRight, Quiet@Check[operatorSolver[scaledRight], $Failed]];
+    Return[checkedSolver]
   ];
-  scaledLeft = scaleRows[inverseBase, left];
+  inverseBase = 1/base;
+  If[Last@Dimensions[left] == 0,
+    rawSolver = Function[scaledRight, scaleRows[inverseBase, scaledRight]];
+    Return[checkedSolver]
+  ];
+  scaledLeft = scaleRows[inverseBase first, left];
   middle = IdentityMatrix[Last@Dimensions[left]] - Transpose[right].scaledLeft;
   middleSolver = Quiet@Check[LinearSolve[middle], $Failed];
   If[middleSolver === $Failed, Return[$Failed]];
-  Function[rightHandSide, Module[{scaled, solved},
-    scaled = scaleRows[inverseBase, rightHandSide];
+  rawSolver = Function[scaledRight, Module[{scaled, solved},
+    scaled = scaleRows[inverseBase, scaledRight];
     solved = Quiet@Check[middleSolver[Transpose[right].scaled], $Failed];
     If[solved === $Failed, $Failed, scaled + scaledLeft.solved]
-  ]]
+  ]];
+  checkedSolver
 ];
 
-solvePhi[model_, first_List, rightHandSide_, transpose_: False] := Module[{solver},
-  solver = makePhiSolver[model, first, transpose];
-  If[solver === $Failed, $Failed, solver[rightHandSide]]
+solvePhi[model_, first_List, rightHandSide_, transpose_: False,
+    solveTolerance_: 1.*^-10] := Module[{solver},
+  solver = makePhiSolver[model, first, transpose, solveTolerance];
+  If[solver === $Failed, $Failed, solver[rightHandSide, False]]
 ];
 
 AnalyzeNetwork[model_, input_, opts : OptionsPattern[]] := Module[
-  {equilibrium, m, n, s, first, second, phi, chi, gram, determinant,
-    objective, gamma, chiGamma, chiGammaDiagonal, a, update,
+  {equilibrium, m, n, s, first, rawFirst, second, phi, chi, gram, singularValues,
+    objective, gamma, chiGamma, chiGammaDiagonal, a, aCandidate, scaledA, update,
     gradient = TrueQ@OptionValue["Gradient"],
     floor = N@OptionValue["DerivativeFloor"], pivot = N@OptionValue["PivotTolerance"],
-    returnPhi = OptionValue["ReturnPhi"], base, phiTChi, b, leftFactors,
-    rightFactors, forwardSolver, transposeSolver, gramSolver},
+    solveTolerance = N@OptionValue["SolveResidualTolerance"],
+    returnPhi = OptionValue["ReturnPhi"], base, phiTQ, b, leftFactors,
+    rightFactors, forwardSolver, transposeSolver, qTranspose, r,
+    gammaSolver, gammaRight, scaledChi, chiScale, floorApplied,
+    gammaResidual, susceptibilityCondition},
   If[!finiteNumericQ[floor] || floor < 0 ||
       !finiteNumericQ[pivot] || pivot <= 0 ||
+      !finiteNumericQ[solveTolerance] || solveTolerance <= 0 ||
       !MemberQ[{True, False, Automatic}, returnPhi],
     Return@modelFailure["InvalidAnalysis",
-      "DerivativeFloor must be non-negative and PivotTolerance positive; ReturnPhi must be True, False, or Automatic."]
+      "DerivativeFloor must be non-negative; numerical tolerances must be positive; ReturnPhi must be True, False, or Automatic."]
   ];
   equilibrium = SettleNetwork[model, input,
     Sequence @@ FilterRules[{opts}, Options[SettleNetwork]]];
   If[FailureQ[equilibrium], Return[equilibrium]];
   {n, m} = Lookup[model, {"InputSize", "OutputSize"}];
   s = equilibrium["State"];
-  first = If[floor == 0., LogisticPrimeFromOutput[s],
-    Map[Max[floor, #] &, LogisticPrimeFromOutput[s]]];
-  second = LogisticSecondFromOutput[s];
-  forwardSolver = makePhiSolver[model, first, False];
+  rawFirst = LogisticPrimeFromField[equilibrium["Field"]];
+  first = rawFirst;
+  If[floor != 0., first = Map[Max[floor, #] &, first]];
+  floorApplied = AnyTrue[MapThread[Unequal, {first, rawFirst}], TrueQ];
+  second = LogisticSecondFromField[equilibrium["Field"]];
+  If[AnyTrue[first, !finiteNumericQ[#] || # <= 0 &],
+    Return@modelFailure["SaturatedDerivative",
+      "A logistic derivative underflowed to zero; the exact machine-precision susceptibility is not representable."]
+  ];
+  forwardSolver = makePhiSolver[model, first, False, solveTolerance];
   If[forwardSolver === $Failed,
     Return@modelFailure["SingularNetwork", "G^-1-K is singular or ill-conditioned."]
   ];
-  chi = forwardSolver[model["W"]];
+  chi = forwardSolver[model["W"], False];
   If[chi === $Failed || !finiteMatrixQ[chi, {m, n}],
     Return@modelFailure["SingularNetwork", "G^-1-K is singular or ill-conditioned."]
   ];
   gram = Transpose[chi].chi;
-  determinant = Quiet@Check[Det[gram], Indeterminate];
-  If[!finiteNumericQ[determinant] || determinant <= pivot,
-    Return@modelFailure["SingularSusceptibility", "The susceptibility Gram matrix is not positive definite."]
+  singularValues = Quiet@Check[SingularValueList[chi], $Failed];
+  If[singularValues === $Failed || Length[singularValues] != n ||
+      !VectorQ[singularValues, finiteNumericQ] || Max[singularValues] <= 0 ||
+      Min[singularValues]/Max[singularValues] <= pivot,
+    Return@modelFailure["SingularSusceptibility",
+      "The susceptibility lacks full column rank at the requested relative tolerance."]
   ];
-  objective = -Log[determinant]/2;
+  susceptibilityCondition = Max[singularValues]/Min[singularValues];
+  objective = -Total[Log[singularValues]];
   returnPhi = Replace[returnPhi, Automatic -> (!lowRankModelQ[model] && m <= 256)];
-  phi = If[TrueQ[returnPhi], forwardSolver[IdentityMatrix[m]],
+  phi = If[TrueQ[returnPhi], forwardSolver[IdentityMatrix[m], False],
     Missing["NotMaterialized"]];
   If[phi === $Failed,
     Return@modelFailure["SingularNetwork", "The recurrent inverse could not be materialized."]
@@ -548,30 +676,58 @@ AnalyzeNetwork[model_, input_, opts : OptionsPattern[]] := Module[
   base = Join[equilibrium, <|
     "Input" -> N@input,
     "FirstDerivative" -> first,
+    "UnflooredFirstDerivative" -> rawFirst,
     "SecondDerivative" -> second,
+    "DerivativeFloor" -> floor,
+    "DerivativeFloorApplied" -> floorApplied,
+    "EquationSemantics" -> If[floorApplied,
+      "ProjectSurrogateDerivativeFloor", "PublicationEquations"],
     "Phi" -> phi,
     "Susceptibility" -> chi,
     "Gram" -> gram,
+    "SusceptibilitySingularValues" -> singularValues,
+    "SusceptibilityConditionNumber" -> susceptibilityCondition,
     "Objective" -> objective|>];
   If[!gradient, Return[base]];
-  transposeSolver = makePhiSolver[model, first, True];
+  transposeSolver = makePhiSolver[model, first, True, solveTolerance];
   If[transposeSolver === $Failed,
     Return@modelFailure["SingularNetwork", "The transposed recurrent operator could not be factored."]
   ];
-  phiTChi = transposeSolver[chi];
-  If[phiTChi === $Failed,
+  chiScale = maxAbsArray[chi];
+  If[!finiteNumericQ[chiScale] || chiScale <= 0,
+    Return@modelFailure["SingularSusceptibility", "The recurrent gradient scale is not representable."]
+  ];
+  scaledChi = chi/chiScale;
+  {qTranspose, r} = Quiet@Check[QRDecomposition[scaledChi], {$Failed, $Failed}];
+  If[qTranspose === $Failed || r === $Failed,
+    Return@modelFailure["SingularSusceptibility", "The susceptibility QR factorization failed."]
+  ];
+  phiTQ = transposeSolver[Transpose[qTranspose], False];
+  If[phiTQ === $Failed,
     Return@modelFailure["SingularNetwork", "The transposed recurrent operator could not be solved."]
   ];
-  gramSolver = Quiet@Check[LinearSolve[gram], $Failed];
-  gamma = If[gramSolver === $Failed, $Failed,
-    Quiet@Check[gramSolver[Transpose[phiTChi]], $Failed]
+  gammaRight = Transpose[phiTQ]/chiScale;
+  gammaSolver = Quiet@Check[LinearSolve[r], $Failed];
+  gamma = If[gammaSolver === $Failed, $Failed,
+    Quiet@Check[gammaSolver[gammaRight], $Failed]
   ];
-  If[gamma === $Failed,
+  gammaResidual = If[gamma === $Failed, Infinity,
+    maxAbsArray[r.gamma - gammaRight]/Max[10.^-280,
+      Max[Total /@ Abs[r]] maxAbsArray[gamma] + maxAbsArray[gammaRight]]];
+  If[gamma === $Failed || !finiteNumericQ[gammaResidual] || gammaResidual > solveTolerance,
     Return@modelFailure["SingularSusceptibility", "The recurrent gradient could not be solved."]
   ];
   chiGammaDiagonal = Total /@ (chi Transpose[gamma]);
-  a = chiGammaDiagonal second/first^3;
-  b = transposeSolver[a];
+  (* Compute G a without the underflow-prone g'^3 denominator from the
+     displayed definition of a.  With the publication derivative this reduces
+     to g''/g'=-tanh(h/2); an active project derivative floor instead retains
+     the literal surrogate ratio g''/g' so the floor is not silently ignored. *)
+  scaledA = (chiGammaDiagonal/first) If[floorApplied,
+    second/first, -Tanh[equilibrium["Field"]/2]];
+  aCandidate = scaledA/first;
+  a = If[VectorQ[aCandidate, finiteNumericQ], aCandidate,
+    Missing["NumericallyUnrepresentableIntermediate"]];
+  b = transposeSolver[scaledA, True];
   If[b === $Failed,
     Return@modelFailure["SingularNetwork", "The recurrent gradient vector could not be solved."]
   ];
@@ -586,7 +742,10 @@ AnalyzeNetwork[model_, input_, opts : OptionsPattern[]] := Module[
   ];
   Join[base, <|"Gamma" -> gamma, "ChiGamma" -> chiGamma,
     "ChiGammaDiagonal" -> chiGammaDiagonal,
-    "A" -> a, "UpdateDirection" -> update|>]
+    "A" -> a, "ScaledA" -> scaledA,
+    "AMaterialized" -> VectorQ[a, finiteNumericQ],
+    "GammaQRSolveRelativeResidual" -> gammaResidual,
+    "UpdateDirection" -> update|>]
 ];
 
 InfomaxObjective[model_, input_, opts : OptionsPattern[AnalyzeNetwork]] := Module[{analysis},
@@ -594,7 +753,8 @@ InfomaxObjective[model_, input_, opts : OptionsPattern[AnalyzeNetwork]] := Modul
     "ReturnPhi" -> False,
     Sequence @@ FilterRules[{opts}, Options[SettleNetwork]],
     "DerivativeFloor" -> OptionValue["DerivativeFloor"],
-    "PivotTolerance" -> OptionValue["PivotTolerance"]];
+    "PivotTolerance" -> OptionValue["PivotTolerance"],
+    "SolveResidualTolerance" -> OptionValue["SolveResidualTolerance"]];
   If[FailureQ[analysis], analysis, analysis["Objective"]]
 ];
 
@@ -614,8 +774,9 @@ directionToDense[direction_] := If[lowRankDirectionQ[direction],
   direction["LeftFactors"].Transpose[direction["RightFactors"]], direction];
 combineDirections[directions_List] := If[AllTrue[directions, lowRankDirectionQ],
   <|"Representation" -> "LowRank",
-    "LeftFactors" -> Join @@ Map[#1["LeftFactors"]/Length[directions] &, directions],
-    "RightFactors" -> Join @@ Lookup[directions, "RightFactors"]|>,
+    "LeftFactors" -> Join[Sequence @@
+      Map[#1["LeftFactors"]/Length[directions] &, directions], 2],
+    "RightFactors" -> Join[Sequence @@ Lookup[directions, "RightFactors"], 2]|>,
   Mean[directionToDense /@ directions]
 ];
 directionMaxAbsBound[direction_] := If[lowRankDirectionQ[direction], Module[
@@ -681,7 +842,8 @@ compressLowRankFactors[left_?MatrixQ, right_?MatrixQ, maximum_Integer] := Module
 
 Options[ApplyRecurrentUpdate] = {
   "ZeroDiagonal" -> Automatic, "MaxAbsWeight" -> Infinity,
-  "MaximumRank" -> Automatic, "DensifyAtFullRank" -> True
+  "MaximumRank" -> Automatic, "DensifyAtStorageCrossover" -> True,
+  "DensifyAtFullRank" -> Automatic
 };
 
 ApplyRecurrentUpdate[model_, direction_, learningRate_, OptionsPattern[]] := Module[
@@ -689,7 +851,8 @@ ApplyRecurrentUpdate[model_, direction_, learningRate_, OptionsPattern[]] := Mod
     directionLeft, directionRight, maximumRank = OptionValue["MaximumRank"], compressed,
     diagonal, truncations, discarded, denseDirection,
     zeroDiagonal = OptionValue["ZeroDiagonal"],
-    densify = OptionValue["DensifyAtFullRank"]},
+    densify = OptionValue["DensifyAtStorageCrossover"],
+    legacyDensify = OptionValue["DensifyAtFullRank"], factorColumns},
   If[!validModelQ[model], Return@modelFailure["InvalidModel", "The network association is malformed."]];
   m = model["OutputSize"];
   If[(!lowRankDirectionQ[direction] && !finiteMatrixQ[direction, {m, m}]) ||
@@ -703,9 +866,10 @@ ApplyRecurrentUpdate[model_, direction_, learningRate_, OptionsPattern[]] := Mod
   If[!BooleanQ[zeroDiagonal],
     Return@modelFailure["InvalidUpdate", "ZeroDiagonal must be True, False, or Automatic."]
   ];
-  If[!BooleanQ[densify],
-    Return@modelFailure["InvalidUpdate", "DensifyAtFullRank must be True or False."]
+  If[!MemberQ[{True, False, Automatic}, legacyDensify] || !BooleanQ[densify],
+    Return@modelFailure["InvalidUpdate", "Densification switches must be boolean (or Automatic for the deprecated alias)."]
   ];
+  If[legacyDensify =!= Automatic, densify = legacyDensify];
   If[learningRate == 0, Return[model]];
   If[lowRankModelQ[model],
     If[!lowRankDirectionQ[direction],
@@ -735,13 +899,15 @@ ApplyRecurrentUpdate[model_, direction_, learningRate_, OptionsPattern[]] := Mod
     If[TrueQ[zeroDiagonal],
       diagonal = -(Total /@ (left right))
     ];
-    If[TrueQ[densify] && Last@Dimensions[left] >= m,
+    factorColumns = Last@Dimensions[left];
+    If[TrueQ[densify] && m (2 factorColumns + 1) >= m^2,
       k = DiagonalMatrix[diagonal] + left.Transpose[right];
       Return@Join[KeyDrop[model, "Recurrent"], <|"K" -> k,
         "Metadata" -> Join[model["Metadata"], <|
           "RecurrentRepresentation" -> "Dense",
           "DensifiedFromExactFactors" -> True,
-          "FactorColumnsAtDensification" -> Last@Dimensions[left],
+          "DensificationCriterion" -> "dense-storage-not-larger",
+          "FactorColumnsAtDensification" -> factorColumns,
           "Approximate" -> (truncations > 0)|>]|>]
     ];
     recurrent = <|"Representation" -> "LowRankPlusDiagonal",
@@ -771,8 +937,10 @@ Options[TrainNetwork] = Join[{
     "LegacyOnlineCheckpoint" -> False,
     "GradientClip" -> Infinity, "MaxAbsWeight" -> Infinity,
     "MaximumRank" -> Automatic, "ZeroDiagonal" -> Automatic,
-    "DensifyAtFullRank" -> True, "OnStep" -> None
-  }, Options[SettleNetwork], {"DerivativeFloor" -> 0., "PivotTolerance" -> 1.*^-13}];
+    "DensifyAtStorageCrossover" -> True,
+    "DensifyAtFullRank" -> Automatic, "OnStep" -> None
+  }, Options[SettleNetwork], {"DerivativeFloor" -> 0., "PivotTolerance" -> 1.*^-13,
+    "SolveResidualTolerance" -> 1.*^-10}];
 
 TrainNetwork[model_, sampler_, opts : OptionsPattern[]] := Module[
   {steps = OptionValue["Steps"], batchSize = OptionValue["BatchSize"],
@@ -783,7 +951,8 @@ TrainNetwork[model_, sampler_, opts : OptionsPattern[]] := Module[
     legacyCheckpoint = TrueQ@OptionValue["LegacyOnlineCheckpoint"],
     maxWeight = OptionValue["MaxAbsWeight"], callback = OptionValue["OnStep"],
     maximumRank = OptionValue["MaximumRank"], zeroDiagonal = OptionValue["ZeroDiagonal"],
-    densify = OptionValue["DensifyAtFullRank"],
+    densify = OptionValue["DensifyAtStorageCrossover"],
+    legacyDensify = OptionValue["DensifyAtFullRank"],
     current = model, bestModel,
     bestObjective = Missing["Disabled"], history, inputs, result,
     objective, direction, scale, maxDirection, candidate, proposed, accepted, attempts,
@@ -795,10 +964,11 @@ TrainNetwork[model_, sampler_, opts : OptionsPattern[]] := Module[
   ];
   If[!IntegerQ[checkpointInterval] || checkpointInterval < 1 ||
       !MemberQ[{True, False}, OptionValue["LegacyOnlineCheckpoint"]] ||
-      !BooleanQ[densify],
+      !BooleanQ[densify] || !MemberQ[{True, False, Automatic}, legacyDensify],
     Return@modelFailure["InvalidTraining",
       "CheckpointInterval must be positive; checkpoint and densification switches must be boolean."]
   ];
+  If[legacyDensify =!= Automatic, densify = legacyDensify];
   If[checkpointInputs =!= Automatic &&
       (!ListQ[checkpointInputs] ||
         AnyTrue[checkpointInputs, !finiteVectorQ[#, model["InputSize"]] &]),
@@ -851,7 +1021,8 @@ TrainNetwork[model_, sampler_, opts : OptionsPattern[]] := Module[
       While[!accepted && attempts < 24,
         candidate = ApplyRecurrentUpdate[current, direction, eta,
           "ZeroDiagonal" -> zeroDiagonal, "MaxAbsWeight" -> maxWeight,
-          "MaximumRank" -> maximumRank, "DensifyAtFullRank" -> densify];
+          "MaximumRank" -> maximumRank,
+          "DensifyAtStorageCrossover" -> densify];
         If[FailureQ[candidate], Return[candidate]];
         proposed = InfomaxObjective[candidate, #,
             Sequence @@ analysisOptions] & /@ inputs;
@@ -861,7 +1032,8 @@ TrainNetwork[model_, sampler_, opts : OptionsPattern[]] := Module[
       ],
       current = ApplyRecurrentUpdate[current, direction, eta,
         "ZeroDiagonal" -> zeroDiagonal, "MaxAbsWeight" -> maxWeight,
-        "MaximumRank" -> maximumRank, "DensifyAtFullRank" -> densify];
+        "MaximumRank" -> maximumRank,
+        "DensifyAtStorageCrossover" -> densify];
       If[FailureQ[current], Return[current]]
     ];
     checkpointObjective = Missing["NotEvaluated"];
@@ -882,8 +1054,11 @@ TrainNetwork[model_, sampler_, opts : OptionsPattern[]] := Module[
       "MeanSettleIterations" -> result["MeanSettleIterations"],
       "MaxAbsUpdate" -> maxDirection,
       "MaxAbsWeightBound" -> recurrentMaxAbsBound[current],
-      "RecurrentRank" -> If[lowRankModelQ[current],
-        Last@Dimensions[current["Recurrent"]["LeftFactors"]], current["OutputSize"]]|>;
+      "RecurrentRepresentation" -> If[lowRankModelQ[current],
+        "LowRankPlusDiagonal", "Dense"],
+      "RecurrentFactorColumns" -> If[lowRankModelQ[current],
+        Last@Dimensions[current["Recurrent"]["LeftFactors"]],
+        Missing["DenseRepresentation"]]|>;
     history[[step]] = record;
     If[callback =!= None, callback[record, current]],
     {step, steps}
@@ -1011,34 +1186,36 @@ EstimateNetworkScale[total_, rank_ : 128] := Module[
     "DenseAdaptiveConnectionsNoSelf" -> denseConnections,
     "DenseRecurrentNumbers" -> denseNumbers,
     "DenseRecurrentBytesReal64" -> 8 denseNumbers,
-    "RequestedLowRank" -> rank,
+    "RequestedFactorColumns" -> rank,
+    "LowRankTermAlgebraicRankUpperBound" -> Min[total, rank],
     "LowRankPlusDiagonalNumbers" -> lowRankNumbers,
     "LowRankPlusDiagonalBytesReal64" -> 8 lowRankNumbers,
     "DenseToLowRankStorageRatio" -> N[denseNumbers/lowRankNumbers],
     "FeedForwardNumbers" -> feedForwardNumbers,
     "FeedForwardBytesReal64" -> 8 feedForwardNumbers,
     "OneStateVectorBytesReal64" -> 8 stateNumbers,
-    "RankAddedPerSingleSampleUpdateUpperBound" -> 5,
+    "FactorColumnsAddedPerSampleUpdate" -> 5,
+    "PerSampleUpdateAlgebraicRankUpperBound" -> 5,
     "BiologicalEquivalence" -> False,
     "ExactnessNote" -> "A finite rank cap is approximate after truncation; neuron count alone does not make a rate model biologically equivalent to a brain."|>
 ];
 
 NetworkScaleReport[model_] := Module[
-  {m, n, rank, stored, dense, recurrent, exact, maximumRank,
+  {m, n, factorColumns, stored, dense, recurrent, exact, maximumRank,
     truncations, discarded, matVecComplexity, solveCoreComplexity},
   If[!validModelQ[model], Return@modelFailure["InvalidModel", "The network association is malformed."]];
   {n, m} = Lookup[model, {"InputSize", "OutputSize"}];
   If[lowRankModelQ[model],
     recurrent = model["Recurrent"];
-    rank = Last@Dimensions[recurrent["LeftFactors"]];
-    stored = m + 2 m rank;
+    factorColumns = Last@Dimensions[recurrent["LeftFactors"]];
+    stored = m + 2 m factorColumns;
     exact = recurrent["Truncations"] == 0;
     maximumRank = recurrent["MaximumRank"];
     truncations = recurrent["Truncations"];
     discarded = recurrent["DiscardedSingularValueMass"];
     matVecComplexity = "O(M r)";
     solveCoreComplexity = "O(M r^2 + r^3)",
-    rank = m; stored = m^2;
+    factorColumns = Missing["DenseRepresentation"]; stored = m^2;
     exact = !TrueQ@Lookup[Lookup[model, "Metadata", <||>], "Approximate", False];
     maximumRank = Missing["DenseRepresentation"];
     truncations = 0; discarded = 0.;
@@ -1049,7 +1226,10 @@ NetworkScaleReport[model_] := Module[
   <|"InputNeurons" -> n, "OutputNeurons" -> m,
     "NeuronsPerModality" -> Quotient[m, 2],
     "RecurrentRepresentation" -> If[lowRankModelQ[model], "LowRankPlusDiagonal", "Dense"],
-    "CurrentRank" -> rank, "MaximumRank" -> maximumRank,
+    "FactorColumns" -> factorColumns,
+    "LowRankTermAlgebraicRankUpperBound" -> If[IntegerQ[factorColumns],
+      Min[m, factorColumns], Missing["DenseRepresentation"]],
+    "MaximumFactorColumns" -> maximumRank,
     "Truncations" -> truncations,
     "DiscardedSingularValueMass" -> discarded,
     "FixedPointMatVecComplexity" -> matVecComplexity,
@@ -1144,7 +1324,7 @@ OutputVarianceForGaussian[variance_?NumericQ] := Module[{sigma},
     {x, -Infinity, Infinity}, Method -> "GlobalAdaptive"]
 ];
 
-ImportJavaScriptNetwork[path_] := Module[{payload, source, m, n, modalities},
+ImportJavaScriptNetwork[path_] := Module[{payload, source, m, n, modalities, metadata},
   payload = Quiet@Check[Import[path, "RawJSON"], $Failed];
   If[payload === $Failed || !AssociationQ[payload],
     Return@modelFailure["InvalidCheckpoint", "The JSON checkpoint could not be imported."]
@@ -1160,23 +1340,33 @@ ImportJavaScriptNetwork[path_] := Module[{payload, source, m, n, modalities},
       "InputCount" -> entry["inputCount"], "OutputOffset" -> entry["outputOffset"] + 1,
       "OutputCount" -> entry["outputCount"],
       "PreferredAngles" -> N@entry["preferredAngles"]|>], source["modalities"]];
+  metadata = Lookup[source, "metadata", <||>];
+  If[KeyExistsQ[metadata, "excludeSelfCoupling"],
+    metadata = Join[KeyDrop[metadata, "excludeSelfCoupling"],
+      <|"ExcludeSelfCoupling" -> TrueQ[metadata["excludeSelfCoupling"]]|>]
+  ];
   <|"InputSize" -> n, "OutputSize" -> m,
     "W" -> Partition[N@source["W"], n], "K" -> Partition[N@source["K"], m],
-    "Modalities" -> modalities, "Metadata" -> Lookup[source, "metadata", <||>]|>
+    "Modalities" -> modalities, "Metadata" -> metadata|>
 ];
 
-ExportJavaScriptNetwork[model_, path_] := Module[{modalities, payload},
+ExportJavaScriptNetwork[model_, path_] := Module[{modalities, payload, metadata},
   If[!validModelQ[model], Return@modelFailure["InvalidModel", "The network association is malformed."]];
   modalities = Map[Function[entry,
     <|"name" -> entry["Name"], "inputOffset" -> entry["InputOffset"] - 1,
       "inputCount" -> entry["InputCount"], "outputOffset" -> entry["OutputOffset"] - 1,
       "outputCount" -> entry["OutputCount"],
       "preferredAngles" -> entry["PreferredAngles"]|>], model["Modalities"]];
+  metadata = model["Metadata"];
+  If[KeyExistsQ[metadata, "ExcludeSelfCoupling"],
+    metadata = Join[KeyDrop[metadata, "ExcludeSelfCoupling"],
+      <|"excludeSelfCoupling" -> TrueQ[metadata["ExcludeSelfCoupling"]]|>]
+  ];
   payload = <|"schema" -> "neural-synaesthesia/shriki-2016/v1",
     "paper" -> <|"doi" -> $PaperDOI|>, "inputSize" -> model["InputSize"],
     "outputSize" -> model["OutputSize"], "W" -> Flatten[model["W"]],
     "K" -> Flatten[MaterializeRecurrentMatrix[model]], "modalities" -> modalities,
-    "metadata" -> model["Metadata"]|>;
+    "metadata" -> metadata|>;
   Export[path, payload, "RawJSON"]
 ];
 

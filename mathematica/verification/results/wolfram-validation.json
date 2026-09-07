@@ -1,13 +1,22 @@
 {
-	"schema":"shriki-2016-publication-verification\/v1",
+	"schema":"shriki-2016-publication-verification\/v2",
+	"generatedAtUtc":"2026-09-07T12:57:38Z",
 	"authority":{
 		"paperDoi":"10.1371\/journal.pcbi.1004959",
 		"appendixDoi":"10.1371\/journal.pcbi.1004959.s001"
 	},
+	"provenance":{
+		"script":"mathematica\/verification\/PublicationDerivation.wls",
+		"scriptSha256":"c64f329c83e69119abd16d0c7e3fb0bc119563176f78976530451daebdcf7f56",
+		"sourceManifest":"mathematica\/verification\/source-manifest.json",
+		"sourceManifestSha256":"73040da225d266c013f74d28c609e652ec54f30123850de776e6af11bc465584",
+		"projectModelImported":false
+	},
 	"independence":"Written from the paper and S1 Appendix before inspecting project implementations; imports no project model code.",
+	"objectiveScope":"The displayed log-volume objective is the publication's low-noise approximation; this artifact does not reinterpret it as a general finite-noise mutual-information estimator.",
 	"kernel":"15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
 	"allPassed":true,
-	"checkCount":24,
+	"checkCount":28,
 	"metrics":{
 		"fixedPointMaxAbsoluteResidual":1.1102230246251565e-16,
 		"susceptibilityFiniteDifferenceMaxAbsoluteError":6.161771093360358e-11,
@@ -97,6 +106,11 @@
 			"pass":true
 		},
 		{
+			"name":"susceptibility-factorization-right-ordered-form",
+			"value":"{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}",
+			"pass":true
+		},
+		{
 			"name":"published-dimensions",
 			"value":"<|\"W\" -> {3, 2}, \"K\" -> {3, 3}, \"G\" -> {3, 3}, \"Phi\" -> {3, 3}, \"Chi\" -> {3, 2}, \"ChiTChi\" -> {2, 2}|>",
 			"pass":true
@@ -167,6 +181,16 @@
 			"pass":true
 		},
 		{
+			"name":"learning-Jacobian-discriminant-is-nonnegative-square-sum",
+			"value":"0",
+			"pass":true
+		},
+		{
+			"name":"appendix-strict-discriminant-claim-has-equality-case",
+			"value":"0",
+			"pass":true
+		},
+		{
 			"name":"appendix-stability-curve",
 			"value":"{0, 0}",
 			"pass":true
@@ -177,7 +201,7 @@
 			"pass":true
 		},
 		{
-			"name":"appendix-equation-95-sign-discrepancy",
+			"name":"appendix-manuscript-line-95-sign-discrepancy",
 			"value":"(2*Sqrt[-4*det + tr^2])\/det",
 			"pass":true
 		},
@@ -189,6 +213,11 @@
 		{
 			"name":"population-vector-normalization-effect",
 			"value":"neuronCount^(-1)",
+			"pass":true
+		},
+		{
+			"name":"objective-baseline-changes-under-row-replication",
+			"value":"-Log[2]",
 			"pass":true
 		},
 		{

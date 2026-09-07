@@ -6,7 +6,8 @@ import { bakeShapePaths } from '../src/dirt-renderer.js';
 import {
   InfomaxRecurrentNetwork, PAPER_FIGURE_7_SCENARIOS, createPaperInputSampler,
   createSimplePaperNetwork, createTwoModalityPaperNetwork, logistic,
-  logisticPrimeFromOutput, logisticSecondFromOutput, polarProbe,
+  logisticPrimeFromField, logisticPrimeFromOutput, logisticSecondFromField,
+  logisticSecondFromOutput, polarProbe,
   populationVector, simpleNoCrossTalkStability
 } from '../src/neural-synesthesia.js';
 import { projectShapeThroughNetwork, shapeToNeuralStimulus } from '../src/neural-shape-bridge.js';
@@ -18,6 +19,8 @@ test('paper logistic and its derivatives are numerically correct',()=>{
   const x=.37,h=1e-5,s=logistic(x);
   close(logisticPrimeFromOutput(s),(logistic(x+h)-logistic(x-h))/(2*h),1e-9);
   close(logisticSecondFromOutput(s),(logisticPrimeFromOutput(logistic(x+h))-logisticPrimeFromOutput(logistic(x-h)))/(2*h),1e-9);
+  close(logisticPrimeFromField(x),logisticPrimeFromOutput(s),1e-15);
+  close(logisticSecondFromField(x),logisticSecondFromOutput(s),1e-15);
 });
 
 test('default high-dimensional architecture is exactly 4 inputs and 2 x 71 outputs',()=>{
@@ -46,6 +49,18 @@ test('settled response satisfies the recurrent fixed-point equation',()=>{
   close(result.state[0],expected[0],1e-11);close(result.state[1],expected[1],1e-11);
 });
 
+test('convergence always requires a fixed-point residual, independent of Euler step',()=>{
+  const network=createSimplePaperNetwork(),result=network.settle([1,1],{integrationStep:1e-12,tolerance:1e-9,residualTolerance:1e-9,stableIterations:2,maxIterations:2,allowUnconverged:true});
+  assert.equal(result.converged,false);assert.ok(result.fixedPointResidual>.2);assert.equal(result.convergenceCriterion,'step-and-residual');
+});
+
+test('fixed-point convergence is not mislabeled as a stability assessment',()=>{
+  const network=createSimplePaperNetwork({crossTalk:[8,8]}),result=network.settle([-4,-4],{tolerance:1e-12});
+  assert.equal(result.converged,true);assert.equal(result.fixedPointResidual,0);assert.equal(result.stabilityAssessed,false);
+  // At s=(.5,.5), GK-I has eigenvalues 1 and -3; the fixed point is unstable.
+  assert.equal(8*logisticPrimeFromField(0)-1,1);
+});
+
 test('Eq. 5 recurrent update matches finite differences of Eq. 3',()=>{
   const network=createSimplePaperNetwork({weights:[1.2,.8],crossTalk:[.07,-.04]}),input=[.35,-.22];
   const analysis=network.analyze(input,{integrationStep:.8,tolerance:1e-12});
@@ -58,7 +73,7 @@ test('Eq. 5 recurrent update matches finite differences of Eq. 3',()=>{
 
 test('JavaScript matches the independent Wolfram reference fixture',()=>{
   const report=JSON.parse(readFileSync(new URL('../mathematica/verification/results/wolfram-validation.json',import.meta.url),'utf8')),fixture=report.referenceFixture;
-  assert.equal(report.allPassed,true);assert.equal(report.checkCount,24);
+  assert.equal(report.allPassed,true);assert.equal(report.checkCount,28);
   const network=new InfomaxRecurrentNetwork({inputSize:2,outputSize:3,W:fixture.W.flat(),K:fixture.K.flat(),metadata:{excludeSelfCoupling:false}});
   const analysis=network.analyze(fixture.input,{integrationStep:.8,tolerance:1e-13,stableIterations:3,pivotTolerance:1e-14});
   const maxError=(actual,expected)=>Math.max(...actual.map((value,index)=>Math.abs(value-expected[index])));
@@ -95,6 +110,48 @@ test('paper population vector is an unnormalized sum and mean is opt-in',()=>{
 test('network serialization round-trips without changing inference',()=>{
   const network=createTwoModalityPaperNetwork({neuronsPerModality:9,seed:7,initialRecurrentScale:1e-4}),copy=InfomaxRecurrentNetwork.fromJSON(network.toJSON()),input=polarProbe({modality:0,angleRadians:.4,radius:1});
   const a=network.respond(input),b=copy.respond(input);assert.ok(Math.max(...a.state.map((x,index)=>Math.abs(x-b.state[index])))<2e-10);
+});
+
+test('checkpoint serialization preserves binary64 values and coupling policy',()=>{
+  const value=1.2345678901234567e-14,network=new InfomaxRecurrentNetwork({inputSize:1,outputSize:1,W:[value],K:[-value],metadata:{ExcludeSelfCoupling:true}});
+  const payload=JSON.parse(JSON.stringify(network.toJSON())),copy=InfomaxRecurrentNetwork.fromJSON(payload);
+  assert.equal(payload.W[0],value);assert.equal(payload.K[0],-value);
+  assert.equal(copy.W[0],value);assert.equal(copy.K[0],-value);
+  assert.equal(copy.metadata.excludeSelfCoupling,true);assert.equal(Object.hasOwn(payload.metadata,'ExcludeSelfCoupling'),false);
+  copy.applyUpdate([1],1e-3);assert.equal(copy.K[0],0);
+});
+
+test('field-based derivatives keep a representable saturated susceptibility finite',()=>{
+  const network=new InfomaxRecurrentNetwork({inputSize:2,outputSize:3,W:[100,0,0,1,1,0],K:new Float64Array(9)});
+  const analysis=network.analyze([1,0],{integrationStep:1,tolerance:1e-12,residualTolerance:1e-12});
+  assert.ok(analysis.firstDerivative[0]>0);assert.ok(Number.isFinite(analysis.objective));close(analysis.objective,3.012817736156336,2e-12);
+});
+
+test('scaled curvature evaluation keeps the saturated recurrent gradient finite',()=>{
+  const network=new InfomaxRecurrentNetwork({inputSize:2,outputSize:3,W:[300,0,0,1,1,0],K:new Float64Array(9)});
+  const analysis=network.analyze([1,0],{integrationStep:1,tolerance:1e-12,residualTolerance:1e-12});
+  assert.ok(analysis.firstDerivative[0]>0);
+  assert.ok([...analysis.scaledA,...analysis.updateDirection].every(Number.isFinite));
+  assert.equal(analysis.aMaterialized,true);
+});
+
+test('scaled QR retains the finite objective and gradient after Gram underflow',()=>{
+  const network=new InfomaxRecurrentNetwork({inputSize:1,outputSize:1,W:[1],K:[0]});
+  const analysis=network.analyze([400],{integrationStep:1,tolerance:1e-12,residualTolerance:1e-12});
+  close(analysis.objective,400,2e-12);assert.equal(analysis.gram[0],0);assert.equal(analysis.gramNumericallyUnderflowed,true);
+  assert.ok(Number.isFinite(analysis.updateDirection[0]));close(analysis.updateDirection[0],-1,2e-12);
+});
+
+test('an active derivative floor is labeled and retains the displayed curvature ratio',()=>{
+  const network=new InfomaxRecurrentNetwork({inputSize:1,outputSize:1,W:[1],K:[0]});
+  const analysis=network.analyze([3],{derivativeFloor:.2,integrationStep:1,tolerance:1e-12,residualTolerance:1e-12});
+  assert.equal(analysis.derivativeFloorApplied,true);assert.equal(analysis.equationSemantics,'project-surrogate-derivative-floor');
+  close(analysis.updateDirection[0],.005238719864787106,2e-14);
+});
+
+test('relative matrix thresholds accept a scaled well-conditioned susceptibility',()=>{
+  const network=createSimplePaperNetwork({weights:[1e-6,1e-6]}),analysis=network.analyze([0,0],{integrationStep:1,tolerance:1e-14,residualTolerance:1e-14});
+  assert.ok(Number.isFinite(analysis.objective));close(analysis.gram[0],6.25e-14,1e-27);close(analysis.gram[3],6.25e-14,1e-27);
 });
 
 test('bundled compact checkpoint records and exhibits directional cross-talk',()=>{

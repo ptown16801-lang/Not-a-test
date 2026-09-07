@@ -1,0 +1,145 @@
+{
+  "schema": "shriki-2016-javascript-adversarial-validation/v1",
+  "generatedAtUtc": "2026-09-07T11:23:16.273Z",
+  "runtime": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "source": {
+    "path": "src/neural-synesthesia.js",
+    "sha256": "4b636f5c71b8bc0bed3dc7ac4aab8e3cface14bb7eb47a50029f561e345b33e4"
+  },
+  "generator": {
+    "path": "scripts/generate-neural-validation-log.js",
+    "sha256": "8fdecfac15120223798078ec69b723e7695bf8fc5b143e326b00007ebac042dd"
+  },
+  "wolframReference": {
+    "path": "mathematica/verification/results/wolfram-validation.json",
+    "sha256": "9cbce3fecc45f55d41be5c72c95c6d6dde4b54b287508c429f4fd6ea7958a22f",
+    "schema": "shriki-2016-publication-verification/v2",
+    "generatedAtUtc": "2026-09-07T11:21:55Z"
+  },
+  "authorityBoundary": "Cross-language values come from the independent Wolfram publication derivation; other cases adversarially test the JavaScript implementation.",
+  "allPassed": true,
+  "summary": {
+    "finiteDifferenceFixtures": 6,
+    "maximumGradientFiniteDifferenceAbsoluteError": 4.6374472317811666e-10,
+    "maximumGradientFiniteDifferenceRelativeError": 2.942842535354231e-9,
+    "maximumSusceptibilityFiniteDifferenceAbsoluteError": 8.884942781506311e-11
+  },
+  "crossLanguage": {
+    "wolframSchema": "shriki-2016-publication-verification/v2",
+    "stateMaxAbsoluteError": 2.0539125955565396e-15,
+    "objectiveAbsoluteError": 4.440892098500626e-16,
+    "susceptibilityMaxAbsoluteError": 2.7755575615628914e-17,
+    "descentDirectionMaxAbsoluteError": 5.551115123125783e-16,
+    "pass": true
+  },
+  "finiteDifferences": [
+    {
+      "seed": 101,
+      "fixedPointResidual": 8.548717289613705e-15,
+      "gradientFiniteDifferenceMaxAbsoluteError": 2.9126708683824276e-10,
+      "gradientFiniteDifferenceRelativeError": 1.0766779911492667e-9,
+      "susceptibilityFiniteDifferenceMaxAbsoluteError": 3.2603780786288894e-11,
+      "pass": true
+    },
+    {
+      "seed": 202,
+      "fixedPointResidual": 3.3306690738754696e-15,
+      "gradientFiniteDifferenceMaxAbsoluteError": 4.0788553090642665e-10,
+      "gradientFiniteDifferenceRelativeError": 1.3687724735290477e-9,
+      "susceptibilityFiniteDifferenceMaxAbsoluteError": 8.884942781506311e-11,
+      "pass": true
+    },
+    {
+      "seed": 303,
+      "fixedPointResidual": 1.6653345369377348e-15,
+      "gradientFiniteDifferenceMaxAbsoluteError": 4.6374472317811666e-10,
+      "gradientFiniteDifferenceRelativeError": 2.942842535354231e-9,
+      "susceptibilityFiniteDifferenceMaxAbsoluteError": 3.857392573761165e-11,
+      "pass": true
+    },
+    {
+      "seed": 1101,
+      "fixedPointResidual": 2.9976021664879227e-15,
+      "gradientFiniteDifferenceMaxAbsoluteError": 3.6731428315617265e-10,
+      "gradientFiniteDifferenceRelativeError": 2.146446457814643e-9,
+      "susceptibilityFiniteDifferenceMaxAbsoluteError": 5.591871410359772e-11,
+      "pass": true
+    },
+    {
+      "seed": 1202,
+      "fixedPointResidual": 2.220446049250313e-15,
+      "gradientFiniteDifferenceMaxAbsoluteError": 3.782256174922338e-10,
+      "gradientFiniteDifferenceRelativeError": 1.559387690458384e-9,
+      "susceptibilityFiniteDifferenceMaxAbsoluteError": 5.154160431786181e-11,
+      "pass": true
+    },
+    {
+      "seed": 1303,
+      "fixedPointResidual": 2.55351295663786e-15,
+      "gradientFiniteDifferenceMaxAbsoluteError": 3.251428432049508e-10,
+      "gradientFiniteDifferenceRelativeError": 1.671972957844496e-9,
+      "susceptibilityFiniteDifferenceMaxAbsoluteError": 3.785936841804727e-11,
+      "pass": true
+    }
+  ],
+  "falseConvergence": {
+    "converged": false,
+    "maxDelta": 2.310374114244951e-13,
+    "fixedPointResidual": 0.23105857862954282,
+    "pass": true
+  },
+  "fixedPointVersusStability": {
+    "exactInitialResidual": 0,
+    "largestContinuousTimeJacobianRealPart": 1,
+    "locallyAsymptoticallyStable": false,
+    "positiveUnstableModeEndpoint": [
+      0.9787520120382422,
+      0.9787520120382422
+    ],
+    "negativeUnstableModeEndpoint": [
+      0.02124798796175765,
+      0.02124798796175765
+    ],
+    "positiveEndpointDistanceFromSymmetricFixedPoint": 0.47875201203824225,
+    "negativeEndpointDistanceFromSymmetricFixedPoint": 0.47875201203824236,
+    "pass": true
+  },
+  "numericalScale": {
+    "derivativeAtField300": 5.148200222412013e-131,
+    "derivativeIsRepresentable": true,
+    "objective": 3.012817736156336,
+    "scaledCurvatureVectorFinite": true,
+    "recurrentGradientFinite": true,
+    "scaledWellConditionedInverse": [
+      1e+200,
+      0,
+      0,
+      5e+199
+    ],
+    "gramUnderflow": {
+      "field": 400,
+      "gramValue": 0,
+      "underflowDetected": true,
+      "objective": 400,
+      "recurrentGradient": -1
+    },
+    "derivativeFloorSurrogate": {
+      "field": 3,
+      "floor": 0.2,
+      "floorApplied": true,
+      "equationSemantics": "project-surrogate-derivative-floor",
+      "recurrentGradient": 0.005238719864787106
+    },
+    "pass": true
+  },
+  "serialization": {
+    "scalarCount": 8,
+    "binary64BitPatternsIdentical": true,
+    "excludeSelfCoupling": false,
+    "pass": true
+  }
+}

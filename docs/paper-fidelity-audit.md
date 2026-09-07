@@ -1,164 +1,180 @@
-# Shriki model paper-fidelity audit
+# Shriki–Sadeh–Ward model: publication-fidelity audit
 
-Status: **publication-first mathematical gate, corrected reference
-implementation, and complete test-suite gate passed on 2026-09-07 before the
-exact-model benchmark was started**.
+Status: **the independent mathematical gate passes; the executable reference is
+qualified for declared reconstruction experiments, not for claiming an exact
+regeneration of unpublished Figure 7 trajectories.**
 
-Primary authority:
+Audit date: 2026-09-07. The scientific authority order is:
 
-- Shriki, Sadeh & Ward (2016), *The Emergence of Synaesthesia in a Neuronal Network Model via Changes in Perceptual Sensitivity and Plasticity*, PLOS Computational Biology 12(7): e1004959, DOI 10.1371/journal.pcbi.1004959.
-- Shriki & Yellin (2016), *Optimal Information Representation and Criticality in an Adaptive Sensory Recurrent Neuronal Network*, PLOS Computational Biology 12(2): e1004698, DOI 10.1371/journal.pcbi.1004698.
-- S1 Appendix to Shriki, Sadeh & Ward (2016).
-- Shriki, Sompolinsky & Lee (2001), *An Information-Maximization Approach to Overcomplete and Recurrent Representations*.
+1. [Shriki, Sadeh & Ward (2016), target article](https://doi.org/10.1371/journal.pcbi.1004959);
+2. [target S1 Appendix](https://doi.org/10.1371/journal.pcbi.1004959.s001);
+3. [Shriki & Yellin (2016), companion model](https://doi.org/10.1371/journal.pcbi.1004698);
+4. [Shriki, Sompolinsky & Lee, foundational Infomax derivation](https://proceedings.neurips.cc/paper_files/paper/2000/file/09fb05dd477d4ae6479985ca56c5a12d-Paper.pdf).
 
-## Verified mathematical core
+Project JavaScript was not used as mathematical authority. The independent
+Wolfram script imports no project implementation.
 
-The current implementation's central equations match the published model at the notation/matrix level:
+## Mathematical result
 
-- rate dynamics: `tau ds/dt = -s + g(Wx + Ks)`;
-- steady state: `s = g(Wx + Ks)`;
-- logistic nonlinearity explicitly chosen in the S1 simple-model analysis;
-- time expressed in units of the paper's characteristic scale `tau` (the paper
-  does not report a numeric value of `tau`);
-- `G_ij = g'_i delta_ij`;
-- `phi = (G^-1 - K)^-1`;
-- `chi = phi W`;
-- objective `epsilon = -1/2 < ln det(chi^T chi) >_x`;
-- `Gamma = (chi^T chi)^-1 chi^T phi`;
-- `a_k = [chi Gamma]_kk g''_k/(g'_k)^3`;
-- recurrent update `Delta K = -eta d epsilon/dK = eta <(chi Gamma)^T + phi^T a s^T>`.
+For (N) inputs and (M) outputs,
 
-`mathematica/verification/PublicationDerivation.wls` was written from the paper
-and S1 Appendix before either project implementation was inspected and imports
-no project code. Wolfram Engine 15.0 verifies 24 symbolic and numerical checks.
-The analytical update direction agrees with the negative central-difference
-objective gradient to `3.18385e-10` maximum absolute error and `1.73101e-9`
-relative error on a nonsymmetric 3-by-3 fixture. The JavaScript state,
-susceptibility, objective, and full 3-by-3 direction then agree with that
-independent fixture to below `1e-12`.
+| Quantity | Dimensions |
+|---|---:|
+| (x) | (N\times1) |
+| (s) | (M\times1) |
+| (W) | (M\times N) |
+| (K,G,\phi) | (M\times M) |
+| (\chi) | (M\times N) |
+| (\Gamma) | (N\times M) |
+| (\Delta K) | (M\times M) |
 
-The independent derivation also found an internal appendix inconsistency: the
-branch sign printed in Eq. 95 does not give the directly derived real-eigenvalue
-stability limit, while the final Eq. 97 does. The implementation follows the
-derivation and Eq. 97.
+The reconstructed equations are
 
-## Confirmed implementation deviations / unresolved publication details
+\[
+\tau\dot s=-s+g(Wx+Ks),\qquad s=g(Wx+Ks),
+\]
 
-### 1. Population-vector normalization — confirmed deviation
+\[
+G_{ij}=g'_i\delta_{ij},\qquad
+\phi=(G^{-1}-K)^{-1}=(I-GK)^{-1}G,\qquad
+\chi=\phi W,
+\]
 
-The papers define the population vector by **summing** the complex numbers associated with the neurons. The implementation at the resumed commit divided the real and imaginary sums by population size. This normalization preserves population-vector angle and preserves whether the magnitude is zero or finite, but it changes the magnitude and therefore was not paper-exact.
+\[
+\epsilon=-\frac12\,\mathbb E_x\!\left[\log\det(\chi^T\chi)\right],
+\]
 
-Resolved: the reference default is now the unnormalized sum. `normalization:
-'mean'` in JavaScript and `"Normalization" -> "Mean"` in Wolfram Language retain
-the old scale-normalized project visualization explicitly. The shape bridge
-requests this optional mode and records it.
+\[
+\Gamma=(\chi^T\chi)^{-1}\chi^T\phi,\qquad
+a_k=(\chi\Gamma)_{kk}\frac{g''_k}{(g'_k)^3},
+\]
 
-### 2. Recurrent initialization — fidelity-sensitive ambiguity
+\[
+-\frac{\partial\epsilon}{\partial K}
+=(\chi\Gamma)^T+(\phi^Ta)s^T.
+\]
 
-For the high-dimensional synaesthesia model, the 2016 synaesthesia paper says cross-talk connections were initially set to **near-zero**. The abstract also describes initial cross-talk interactions as zero. The companion criticality paper reports an initial recurrent matrix set exactly to zero for its single-hypercolumn simulation.
+The sign and transpose order match the target paper and foundational
+derivation. The S1 expression whose first term is simply (\phi^T) is the
+square, full-rank simplification; it is not the general (M>N) rule.
 
-The high-dimensional constructor retains exact zero as a labeled reconstruction
-condition and seeded uniform jitter as a second labeled condition. Exact zero is
-not described as the authors' unique initialization. The publication does not
-report the near-zero scale or distribution, nor does it state the initial
-within-modality matrix precisely.
+### Objective scope
 
-### 3. Numerical integration step — unpublished
+The foundational paper derives this objective as the zero-output-noise limit
+of a manifold-volume expression for mutual information. It assumes a
+continuous, single-valued, locally invertible input–output map and full-column
+rank (\chi). It is **not** a general finite-noise mutual-information
+estimator. The companion paper warns that attractor regimes can make the map
+disconnected, discontinuous, or branch-dependent, violating those assumptions.
 
-The paper specifies continuous first-order rate dynamics with a characteristic
-time scale `tau`, but neither a numeric value nor a precise numerical
-integrator/time-step. The project measures time in units of `tau` and defaults
-to Euler integration with `integrationStep = 0.5`. These are explicit
-reconstruction choices, not published parameters.
+## Independent verification
 
-Consequence: the authors' reported `~1,000–4,000` early and `~35,000–45,000` near-critical settling **iterations cannot be compared one-for-one with our iteration counts** until the original time-discretization/stability convention is known or sensitivity to integration step is quantified.
+`mathematica/verification/PublicationDerivation.wls` passed 28/28 checks in
+Wolfram Engine 15.0. It independently checks dimensions, matrix differentials,
+signs, transposes, logistic derivatives, susceptibility, the objective,
+recurrent gradient, fixed points, and S1 stability algebra.
 
-### 4. Equilibrium tolerance / stability window — unpublished
+| Verification | Current result |
+|---|---:|
+| Independent fixed-point residual | (1.11\times10^{-16}) |
+| Susceptibility vs. finite difference | (6.16\times10^{-11}) maximum absolute error |
+| Objective gradient vs. finite difference | (3.18\times10^{-10}) maximum absolute error |
+| Objective-gradient relative error | (1.73\times10^{-9}) |
+| Independent random Wolfram fixtures | 9/9 pass |
+| Worst repeated gradient absolute error | (7.85\times10^{-10}) |
+| JavaScript random finite-difference fixtures | 6/6 pass |
+| Worst JavaScript gradient absolute error | (4.64\times10^{-10}) |
+| Wolfram MUnit suite | 31/31 pass |
 
-The authors state that convergence required every neuron's activity difference between current and previous time step to be below a predefined small number, but do not report that number in the main paper. The project's `1e-9` tolerance and two consecutive stable iterations are therefore reconstruction choices.
+The numerical implementation uses scaled QR/least-squares algebra for
+(\Gamma), rather than explicitly inverting (\chi^T\chi). This is
+algebraically equivalent at full column rank and avoids squaring the condition
+number or underflowing the Gram matrix. A scalar (h=400) test has a
+machine-zero Gram entry while retaining the finite objective (400) and
+gradient (-1).
 
-Performance/critical-slowing benchmarks must report the tolerance and cannot claim exact reproduction of the authors' iteration counts solely from matching a count range.
+## Fidelity corrections
 
-### 5. Radius distribution — family supported, coefficient unresolved
+| Issue at resumed implementation | Resolution | Classification |
+|---|---|---|
+| Population vector divided by neuron count | Default is the published unnormalized complex sum; mean is explicit | Fidelity correction |
+| High-dimensional diagonal always deleted | General reference retains it; deletion is explicit | Target simulation remains unresolved |
+| Positive logistic derivative floor always active | Default is zero; positive floor is a labeled surrogate excluded from exact runs | Fidelity correction plus optional model change |
+| Best checkpoints compared on changing random samples | Reference comparison uses one fixed input ensemble | Statistical correction; ensemble/cadence remain project choices |
+| Explicit/normal-equation inverse paths | Scaled QR and reusable linear solvers | Equation-preserving numerical correction |
+| Cubic derivative underflow | Compute (Ga) and solve directly | Equation-preserving numerical correction |
+| Floored path reused (g''/g'=-\tanh(h/2)) incorrectly | Active-floor path retains literal (g''/g'_{\rm floor}) and labels surrogate semantics | Optional-path correction |
 
-The target paper states that stimulus magnitude is Gaussian around a
-characteristic mean and that its standard deviation is proportional to that
-mean. It does not give the coefficient. The companion paper reports `0.1` for
-its related single-hypercolumn experiment. The project may use `0.1` as a
-cross-publication reconstruction choice, but not as a numeric Figure 7 value.
+Retaining high-dimensional self-coupling is a well-supported **reference
+convention**, not a uniquely published Figure 7 setting. The general sum permits
+(K_{ii}), and the companion numerical model reports no form restriction, but
+the target 142-unit simulation does not state its diagonal policy. Only the S1
+two-unit analysis explicitly sets the diagonal to zero.
 
-### 6. Preferred-angle discretization — mathematically equivalent convention
+## Published, supported, and unreported details
 
-The authors use equally spaced preferred angles over the full circle. The companion paper writes `phi_i = 2 pi i / M`; the project uses zero-based `i 2 pi / M`. These generate the same circular set up to indexing/rotation and avoid a duplicated endpoint.
+| Detail | Evidence status | Reference behavior |
+|---|---|---|
+| 4 inputs; 142 outputs; 71 per modality | Target-paper explicit | Exact at (M=142) |
+| Equally spaced circular preferred angles and unit feed-forward rows | Target-paper explicit | Endpoint-exclusive equal grid |
+| General high-dimensional nonlinearity | Squashing function only | Logistic is a supported reconstruction convention from S1 and companion, not a printed Figure 7 parameter |
+| Time constant | Symbolic (\tau) only | Time measured in units of (\tau) |
+| Input angles | Independent uniform draws | Implemented |
+| Radius distribution | Gaussian; SD proportional to mean | Coefficient 0.1 is companion-derived and labeled |
+| Recurrent initialization | Target says near-zero **cross-talk**; abstract says zero | Full (K=0), all-matrix jitter, and cross-talk-only jitter are distinct conditions |
+| Integrator and time step | Unreported | Synchronous Euler, step 0.5, declared project policy |
+| Equilibrium tolerance | Only a small step-difference threshold described | Step and fixed-point residual (10^{-9}), two stable iterations |
+| Training length, batch, seed | Unreported | Recorded for every run |
+| Checkpoint ensemble/cadence | Unreported | Fixed ensemble, explicitly recorded |
+| High-dimensional diagonal | Unreported | Retained reference convention; deletion optional |
+| Population-vector threshold/classifier | Unreported | No author-exact classifier claimed |
 
-### 7. Self-coupling — simple model explicit, high-dimensional model unresolved
+The target reports five displayed Figure 7 simulations, not a replicated study.
+It gives no seeds, uncertainty, monotonicity classifier, effective-zero
+threshold, probe radius, root/branch initialization, or exact Gaussian
+truncation rule. Figure 7D itself is described as sensitive to random
+realization/local extrema.
 
-The S1 Appendix explicitly assumes no self-coupling only for its 2-by-2 simple
-model. The target paper describes an M-by-M recurrent matrix, sums over all
-`k=1..M`, and says that recurrent connections exist among all output neurons;
-it does not separately state that Kii is deleted in the 142-unit simulation.
-The general publication-faithful path therefore retains diagonal updates.
-Forced zero diagonal remains an explicit simple-model/project option.
+## S1 Appendix internal issues
 
-### 8. Derivative floor — optional numerical safeguard
+The audit records these as internal mathematical findings, not author-confirmed
+errata:
 
-The published derivative is the actual `g'`; it is not floored. The reference
-default is now zero floor. A positive floor remains available but is labeled as
-a numerical convenience that alters saturated cases.
+- Eq. 95 prints a real-branch sign inconsistent with direct eigenvalue algebra
+  and S1 Eqs. 93 and 97. The implementation follows the latter result.
+- The derived learning Jacobian is symmetric, so
+  (D=t^2-4\Delta=(J_{11}-J_{22})^2+4J_{12}^2\ge0); the complex branch is
+  unreachable for that Jacobian.
+- Eq. 96 should say nonnegative, not strictly positive: (u_1=u_2=0.3)
+  gives (D=0).
+- Eq. 92's statement that (\gamma_1) does not depend on (\eta) is not
+  literally general; in the stable interior it does not cross (+1) for
+  positive (\eta).
 
-### 9. Expected-objective checkpoint — corrected training defect
+No correction linked from the official PLOS record was found as of the audit
+date.
 
-The resumed implementation selected its “best” recurrent matrix by comparing
-single-sample objective values from different random inputs. Those are draws
-from the published expected objective, not comparable evaluations of K. The
-reference training API now requires one fixed input ensemble whenever
-`RestoreBest` is enabled and compares checkpoints only on that ensemble. Its
-size and evaluation interval remain reported reconstruction choices. The former
-heuristic is retained only as `legacyOnlineCheckpoint` for reproducing the
-compact visualization asset.
+## Numerical-policy result
 
-## Scientific-intent constraints for optimization
+The fixed-point sensitivity suite varies Euler step, tolerance, solver, and
+initialization. In its tested noncritical cases, Anderson and tight Euler agree
+to (3.86\times10^{-14}), and every tested one-step update lowers its matched
+objective. This does not make Anderson a simulation of the published temporal
+dynamics or prove basin equivalence in a multistable regime.
 
-The following may be used only when numerically validated as equivalent:
+The controlled critical construction is more restrictive. At
+(\rho=0.9999), a fixed-point residual of (9.999\times10^{-10}) corresponds
+to a state error of (9.999\times10^{-6}) and a **0.62176 relative gradient
+matrix error**. Therefore a fixed residual tolerance is not a fidelity-safe
+gradient criterion near criticality. Long critical trajectories require an
+adaptive, condition-aware tolerance, higher precision, or an explicit
+gradient-accuracy gate.
 
-- linear solves/factorizations instead of explicitly materializing inverses;
-- vectorized/BLAS/GPU matrix operations;
-- parallel evaluation of independent input samples;
-- reuse of invariant/intermediate quantities when mathematically valid.
+## Gate decision
 
-The following create a modified model and must not be mixed into the paper-exact benchmark:
-
-- sparse recurrent connectivity replacing dense connectivity;
-- low-rank approximation of `K`, `phi`, susceptibility, or gradients;
-- altered learning objective or learning rule;
-- changed activation function;
-- changed fixed-point dynamics;
-- gradient clipping or weight clipping;
-- reduced neuron count presented as a paper-sized result;
-- altered stimulus statistics;
-- regularization not present in the publications.
-
-Reduced precision is permitted only after error bounds are measured against the Float64/reference result and must be labeled as a numerical implementation variant.
-
-## Gate before scalability claims
-
-Before previous benchmark/scaling work is treated as evidence about the authors' model:
-
-1. **Passed:** publication population-vector sum separated from project mean normalization.
-2. **Passed:** exact-zero and seeded near-zero initialization are distinct labeled conditions.
-3. **Passed:** exact 142-unit convergence sensitivity covers three time steps,
-   three tolerances, an Anderson reference root, and zero/near-zero conditions;
-   results are in `mathematica/verification/results/numerical-policy-sensitivity.json`.
-4. **Passed:** all Figure 7 printed values and architecture claims audited in `figure-7-publication-audit.md`.
-5. **Passed for the reference:** independent symbolic derivation, finite differences, and cross-language fixture comparison.
-6. **Not a mathematical-fidelity gate:** exact Figure 7 endpoints cannot be
-   uniquely regenerated because the training length, near-zero realization,
-   integration policy, and checkpoint cadence are unpublished. A 1,000-update
-   Figure 7E-parameter trajectory is reported as a declared reconstruction
-   condition, not as the authors' endpoint.
-7. **Passed and unlocked:** the corrected JavaScript/Wolfram reference and all
-   tests passed before modern-compute measurements began. Results and raw data
-   are in `modern-compute-scaling-results.md` and
-   `mathematica/benchmark-results/`.
-
-The fidelity audit is intentionally stricter than the visualization reconstruction. A project feature can remain useful while being labeled a project extension; it must not be attributed to the authors unless supported by the publication.
+The publication-equation implementation is validated and benchmarking is
+unlocked. What remains impossible from the record is an author-exact Figure 7
+regeneration: too many numerical and stochastic details are unreported. All
+experiments therefore identify their reconstruction condition, and all
+cross-size runs are labeled project model-family extensions rather than
+paper-specified networks.
