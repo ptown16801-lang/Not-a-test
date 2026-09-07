@@ -27,11 +27,18 @@ Primary sources:
 | `PaperFigures.wl` | Figure 1–7 constructors and scenario runners |
 | `Shriki2016Reproduction.nb` | Full executable paper walkthrough with original explanatory prose |
 | `RunAll.wls` | Headless runner for analytical, smoke, or full experiments |
-| `ScalingBenchmark.wls` | Dense-versus-low-rank scaling report and timing harness |
+| `ScalingBenchmark.wls` | Legacy initial-state exploratory timing harness |
+| `ExactBenchmarkPoint.wls` | Reproducible exact dense/factor-history benchmark point; no finite rank cap or model-changing shortcut |
+| `CriticalSlowingBenchmark.wls` | Controlled exact critical-point convergence experiment |
+| `AggregateScalingResults.wls` | Rebuilds the committed JSON/CSV scaling synthesis from raw measurements |
 | `SCALING_AUDIT.md` | Exact, tolerance-equivalent, approximate, model-changing, and unavailable-method audit |
 | `paper-spec.json` | Machine-readable map of reported values, reconstruction choices, omissions, and figure coverage |
 | `tests/SynesthesiaModel.wlt` | MUnit equation, parity, gradient, stability, and scaling tests |
 | `tests/RunTests.wls` | Headless MUnit entry point |
+| `verification/PublicationDerivation.wls` | Publication-first derivation and finite-difference reference; imports no project model code |
+| `verification/NumericalPolicySensitivity.wls` | Exact-zero/near-zero and integration-step/tolerance sensitivity sweep |
+| `verification/results/wolfram-validation.json` | Deterministic Wolfram validation report and cross-language fixture |
+| `benchmark-results/` | Raw exact measurements, environment manifest, flat CSV, and machine-readable synthesis |
 
 ## Open the notebook
 
@@ -50,6 +57,7 @@ free developer engine prompts for its one-time Wolfram ID activation through
 For a command-line kernel:
 
 ```sh
+wolframscript -file mathematica/verification/PublicationDerivation.wls
 wolframscript -file mathematica/tests/RunTests.wls
 wolframscript -file mathematica/RunAll.wls --mode=analytical --output=mathematica/output
 wolframscript -file mathematica/RunAll.wls --mode=smoke --total-neurons=40 --steps=2 --output=mathematica/output
@@ -61,12 +69,29 @@ The literal paper-sized experiment is:
 wolframscript -file mathematica/RunAll.wls --mode=full --total-neurons=142 --steps=1000 --output=mathematica/output
 ```
 
-Independent runs can be distributed without sharing mutable state by selecting
+The publication-gated exact benchmark and synthesis are:
+
+```sh
+wolframscript -file mathematica/ExactBenchmarkPoint.wls --total=142 --backend=Dense --repeats=7 --training-steps=100 --validation-samples=8 --output=mathematica/benchmark-results/dense-142.json
+wolframscript -file mathematica/ExactBenchmarkPoint.wls --total=9088 --backend=FactorHistory --repeats=3 --training-steps=10 --validation-samples=4 --output=mathematica/benchmark-results/factorhistory-9088.json
+wolframscript -file mathematica/CriticalSlowingBenchmark.wls
+wolframscript -file mathematica/AggregateScalingResults.wls
+```
+
+The results and interpretation are in
+`../docs/modern-compute-scaling-results.md`. `FactorHistory` in these exact
+runs always uses `MaximumRank -> Infinity`; finite-rank compression is excluded.
+
+Independent project runs can be distributed without sharing mutable state by selecting
 one scenario per kernel, for example:
 
 ```sh
 wolframscript -file mathematica/RunAll.wls --mode=full --scenario=deprivedHighPlasticity --total-neurons=2048 --maximum-rank=192 --steps=1000 --output=mathematica/output-deprived
 ```
+
+That 2,048-neuron example is explicitly approximate after its factor rank
+exceeds 192. It is a visualization/scaling convenience and is not an exact-model
+benchmark.
 
 `1000` is an explicit run length, not a value reported by the paper. Near the
 critical point, the paper reports 35,000–45,000 rate-integration iterations for
@@ -124,9 +149,11 @@ Unbounded rank is algebraically equivalent to materializing every dense update:
 exactLarge = CreateScalablePaperNetwork[2048, "MaximumRank" -> Infinity];
 ```
 
-Its rank grows by at most five per single-sample step, so indefinite exact
-training eventually loses the storage advantage. Setting `"MaximumRank"` runs
-a factor-space truncated SVD when the cap is exceeded:
+Its rank grows by at most five per single-sample step. When the stored factor
+count reaches M, the default exact path materializes the unrestricted dense K;
+this loses no weights and avoids carrying more factor columns than dense
+storage. Setting a finite `"MaximumRank"` instead runs a factor-space truncated
+SVD when the cap is exceeded:
 
 ```wl
 bounded = CreateScalablePaperNetwork[8192, "MaximumRank" -> 192];
@@ -135,8 +162,10 @@ bounded = CreateScalablePaperNetwork[8192, "MaximumRank" -> 192];
 That truncation is a modern approximation, not part of the 2016 paper. The
 model increments `"Truncations"`, accumulates discarded singular-value mass,
 and sets `Metadata["Approximate"]` so an approximate run cannot be mistaken for
-an exact reproduction. The diagonal correction continues to enforce the
-paper's no-self-coupling constraint.
+an exact reproduction. An optional diagonal correction enforces the explicitly
+requested simple-model/project no-self-coupling constraint. The general
+high-dimensional path retains diagonal updates because the target publication
+does not report a diagonal constraint for that simulation.
 
 Use `NetworkScaleReport[model]` before long runs. It reports current rank,
 stored `Real64` numbers, dense-equivalent bytes, compression ratio, and whether
@@ -152,7 +181,8 @@ synesthetic geometry renderer to the paper. A compact project checkpoint can be
 loaded with `ImportJavaScriptNetwork`, but it remains labeled as a visualization
 checkpoint rather than a published result.
 
-The full parameter ledger is in `paper-spec.json`. Every notebook result should
+The full parameter ledger is in `paper-spec.json`, and the direct Figure 7 audit
+is in `../docs/figure-7-publication-audit.md`. Every notebook result should
 be interpreted under that ledger: reported values are transcriptions;
 integration guards and seeds are reconstruction choices; rank truncation is a
 scaling extension.

@@ -1,0 +1,107 @@
+{
+	"schema":"shriki-2016-critical-slowing\/v1",
+	"kernel":"15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+	"totalNeurons":142,
+	"construction":{
+		"recurrentMatrix":"4 rho (I - 11^T\/M)",
+		"knownFixedPoint":"s=1\/2 1 at x=0",
+		"fixedPointJacobianSpectralRadius":"rho",
+		"representation":"exact diagonal plus rank one",
+		"approximation":false
+	},
+	"numericalPolicy":{
+		"method":"synchronous explicit Euler",
+		"integrationStepInTauUnits":0.5,
+		"deltaTolerance":1.0e-9,
+		"stableIterations":2,
+		"maxIterations":1000000
+	},
+	"publicationContext":{
+		"reportedEarlySettlingIterations":[
+			1000,
+			4000
+		],
+		"reportedNearCriticalSettlingIterations":[
+			35000,
+			45000
+		],
+		"comparabilityCaveat":"The publication does not report its integration step or tolerance."
+	},
+	"results":[
+		{
+			"rho":0.9,
+			"distanceToCriticality":9.999999999999998e-2,
+			"eulerLinearContraction":0.95,
+			"iterations":258,
+			"seconds":9.9241e-2,
+			"microsecondsPerNeuronIteration":2.708838301124577,
+			"reportedMaxDelta":9.412583490409077e-10,
+			"fixedPointResidual":1.78839087983107e-9,
+			"stateErrorFromKnownFixedPoint":1.788390791013228e-8,
+			"objective":-1.0804228320459334e1,
+			"objectiveAndGradientSecondsIncludingSettle":0.10947,
+			"gradientFrobeniusNorm":5.00000000000248,
+			"gradientRepresentation":"exact rank-five factors"
+		},
+		{
+			"rho":0.99,
+			"distanceToCriticality":1.0000000000000009e-2,
+			"eulerLinearContraction":0.995,
+			"iterations":2160,
+			"seconds":0.923319,
+			"microsecondsPerNeuronIteration":3.0102992957746477,
+			"reportedMaxDelta":9.912637932707469e-10,
+			"fixedPointResidual":1.9726148492438256e-9,
+			"stateErrorFromKnownFixedPoint":1.9726147959531204e-7,
+			"objective":-2.0014568692404293e1,
+			"objectiveAndGradientSecondsIncludingSettle":0.984733,
+			"gradientFrobeniusNorm":5.000000031135019e1,
+			"gradientRepresentation":"exact rank-five factors"
+		},
+		{
+			"rho":0.999,
+			"distanceToCriticality":1.0000000000000009e-3,
+			"eulerLinearContraction":0.9995,
+			"iterations":16908,
+			"seconds":7.162957,
+			"microsecondsPerNeuronIteration":2.9834018899295938,
+			"reportedMaxDelta":9.99132110379719e-10,
+			"fixedPointResidual":1.9972647979926705e-9,
+			"stateErrorFromKnownFixedPoint":1.9972646849719666e-6,
+			"objective":-2.922490903150292e1,
+			"objectiveAndGradientSecondsIncludingSettle":8.262507,
+			"gradientFrobeniusNorm":5.00032897387141e2,
+			"gradientRepresentation":"exact rank-five factors"
+		},
+		{
+			"rho":0.9995,
+			"distanceToCriticality":4.999999999999449e-4,
+			"eulerLinearContraction":0.99975,
+			"iterations":30823,
+			"seconds":1.6391094e1,
+			"microsecondsPerNeuronIteration":3.7449385016584924,
+			"reportedMaxDelta":9.995098082526965e-10,
+			"fixedPointResidual":1.9985199606331605e-9,
+			"stateErrorFromKnownFixedPoint":3.997039391467894e-6,
+			"objective":-3.1997497515957075e1,
+			"objectiveAndGradientSecondsIncludingSettle":1.4653361e1,
+			"gradientFrobeniusNorm":1.0010820234075032e3,
+			"gradientRepresentation":"exact rank-five factors"
+		},
+		{
+			"rho":0.9999,
+			"distanceToCriticality":9.999999999998899e-5,
+			"eulerLinearContraction":0.99995,
+			"iterations":115820,
+			"seconds":5.2633532e1,
+			"microsecondsPerNeuronIteration":3.200299396100311,
+			"reportedMaxDelta":9.999430172769053e-10,
+			"fixedPointResidual":1.9997858924369893e-9,
+			"stateErrorFromKnownFixedPoint":1.999775107486279e-5,
+			"objective":-3.8435210767812556e1,
+			"objectiveAndGradientSecondsIncludingSettle":5.1325854e1,
+			"gradientFrobeniusNorm":7.979057267222983e3,
+			"gradientRepresentation":"exact rank-five factors"
+		}
+	]
+}

@@ -28,9 +28,11 @@ store
 K = Diagonal[d] + U V^T
 ```
 
-and use the Woodbury identity without first creating `K`. The diagonal term is
-the exact correction that keeps every self-coupling zero. With no rank cap this
-is algebraically the same update as the dense model. With a finite cap it
+and use the Woodbury identity without first creating `K`. For the general
+high-dimensional rule, `d` starts at zero and the factor product retains its
+diagonal. When the optional simple-model/project zero-diagonal constraint is
+requested, `d` is the exact cancelling correction. With no rank cap either
+policy is algebraically the same as its dense counterpart. With a finite cap it
 becomes an explicitly recorded truncated-SVD approximation.
 
 The susceptibility objective never needs a large determinant: `χ^T χ` is
@@ -45,6 +47,7 @@ right-hand sides.
 | Increase the endpoint-exclusive preferred-angle grid | Exact model extension | Yes | Raises circular population resolution at any even output count ≥ 6. |
 | Low-rank update history plus diagonal correction | Exact until compression | Yes | Recurrent storage is `O(Mr)`, and a sample adds at most five columns. |
 | Woodbury susceptibility solves | Exact until compression | Yes | Replaces an `M × M` solve by diagonal operations and an `r × r` solve. |
+| Materialize dense K once factor count reaches M | Exact | Yes | Preserves every entry while preventing redundant factor history from exceeding dense storage. |
 | Reuse forward, transpose, and Gram factorizations | Exact | Yes | Avoids refactoring the same operator for each right-hand side. |
 | Do not materialize `φ` | Exact | Yes | Removes an unnecessary `M × M` result; set `"ReturnPhi" -> True` when explicitly needed. |
 | Warm-start nearby probe angles | Tolerance-equivalent | Yes | Usually cuts fixed-point iterations; it must converge to the same root. |
@@ -70,6 +73,22 @@ every such matrix. The factorized path wins because early update history is
 low rank; indefinite exact training can eventually reach rank `M`, at which
 point dense or distributed dense algebra is the honest fallback. A finite rank
 cap stays scalable by changing that guarantee from exact to approximate.
+
+## Measured boundary on the Work machine
+
+The publication-first verification and corrected test suite were completed
+before measurements. `ExactBenchmarkPoint.wls` subsequently ran the requested
+142-to-9,088 ladder with no finite rank cap and continued through an actually
+executed 72,704-neuron one-update feasibility point. The literal dense path was
+measured through 4,544 neurons. The exact rank-50 path was approximately linear
+in M; dense time and storage were approximately quadratic over the measured
+range. A controlled critical construction reached 30,823 equilibrium iterations
+at `rho=0.9995` and 115,820 at `rho=0.9999`.
+
+This worker exposed 9 AMD EPYC vCPUs, 16.79 GB RAM, no swap, and no GPU.
+Accordingly, no GPU result is claimed. Full raw values and the practical
+1,136–2,272-neuron sustained-training conclusion are in
+`../docs/modern-compute-scaling-results.md` and `benchmark-results/`.
 
 ## Public-source check
 

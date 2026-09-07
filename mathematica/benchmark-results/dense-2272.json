@@ -1,0 +1,65 @@
+{
+	"schema":"shriki-2016-exact-benchmark-point\/v1",
+	"kernel":"15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+	"backend":"Dense",
+	"totalNeurons":2272,
+	"inputNeurons":4,
+	"neuronsPerModality":1136,
+	"exactness":{
+		"finiteRankCompression":false,
+		"sparsification":false,
+		"gradientClipping":false,
+		"weightClipping":false,
+		"derivativeFloor":0.0,
+		"zeroDiagonalConstraint":false,
+		"initialization":"exact-zero condition"
+	},
+	"numericalPolicy":{
+		"method":"synchronous explicit Euler",
+		"integrationStepInTauUnits":0.5,
+		"deltaTolerance":1.0e-9,
+		"stableIterations":2,
+		"maxIterations":200000
+	},
+	"repeats":1,
+	"probe":[
+		0.13622214384283576,
+		-0.11007992123920785,
+		-1.9343484976587944,
+		0.23279347467025466
+	],
+	"settle":{
+		"seconds":[
+			1.4026419e1
+		],
+		"medianSeconds":1.4026419e1,
+		"minimumSeconds":1.4026419e1,
+		"iterations":30,
+		"fixedPointResidual":3.4948945126789255e-10
+	},
+	"objective":{
+		"secondsIncludingSettle":[
+			1.3989414e1
+		],
+		"medianSecondsIncludingSettle":1.3989414e1,
+		"value":-6.361625737888253
+	},
+	"gradient":{
+		"secondsIncludingSettleAndObjective":[
+			1.3911153e1
+		],
+		"medianSecondsIncludingSettleAndObjective":1.3911153e1,
+		"directionStorageBytes":41296080,
+		"representation":"dense matrix"
+	},
+	"training":null,
+	"memory":{
+		"modelByteCount":41684488,
+		"startBytes":96157616,
+		"afterSettleBytes":98409344,
+		"afterObjectiveBytes":99779200,
+		"afterGradientBytes":183431400,
+		"afterTrainingBytes":183437504,
+		"kernelMaxMemoryUsedBytes":266449464
+	}
+}

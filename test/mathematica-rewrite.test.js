@@ -65,6 +65,11 @@ test('all Wolfram source and notebook expressions have balanced delimiters', () 
     'mathematica/Shriki2016Reproduction.nb',
     'mathematica/RunAll.wls',
     'mathematica/ScalingBenchmark.wls',
+    'mathematica/ExactBenchmarkPoint.wls',
+    'mathematica/CriticalSlowingBenchmark.wls',
+    'mathematica/AggregateScalingResults.wls',
+    'mathematica/verification/PublicationDerivation.wls',
+    'mathematica/verification/NumericalPolicySensitivity.wls',
     'mathematica/tests/SynesthesiaModel.wlt',
     'mathematica/tests/RunTests.wls'
   ];
@@ -74,10 +79,15 @@ test('all Wolfram source and notebook expressions have balanced delimiters', () 
 test('the machine-readable paper ledger matches the tested JavaScript transcription', () => {
   const spec = JSON.parse(read('mathematica/paper-spec.json'));
   assert.equal(spec.paper.doi, PAPER_DOI);
-  assert.deepEqual(spec.architecture.simple, {inputNeurons: 2, outputNeurons: 2});
+  assert.equal(spec.architecture.simple.inputNeurons, 2);
+  assert.equal(spec.architecture.simple.outputNeurons, 2);
+  assert.equal(spec.architecture.simple.selfCoupling, false);
   assert.equal(spec.architecture.population.inputNeurons, 4);
   assert.equal(spec.architecture.population.reportedOutputNeurons, 142);
   assert.equal(spec.architecture.population.reportedNeuronsPerModality, 71);
+  assert.equal(spec.architecture.population.selfCoupling, 'not separately reported');
+  assert.equal(spec.populationVector.referenceNormalization, 'sum');
+  assert.equal(spec.inputDistribution.targetPaperCoefficient, null);
   assert.deepEqual(Object.keys(spec.figure7Scenarios), Object.keys(PAPER_FIGURE_7_SCENARIOS));
   for (const [name, scenario] of Object.entries(PAPER_FIGURE_7_SCENARIOS)) {
     assert.deepEqual(spec.figure7Scenarios[name].meanRadii, scenario.meanRadii, name);
@@ -108,6 +118,20 @@ test('the Wolfram package contains the published equations and guarded scaling p
   assert.match(source, /returnPhi = Replace\[returnPhi, Automatic -> \(!lowRankModelQ\[model\] && m <= 256\)\]/);
   assert.match(source, /operatorSolver = Quiet@Check\[LinearSolve\[operator\], \$Failed\]/);
   assert.match(source, /exact = recurrent\["Truncations"\] == 0;\s+maximumRank = recurrent\["MaximumRank"\]/);
+  assert.match(source, /"DerivativeFloor" -> 0\./);
+  assert.match(source, /Options\[PopulationVector\] = \{"Normalization" -> "Sum"\}/);
+});
+
+test('publication-first Wolfram derivation is independent and its committed report passes', () => {
+  const source = read('mathematica/verification/PublicationDerivation.wls');
+  const report = JSON.parse(read('mathematica/verification/results/wolfram-validation.json'));
+  assert.doesNotMatch(source, /Get\[.*SynesthesiaModel/);
+  assert.equal(report.allPassed, true);
+  assert.equal(report.checkCount, 24);
+  assert.ok(report.metrics.objectiveGradientFiniteDifferenceMaxAbsoluteError < 2e-7);
+  assert.ok(report.metrics.susceptibilityFiniteDifferenceMaxAbsoluteError < 1e-8);
+  assert.match(report.checks.find(check => check.name === 'appendix-equation-95-sign-discrepancy').value,
+    /Sqrt/);
 });
 
 test('the notebook covers the full computational paper and labels reconstruction limits', () => {
@@ -137,12 +161,47 @@ test('S1 stability cases remain aligned with the analytical implementation', () 
 });
 
 test('headless Wolfram entry points avoid evaluator-style command-line parsing', () => {
-  for (const file of ['mathematica/RunAll.wls', 'mathematica/ScalingBenchmark.wls']) {
+  for (const file of [
+    'mathematica/RunAll.wls',
+    'mathematica/ScalingBenchmark.wls',
+    'mathematica/ExactBenchmarkPoint.wls',
+    'mathematica/CriticalSlowingBenchmark.wls',
+    'mathematica/AggregateScalingResults.wls'
+  ]) {
     const source = read(file);
     assert.doesNotMatch(source, /\bToExpression\b/);
     assert.doesNotMatch(source, /\bRunProcess\b|\bExternalEvaluate\b/);
   }
   assert.match(read('mathematica/RunAll.wls'), /--scenario/);
+});
+
+test('committed modern-compute results are exact, complete, and internally labeled', () => {
+  const summary = JSON.parse(read('mathematica/benchmark-results/scaling-summary.json'));
+  const environment = JSON.parse(read('mathematica/benchmark-results/environment.json'));
+  const critical = JSON.parse(read('mathematica/benchmark-results/critical-slowing-142.json'));
+  const sustained = JSON.parse(read('mathematica/benchmark-results/factorhistory-142-train1000.json'));
+  assert.deepEqual(summary.requestedLadder.map(row => row.totalNeurons),
+    [142, 284, 568, 1136, 2272, 4544, 9088]);
+  assert.equal(summary.largestExactExecutedNeurons, 72704);
+  assert.equal(environment.gpu, null);
+  assert.ok(summary.empiricalLogLogExponents.factorHistoryRank0GradientVsNeurons < 1.2);
+  assert.ok(summary.empiricalLogLogExponents.denseGradientVsNeurons284Through4544 > 1.7);
+  for (const total of [142, 284, 568, 1136, 2272, 4544, 9088]) {
+    const suffix = total === 142 ? '142-window10' : String(total);
+    const report = JSON.parse(read(`mathematica/benchmark-results/factorhistory-${suffix}.json`));
+    assert.equal(report.exactness.finiteRankCompression, false);
+    assert.equal(report.exactness.sparsification, false);
+    assert.equal(report.training.truncations, 0);
+  }
+  const rho9995 = critical.results.find(row => row.rho === .9995);
+  assert.ok(rho9995.iterations >= 30_000);
+  assert.ok(critical.results.at(-1).iterations > rho9995.iterations);
+  assert.equal(sustained.training.steps, 1000);
+  assert.ok(sustained.training.validationObjectiveAfter <
+    sustained.training.validationObjectiveBefore);
+  const benchmarkSource = read('mathematica/ExactBenchmarkPoint.wls');
+  assert.match(benchmarkSource, /"MaximumRank" -> Infinity/);
+  assert.doesNotMatch(benchmarkSource, /MaterializeRecurrentMatrix/);
 });
 
 test('the scaling audit separates fidelity classes and states the non-public boundary', () => {
@@ -183,4 +242,15 @@ test('MUnit suite passes when a licensed Wolfram runtime is available', {
     '-file', path.join(mathematica, 'tests', 'RunTests.wls')
   ], {cwd: repository, encoding: 'utf8', timeout: 600_000});
   assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+});
+
+test('independent Wolfram publication verification executes when a licensed runtime is available', {
+  skip: hasWolframRuntime ? false : wolframSkipReason
+}, () => {
+  const result = spawnSync('wolframscript', [
+    '-file', path.join(mathematica, 'verification', 'PublicationDerivation.wls')
+  ], {cwd: repository, encoding: 'utf8', timeout: 600_000});
+  assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+  const report = JSON.parse(read('mathematica/verification/results/wolfram-validation.json'));
+  assert.equal(report.allPassed, true);
 });

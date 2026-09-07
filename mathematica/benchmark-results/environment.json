@@ -1,0 +1,19 @@
+{
+  "schema": "shriki-2016-benchmark-environment/v1",
+  "dateUtc": "2026-09-07",
+  "baseCommit": "9f3e163e469be40c5d5248be8e66ef3b7945b672",
+  "wolframKernel": "15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+  "wolframProcessorCount": 9,
+  "architecture": "x86_64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "onlineLogicalCpus": 9,
+  "threadsPerCore": 1,
+  "numaNodes": 1,
+  "memoryBytes": 16793292800,
+  "swapBytes": 0,
+  "gpu": null,
+  "gpuProbe": "nvidia-smi and rocm-smi unavailable",
+  "operatingSystem": "Linux 6.18.35 x86_64 GNU/Linux",
+  "node": "v24.19.0",
+  "notes": "Shared Work cloud CPU; no GPU device was exposed to this session."
+}
