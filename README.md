@@ -2,6 +2,10 @@
 
 Dependency-free browser-compatible ES modules implementing a closed geometric thought substrate. Shapes are content-addressed, immutable objects; derivations retain parent IDs and operator parameters as a provenance DAG. Candidate sampling and tie-breaking are deterministic under a seed.
 
+See [`docs/project-change-summary.md`](docs/project-change-summary.md) for a
+consolidated account of how the neural engine evolved and [`CHANGELOG.md`](CHANGELOG.md)
+for the chronological release history.
+
 Run:
 
 ```sh
