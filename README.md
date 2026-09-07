@@ -10,6 +10,11 @@ npm run demo
 npm run demo:neural
 ```
 
+For a zero-configuration local browser preview, run `npm run dev`. The
+development entry supplies local-only credentials and accepts forwarded
+`--host` and `--port` options; production startup remains `npm start` with the
+explicit environment configuration described below.
+
 The demo writes `demo/balance-output.json`. A tram-line renderer can consume `shapes`, resolve every `provenance.parents` edge, and place active or step-selected shapes on its normalized ground plane. Geometry marked `derived` is intentionally a replay recipe: renderers may replay operators exactly or first bake recipes into meshes/SDFs.
 
 The engine accepts semantic `tags` only at the perception/goal boundary. They stand in for a future shape-only encoder and learned geometric goal descriptor; internal creation remains restricted to primitives and the eight legal operators.

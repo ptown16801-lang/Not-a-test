@@ -5,6 +5,7 @@
   "type": "module",
   "engines": {"node": ">=22"},
   "scripts": {
+    "dev": "node demo/dev-server.js",
     "start": "node demo/intake-server.js",
     "test": "node --test test/*.test.js",
     "smoke:deployment": "node --test test/deployment.test.js",

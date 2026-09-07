@@ -50,3 +50,17 @@ test('deployment flips to Moltbook identity without a source change',async()=>{
     const tool=await fetch(`${deployment.base}/v1/tool-schema`).then(r=>r.json());assert.equal(tool.authentication.header,'X-Moltbook-Identity');assert.equal(tool.capabilities.textSeedRendering,true);
   }finally{await stopDeployment(deployment.child);}
 });
+
+test('development entry accepts forwarded preview host and port flags',async()=>{
+  const child=spawn(process.execPath,['demo/dev-server.js','--host','127.0.0.1','--port','0','--strictPort'],{cwd:projectRoot,env:{PATH:process.env.PATH},stdio:['ignore','pipe','pipe']});
+  let stdout='',stderr='';child.stdout.setEncoding('utf8');child.stderr.setEncoding('utf8');child.stderr.on('data',chunk=>stderr+=chunk);
+  try{
+    const port=await new Promise((resolve,reject)=>{
+      const timer=setTimeout(()=>reject(new Error(`development start timed out: ${stderr}`)),5000);
+      child.once('exit',code=>{clearTimeout(timer);reject(new Error(`development entry exited ${code}: ${stderr}`));});
+      child.stdout.on('data',chunk=>{stdout+=chunk;const match=stdout.match(/listening on http:\/\/127\.0\.0\.1:(\d+)/);if(match){clearTimeout(timer);resolve(Number(match[1]));}});
+    });
+    const ready=await fetch(`http://127.0.0.1:${port}/ready`).then(response=>response.json());
+    assert.equal(ready.status,'ok');assert.equal(ready.capabilities.textSeedRendering,true);
+  }finally{await stopDeployment(child);}
+});
