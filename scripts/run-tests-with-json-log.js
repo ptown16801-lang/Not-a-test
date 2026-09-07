@@ -7,7 +7,10 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const output = path.join(root, 'verification', 'results', 'node-test-report.json');
+const configuredOutput = process.env.NEURAL_NODE_TEST_REPORT_OUTPUT;
+const output = configuredOutput
+  ? path.resolve(root, configuredOutput)
+  : path.join(root, 'verification', 'results', 'node-test-report.json');
 const testFiles = fs.readdirSync(path.join(root, 'test'))
   .filter(name => name.endsWith('.test.js'))
   .sort()
@@ -62,6 +65,7 @@ const report = {
   spawnError: result.error ? String(result.error.message ?? result.error) : null,
   summary,
   allPassed: exitCode === 0 && summary.failed === 0,
+  fullyExecuted: exitCode === 0 && summary.failed === 0 && summary.skipped === 0,
   testSources,
   stdoutSha256: crypto.createHash('sha256').update(stdout).digest('hex'),
   stderrSha256: crypto.createHash('sha256').update(stderr).digest('hex'),

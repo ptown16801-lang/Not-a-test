@@ -4,22 +4,22 @@
   "project": {
     "name": "Shape Cognition Prototype / Neural Engine",
     "package": "shape-cognition-prototype",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "repository": "https://github.com/ptown16801-lang/Not-a-test",
     "defaultBranch": "main",
     "currentBranch": "main"
   },
   "snapshot": {
-    "generatedAtUtc": "2026-09-07T13:02:15.630Z",
-    "worktreeBaseCommit": "50a4ca808e34f6e02ff691172d76b4ba716e4ad8",
+    "generatedAtUtc": "2026-09-07T14:10:30.885Z",
+    "worktreeBaseCommit": "cf7696d3cdd7d8a3a20f439038789699d622bc12",
     "historyStartsAtCommit": "bbc232c285b92d95c2722d7c33f6838cf10a711d",
-    "historyThroughCommit": "50a4ca808e34f6e02ff691172d76b4ba716e4ad8",
-    "commitCount": 25,
-    "fileCount": 137,
-    "totalBytes": 1722468,
-    "aggregateSha256": "c8fc3eefd5d8cba7c56ba8493456e8f12ca62462cf8593e87c1c97f986fefbc3",
+    "historyThroughCommit": "cf7696d3cdd7d8a3a20f439038789699d622bc12",
+    "commitCount": 26,
+    "fileCount": 139,
+    "totalBytes": 1759749,
+    "aggregateSha256": "c02e782e2ce34b2916531a3d49ee56cf98cc438a3578be0271a98f9d08f6469e",
     "contentSnapshotIncludesWorkingTree": true,
-    "worktreeChangeCountExcludingThisLog": 58,
+    "worktreeChangeCountExcludingThisLog": 10,
     "exclusions": [
       {
         "path": ".git/",
@@ -34,6 +34,10 @@
         "reason": "The manifest excludes itself to avoid an impossible self-referential SHA-256 fixed point."
       },
       {
+        "path": "MASTER_PROJECT.json",
+        "reason": "The master aggregate embeds this manifest and is generated after it; excluding the aggregate prevents a circular digest dependency."
+      },
+      {
         "path": "tmp/",
         "reason": "Ephemeral render and diagnostic files are not project artifacts."
       }
@@ -42,10 +46,11 @@
   },
   "generation": {
     "generator": "scripts/generate-project-log.js",
-    "generatorSha256": "db1fa115d793a2b320fb9cc2bc2a56f269742dc11d8f3de9c7361544af942f96",
+    "generatorSha256": "f6e9b47df72ba3aafd4cdf481e58869a7b845ada64e435286dd45e2ff0e025e8",
     "ordering": "UTF-8 path lexical order",
     "aggregateDigestRecord": "path NUL byte-count NUL sha256 LF for every indexed file",
-    "regenerate": "npm run logs:project"
+    "regenerate": "npm run logs:all",
+    "masterAggregate": "MASTER_PROJECT.json"
   },
   "history": [
     {
@@ -222,6 +227,13 @@
       "authorName": "ptown16801-lang",
       "authorEmail": "ptown16801@gmail.com",
       "subject": "docs: summarize neural engine evolution"
+    },
+    {
+      "commit": "cf7696d3cdd7d8a3a20f439038789699d622bc12",
+      "authoredAt": "2026-09-07T09:07:53-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "fix: validate Shriki fidelity and exact scaling"
     }
   ],
   "subsystems": [
@@ -464,8 +476,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 6032,
-      "sha256": "d8ffc40081a61d516d85f85fbce68536b4dbe7ffec097d83436627e5d0e9d114",
+      "bytes": 7390,
+      "sha256": "8d7c4c4c256bf942291afafda2717f014ba97db132d7fc9adec5e8802849016e",
       "category": "documentation"
     },
     {
@@ -476,14 +488,14 @@
     },
     {
       "path": "README.md",
-      "bytes": 18853,
-      "sha256": "71cc4930759d711e0601eeead54da09e705f728544398804bda22374cbfe1859",
+      "bytes": 19131,
+      "sha256": "9fb4a27e5ff3c70dfb9172057810ef5819dca103c1f49a36e1f076f849a9f6c6",
       "category": "documentation"
     },
     {
       "path": "RELEASE.md",
-      "bytes": 2658,
-      "sha256": "6b7a36763f1c81dd1c919aa0fad071e302542836bafbd6ca79ae568694de3bc4",
+      "bytes": 3947,
+      "sha256": "bb1009938cd693253ce915e64454b0ac3128aca9004f1666919574aaba95dab7",
       "category": "documentation"
     },
     {
@@ -1010,9 +1022,15 @@
     },
     {
       "path": "package.json",
-      "bytes": 978,
-      "sha256": "e3aa4d46ca340e867946fa476653d3034792e254594a4bb4b4a3fce1e32527c3",
+      "bytes": 1139,
+      "sha256": "4901540ec228a23f6b6193f90fe77e01d99fb454cadedbd694398001102d95b3",
       "category": "configuration-or-data"
+    },
+    {
+      "path": "scripts/generate-master-project.js",
+      "bytes": 7653,
+      "sha256": "07dd77bc87b6e781c52757009c6e721df31a92e5582834f20fda574741ec8fb4",
+      "category": "reproducibility-tooling"
     },
     {
       "path": "scripts/generate-neural-validation-log.js",
@@ -1022,8 +1040,8 @@
     },
     {
       "path": "scripts/generate-project-log.js",
-      "bytes": 15800,
-      "sha256": "db1fa115d793a2b320fb9cc2bc2a56f269742dc11d8f3de9c7361544af942f96",
+      "bytes": 16652,
+      "sha256": "f6e9b47df72ba3aafd4cdf481e58869a7b845ada64e435286dd45e2ff0e025e8",
       "category": "reproducibility-tooling"
     },
     {
@@ -1034,8 +1052,8 @@
     },
     {
       "path": "scripts/run-tests-with-json-log.js",
-      "bytes": 2729,
-      "sha256": "e88b3a6eba76779e593b76317bd49457fcadc5978af5f117c3d8106dacb043fb",
+      "bytes": 2942,
+      "sha256": "12c1eeb99e1285a24b7e27e9e176ba431dcd0441680c0e9dc49e7a1487e3ce26",
       "category": "reproducibility-tooling"
     },
     {
@@ -1202,8 +1220,8 @@
     },
     {
       "path": "test/project-log.test.js",
-      "bytes": 6026,
-      "sha256": "fbd39f196e548268019eb655c53da2361c4679be53edcc181b389d8dfde16382",
+      "bytes": 8477,
+      "sha256": "cd5b62b7cfd75135593b842e8e2b35485cb9c8e6bdd46789c21e6ae10af48e11",
       "category": "test-source"
     },
     {
@@ -1261,6 +1279,12 @@
       "category": "scientific-validation"
     },
     {
+      "path": "verification/results/node-test-report-v0.8.0.json",
+      "bytes": 23026,
+      "sha256": "d21cea586f778c96efecac990489e25965df1d51eb383c1c1941e50f26c10856",
+      "category": "scientific-validation"
+    },
+    {
       "path": "verification/results/node-test-report.json",
       "bytes": 22532,
       "sha256": "f6f6b2fee36978ada309c04a2b52b23900c241412fcc6df2415e22415309d578",
@@ -1284,6 +1308,7 @@
       "mathematica/verification/results/wolfram-validation.json",
       "verification/results/node-test-report-attempt1.json",
       "verification/results/node-test-report-attempt2.json",
+      "verification/results/node-test-report-v0.8.0.json",
       "verification/results/node-test-report.json"
     ],
     "benchmarkLogs": [
@@ -1720,8 +1745,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "e3aa4d46ca340e867946fa476653d3034792e254594a4bb4b4a3fce1e32527c3",
-      "bytes": 978,
+      "sha256": "4901540ec228a23f6b6193f90fe77e01d99fb454cadedbd694398001102d95b3",
+      "bytes": 1139,
       "schema": null,
       "generatedAtUtc": null,
       "validJson": true
@@ -1740,6 +1765,14 @@
       "bytes": 23392,
       "schema": "neural-engine-node-test-report/v1",
       "generatedAtUtc": "2026-09-07T12:52:23.644Z",
+      "validJson": true
+    },
+    {
+      "path": "verification/results/node-test-report-v0.8.0.json",
+      "sha256": "d21cea586f778c96efecac990489e25965df1d51eb383c1c1941e50f26c10856",
+      "bytes": 23026,
+      "schema": "neural-engine-node-test-report/v1",
+      "generatedAtUtc": "2026-09-07T14:10:20.455Z",
       "validJson": true
     },
     {
@@ -1763,6 +1796,19 @@
       "skipped": 0,
       "todo": 0,
       "elapsedSeconds": 5.866933948
+    },
+    "nodeCurrentRelease": {
+      "source": "verification/results/node-test-report-v0.8.0.json",
+      "allPassed": true,
+      "fullyExecuted": false,
+      "tests": 95,
+      "suites": 0,
+      "passed": 93,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 2,
+      "todo": 0,
+      "elapsedSeconds": 0.752804837
     },
     "wolframMUnit": {
       "source": "mathematica/verification/results/wolfram-test-report.json",

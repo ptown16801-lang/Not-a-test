@@ -1,6 +1,6 @@
 {
   "name": "shape-cognition-prototype",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "engines": {"node": ">=22"},
@@ -10,7 +10,9 @@
     "test": "node --test test/*.test.js",
     "test:json": "node scripts/run-tests-with-json-log.js",
     "validate:neural": "node scripts/generate-neural-validation-log.js",
+    "logs:master": "node scripts/generate-master-project.js",
     "logs:project": "node scripts/generate-project-log.js",
+    "logs:all": "node scripts/generate-project-log.js && node scripts/generate-master-project.js",
     "test:mathematica": "node --test test/mathematica-rewrite.test.js",
     "smoke:deployment": "node --test test/deployment.test.js",
     "demo": "node demo/balance.js",

@@ -19,13 +19,15 @@ const excluded = [
   {path: '.git/', reason: 'Git object database and local metadata are represented by commit history, not copied into the content manifest.'},
   {path: 'ignored files', reason: 'Credentials, dependencies, coverage, and local runtime outputs are excluded by .gitignore.'},
   {path: 'PROJECT_LOG.json', reason: 'The manifest excludes itself to avoid an impossible self-referential SHA-256 fixed point.'},
+  {path: 'MASTER_PROJECT.json', reason: 'The master aggregate embeds this manifest and is generated after it; excluding the aggregate prevents a circular digest dependency.'},
   {path: 'tmp/', reason: 'Ephemeral render and diagnostic files are not project artifacts.'}
 ];
 
 const listed = git(['ls-files', '--cached', '--others', '--exclude-standard', '-z'])
   .split('\0')
   .filter(Boolean)
-  .filter(relative => relative !== 'PROJECT_LOG.json' && !relative.startsWith('tmp/'))
+  .filter(relative => relative !== 'PROJECT_LOG.json' &&
+    relative !== 'MASTER_PROJECT.json' && !relative.startsWith('tmp/'))
   .sort();
 
 function category(relative) {
@@ -114,6 +116,9 @@ const claimAudit = readJson('docs/scientific-claim-audit.json');
 const packageMetadata = readJson('package.json');
 const nodeReport = exists('verification/results/node-test-report.json')
   ? readJson('verification/results/node-test-report.json') : null;
+const releaseNodeReportPath = 'verification/results/node-test-report-v0.8.0.json';
+const releaseNodeReport = exists(releaseNodeReportPath)
+  ? readJson(releaseNodeReportPath) : null;
 const currentQualifications = qualification.runs.filter(row =>
   row.cohort === 'current' || row.cohort === 'current-farther');
 const lastCritical = critical.results.at(-1);
@@ -169,7 +174,8 @@ const log = {
     generatorSha256: sha256(fs.readFileSync(generatorPath)),
     ordering: 'UTF-8 path lexical order',
     aggregateDigestRecord: 'path NUL byte-count NUL sha256 LF for every indexed file',
-    regenerate: 'npm run logs:project'
+    regenerate: 'npm run logs:all',
+    masterAggregate: 'MASTER_PROJECT.json'
   },
   history,
   subsystems,
@@ -190,6 +196,14 @@ const log = {
       ...nodeReport.summary,
       elapsedSeconds: nodeReport.elapsedSeconds
     } : {source: null, allPassed: null, status: 'No archived Node test report present when this manifest was generated.'},
+    nodeCurrentRelease: releaseNodeReport ? {
+      source: releaseNodeReportPath,
+      allPassed: releaseNodeReport.allPassed,
+      fullyExecuted: releaseNodeReport.fullyExecuted,
+      ...releaseNodeReport.summary,
+      elapsedSeconds: releaseNodeReport.elapsedSeconds
+    } : {source: null, allPassed: null,
+      status: 'No release-specific Node test report present when this manifest was generated.'},
     wolframMUnit: {
       source: 'mathematica/verification/results/wolfram-test-report.json',
       tests: munit.testCount,

@@ -2,11 +2,16 @@
 
 Dependency-free browser-compatible ES modules implementing a closed geometric thought substrate. Shapes are content-addressed, immutable objects; derivations retain parent IDs and operator parameters as a provenance DAG. Candidate sampling and tie-breaking are deterministic under a seed.
 
+Current release: [`v0.8.0`](RELEASE.md), the publication-grade neural fidelity,
+exact-scaling, and reproducibility release.
+
 See [`docs/project-change-summary.md`](docs/project-change-summary.md) for a
 consolidated account of how the neural engine evolved and [`CHANGELOG.md`](CHANGELOG.md)
 for the chronological release history. [`PROJECT_LOG.json`](PROJECT_LOG.json)
 is the project-wide machine-readable history, subsystem inventory, validation
 snapshot, and index of every committed scientific JSON log.
+[`MASTER_PROJECT.json`](MASTER_PROJECT.json) is the single-file aggregate: it
+embeds every other project JSON artifact with its parsed contents and SHA-256.
 
 The publication package is anchored by the
 [`scientific audit report`](output/pdf/shriki-2016-publication-grade-audit.pdf),
@@ -22,7 +27,7 @@ Run:
 ```sh
 npm test
 npm run test:json
-npm run logs:project
+npm run logs:all
 npm run demo
 npm run demo:neural
 ```

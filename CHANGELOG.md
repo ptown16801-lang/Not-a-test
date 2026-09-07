@@ -6,7 +6,32 @@ on which they landed in `main`.
 
 ## [Unreleased]
 
-### Documentation
+## [0.8.0] - 2026-09-07
+
+### Scientific validation and numerical correctness
+
+- Independently reconstructed and verified the published equations in Wolfram
+  Language before admitting any benchmark result.
+- Corrected extreme-scale susceptibility evaluation with scaled QR, corrected
+  the optional derivative-floor curvature path, and added explicit surrogate
+  semantics plus Gram-underflow regression tests.
+- Demonstrated that a nominal `1e-9` fixed-point residual can still produce
+  62.2% recurrent-gradient error near criticality, requiring condition-aware
+  fidelity gates for future endpoint studies.
+- Isolated live Wolfram test outputs from committed evidence files so parallel
+  manifest verification cannot race with validation-report regeneration.
+
+### Scaling evidence
+
+- Qualified the 142-output, 1,000-update reference trajectory and the requested
+  early-training ladder through 9,088 outputs using source-fingerprinted v2
+  benchmark records.
+- Preserved one/two-update exact feasibility probes through 72,704 outputs while
+  explicitly declining to infer an unmeasured sustained practical limit.
+- Separated equation-preserving, tolerance-equivalent, approximate, and
+  model-changing expansion techniques through a primary-source numerical audit.
+
+### Documentation and reproducibility
 
 - Added this changelog and a consolidated project-change summary.
 - Added a project-wide machine-readable history and JSON artifact registry in
@@ -14,11 +39,10 @@ on which they landed in `main`.
   scientific logs.
 - Added a publication-grade source/claim ledger, benchmark qualification gate,
   and manuscript-style scientific audit report.
-- Corrected extreme-scale susceptibility evaluation with scaled QR, corrected
-  the optional derivative-floor curvature path, and added explicit surrogate
-  semantics plus Gram-underflow regression tests.
-- Isolated live Wolfram test outputs from committed evidence files so parallel
-  manifest verification cannot race with validation-report regeneration.
+- Added archived full-suite JSON logs, including preserved failed attempts, so
+  provenance failures are visible rather than overwritten.
+- Added `MASTER_PROJECT.json`, a generated single-file aggregate containing
+  every other project JSON artifact, its parsed contents, and its SHA-256.
 
 ## [0.7.0] - 2026-09-07
 
@@ -125,4 +149,5 @@ on which they landed in `main`.
   artifacts.
 
 [Unreleased]: https://github.com/ptown16801-lang/Not-a-test/compare/main...HEAD
-[0.7.0]: https://github.com/ptown16801-lang/Not-a-test/releases/tag/v0.7.0
+[0.8.0]: https://github.com/ptown16801-lang/Not-a-test/compare/50a4ca808e34f6e02ff691172d76b4ba716e4ad8...main
+[0.7.0]: https://github.com/ptown16801-lang/Not-a-test/tree/50a4ca808e34f6e02ff691172d76b4ba716e4ad8

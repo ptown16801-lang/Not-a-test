@@ -1,8 +1,30 @@
-# Shape Cognition Prototype v0.7.0
+# Shape Cognition Prototype v0.8.0
 
 This is the assembled, dependency-free prototype for geometric cognition,
 neural population-to-shape projection, physical dirt inscription, and
 recoverable agent/thought identification.
+
+## Publication-grade neural release
+
+Version 0.8.0 adds the independent Wolfram reconstruction, repeated symbolic
+and finite-difference validation, corrected publication defaults, qualified
+exact-model scaling measurements, critical-conditioning analysis, a 23-source
+numerical-method review, and a whole-project JSON evidence manifest.
+
+The licensed-worker suite passed 93/93 tests, including both live Wolfram entry
+points. After adding the v0.8 release and master-log gates, the reconnect worker
+passed all 93 runnable tests in the 95-test suite with the two live-kernel tests
+explicitly skipped because Wolfram was not installed there. The independent
+publication-first Wolfram derivation passes 28/28 checks, and the Wolfram MUnit
+suite passes 31/31 tests. The paper-sized 142-output declared reconstruction
+completed 1,000 updates in 239.805 seconds; bounded exact probes reached 72,704
+outputs. These measurements are evidence-qualified and do not claim an
+author-matched speedup or a sustained large-model practical limit.
+
+See `output/pdf/shriki-2016-publication-grade-audit.pdf`,
+`docs/scientific-claim-audit.json`, `docs/scientific-source-ledger.json`, and
+`MASTER_PROJECT.json` for the single-file aggregate, and `PROJECT_LOG.json` for
+the forensic whole-repository manifest.
 
 ## Run
 

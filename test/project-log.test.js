@@ -7,7 +7,52 @@ import {fileURLToPath} from 'node:url';
 
 const repository = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = relative => JSON.parse(fs.readFileSync(path.join(repository, relative), 'utf8'));
+const readText = relative => fs.readFileSync(path.join(repository, relative), 'utf8');
 const digest = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
+
+test('release version is consistent across package and human-facing metadata', () => {
+  const version = readJson('package.json').version;
+  assert.match(version, /^\d+\.\d+\.\d+$/);
+  assert.ok(readText('README.md').includes(`Current release: [\`v${version}\`]`));
+  assert.match(readText('RELEASE.md'), new RegExp(`^# Shape Cognition Prototype v${version}$`, 'm'));
+  const escapedVersion = version.replaceAll('.', '\\.');
+  assert.match(readText('CHANGELOG.md'),
+    new RegExp(`^## \\[${escapedVersion}\\] - \\d{4}-\\d{2}-\\d{2}$`, 'm'));
+});
+
+test('master JSON embeds every other project JSON artifact with verified integrity', () => {
+  const master = readJson('MASTER_PROJECT.json');
+  const projectLog = readJson('PROJECT_LOG.json');
+  const packageMetadata = readJson('package.json');
+  assert.equal(master.schema, 'neural-engine-master-project/v1');
+  assert.equal(master.scope, 'all-project-json-artifacts-and-release-evidence');
+  assert.equal(master.project.version, packageMetadata.version);
+  assert.equal(master.artifactAggregation.artifactCount, master.artifacts.length);
+
+  const expected = new Set([
+    ...projectLog.files.filter(entry => entry.path.endsWith('.json'))
+      .map(entry => entry.path),
+    'PROJECT_LOG.json'
+  ]);
+  const actual = new Set(master.artifacts.map(entry => entry.path));
+  assert.deepEqual(actual, expected);
+  assert.equal(new Set(master.artifacts.map(entry => entry.path)).size,
+    master.artifacts.length);
+
+  for (const artifact of master.artifacts) {
+    const bytes = fs.readFileSync(path.join(repository, artifact.path));
+    assert.equal(bytes.length, artifact.bytes, `${artifact.path} byte count`);
+    assert.equal(digest(bytes), artifact.sha256, `${artifact.path} SHA-256`);
+    assert.deepEqual(JSON.parse(bytes.toString('utf8')), artifact.content,
+      `${artifact.path} embedded content`);
+  }
+  const payload = master.artifacts.map(artifact =>
+    `${artifact.path}\0${artifact.bytes}\0${artifact.sha256}\n`).join('');
+  assert.equal(digest(payload), master.artifactAggregation.aggregateSha256);
+  const generator = fs.readFileSync(path.join(repository,
+    master.artifactAggregation.generator));
+  assert.equal(digest(generator), master.artifactAggregation.generatorSha256);
+});
 
 test('project-wide JSON log is internally consistent and covers every subsystem', () => {
   const log = readJson('PROJECT_LOG.json');
@@ -45,7 +90,7 @@ test('project-wide JSON log hashes every indexed repository artifact', () => {
   assert.equal(digest(generator), log.generation.generatorSha256);
 });
 
-test('project-wide JSON log indexes every repository JSON artifact except itself', () => {
+test('project-wide JSON log indexes source JSON artifacts but excludes containers', () => {
   const log = readJson('PROJECT_LOG.json');
   const grouped = new Set(Object.values(log.jsonArtifacts).flat());
   const indexed = new Set(log.jsonArtifactIndex.map(entry => entry.path));
@@ -63,6 +108,8 @@ test('project-wide JSON log indexes every repository JSON artifact except itself
   assert.ok(indexed.has('docs/scientific-claim-audit.json'));
   assert.ok(indexed.has('mathematica/benchmark-results/benchmark-qualification.json'));
   assert.ok(indexed.has('mathematica/verification/results/wolfram-test-report.json'));
+  assert.equal(indexed.has('PROJECT_LOG.json'), false);
+  assert.equal(indexed.has('MASTER_PROJECT.json'), false);
 });
 
 test('project-wide JSON log preserves the measured scientific gates', () => {
