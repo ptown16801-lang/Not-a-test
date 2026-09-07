@@ -285,13 +285,16 @@ Options[TrainPaperScenario] = {
   "TotalNeurons" -> 142, "RecurrentRepresentation" -> Automatic,
   "MaximumRank" -> 128, "Steps" -> 1000, "BatchSize" -> 1,
   "Seed" -> 1, "InitialRecurrentScale" -> 1.*^-5,
-  "RestoreBest" -> True
+  "RestoreBest" -> True, "CheckpointSamples" -> 32,
+  "CheckpointInterval" -> 25
 };
 
 TrainPaperScenario[name_String, OptionsPattern[]] := Module[
   {scenario, total = OptionValue["TotalNeurons"], representation = OptionValue["RecurrentRepresentation"],
     maximumRank = OptionValue["MaximumRank"], seed = OptionValue["Seed"], scale,
-    network, sampler, training},
+    checkpointSamples = OptionValue["CheckpointSamples"],
+    checkpointInterval = OptionValue["CheckpointInterval"],
+    network, sampler, checkpointSampler, checkpointInputs, training},
   scenario = Lookup[$PaperFigure7Scenarios, name, Missing["UnknownScenario"]];
   If[MissingQ[scenario], Return@Failure["UnknownScenario", <|"Name" -> name|>]];
   representation = Replace[representation, Automatic -> If[total <= 512, "Dense", "LowRank"]];
@@ -302,10 +305,22 @@ TrainPaperScenario[name_String, OptionsPattern[]] := Module[
   If[FailureQ[network], Return[network]];
   sampler = CreatePaperInputSampler["MeanRadii" -> scenario["MeanRadii"], "Seed" -> seed];
   If[FailureQ[sampler], Return[sampler]];
+  If[!IntegerQ[checkpointSamples] || checkpointSamples < 1 ||
+      !IntegerQ[checkpointInterval] || checkpointInterval < 1,
+    Return@Failure["InvalidCheckpoint", <|
+      "MessageTemplate" -> "CheckpointSamples and CheckpointInterval must be positive integers."|>]
+  ];
+  checkpointSampler = CreatePaperInputSampler[
+    "MeanRadii" -> scenario["MeanRadii"], "Seed" -> seed + 1000003];
+  checkpointInputs = Table[checkpointSampler["Next"][0, i],
+    {i, checkpointSamples}];
   training = TrainNetwork[network, sampler,
     "Steps" -> OptionValue["Steps"], "BatchSize" -> OptionValue["BatchSize"],
     "LearningRate" -> scenario["LearningRate"], "Policy" -> "fixed-best",
-    "RestoreBest" -> OptionValue["RestoreBest"], "MaximumRank" -> maximumRank];
+    "RestoreBest" -> OptionValue["RestoreBest"],
+    "CheckpointInputs" -> checkpointInputs,
+    "CheckpointInterval" -> checkpointInterval,
+    "MaximumRank" -> maximumRank];
   If[FailureQ[training], Return[training]];
   Join[training, <|"ScenarioName" -> name, "Scenario" -> scenario,
     "ScaleReport" -> NetworkScaleReport[training["Model"]]|>]

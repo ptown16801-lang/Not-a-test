@@ -1,0 +1,17 @@
+{
+  "paper": {
+    "doi": "10.1371/journal.pcbi.1004959",
+    "url": "https://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1004959&type=printable",
+    "sha256": "eb5d4c76407ef523479c7e25b95956d6f29130d1c59d7019b3fae6efc395bf53",
+    "pages": 18
+  },
+  "supportingAppendix": {
+    "doi": "10.1371/journal.pcbi.1004959.s001",
+    "url": "https://journals.plos.org/ploscompbiol/article/file?id=10.1371%2Fjournal.pcbi.1004959.s001&type=supplementary",
+    "sha256": "bc2ef4dbb50dd60d63c0037f2c48024dffe72bbcaf73d0ced576508261e23ca4",
+    "format": "DOCX",
+    "renderedPages": 7
+  },
+  "retrievedUtc": "2026-09-07",
+  "note": "Hashes identify the authoritative files used for the independent transcription; the publication files themselves are not vendored."
+}

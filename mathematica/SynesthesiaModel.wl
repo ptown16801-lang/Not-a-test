@@ -31,10 +31,10 @@ AnalyzeNetwork::usage = "AnalyzeNetwork[model,input] evaluates equilibrium, susc
 InfomaxObjective::usage = "InfomaxObjective[model,input] evaluates the information objective epsilon.";
 RecurrentUpdateDirection::usage = "RecurrentUpdateDirection[model,inputs] averages the published recurrent update over inputs.";
 ApplyRecurrentUpdate::usage = "ApplyRecurrentUpdate[model,direction,eta] returns a model with one recurrent update applied.";
-TrainNetwork::usage = "TrainNetwork[model,sampler] performs deterministic synchronous training and retains the best checkpoint.";
+TrainNetwork::usage = "TrainNetwork[model,sampler] trains synchronously; restoring a best checkpoint requires one fixed CheckpointInputs ensemble.";
 
 ModalityActivity::usage = "ModalityActivity[model,state,modality] extracts one population's activity.";
-PopulationVector::usage = "PopulationVector[activity,angles] returns the circular population vector.";
+PopulationVector::usage = "PopulationVector[activity,angles] returns the publication-defined circular sum; Normalization->Mean is a project visualization option.";
 RespondNetwork::usage = "RespondNetwork[model,input] settles a model and summarizes both modality populations.";
 ProbeCrossModalMapping::usage = "ProbeCrossModalMapping[model,source,target] measures population-vector responses across angles.";
 CrossTalkSummary::usage = "CrossTalkSummary[model] summarizes signed and absolute weights in both cross-modal blocks.";
@@ -77,7 +77,7 @@ $ReconstructionDefaults = <|
   "Tolerance" -> 1.*^-9,
   "StableIterations" -> 2,
   "MaxIterations" -> 50000,
-  "DerivativeFloor" -> 1.*^-12,
+  "DerivativeFloor" -> 0.,
   "InitialRecurrentScale" -> 0.0,
   "PivotTolerance" -> 1.*^-13,
   "Seed" -> 1
@@ -125,7 +125,10 @@ lowRankModelQ[model_] := AssociationQ@Lookup[model, "Recurrent", None] &&
 scaleRows[scales_List, matrix_?MatrixQ] := MapThread[#1 #2 &, {scales, matrix}];
 scaleRows[scales_List, vector_?VectorQ] := scales vector;
 recurrentTimes[model_, value_] := If[lowRankModelQ[model], Module[{r = model["Recurrent"]},
-    r["Diagonal"] value + r["LeftFactors"].(Transpose[r["RightFactors"]].value)
+    If[Last@Dimensions[r["LeftFactors"]] == 0,
+      r["Diagonal"] value,
+      r["Diagonal"] value + r["LeftFactors"].(Transpose[r["RightFactors"]].value)
+    ]
   ], model["K"].value];
 recurrentState[model_] := If[lowRankModelQ[model], model["Recurrent"], model["K"]];
 setRecurrentState[model_, state_] := If[lowRankModelQ[model],
@@ -172,7 +175,9 @@ CreateSimplePaperNetwork[OptionsPattern[]] := Module[
       <|"Name" -> "modality-2", "InputOffset" -> 2, "InputCount" -> 1,
         "OutputOffset" -> 2, "OutputCount" -> 1, "PreferredAngles" -> {0.}|>
     },
-    "Metadata" -> <|"Model" -> "paper-simple-model", "DOI" -> $PaperDOI|>
+    "Metadata" -> <|"Model" -> "paper-simple-model", "DOI" -> $PaperDOI,
+      "ExcludeSelfCoupling" -> True,
+      "SelfCouplingProvenance" -> "S1 Appendix explicitly sets the two diagonal entries to zero."|>
   |>
 ];
 
@@ -181,6 +186,7 @@ Options[CreateTwoModalityPaperNetwork] = {
   "TotalNeurons" -> Automatic,
   "Seed" -> 1,
   "InitialRecurrentScale" -> 0.,
+  "ExcludeSelfCoupling" -> False,
   "RecurrentRepresentation" -> "Dense",
   "MaximumRank" -> Infinity
 };
@@ -189,7 +195,8 @@ CreateTwoModalityPaperNetwork[OptionsPattern[]] := Module[
   {count = OptionValue["NeuronsPerModality"], seed = OptionValue["Seed"],
     scale = N@OptionValue["InitialRecurrentScale"], angles, w, k, modalities,
     outputs, total = OptionValue["TotalNeurons"],
-    representation = OptionValue["RecurrentRepresentation"], recurrent, maximumRank},
+    representation = OptionValue["RecurrentRepresentation"], recurrent, maximumRank,
+    excludeSelf = OptionValue["ExcludeSelfCoupling"], initialization},
   If[total =!= Automatic,
     If[!IntegerQ[total] || total < 6 || OddQ[total],
       Return@modelFailure["InvalidModel", "TotalNeurons must be an even integer of at least six."]
@@ -204,6 +211,9 @@ CreateTwoModalityPaperNetwork[OptionsPattern[]] := Module[
   ];
   If[!finiteNumericQ[scale] || scale < 0,
     Return@modelFailure["InvalidModel", "InitialRecurrentScale must be non-negative."]
+  ];
+  If[!BooleanQ[excludeSelf],
+    Return@modelFailure["InvalidModel", "ExcludeSelfCoupling must be True or False."]
   ];
   If[!MemberQ[{"Dense", "LowRank"}, representation],
     Return@modelFailure["InvalidModel", "RecurrentRepresentation must be Dense or LowRank."]
@@ -227,7 +237,7 @@ CreateTwoModalityPaperNetwork[OptionsPattern[]] := Module[
     k = If[scale == 0., ConstantArray[0., {outputs, outputs}],
       BlockRandom[SeedRandom[seed]; RandomReal[{-scale, scale}, {outputs, outputs}]]
     ];
-    Do[k[[i, i]] = 0., {i, outputs}],
+    If[TrueQ[excludeSelf], Do[k[[i, i]] = 0., {i, outputs}]],
     recurrent = <|"Representation" -> "LowRankPlusDiagonal",
       "Diagonal" -> ConstantArray[0., outputs],
       "LeftFactors" -> ConstantArray[0., {outputs, 0}],
@@ -235,6 +245,8 @@ CreateTwoModalityPaperNetwork[OptionsPattern[]] := Module[
       "MaximumRank" -> maximumRank,
       "Truncations" -> 0, "DiscardedSingularValueMass" -> 0.|>
   ];
+  initialization = If[scale == 0., "exact-zero-reconstruction-condition",
+    "seeded-uniform-near-zero-reconstruction-condition"];
   modalities = Table[
     <|"Name" -> "modality-" <> ToString[modality + 1],
       "InputOffset" -> 2 modality + 1, "InputCount" -> 2,
@@ -251,8 +263,14 @@ CreateTwoModalityPaperNetwork[OptionsPattern[]] := Module[
       "Model" -> "paper-high-dimensional-model",
       "NeuronsPerModality" -> count,
       "FeedForward" -> "unit-vectors-at-equal-angles",
-      "Activation" -> "logistic", "Tau" -> 1., "Seed" -> seed,
+      "Activation" -> "logistic", "TimeUnits" -> "t/tau", "Seed" -> seed,
       "InitialRecurrentScale" -> scale,
+      "Initialization" -> initialization,
+      "InitializationProvenance" -> "The target paper says cross-talk was near-zero but does not report its scale or distribution.",
+      "ExcludeSelfCoupling" -> excludeSelf,
+      "SelfCouplingProvenance" -> If[TrueQ[excludeSelf],
+        "Optional project constraint borrowed from the simple S1 model.",
+        "General published M by M equation; the high-dimensional diagonal policy is not separately reported."],
       "RecurrentRepresentation" -> representation,
       "MaximumRank" -> maximumRank, "DOI" -> $PaperDOI|>
   |>, If[representation === "Dense", <|"K" -> k|>, <|"Recurrent" -> recurrent|>]]
@@ -374,7 +392,7 @@ SettleNetwork[model_, input_, OptionsPattern[]] := Module[
     method = OptionValue["Method"], depth = OptionValue["AndersonDepth"],
     damping = N@OptionValue["AndersonDamping"],
     regularization = N@OptionValue["AndersonRegularization"],
-    stable = 0, iterations = 0, maxDelta = Infinity, converged,
+    stable = 0, iterations = 0, maxDelta = Infinity, fixedPointResidual, converged,
     mapped, residual, mappedHistory = {}, residualHistory = {}, residualMatrix,
     gram, coefficients, weights, candidate},
   If[!validModelQ[model], Return@modelFailure["InvalidModel", "The network association is malformed."]];
@@ -427,16 +445,18 @@ SettleNetwork[model_, input_, OptionsPattern[]] := Module[
   ];
   converged = stable >= required;
   field = direct + recurrentTimes[model, state];
+  fixedPointResidual = Max[Abs[state - LogisticActivation[field]]];
   If[!converged && !allow,
     Return@modelFailure["DidNotConverge", "The recurrent dynamics did not settle.",
       <|"Iterations" -> iterations, "MaxDelta" -> maxDelta|>]
   ];
   <|"State" -> state, "Field" -> field, "Iterations" -> iterations,
-    "MaxDelta" -> maxDelta, "Converged" -> converged, "Method" -> method|>
+    "MaxDelta" -> maxDelta, "FixedPointResidual" -> fixedPointResidual,
+    "Converged" -> converged, "Method" -> method|>
 ];
 
 Options[AnalyzeNetwork] = Join[
-  {"Gradient" -> True, "DerivativeFloor" -> 1.*^-12,
+  {"Gradient" -> True, "DerivativeFloor" -> 0.,
     "PivotTolerance" -> 1.*^-13, "ReturnPhi" -> Automatic},
   Options[SettleNetwork]
 ];
@@ -491,18 +511,19 @@ AnalyzeNetwork[model_, input_, opts : OptionsPattern[]] := Module[
     floor = N@OptionValue["DerivativeFloor"], pivot = N@OptionValue["PivotTolerance"],
     returnPhi = OptionValue["ReturnPhi"], base, phiTChi, b, leftFactors,
     rightFactors, forwardSolver, transposeSolver, gramSolver},
-  If[!finiteNumericQ[floor] || floor <= 0 ||
+  If[!finiteNumericQ[floor] || floor < 0 ||
       !finiteNumericQ[pivot] || pivot <= 0 ||
       !MemberQ[{True, False, Automatic}, returnPhi],
     Return@modelFailure["InvalidAnalysis",
-      "DerivativeFloor and PivotTolerance must be positive; ReturnPhi must be True, False, or Automatic."]
+      "DerivativeFloor must be non-negative and PivotTolerance positive; ReturnPhi must be True, False, or Automatic."]
   ];
   equilibrium = SettleNetwork[model, input,
     Sequence @@ FilterRules[{opts}, Options[SettleNetwork]]];
   If[FailureQ[equilibrium], Return[equilibrium]];
   {n, m} = Lookup[model, {"InputSize", "OutputSize"}];
   s = equilibrium["State"];
-  first = Map[Max[floor, #] &, LogisticPrimeFromOutput[s]];
+  first = If[floor == 0., LogisticPrimeFromOutput[s],
+    Map[Max[floor, #] &, LogisticPrimeFromOutput[s]]];
   second = LogisticSecondFromOutput[s];
   forwardSolver = makePhiSolver[model, first, False];
   If[forwardSolver === $Failed,
@@ -659,13 +680,16 @@ compressLowRankFactors[left_?MatrixQ, right_?MatrixQ, maximum_Integer] := Module
 ];
 
 Options[ApplyRecurrentUpdate] = {
-  "ZeroDiagonal" -> True, "MaxAbsWeight" -> Infinity, "MaximumRank" -> Automatic
+  "ZeroDiagonal" -> Automatic, "MaxAbsWeight" -> Infinity,
+  "MaximumRank" -> Automatic, "DensifyAtFullRank" -> True
 };
 
 ApplyRecurrentUpdate[model_, direction_, learningRate_, OptionsPattern[]] := Module[
   {m, k, maximum = OptionValue["MaxAbsWeight"], recurrent, left, right,
     directionLeft, directionRight, maximumRank = OptionValue["MaximumRank"], compressed,
-    diagonal, truncations, discarded},
+    diagonal, truncations, discarded, denseDirection,
+    zeroDiagonal = OptionValue["ZeroDiagonal"],
+    densify = OptionValue["DensifyAtFullRank"]},
   If[!validModelQ[model], Return@modelFailure["InvalidModel", "The network association is malformed."]];
   m = model["OutputSize"];
   If[(!lowRankDirectionQ[direction] && !finiteMatrixQ[direction, {m, m}]) ||
@@ -673,6 +697,14 @@ ApplyRecurrentUpdate[model_, direction_, learningRate_, OptionsPattern[]] := Mod
         First@Dimensions[direction["LeftFactors"]] != m) ||
       !finiteNumericQ[learningRate] || learningRate < 0,
     Return@modelFailure["InvalidUpdate", "The update matrix or learning rate is invalid."]
+  ];
+  zeroDiagonal = Replace[zeroDiagonal, Automatic ->
+    TrueQ@Lookup[Lookup[model, "Metadata", <||>], "ExcludeSelfCoupling", False]];
+  If[!BooleanQ[zeroDiagonal],
+    Return@modelFailure["InvalidUpdate", "ZeroDiagonal must be True, False, or Automatic."]
+  ];
+  If[!BooleanQ[densify],
+    Return@modelFailure["InvalidUpdate", "DensifyAtFullRank must be True or False."]
   ];
   If[learningRate == 0, Return[model]];
   If[lowRankModelQ[model],
@@ -700,8 +732,17 @@ ApplyRecurrentUpdate[model_, direction_, learningRate_, OptionsPattern[]] := Mod
       discarded += compressed["DiscardedSingularValueMass"]
     ];
     diagonal = recurrent["Diagonal"];
-    If[TrueQ@OptionValue["ZeroDiagonal"],
+    If[TrueQ[zeroDiagonal],
       diagonal = -(Total /@ (left right))
+    ];
+    If[TrueQ[densify] && Last@Dimensions[left] >= m,
+      k = DiagonalMatrix[diagonal] + left.Transpose[right];
+      Return@Join[KeyDrop[model, "Recurrent"], <|"K" -> k,
+        "Metadata" -> Join[model["Metadata"], <|
+          "RecurrentRepresentation" -> "Dense",
+          "DensifiedFromExactFactors" -> True,
+          "FactorColumnsAtDensification" -> Last@Dimensions[left],
+          "Approximate" -> (truncations > 0)|>]|>]
     ];
     recurrent = <|"Representation" -> "LowRankPlusDiagonal",
       "Diagonal" -> diagonal, "LeftFactors" -> left, "RightFactors" -> right,
@@ -711,50 +752,91 @@ ApplyRecurrentUpdate[model_, direction_, learningRate_, OptionsPattern[]] := Mod
       "Metadata" -> Join[model["Metadata"], <|
         "MaximumRank" -> maximumRank, "Approximate" -> (truncations > 0)|>]|>]
   ];
-  direction = directionToDense[direction];
-  k = N[model["K"] + learningRate direction];
+  denseDirection = directionToDense[direction];
+  k = N[model["K"] + learningRate denseDirection];
   If[maximum =!= Infinity,
     If[!finiteNumericQ[maximum] || maximum <= 0,
       Return@modelFailure["InvalidUpdate", "MaxAbsWeight must be positive or Infinity."]
     ];
     k = Clip[k, {-maximum, maximum}]
   ];
-  If[TrueQ@OptionValue["ZeroDiagonal"], Do[k[[i, i]] = 0., {i, m}]];
+  If[TrueQ[zeroDiagonal], Do[k[[i, i]] = 0., {i, m}]];
   Join[model, <|"K" -> k|>]
 ];
 
 Options[TrainNetwork] = Join[{
     "Steps" -> 1, "BatchSize" -> 1, "LearningRate" -> 1.*^-4,
     "Policy" -> "fixed-best", "RestoreBest" -> True,
+    "CheckpointInputs" -> Automatic, "CheckpointInterval" -> 1,
+    "LegacyOnlineCheckpoint" -> False,
     "GradientClip" -> Infinity, "MaxAbsWeight" -> Infinity,
-    "MaximumRank" -> Automatic, "OnStep" -> None
-  }, Options[SettleNetwork], {"DerivativeFloor" -> 1.*^-12, "PivotTolerance" -> 1.*^-13}];
+    "MaximumRank" -> Automatic, "ZeroDiagonal" -> Automatic,
+    "DensifyAtFullRank" -> True, "OnStep" -> None
+  }, Options[SettleNetwork], {"DerivativeFloor" -> 0., "PivotTolerance" -> 1.*^-13}];
 
 TrainNetwork[model_, sampler_, opts : OptionsPattern[]] := Module[
   {steps = OptionValue["Steps"], batchSize = OptionValue["BatchSize"],
     eta = N@OptionValue["LearningRate"], initialEta, policy = OptionValue["Policy"],
     restore = TrueQ@OptionValue["RestoreBest"], clip = OptionValue["GradientClip"],
+    checkpointInputs = OptionValue["CheckpointInputs"],
+    checkpointInterval = OptionValue["CheckpointInterval"],
+    legacyCheckpoint = TrueQ@OptionValue["LegacyOnlineCheckpoint"],
     maxWeight = OptionValue["MaxAbsWeight"], callback = OptionValue["OnStep"],
-    maximumRank = OptionValue["MaximumRank"], current = model, bestState,
-    bestObjective = Infinity, history, inputs, result,
+    maximumRank = OptionValue["MaximumRank"], zeroDiagonal = OptionValue["ZeroDiagonal"],
+    densify = OptionValue["DensifyAtFullRank"],
+    current = model, bestModel,
+    bestObjective = Missing["Disabled"], history, inputs, result,
     objective, direction, scale, maxDirection, candidate, proposed, accepted, attempts,
-    record, analysisOptions},
+    record, analysisOptions, checkpointObjective, checkpointValues, checkpointMode},
   If[!validModelQ[model], Return@modelFailure["InvalidModel", "The network association is malformed."]];
   If[!IntegerQ[steps] || steps < 1 || !IntegerQ[batchSize] || batchSize < 1 ||
       !finiteNumericQ[eta] || eta < 0 || !MemberQ[{"fixed-best", "backtrack"}, policy],
     Return@modelFailure["InvalidTraining", "Training options are invalid."]
   ];
-  initialEta = eta; bestState = recurrentState[current];
+  If[!IntegerQ[checkpointInterval] || checkpointInterval < 1 ||
+      !MemberQ[{True, False}, OptionValue["LegacyOnlineCheckpoint"]] ||
+      !BooleanQ[densify],
+    Return@modelFailure["InvalidTraining",
+      "CheckpointInterval must be positive; checkpoint and densification switches must be boolean."]
+  ];
+  If[checkpointInputs =!= Automatic &&
+      (!ListQ[checkpointInputs] ||
+        AnyTrue[checkpointInputs, !finiteVectorQ[#, model["InputSize"]] &]),
+    Return@modelFailure["InvalidTraining",
+      "CheckpointInputs must be Automatic or a list of valid fixed inputs."]
+  ];
+  If[restore && !legacyCheckpoint &&
+      (checkpointInputs === Automatic || checkpointInputs === {}),
+    Return@modelFailure["MissingCheckpointEnsemble",
+      "RestoreBest requires a non-empty fixed CheckpointInputs ensemble; LegacyOnlineCheckpoint is only for old project runs."]
+  ];
+  initialEta = eta; bestModel = current;
+  zeroDiagonal = Replace[zeroDiagonal, Automatic ->
+    TrueQ@Lookup[Lookup[model, "Metadata", <||>], "ExcludeSelfCoupling", False]];
+  If[!BooleanQ[zeroDiagonal],
+    Return@modelFailure["InvalidTraining", "ZeroDiagonal must be True, False, or Automatic."]
+  ];
   history = ConstantArray[Null, steps];
   analysisOptions = FilterRules[{opts}, Options[AnalyzeNetwork]];
+  checkpointMode = If[!restore, "disabled",
+    If[legacyCheckpoint, "legacy-changing-sample", "fixed-ensemble"]];
+  If[restore && !legacyCheckpoint,
+    checkpointValues = InfomaxObjective[current, #,
+        Sequence @@ analysisOptions] & /@ checkpointInputs;
+    If[AnyTrue[checkpointValues, FailureQ],
+      Return@FirstCase[checkpointValues, _Failure]];
+    bestObjective = Mean[checkpointValues];
+    bestModel = current
+  ];
   Do[
     inputs = Table[N@sampleFrom[sampler, step - 1, sample - 1], {sample, batchSize}];
     result = RecurrentUpdateDirection[current, inputs, Sequence @@ analysisOptions];
     If[FailureQ[result], Return[result]];
     objective = result["Objective"];
     direction = result["UpdateDirection"];
-    If[objective < bestObjective,
-      bestObjective = objective; bestState = recurrentState[current]
+    If[restore && legacyCheckpoint &&
+        (MissingQ[bestObjective] || objective < bestObjective),
+      bestObjective = objective; bestModel = current
     ];
     maxDirection = directionMaxAbsBound[direction];
     If[clip =!= Infinity,
@@ -768,8 +850,8 @@ TrainNetwork[model_, sampler_, opts : OptionsPattern[]] := Module[
       accepted = False; attempts = 0;
       While[!accepted && attempts < 24,
         candidate = ApplyRecurrentUpdate[current, direction, eta,
-          "ZeroDiagonal" -> True, "MaxAbsWeight" -> maxWeight,
-          "MaximumRank" -> maximumRank];
+          "ZeroDiagonal" -> zeroDiagonal, "MaxAbsWeight" -> maxWeight,
+          "MaximumRank" -> maximumRank, "DensifyAtFullRank" -> densify];
         If[FailureQ[candidate], Return[candidate]];
         proposed = InfomaxObjective[candidate, #,
             Sequence @@ analysisOptions] & /@ inputs;
@@ -778,11 +860,24 @@ TrainNetwork[model_, sampler_, opts : OptionsPattern[]] := Module[
         attempts++;
       ],
       current = ApplyRecurrentUpdate[current, direction, eta,
-        "ZeroDiagonal" -> True, "MaxAbsWeight" -> maxWeight,
-        "MaximumRank" -> maximumRank];
+        "ZeroDiagonal" -> zeroDiagonal, "MaxAbsWeight" -> maxWeight,
+        "MaximumRank" -> maximumRank, "DensifyAtFullRank" -> densify];
       If[FailureQ[current], Return[current]]
     ];
+    checkpointObjective = Missing["NotEvaluated"];
+    If[restore && !legacyCheckpoint &&
+        (Mod[step, checkpointInterval] == 0 || step == steps),
+      checkpointValues = InfomaxObjective[current, #,
+          Sequence @@ analysisOptions] & /@ checkpointInputs;
+      If[AnyTrue[checkpointValues, FailureQ],
+        Return@FirstCase[checkpointValues, _Failure]];
+      checkpointObjective = Mean[checkpointValues];
+      If[checkpointObjective < bestObjective,
+        bestObjective = checkpointObjective; bestModel = current
+      ]
+    ];
     record = <|"Step" -> step, "Objective" -> objective,
+      "CheckpointObjective" -> checkpointObjective,
       "LearningRate" -> eta,
       "MeanSettleIterations" -> result["MeanSettleIterations"],
       "MaxAbsUpdate" -> maxDirection,
@@ -793,11 +888,15 @@ TrainNetwork[model_, sampler_, opts : OptionsPattern[]] := Module[
     If[callback =!= None, callback[record, current]],
     {step, steps}
   ];
-  If[restore, current = setRecurrentState[current, bestState]];
+  If[restore, current = bestModel];
   <|"Model" -> current, "Policy" -> policy, "Steps" -> steps,
     "BatchSize" -> batchSize, "InitialLearningRate" -> initialEta,
     "FinalLearningRate" -> eta, "BestObjective" -> bestObjective,
+    "CheckpointMode" -> checkpointMode,
+    "CheckpointInputCount" -> If[ListQ[checkpointInputs], Length[checkpointInputs], 0],
+    "CheckpointInterval" -> checkpointInterval,
     "History" -> history, "RestoredBest" -> restore,
+    "ZeroDiagonal" -> zeroDiagonal,
     "SamplerState" -> If[AssociationQ[sampler] && KeyExistsQ[sampler, "Snapshot"],
       sampler["Snapshot"][], Missing["NotAvailable"]]|>
 ];
@@ -812,42 +911,51 @@ ModalityActivity[model_, state_, modality_Integer] := Module[{specification, sta
   state[[start ;; start + count - 1]]
 ];
 
-PopulationVector[activity_List, preferredAngles_List] := Module[{vector, angle},
+Options[PopulationVector] = {"Normalization" -> "Sum"};
+
+PopulationVector[activity_List, preferredAngles_List, OptionsPattern[]] := Module[
+  {vector, angle, normalization = OptionValue["Normalization"]},
   If[Length[activity] == 0 || Length[activity] != Length[preferredAngles] ||
       !VectorQ[activity, finiteNumericQ] || !VectorQ[preferredAngles, finiteNumericQ],
     Return@modelFailure["InvalidPopulation", "Activity and preferred angles must have equal non-zero lengths."]
   ];
-  vector = Total[MapThread[#1 {Cos[#2], Sin[#2]} &, {activity, preferredAngles}]]/Length[activity];
+  If[!MemberQ[{"Sum", "Mean"}, normalization],
+    Return@modelFailure["InvalidPopulation", "Normalization must be Sum or Mean."]
+  ];
+  vector = Total[MapThread[#1 {Cos[#2], Sin[#2]} &, {activity, preferredAngles}]];
+  If[normalization === "Mean", vector = vector/Length[activity]];
   angle = Mod[ArcTan[vector[[1]], vector[[2]]], 2 Pi];
   <|"Real" -> vector[[1]], "Imaginary" -> vector[[2]],
     "Magnitude" -> Norm[vector], "AngleRadians" -> angle,
-    "AngleDegrees" -> angle 180/Pi|>
+    "AngleDegrees" -> angle 180/Pi, "Normalization" -> normalization|>
 ];
 
-Options[RespondNetwork] = Options[SettleNetwork];
+Options[RespondNetwork] = Join[{"PopulationNormalization" -> "Sum"}, Options[SettleNetwork]];
 
 RespondNetwork[model_, input_, opts : OptionsPattern[]] := Module[
-  {equilibrium, populations},
+  {equilibrium, populations, normalization = OptionValue["PopulationNormalization"]},
   equilibrium = SettleNetwork[model, input, Sequence @@ FilterRules[{opts}, Options[SettleNetwork]]];
   If[FailureQ[equilibrium], Return[equilibrium]];
   populations = MapIndexed[Function[{modality, index}, Module[{activity},
       activity = ModalityActivity[model, equilibrium["State"], First@index];
       <|"Name" -> modality["Name"], "Activity" -> activity,
         "PreferredAngles" -> modality["PreferredAngles"],
-        "Population" -> PopulationVector[activity, modality["PreferredAngles"]]|>
+        "Population" -> PopulationVector[activity, modality["PreferredAngles"],
+          "Normalization" -> normalization]|>
     ]], model["Modalities"]];
   Join[equilibrium, <|"Input" -> N@input, "Modalities" -> populations|>]
 ];
 
 Options[ProbeCrossModalMapping] = Join[
   {"Angles" -> N@Table[2 Pi i/72, {i, 0, 71}], "ProbeRadius" -> 1.,
-    "WarmStart" -> True},
+    "WarmStart" -> True, "PopulationNormalization" -> "Sum"},
   Options[SettleNetwork]
 ];
 
 ProbeCrossModalMapping[model_, source_Integer, target_Integer, opts : OptionsPattern[]] := Module[
   {angles = N@OptionValue["Angles"], radius = N@OptionValue["ProbeRadius"], rows,
     response, population, warm = TrueQ@OptionValue["WarmStart"], initial,
+    normalization = OptionValue["PopulationNormalization"],
     settleRules},
   If[!MemberQ[{1, 2}, source] || !MemberQ[{1, 2}, target] || source == target ||
       !VectorQ[angles, finiteNumericQ] || !finiteNumericQ[radius],
@@ -858,7 +966,8 @@ ProbeCrossModalMapping[model_, source_Integer, target_Integer, opts : OptionsPat
   settleRules = DeleteCases[settleRules, "InitialState" -> _];
   rows = Table[
     response = RespondNetwork[model, PolarProbe[source, angle, radius],
-      Sequence @@ settleRules, "InitialState" -> initial];
+      Sequence @@ settleRules, "InitialState" -> initial,
+      "PopulationNormalization" -> normalization];
     If[FailureQ[response], Return[response]];
     If[warm, initial = response["State"]];
     population = response["Modalities"][[target]]["Population"];
@@ -897,6 +1006,8 @@ EstimateNetworkScale[total_, rank_ : 128] := Module[
   <|"InputNeurons" -> 4, "OutputNeurons" -> total,
     "NeuronsPerModality" -> perModality,
     "PreferredAngleSpacingDegrees" -> N[360/perModality],
+    "DenseAdaptiveParametersGeneralRule" -> denseNumbers,
+    "DenseAdaptiveConnectionsNoSelfOptional" -> denseConnections,
     "DenseAdaptiveConnectionsNoSelf" -> denseConnections,
     "DenseRecurrentNumbers" -> denseNumbers,
     "DenseRecurrentBytesReal64" -> 8 denseNumbers,
@@ -927,7 +1038,8 @@ NetworkScaleReport[model_] := Module[
     discarded = recurrent["DiscardedSingularValueMass"];
     matVecComplexity = "O(M r)";
     solveCoreComplexity = "O(M r^2 + r^3)",
-    rank = m; stored = m^2; exact = True;
+    rank = m; stored = m^2;
+    exact = !TrueQ@Lookup[Lookup[model, "Metadata", <||>], "Approximate", False];
     maximumRank = Missing["DenseRepresentation"];
     truncations = 0; discarded = 0.;
     matVecComplexity = "O(M^2)";

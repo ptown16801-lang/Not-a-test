@@ -66,13 +66,13 @@ export function neuralResponseToShape(network,response,{originalShape=null,senso
   if(sensoryFeatures)shapes.push(sensoryFeaturesToArtShape(sensoryFeatures));
   if(originalShape)shapes.unshift(originalShape);
   const shape=overlay(shapes);
-  return Object.freeze({schema:NEURAL_SHAPE_BRIDGE_SCHEMA,sourceSchema:NEURAL_SYNAESTHESIA_SCHEMA,shape,input:[...response.input].map(round),converged:response.converged,settleIterations:response.iterations,populations:response.modalities.map(x=>({magnitude:round(x.population.magnitude),angleRadians:round(x.population.angleRadians),angleDegrees:round(x.population.angleDegrees)})),weavePathCount:edges.length});
+  return Object.freeze({schema:NEURAL_SHAPE_BRIDGE_SCHEMA,sourceSchema:NEURAL_SYNAESTHESIA_SCHEMA,shape,input:[...response.input].map(round),converged:response.converged,settleIterations:response.iterations,populationNormalization:response.modalities[0].population.normalization,populations:response.modalities.map(x=>({magnitude:round(x.population.magnitude),angleRadians:round(x.population.angleRadians),angleDegrees:round(x.population.angleDegrees)})),weavePathCount:edges.length});
 }
 
 /** End-to-end projection of an existing thought through the recurrent network. */
 export function projectShapeThroughNetwork(shape,network,{sequence=0,perception=null,stimulus={},response={},projection={}}={}){
   const encoded=perception?perceptionToNeuralStimulus(perception,stimulus):shapeToNeuralStimulus(shape,{sequence,...stimulus});
-  const settled=network.respond(encoded.input,response);
+  const settled=network.respond(encoded.input,{populationNormalization:'mean',...response});
   const projected=neuralResponseToShape(network,settled,{originalShape:shape,sensoryFeatures:encoded.features||null,...projection});
   return Object.freeze({...projected,stimulus:{modalities:encoded.modalities,encoding:encoded.encoding,...(encoded.features?{features:encoded.features}:{})}});
 }

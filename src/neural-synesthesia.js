@@ -11,6 +11,16 @@
 export const NEURAL_SYNAESTHESIA_SCHEMA = 'neural-synaesthesia/shriki-2016/v1';
 export const PAPER_DOI = '10.1371/journal.pcbi.1004959';
 
+/**
+ * Executable choices needed by this project but not numerically reported in
+ * the target paper. They are defaults, not claims about the authors' MATLAB.
+ */
+export const PROJECT_NUMERICAL_DEFAULTS = Object.freeze({
+  integrationMethod:'synchronous-explicit-euler',integrationStep:0.5,
+  tolerance:1e-9,stableIterations:2,maxIterations:50000,
+  pivotTolerance:1e-13,derivativeFloor:0
+});
+
 export const PAPER_FIGURE_7_SCENARIOS = Object.freeze({
   balancedLowPlasticity: Object.freeze({meanRadii:[0.2,0.2],learningRate:6e-5,reported:'no-synaesthesia'}),
   deprivedLowPlasticity: Object.freeze({meanRadii:[0.2,2],learningRate:1e-4,reported:'no-synaesthesia'}),
@@ -103,17 +113,18 @@ function positiveLogDet(a,n,tolerance=1e-14){
 const matrixMaxAbs = a => {let out=0;for(const x of a)out=Math.max(out,Math.abs(x));return out;};
 
 /**
- * Population vector used in the paper. Uniform activity cancels for evenly
- * spaced preferred angles. Magnitude is normalized by population size so it
- * remains comparable when quick tests use fewer than 71 neurons.
+ * Circular population vector. The publication-defined value is the complex
+ * sum. `normalization: 'mean'` preserves the former project visualization
+ * convention, which changes magnitude by 1/M but not phase.
  */
-export function populationVector(activity, preferredAngles) {
+export function populationVector(activity, preferredAngles,{normalization='sum'}={}) {
   if(!activity||activity.length<1||activity.length!==preferredAngles?.length)throw new NeuralModelError('activity and preferredAngles must have equal non-zero lengths','invalid_population');
+  if(!['sum','mean'].includes(normalization))throw new NeuralModelError("population normalization must be 'sum' or 'mean'",'invalid_population');
   let real=0,imaginary=0;
   for(let i=0;i<activity.length;i++){real+=activity[i]*Math.cos(preferredAngles[i]);imaginary+=activity[i]*Math.sin(preferredAngles[i]);}
-  real/=activity.length;imaginary/=activity.length;
+  if(normalization==='mean'){real/=activity.length;imaginary/=activity.length;}
   const angleRadians=(Math.atan2(imaginary,real)+TWO_PI)%TWO_PI;
-  return Object.freeze({real,imaginary,magnitude:Math.hypot(real,imaginary),angleRadians,angleDegrees:angleRadians*180/Math.PI});
+  return Object.freeze({real,imaginary,magnitude:Math.hypot(real,imaginary),angleRadians,angleDegrees:angleRadians*180/Math.PI,normalization});
 }
 
 /**
@@ -160,22 +171,25 @@ export class InfomaxRecurrentNetwork {
     }
     const converged=iterations<=maxIterations;
     for(let i=0;i<this.outputSize;i++){let h=direct[i];for(let j=0;j<this.outputSize;j++)h+=this.K[i*this.outputSize+j]*state[j];field[i]=h;}
+    let fixedPointResidual=0;for(let i=0;i<this.outputSize;i++)fixedPointResidual=Math.max(fixedPointResidual,Math.abs(state[i]-logistic(field[i])));
     if(!converged&&!allowUnconverged)throw new NeuralModelError(`network did not settle in ${maxIterations} iterations`,'did_not_converge');
-    return Object.freeze({state,field,iterations:Math.min(iterations,maxIterations),maxDelta,converged});
+    return Object.freeze({state,field,iterations:Math.min(iterations,maxIterations),maxDelta,fixedPointResidual,converged});
   }
 
   /** Fast inference path: settle the rate dynamics without matrix inversions. */
-  respond(input,options={}){
-    const equilibrium=this.settle(input,options);
+  respond(input,{populationNormalization='sum',...settleOptions}={}){
+    const equilibrium=this.settle(input,settleOptions);
     const modalities=this.modalities.map((modality,index)=>{
       const activity=this.modalityActivity(equilibrium.state,index);
-      return Object.freeze({name:modality.name,activity,population:populationVector(activity,modality.preferredAngles),preferredAngles:modality.preferredAngles});
+      return Object.freeze({name:modality.name,activity,population:populationVector(activity,modality.preferredAngles,{normalization:populationNormalization}),preferredAngles:modality.preferredAngles});
     });
     return Object.freeze({...equilibrium,input:Float64Array.from(input),modalities:Object.freeze(modalities)});
   }
 
   /** Evaluate Eq. 3 and (optionally) the exact recurrent update direction Eq. 5. */
-  analyze(input,{gradient=true,derivativeFloor=1e-12,pivotTolerance=1e-13,...settleOptions}={}){
+  analyze(input,{gradient=true,derivativeFloor=0,pivotTolerance=1e-13,...settleOptions}={}){
+    if(!finite(derivativeFloor)||derivativeFloor<0)throw new NeuralModelError('derivativeFloor must be non-negative','invalid_analysis');
+    if(!finite(pivotTolerance)||pivotTolerance<=0)throw new NeuralModelError('pivotTolerance must be positive','invalid_analysis');
     const equilibrium=this.settle(input,settleOptions),m=this.outputSize,n=this.inputSize,s=equilibrium.state;
     const first=new Float64Array(m),second=new Float64Array(m),operator=new Float64Array(m*m);
     for(let i=0;i<m;i++){
@@ -196,25 +210,34 @@ export class InfomaxRecurrentNetwork {
 
   objective(input,options={}){return this.analyze(input,{...options,gradient:false}).objective;}
 
-  /** Apply a precomputed ascent direction. The diagonal is normally excluded. */
-  applyUpdate(updateDirection,learningRate,{zeroDiagonal=true,maxAbsWeight=Infinity}={}){
+  /** Apply a precomputed descent direction; diagonal exclusion is model-specific. */
+  applyUpdate(updateDirection,learningRate,{zeroDiagonal=this.metadata.excludeSelfCoupling===true,maxAbsWeight=Infinity}={}){
     assertMatrix(updateDirection,this.outputSize,this.outputSize,'updateDirection');
     if(!finite(learningRate)||learningRate<0)throw new NeuralModelError('learningRate must be non-negative','invalid_learning_rate');
+    if(typeof zeroDiagonal!=='boolean')throw new NeuralModelError('zeroDiagonal must be boolean','invalid_update');
     for(let i=0;i<this.K.length;i++)this.K[i]=clamp(this.K[i]+learningRate*updateDirection[i],-maxAbsWeight,maxAbsWeight);
     if(zeroDiagonal)for(let i=0;i<this.outputSize;i++)this.K[i*this.outputSize+i]=0;
     return this;
   }
 
   /**
-   * Deterministic synchronous training. `fixed-best` implements the policy in
-   * the synaesthesia paper: eta stays fixed and the minimum-cost checkpoint is
-   * retained. `backtrack` implements the companion paper's eta-halving policy.
+   * Deterministic synchronous training. A publication-compatible best
+   * checkpoint compares every saved K on one fixed input ensemble. The old
+   * changing-sample comparison survives only behind `legacyOnlineCheckpoint`.
    */
-  train({sampler,steps=1,batchSize=1,learningRate=1e-4,policy='fixed-best',restoreBest=true,gradientClip=Infinity,maxAbsWeight=Infinity,settle={},onStep=null}={}){
+  train({sampler,steps=1,batchSize=1,learningRate=1e-4,policy='fixed-best',restoreBest=true,checkpointInputs=null,checkpointInterval=1,legacyOnlineCheckpoint=false,gradientClip=Infinity,maxAbsWeight=Infinity,zeroDiagonal=this.metadata.excludeSelfCoupling===true,settle={},onStep=null}={}){
     if(typeof sampler!=='function')throw new NeuralModelError('sampler must be a function returning an input vector','invalid_sampler');
     if(!Number.isInteger(steps)||steps<1||!Number.isInteger(batchSize)||batchSize<1)throw new NeuralModelError('steps and batchSize must be positive integers','invalid_training');
     if(!['fixed-best','backtrack'].includes(policy))throw new NeuralModelError('policy must be fixed-best or backtrack','invalid_training');
-    let eta=learningRate,bestObjective=Infinity,bestK=this.K.slice();const history=[];
+    if(typeof zeroDiagonal!=='boolean')throw new NeuralModelError('zeroDiagonal must be boolean','invalid_training');
+    if(!Number.isInteger(checkpointInterval)||checkpointInterval<1)throw new NeuralModelError('checkpointInterval must be a positive integer','invalid_training');
+    if(typeof legacyOnlineCheckpoint!=='boolean')throw new NeuralModelError('legacyOnlineCheckpoint must be boolean','invalid_training');
+    const fixedCheckpointInputs=checkpointInputs===null?null:Array.from(checkpointInputs,input=>Float64Array.from(input));
+    if(fixedCheckpointInputs?.some(input=>input.length!==this.inputSize||[...input].some(x=>!finite(x))))throw new NeuralModelError('checkpointInputs must contain valid fixed inputs','invalid_training');
+    if(restoreBest&&!legacyOnlineCheckpoint&&(!fixedCheckpointInputs||fixedCheckpointInputs.length===0))throw new NeuralModelError('restoreBest requires a non-empty fixed checkpointInputs ensemble; use legacyOnlineCheckpoint only for old visualization runs','missing_checkpoint_ensemble');
+    const evaluateCheckpoint=()=>fixedCheckpointInputs.reduce((sum,input)=>sum+this.objective(input,settle),0)/fixedCheckpointInputs.length;
+    let eta=learningRate,bestObjective=null,bestK=this.K.slice();const history=[];
+    if(restoreBest&&!legacyOnlineCheckpoint){bestObjective=evaluateCheckpoint();bestK=this.K.slice();}
     for(let step=0;step<steps;step++){
       const inputs=[],direction=new Float64Array(this.K.length);let objective=0,settleIterations=0;
       for(let sample=0;sample<batchSize;sample++){
@@ -222,22 +245,26 @@ export class InfomaxRecurrentNetwork {
         for(let i=0;i<direction.length;i++)direction[i]+=analysis.updateDirection[i]/batchSize;
       }
       objective/=batchSize;
-      if(objective<bestObjective){bestObjective=objective;bestK=this.K.slice();}
+      if(restoreBest&&legacyOnlineCheckpoint&&(bestObjective===null||objective<bestObjective)){bestObjective=objective;bestK=this.K.slice();}
       if(Number.isFinite(gradientClip)){const scale=Math.max(1,matrixMaxAbs(direction)/gradientClip);for(let i=0;i<direction.length;i++)direction[i]/=scale;}
       if(policy==='backtrack'){
         const original=this.K.slice();let accepted=false,attempts=0;
-        while(!accepted&&attempts<24){this.K.set(original);this.applyUpdate(direction,eta,{zeroDiagonal:true,maxAbsWeight});let proposed=0;try{for(const input of inputs)proposed+=this.objective(input,settle)/batchSize;accepted=proposed<=objective;}catch{accepted=false;}if(!accepted)eta/=2;attempts++;}
+        while(!accepted&&attempts<24){this.K.set(original);this.applyUpdate(direction,eta,{zeroDiagonal,maxAbsWeight});let proposed=0;try{for(const input of inputs)proposed+=this.objective(input,settle)/batchSize;accepted=proposed<=objective;}catch{accepted=false;}if(!accepted)eta/=2;attempts++;}
         if(!accepted)this.K.set(original);
-      }else this.applyUpdate(direction,eta,{zeroDiagonal:true,maxAbsWeight});
-      const record=Object.freeze({step:step+1,objective,learningRate:eta,meanSettleIterations:settleIterations/batchSize,maxAbsUpdate:matrixMaxAbs(direction),maxAbsWeight:matrixMaxAbs(this.K)});history.push(record);if(onStep)onStep(record,this);
+      }else this.applyUpdate(direction,eta,{zeroDiagonal,maxAbsWeight});
+      let checkpointObjective=null;
+      if(restoreBest&&!legacyOnlineCheckpoint&&((step+1)%checkpointInterval===0||step===steps-1)){
+        checkpointObjective=evaluateCheckpoint();if(checkpointObjective<bestObjective){bestObjective=checkpointObjective;bestK=this.K.slice();}
+      }
+      const record=Object.freeze({step:step+1,objective,checkpointObjective,learningRate:eta,meanSettleIterations:settleIterations/batchSize,maxAbsUpdate:matrixMaxAbs(direction),maxAbsWeight:matrixMaxAbs(this.K)});history.push(record);if(onStep)onStep(record,this);
     }
     if(restoreBest)this.K.set(bestK);
-    return Object.freeze({policy,steps,batchSize,initialLearningRate:learningRate,finalLearningRate:eta,bestObjective,history:Object.freeze(history),restoredBest:restoreBest});
+    return Object.freeze({policy,steps,batchSize,initialLearningRate:learningRate,finalLearningRate:eta,bestObjective,checkpointMode:restoreBest?(legacyOnlineCheckpoint?'legacy-changing-sample':'fixed-ensemble'):'disabled',checkpointInputCount:fixedCheckpointInputs?.length??0,checkpointInterval,history:Object.freeze(history),restoredBest:restoreBest,zeroDiagonal});
   }
 
   modalityActivity(state,index){const modality=this.modalities[index];if(!modality)throw new NeuralModelError(`unknown modality ${index}`,'invalid_modality');return Float64Array.from(state.slice(modality.outputOffset,modality.outputOffset+modality.outputCount));}
 
-  modalityPopulation(state,index){const modality=this.modalities[index];return populationVector(this.modalityActivity(state,index),modality.preferredAngles);}
+  modalityPopulation(state,index,{normalization='sum'}={}){const modality=this.modalities[index];return populationVector(this.modalityActivity(state,index),modality.preferredAngles,{normalization});}
 
   crossTalkSummary(){
     if(this.modalities.length!==2)return null;const [a,b]=this.modalities;
@@ -251,13 +278,14 @@ export class InfomaxRecurrentNetwork {
 
 export function createSimplePaperNetwork({weights=[1,1],crossTalk=[0,0]}={}){
   if(!Array.isArray(weights)||weights.length!==2||!Array.isArray(crossTalk)||crossTalk.length!==2)throw new NeuralModelError('simple model needs two weights and two cross-talk values','invalid_model');
-  return new InfomaxRecurrentNetwork({inputSize:2,outputSize:2,W:[weights[0],0,0,weights[1]],K:[0,crossTalk[0],crossTalk[1],0],modalities:[{name:'modality-1',inputOffset:0,inputCount:1,outputOffset:0,outputCount:1,preferredAngles:[0]},{name:'modality-2',inputOffset:1,inputCount:1,outputOffset:1,outputCount:1,preferredAngles:[0]}],metadata:{model:'paper-simple-model'}});
+  return new InfomaxRecurrentNetwork({inputSize:2,outputSize:2,W:[weights[0],0,0,weights[1]],K:[0,crossTalk[0],crossTalk[1],0],modalities:[{name:'modality-1',inputOffset:0,inputCount:1,outputOffset:0,outputCount:1,preferredAngles:[0]},{name:'modality-2',inputOffset:1,inputCount:1,outputOffset:1,outputCount:1,preferredAngles:[0]}],metadata:{model:'paper-simple-model',excludeSelfCoupling:true,selfCouplingProvenance:'S1 Appendix explicitly sets the two diagonal entries to zero'}});
 }
 
-/** Exact high-dimensional architecture: default N=4, M=142 (71 per modality). */
-export function createTwoModalityPaperNetwork({neuronsPerModality=71,seed=1,initialRecurrentScale=0}={}){
+/** Published high-dimensional architecture: default N=4, M=142. */
+export function createTwoModalityPaperNetwork({neuronsPerModality=71,seed=1,initialRecurrentScale=0,excludeSelfCoupling=false}={}){
   if(!Number.isInteger(neuronsPerModality)||neuronsPerModality<3)throw new NeuralModelError('neuronsPerModality must be an integer of at least 3','invalid_model');
   if(!finite(initialRecurrentScale)||initialRecurrentScale<0)throw new NeuralModelError('initialRecurrentScale must be non-negative','invalid_model');
+  if(typeof excludeSelfCoupling!=='boolean')throw new NeuralModelError('excludeSelfCoupling must be boolean','invalid_model');
   const n=4,m=neuronsPerModality*2,W=new Float64Array(m*n),K=new Float64Array(m*m),modalities=[];
   for(let modality=0;modality<2;modality++){
     const preferredAngles=[];
@@ -266,8 +294,9 @@ export function createTwoModalityPaperNetwork({neuronsPerModality=71,seed=1,init
     }
     modalities.push({name:`modality-${modality+1}`,inputOffset:modality*2,inputCount:2,outputOffset:modality*neuronsPerModality,outputCount:neuronsPerModality,preferredAngles});
   }
-  if(initialRecurrentScale>0){const random=new GaussianRandom(seed);for(let i=0;i<m;i++)for(let j=0;j<m;j++)if(i!==j)K[i*m+j]=(random.uniform()*2-1)*initialRecurrentScale;}
-  return new InfomaxRecurrentNetwork({inputSize:n,outputSize:m,W,K,modalities,metadata:{model:'paper-high-dimensional-model',neuronsPerModality,feedforward:'unit-vectors-at-equal-angles',activation:'logistic',tau:1,seed,initialRecurrentScale}});
+  if(initialRecurrentScale>0){const random=new GaussianRandom(seed);for(let i=0;i<m;i++)for(let j=0;j<m;j++)if(!excludeSelfCoupling||i!==j)K[i*m+j]=(random.uniform()*2-1)*initialRecurrentScale;}
+  const initialization=initialRecurrentScale===0?'exact-zero-reconstruction-condition':'seeded-uniform-near-zero-reconstruction-condition';
+  return new InfomaxRecurrentNetwork({inputSize:n,outputSize:m,W,K,modalities,metadata:{model:'paper-high-dimensional-model',neuronsPerModality,feedforward:'unit-vectors-at-equal-angles',activation:'logistic',timeUnits:'t/tau',seed,initialRecurrentScale,initialization,initializationProvenance:'target paper says cross-talk near-zero but does not report scale or distribution',excludeSelfCoupling,selfCouplingProvenance:excludeSelfCoupling?'optional project constraint borrowed from the simple S1 model':'general published M x M equation; high-dimensional diagonal policy is not separately reported'}});
 }
 
 /** Independent polar inputs with r ~ Normal(mean, radiusSdFraction * mean). */

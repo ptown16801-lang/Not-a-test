@@ -11,8 +11,7 @@ const config=Object.freeze({
 });
 const network=createTwoModalityPaperNetwork({neuronsPerModality:config.neuronsPerModality,seed:config.networkSeed,initialRecurrentScale:config.initialRecurrentScale});
 const sampler=createPaperInputSampler({meanRadii:config.meanRadii,radiusSdFraction:config.radiusSdFraction,seed:config.inputSeed});
-const training=network.train({sampler,steps:config.steps,batchSize:config.batchSize,learningRate:config.learningRate,policy:config.policy,restoreBest:true,gradientClip:50,maxAbsWeight:20,settle:{integrationStep:1,tolerance:1e-7,maxIterations:5000,allowUnconverged:true}});
+const training=network.train({sampler,steps:config.steps,batchSize:config.batchSize,learningRate:config.learningRate,policy:config.policy,restoreBest:true,legacyOnlineCheckpoint:true,gradientClip:50,maxAbsWeight:20,zeroDiagonal:true,settle:{integrationStep:1,tolerance:1e-7,maxIterations:5000,allowUnconverged:true}});
 const artifact={schema:'neural-preview-checkpoint/v1',notice:'Compact visualization checkpoint; not a digitized or exact reproduction of a published figure.',reconstruction:{paperDoi:'10.1371/journal.pcbi.1004959',config,bestObjective:training.bestObjective,crossTalk:network.crossTalkSummary()},network:network.toJSON()};
 writeFileSync(new URL('../assets/neural-preview-checkpoint.json',import.meta.url),JSON.stringify(artifact,null,2)+'\n');
 console.log(JSON.stringify({output:'assets/neural-preview-checkpoint.json',bestObjective:training.bestObjective,crossTalk:network.crossTalkSummary()},null,2));
-

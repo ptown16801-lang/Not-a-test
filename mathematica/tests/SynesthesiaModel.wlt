@@ -69,7 +69,7 @@ VerificationTest[
   With[{model = CreateSimplePaperNetwork["Weights" -> {1.2, .8},
       "CrossTalk" -> {.07, -.04}], input = {.35, -.22}, epsilon = 1.*^-6},
     With[{analysis = AnalyzeNetwork[model, input, "IntegrationStep" -> .8,
-          "Tolerance" -> 1.*^-12], indices = {{1, 2}, {2, 1}}},
+          "Tolerance" -> 1.*^-12], indices = Tuples[{1, 2}, 2]},
       Max@Table[With[{plus = Join[model, <|"K" -> ReplacePart[model["K"], index ->
                 model["K"][[Sequence @@ index]] + epsilon]|>],
             minus = Join[model, <|"K" -> ReplacePart[model["K"], index ->
@@ -82,6 +82,21 @@ VerificationTest[
   ],
   True,
   TestID -> "published recurrent update is negative objective gradient"
+]
+
+VerificationTest[
+  With[{activity = {.2, .7, .4, .1},
+      angles = {0., Pi/2, Pi, 3 Pi/2}},
+    With[{sum = PopulationVector[activity, angles],
+        mean = PopulationVector[activity, angles, "Normalization" -> "Mean"]},
+      {Max[Abs[{sum["Real"], sum["Imaginary"]} -
+          4 {mean["Real"], mean["Imaginary"]}]] < 1.*^-14,
+        Abs[sum["AngleRadians"] - mean["AngleRadians"]] < 1.*^-14,
+        sum["Normalization"], mean["Normalization"]}
+    ]
+  ],
+  {True, True, "Sum", "Mean"},
+  TestID -> "publication population vector is an unnormalized sum"
 ]
 
 VerificationTest[
@@ -161,14 +176,28 @@ VerificationTest[
   With[{model = CreateScalablePaperNetwork[20, "MaximumRank" -> 3],
       input = PolarProbe[2, .2, 1.]},
     With[{updated = ApplyRecurrentUpdate[model,
-        AnalyzeNetwork[model, input]["UpdateDirection"], 1.*^-4]},
+        AnalyzeNetwork[model, input]["UpdateDirection"], 1.*^-4,
+        "ZeroDiagonal" -> True]},
       {Last@Dimensions[updated["Recurrent"]["LeftFactors"]],
         updated["Recurrent"]["Truncations"], updated["Metadata"]["Approximate"],
         Max[Abs[Diagonal[MaterializeRecurrentMatrix[updated]]]] < 1.*^-12}
     ]
   ],
   {3, 1, True, True},
-  TestID -> "rank cap is explicit and preserves zero self-coupling"
+  TestID -> "rank cap is explicit and optional zero diagonal is preserved"
+]
+
+VerificationTest[
+  With[{model = CreateTwoModalityPaperNetwork["TotalNeurons" -> 18],
+      input = PolarProbe[1, .4, 1.]},
+    With[{updated = ApplyRecurrentUpdate[model,
+        AnalyzeNetwork[model, input]["UpdateDirection"], 1.*^-4]},
+      {model["Metadata"]["ExcludeSelfCoupling"],
+        Max[Abs[Diagonal[updated["K"]]]] > 0}
+    ]
+  ],
+  {False, True},
+  TestID -> "general high-dimensional rule retains diagonal updates"
 ]
 
 VerificationTest[
@@ -189,6 +218,48 @@ VerificationTest[
   ],
   True,
   TestID -> "unbounded factors remain dense-equivalent after multiple updates"
+]
+
+VerificationTest[
+  With[{dense0 = CreateTwoModalityPaperNetwork["TotalNeurons" -> 6],
+      factored0 = CreateScalablePaperNetwork[6, "MaximumRank" -> Infinity],
+      inputs = {PolarProbe[1, .4, 1.], PolarProbe[2, 1.1, 2.]}, eta = 1.*^-4},
+    With[{dense1 = ApplyRecurrentUpdate[dense0,
+          AnalyzeNetwork[dense0, inputs[[1]]]["UpdateDirection"], eta],
+        factored1 = ApplyRecurrentUpdate[factored0,
+          AnalyzeNetwork[factored0, inputs[[1]]]["UpdateDirection"], eta]},
+      With[{dense2 = ApplyRecurrentUpdate[dense1,
+            AnalyzeNetwork[dense1, inputs[[2]]]["UpdateDirection"], eta],
+          factored2 = ApplyRecurrentUpdate[factored1,
+            AnalyzeNetwork[factored1, inputs[[2]]]["UpdateDirection"], eta]},
+        {!KeyExistsQ[factored2, "Recurrent"],
+          factored2["Metadata"]["DensifiedFromExactFactors"],
+          Max[Abs[Flatten[dense2["K"] - factored2["K"]]]] < 5.*^-9}
+      ]
+    ]
+  ],
+  {True, True, True},
+  TestID -> "full-rank factor history densifies without truncation"
+]
+
+VerificationTest[
+  With[{model = CreateTwoModalityPaperNetwork["TotalNeurons" -> 10],
+      inputs = {PolarProbe[1, .2, .8], PolarProbe[2, .7, 1.2]}},
+    With[{missing = TrainNetwork[model, Function[{step, sample}, First[inputs]],
+          "Steps" -> 1],
+        trained = TrainNetwork[model,
+          Function[{step, sample}, inputs[[Mod[step, Length[inputs]] + 1]]],
+          "Steps" -> 4, "LearningRate" -> 1.*^-4,
+          "CheckpointInputs" -> inputs, "CheckpointInterval" -> 2,
+          "IntegrationStep" -> 1., "Tolerance" -> 1.*^-9]},
+      {FailureQ[missing], trained["CheckpointMode"],
+        Abs[trained["BestObjective"] -
+          Mean[InfomaxObjective[trained["Model"], #,
+            "IntegrationStep" -> 1., "Tolerance" -> 1.*^-9] & /@ inputs]] < 2.*^-9}
+    ]
+  ],
+  {True, "fixed-ensemble", True},
+  TestID -> "best checkpoint compares one fixed objective ensemble"
 ]
 
 VerificationTest[

@@ -20,7 +20,7 @@ Notebook[{
 
   Cell[CellGroupData[{
     Cell["2. Rate dynamics and equilibrium", "Section"],
-    Cell["Let x be an N-dimensional fixed input, s the M-dimensional output activity, W the feed-forward matrix, and K the recurrent matrix. Each output follows a first-order rate equation with time constant one and logistic nonlinearity.", "Text"],
+    Cell["Let x be an N-dimensional fixed input, s the M-dimensional output activity, W the feed-forward matrix, and K the recurrent matrix. Each output follows the paper's first-order rate equation. This notebook measures time in units of the characteristic time scale tau; the paper does not print a numeric tau. The S1 Appendix explicitly chooses the logistic nonlinearity for its concrete analysis.", "Text"],
     Cell[BoxData["rateEquation = HoldForm[D[s[t], t] == -s[t] + LogisticActivation[W.x + K.s[t]]];\nfixedPointEquation = HoldForm[sStar == LogisticActivation[W.x + K.sStar]];\nColumn[{TraditionalForm[rateEquation], TraditionalForm[fixedPointEquation]}]"], "Input"],
     Cell["SettleNetwork uses synchronous explicit Euler for strict reconstruction. The alternative Anderson method solves the same fixed-point equation with a short residual history and is a labeled modern acceleration.", "Text"],
     Cell[BoxData["simple = CreateSimplePaperNetwork[\"Weights\" -> {1.1, .8}, \"CrossTalk\" -> {.12, -.07}];\neuler = SettleNetwork[simple, {.35, -.22}, \"IntegrationStep\" -> .8, \"Tolerance\" -> 10^-12];\nanderson = SettleNetwork[simple, {.35, -.22}, \"Method\" -> \"Anderson\", \"Tolerance\" -> 10^-12];\nDataset[{KeyTake[euler, {\"State\", \"Iterations\", \"MaxDelta\", \"Method\"}], KeyTake[anderson, {\"State\", \"Iterations\", \"MaxDelta\", \"Method\"}]}]"], "Input"]
@@ -68,7 +68,7 @@ Notebook[{
 
   Cell[CellGroupData[{
     Cell["8. Population representation (Figure 5)", "Section"],
-    Cell["Each modality now has a two-dimensional input written in Cartesian coordinates but interpreted as angle φ and radius r. Seventy-one output neurons per modality have evenly spaced preferred angles θ_i. Their fixed feed-forward weights are unit vectors, so neuron i receives r cos(θ_i-φ). The two modality draws are independent; angles are uniform and radius is Gaussian with standard deviation ten percent of its mean.", "Text"],
+    Cell["Each modality now has a two-dimensional input written in Cartesian coordinates but interpreted as angle φ and radius r. Seventy-one output neurons per modality have evenly spaced preferred angles θ_i. Their fixed feed-forward weights are unit vectors, so neuron i receives r cos(θ_i-φ). The two modality draws are independent; angles are uniform and radius is Gaussian with standard deviation proportional to its mean. The target paper does not report the coefficient; this notebook's 0.1 choice is borrowed from the related companion paper.", "Text"],
     Cell[BoxData["PaperFigure5[]"], "Input"],
     Cell[BoxData["paperNetwork = CreateTwoModalityPaperNetwork[];\n{paperNetwork[\"InputSize\"], paperNetwork[\"OutputSize\"], Dimensions[paperNetwork[\"W\"]], Dimensions[paperNetwork[\"K\"]]}"], "Input"],
     Cell["The endpoint 2π is excluded so the zero-degree neuron is not duplicated. That implementation choice preserves uniform circular spacing.", "Text"]
@@ -116,7 +116,7 @@ Notebook[{
 
   Cell[CellGroupData[{
     Cell["14. Verification", "Section"],
-    Cell["The Wolfram tests check derivatives, architecture, the project-compatible random stream, fixed-point residuals, finite-difference gradients, the complete S1 determinant identity, stable and unstable cases, dense/low-rank equality, rank truncation metadata, zero self-coupling, and Figure 7 values.", "Text"],
+    Cell["The Wolfram tests check derivatives, architecture, the project-compatible random stream, fixed-point residuals, finite-difference gradients, the complete S1 determinant identity, stable and unstable cases, dense/factor-history equality, rank truncation metadata, the general diagonal update and optional zero-diagonal constraint, the unnormalized population-vector sum, and Figure 7 values.", "Text"],
     Cell[BoxData["TestReport[FileNameJoin[{projectDirectory, \"tests\", \"SynesthesiaModel.wlt\"}]]"], "Input"],
     Cell["A separate Node test statically validates this notebook and package, compares paper-spec.json with the tested JavaScript reconstruction, and runs the Wolfram suite automatically whenever wolframscript and an activated local kernel are available.", "Text"]
   }, Open]],

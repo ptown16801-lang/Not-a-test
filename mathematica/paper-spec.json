@@ -1,64 +1,69 @@
 {
-  "schema": "shriki-2016-mathematica-reproduction/v1",
+  "schema": "shriki-2016-publication-ledger/v2",
   "paper": {
     "title": "The Emergence of Synaesthesia in a Neuronal Network Model via Changes in Perceptual Sensitivity and Plasticity",
     "authors": ["Oren Shriki", "Yaniv Sadeh", "Jamie Ward"],
     "journal": "PLOS Computational Biology",
     "year": 2016,
     "doi": "10.1371/journal.pcbi.1004959",
+    "appendixDoi": "10.1371/journal.pcbi.1004959.s001",
     "license": "CC BY 4.0"
   },
   "architecture": {
-    "simple": {"inputNeurons": 2, "outputNeurons": 2},
+    "simple": {
+      "inputNeurons": 2,
+      "outputNeurons": 2,
+      "selfCoupling": false,
+      "selfCouplingAuthority": "S1 Appendix explicitly sets the K diagonal to zero"
+    },
     "population": {
       "inputNeurons": 4,
       "reportedOutputNeurons": 142,
       "reportedNeuronsPerModality": 71,
+      "selfCoupling": "not separately reported",
+      "generalEquation": "sum over k=1..M includes K_ii",
+      "referenceDefault": "retain diagonal updates",
+      "optionalProjectConstraint": "exclude diagonal updates",
       "scalable": true,
       "minimumTotalNeurons": 6,
       "totalNeuronsMustBeEven": true
     },
     "activation": "logistic",
-    "timeConstant": 1,
-    "feedForward": "equally spaced unit vectors",
-    "selfCoupling": false
+    "timeConstant": {
+      "symbol": "tau",
+      "reportedNumericValue": null,
+      "implementationConvention": "measure time in units of tau"
+    },
+    "feedForward": "equally spaced unit vectors"
   },
   "inputDistribution": {
     "modalitiesIndependent": true,
     "angle": "Uniform[0,2 Pi)",
-    "radius": "Normal[mean, 0.1 mean]"
+    "radiusFamily": "Normal",
+    "radiusStandardDeviation": "proportional to mean",
+    "targetPaperCoefficient": null,
+    "projectDefaultCoefficient": 0.1,
+    "projectDefaultProvenance": "reported for the related single-hypercolumn model in Shriki and Yellin 2016, not numerically specified in the target paper"
+  },
+  "initialization": {
+    "targetPaperStatement": "cross-talk connections initially near-zero",
+    "reportedScale": null,
+    "reportedDistribution": null,
+    "exactZeroCondition": "explicit reproducible reconstruction condition",
+    "seededNearZeroCondition": "explicit sensitivity condition"
+  },
+  "populationVector": {
+    "publicationDefinition": "unnormalized complex sum",
+    "referenceNormalization": "sum",
+    "optionalVisualizationNormalization": "mean",
+    "normalizationEffect": "magnitude divided by population size; angle unchanged"
   },
   "figure7Scenarios": {
-    "balancedLowPlasticity": {
-      "panel": "7A",
-      "meanRadii": [0.2, 0.2],
-      "learningRate": 0.00006,
-      "reported": "no-synaesthesia"
-    },
-    "deprivedLowPlasticity": {
-      "panel": "7B",
-      "meanRadii": [0.2, 2.0],
-      "learningRate": 0.0001,
-      "reported": "no-synaesthesia"
-    },
-    "balancedHighInput": {
-      "panel": "7C",
-      "meanRadii": [2.0, 2.0],
-      "learningRate": 0.00015,
-      "reported": "no-synaesthesia"
-    },
-    "balancedHighPlasticity": {
-      "panel": "7D",
-      "meanRadii": [0.2, 0.2],
-      "learningRate": 0.0001,
-      "reported": "bidirectional"
-    },
-    "deprivedHighPlasticity": {
-      "panel": "7E",
-      "meanRadii": [0.2, 2.0],
-      "learningRate": 0.00015,
-      "reported": "modality-2-to-1"
-    }
+    "balancedLowPlasticity": {"panel": "7A", "meanRadii": [0.2, 0.2], "learningRate": 0.00006, "reported": "no-synaesthesia"},
+    "deprivedLowPlasticity": {"panel": "7B", "meanRadii": [0.2, 2.0], "learningRate": 0.0001, "reported": "no-synaesthesia"},
+    "balancedHighInput": {"panel": "7C", "meanRadii": [2.0, 2.0], "learningRate": 0.00015, "reported": "no-synaesthesia"},
+    "balancedHighPlasticity": {"panel": "7D", "meanRadii": [0.2, 0.2], "learningRate": 0.0001, "reported": "bidirectional"},
+    "deprivedHighPlasticity": {"panel": "7E", "meanRadii": [0.2, 2.0], "learningRate": 0.00015, "reported": "modality-2-to-1"}
   },
   "reportedFigureCoverage": {
     "1": "general two-modality architecture",
@@ -84,39 +89,50 @@
     "equilibriumTolerance": 1e-9,
     "stableIterations": 2,
     "maximumIterations": 50000,
-    "derivativeFloor": 1e-12,
+    "derivativeFloor": 0,
+    "optionalDerivativeFloor": "nonzero values are a labeled numerical safeguard",
     "pivotTolerance": 1e-13,
     "defaultSeed": 1,
     "preferredAngleEndpoint": "exclude 2 Pi",
-    "paperTrainingPolicy": "fixed learning rate, retain minimum-objective checkpoint"
+    "paperTrainingPolicy": "fixed learning rate, retain minimum-objective checkpoint",
+    "checkpointObjective": "same fixed input ensemble for every candidate K",
+    "legacyChangingSampleCheckpoint": "project visualization only; not scientifically valid"
   },
   "unreportedByAuthors": [
     "MATLAB source code",
     "random seeds",
     "exact integration scheme and step",
-    "exact equilibrium tolerance",
+    "numeric value of tau",
+    "exact equilibrium tolerance and stability window",
+    "near-zero initialization scale and distribution",
+    "radius standard-deviation coefficient in the target paper",
+    "high-dimensional self-coupling policy",
     "exact Figure 4 input grid",
-    "exact training lengths",
+    "exact training lengths and batch/sample policy",
+    "checkpoint evaluation ensemble size and cadence",
+    "preferred-angle endpoint convention",
     "machine-precision safeguards"
   ],
+  "independentVerification": {
+    "script": "mathematica/verification/PublicationDerivation.wls",
+    "importsProjectImplementation": false,
+    "symbolicAndNumericChecks": 24,
+    "appendixInternalDiscrepancy": "Eq. 95 has a branch sign inconsistent with direct derivation and final Eq. 97; Eq. 97 is correct"
+  },
   "scaling": {
-    "denseMode": "literal unrestricted recurrent matrix; O(M^2) storage and conventional dense solves",
-    "lowRankMode": "matrix-free low-rank-plus-diagonal recurrent operator with Woodbury solves",
+    "denseMode": "literal unrestricted recurrent matrix; O(M^2) storage",
+    "factorHistoryMode": "unbounded update-factor history with exact Woodbury solves",
+    "exactFullRankHandoff": "materialize unrestricted dense K when factor count reaches M",
     "rankAddedPerSampleUpdate": 5,
-    "whyFive": "four input susceptibility directions plus one recurrent state outer product",
+    "whyFive": "four input susceptibility directions plus one recurrent-state outer product",
     "exactUntilCompression": true,
-    "compression": "optional truncated factor SVD; recorded as an approximation",
+    "finiteRankCompression": "model-changing approximation excluded from exact benchmarks",
     "factorizationReuse": true,
     "fullPhiMaterializedInScalableMode": false,
     "allocationFreeEstimator": "EstimateNetworkScale[total,rank]",
     "biologicalEquivalenceFromNeuronCountAlone": false,
-    "implementedAccelerators": [
-      "Anderson fixed-point acceleration",
-      "warm-started angular probes",
-      "independent scenario jobs",
-      "factor-space SVD compression"
-    ],
     "modelChangingAlternatives": [
+      "finite-rank truncation",
       "sparse or pruned recurrent connectivity",
       "block-circulant FFT recurrent blocks",
       "surrogate or incompletely settled dynamics"

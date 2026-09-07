@@ -49,11 +49,23 @@ test('settled response satisfies the recurrent fixed-point equation',()=>{
 test('Eq. 5 recurrent update matches finite differences of Eq. 3',()=>{
   const network=createSimplePaperNetwork({weights:[1.2,.8],crossTalk:[.07,-.04]}),input=[.35,-.22];
   const analysis=network.analyze(input,{integrationStep:.8,tolerance:1e-12});
-  for(const index of [1,2]){
+  for(const index of [0,1,2,3]){
     const epsilon=1e-6,plus=network.clone(),minus=network.clone();plus.K[index]+=epsilon;minus.K[index]-=epsilon;
     const numerical=-(plus.objective(input,{integrationStep:.8,tolerance:1e-12})-minus.objective(input,{integrationStep:.8,tolerance:1e-12}))/(2*epsilon);
     close(analysis.updateDirection[index],numerical,2e-7);
   }
+});
+
+test('JavaScript matches the independent Wolfram reference fixture',()=>{
+  const report=JSON.parse(readFileSync(new URL('../mathematica/verification/results/wolfram-validation.json',import.meta.url),'utf8')),fixture=report.referenceFixture;
+  assert.equal(report.allPassed,true);assert.equal(report.checkCount,24);
+  const network=new InfomaxRecurrentNetwork({inputSize:2,outputSize:3,W:fixture.W.flat(),K:fixture.K.flat(),metadata:{excludeSelfCoupling:false}});
+  const analysis=network.analyze(fixture.input,{integrationStep:.8,tolerance:1e-13,stableIterations:3,pivotTolerance:1e-14});
+  const maxError=(actual,expected)=>Math.max(...actual.map((value,index)=>Math.abs(value-expected[index])));
+  assert.ok(maxError([...analysis.state],fixture.state)<1e-12);
+  assert.ok(Math.abs(analysis.objective-fixture.objective)<1e-12);
+  assert.ok(maxError([...analysis.susceptibility],fixture.susceptibility.flat())<1e-12);
+  assert.ok(maxError([...analysis.updateDirection],fixture.descentDirection.flat())<1e-12);
 });
 
 test('S1 phase calculation separates a central stable point from deprivation edge',()=>{
@@ -72,9 +84,17 @@ test('population vector recovers the angle of a direct polar probe',()=>{
   close(response.modalities[1].population.angleRadians,angle,1e-9);assert.ok(response.modalities[1].population.magnitude>.15);assert.ok(response.modalities[0].population.magnitude<1e-12);
 });
 
+test('paper population vector is an unnormalized sum and mean is opt-in',()=>{
+  const activity=[.2,.7,.4,.1],angles=[0,Math.PI/2,Math.PI,3*Math.PI/2];
+  const summed=populationVector(activity,angles),mean=populationVector(activity,angles,{normalization:'mean'});
+  close(summed.real,mean.real*activity.length,1e-14);close(summed.imaginary,mean.imaginary*activity.length,1e-14);
+  close(summed.magnitude,mean.magnitude*activity.length,1e-14);close(summed.angleRadians,mean.angleRadians,1e-14);
+  assert.equal(summed.normalization,'sum');assert.equal(mean.normalization,'mean');
+});
+
 test('network serialization round-trips without changing inference',()=>{
   const network=createTwoModalityPaperNetwork({neuronsPerModality:9,seed:7,initialRecurrentScale:1e-4}),copy=InfomaxRecurrentNetwork.fromJSON(network.toJSON()),input=polarProbe({modality:0,angleRadians:.4,radius:1});
-  const a=network.respond(input),b=copy.respond(input);assert.deepEqual([...a.state].map(x=>Number(x.toFixed(10))),[...b.state].map(x=>Number(x.toFixed(10))));
+  const a=network.respond(input),b=copy.respond(input);assert.ok(Math.max(...a.state.map((x,index)=>Math.abs(x-b.state[index])))<2e-10);
 });
 
 test('bundled compact checkpoint records and exhibits directional cross-talk',()=>{
@@ -84,9 +104,24 @@ test('bundled compact checkpoint records and exhibits directional cross-talk',()
   assert.ok(response.modalities[0].population.magnitude>.01);assert.ok(response.modalities[1].population.magnitude>.01);
 });
 
-test('training is deterministic and excludes self-coupling',()=>{
+test('high-dimensional training includes the general-rule diagonal by default',()=>{
   const run=()=>{const network=createTwoModalityPaperNetwork({neuronsPerModality:7,seed:2,initialRecurrentScale:1e-5}),sampler=createPaperInputSampler({meanRadii:[.2,2],seed:9});network.train({sampler,steps:20,learningRate:1.5e-4,restoreBest:false,settle:{integrationStep:1,tolerance:1e-8}});return network;};
-  const a=run(),b=run();assert.deepEqual([...a.K],[...b.K]);for(let i=0;i<a.outputSize;i++)assert.equal(a.K[i*a.outputSize+i],0);
+  const a=run(),b=run();assert.deepEqual([...a.K],[...b.K]);assert.ok(Array.from({length:a.outputSize},(_,i)=>Math.abs(a.K[i*a.outputSize+i])).some(x=>x>0));
+});
+
+test('zero diagonal remains an explicit simple-model/project option',()=>{
+  const network=createTwoModalityPaperNetwork({neuronsPerModality:7,seed:2,initialRecurrentScale:1e-5,excludeSelfCoupling:true}),sampler=createPaperInputSampler({meanRadii:[.2,2],seed:9});
+  const training=network.train({sampler,steps:3,learningRate:1.5e-4,restoreBest:false,settle:{integrationStep:1,tolerance:1e-8}});
+  assert.equal(training.zeroDiagonal,true);for(let i=0;i<network.outputSize;i++)assert.equal(network.K[i*network.outputSize+i],0);
+});
+
+test('best checkpoint uses one fixed objective ensemble',()=>{
+  const network=createTwoModalityPaperNetwork({neuronsPerModality:5}),sampler=createPaperInputSampler({meanRadii:[.2,2],seed:31}),checkpointSampler=createPaperInputSampler({meanRadii:[.2,2],seed:32});
+  const checkpointInputs=Array.from({length:4},()=>checkpointSampler());
+  assert.throws(()=>network.clone().train({sampler:createPaperInputSampler({seed:1}),steps:1}),error=>error.code==='missing_checkpoint_ensemble');
+  const training=network.train({sampler,steps:4,learningRate:1e-4,checkpointInputs,checkpointInterval:2,settle:{integrationStep:1,tolerance:1e-9}});
+  const restoredObjective=checkpointInputs.reduce((sum,input)=>sum+network.objective(input,{integrationStep:1,tolerance:1e-9}),0)/checkpointInputs.length;
+  close(training.bestObjective,restoredObjective,2e-10);assert.equal(training.checkpointMode,'fixed-ensemble');assert.equal(training.checkpointInputCount,4);
 });
 
 test('neural projection is shape-only, deterministic, closed, and visibly input-sensitive',()=>{

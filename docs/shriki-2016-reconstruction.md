@@ -39,7 +39,7 @@ rate dynamics are
 
 \[
 \tau\frac{ds_i}{dt}=-s_i+g\!\left(\sum_j W_{ij}x_j+\sum_k K_{ik}s_k\right),
-\qquad g(h)=\frac{1}{1+e^{-h}},\quad \tau=1.
+\qquad g(h)=\frac{1}{1+e^{-h}}.
 \]
 
 At equilibrium,
@@ -74,8 +74,11 @@ the recurrent update is
 \Delta K=\eta\left\langle(\chi\Gamma)^T+\phi^T a s^T\right\rangle_x.
 \]
 
-The implementation evaluates this equation directly. Self-coupling remains
-zero, consistent with the paper's \(M^2-M\) adaptive recurrent parameters.
+The implementation evaluates this equation directly. The S1 Appendix forbids
+self-coupling in the 2-neuron model, but the high-dimensional publication does
+not state that restriction and its general sum includes \(K_{ii}\). The
+high-dimensional reference therefore keeps diagonal updates; zero diagonal is
+an explicit optional project constraint.
 
 ## High-dimensional architecture
 
@@ -88,8 +91,9 @@ zero, consistent with the paper's \(M^2-M\) adaptive recurrent parameters.
 - an adaptable 142×142 recurrent matrix containing two intra-modal and two
   cross-modal blocks;
 - independent angles sampled uniformly from \([0,2\pi)\);
-- radius sampled from a normal distribution whose standard deviation is 0.1
-  times its mean.
+- radius sampled from a normal distribution whose standard deviation is
+  proportional to its mean. The executable coefficient 0.1 is borrowed from
+  the related companion paper and is not printed as a Figure 7 parameter.
 
 For a stimulus with angle \(\varphi\) and magnitude \(r\), the direct input to a
 unit preferring \(\theta_i\) is exactly
@@ -115,20 +119,29 @@ therefore parameters rather than hidden assumptions:
 | Maximum settling iterations | 50,000 | Operational guard |
 | Random seed | User supplied, default 1 | Original seeds not reported |
 | Initial recurrent jitter | 0 unless requested | Paper says zero or “near-zero” in different experiments |
-| Input-radius standard deviation | 0.1 × mean | Reported |
+| Input-radius standard deviation | 0.1 × mean | Proportionality reported; coefficient borrowed from companion paper |
 | Preferred-angle endpoint | 360° excluded to avoid duplicate 0° unit | Necessary implementation choice |
 | Numerical pivot floor | `1e-13` | Floating-point guard |
-| Logistic-derivative floor | `1e-12` | Prevents division overflow only at numerical saturation |
+| Logistic-derivative floor | `0` | Paper-exact derivative; a positive floor is opt-in |
+| High-dimensional diagonal | retained | General equation; explicit simulation constraint unreported |
+
+Time is measured in units of \(\tau\). This is nondimensionalization, not a
+claim that the authors reported a numeric time constant of 1.
 
 Training supports two policies. `fixed-best` keeps the learning rate constant and
 restores the minimum-objective checkpoint, matching the synaesthesia paper.
+Every candidate checkpoint is compared on the same caller-supplied fixed input
+ensemble; comparing values from changing training samples is invalid because
+the published objective is an expectation over inputs. Ensemble size and
+checkpoint interval are exposed reconstruction choices.
 `backtrack` halves the learning rate when a proposed update raises the objective,
 matching the companion criticality paper.
 
 The compact bundled checkpoint uses seven neurons per modality, 20,000 updates,
-and an accelerated learning rate of 0.001 so a contributor can reproduce it in
-seconds. It is a visualization checkpoint, not an exact numerical recreation of
-a published figure. Its metadata records every setting. Run:
+an accelerated learning rate of 0.001, clipping, and the historical
+changing-sample checkpoint heuristic so a contributor can reproduce the legacy
+visual asset. It is a visualization checkpoint, not an exact numerical
+recreation of a published figure. Its metadata records every setting. Run:
 
 ```sh
 npm run train:neural-preview
@@ -141,6 +154,10 @@ per modality and the deprived/high-plasticity Figure 7 scenario:
 npm run experiment:neural -- --steps=1000 --output=experiment.json
 node demo/run-neural-experiment.js --resume=experiment.json --steps=1000 --output=experiment-continued.json
 ```
+
+Use `--zero-diagonal=1` only to request the optional project constraint. New
+runs retain the general high-dimensional diagonal by default; old checkpoints
+without this field resume with their historical zero-diagonal behavior.
 
 It writes the network, sampler state, numerical settings, progress, and paper
 scenario into each checkpoint. This makes long runs reproducible without
@@ -162,7 +179,9 @@ Each circular population code becomes a radial contour:
 \]
 
 Periodic smoothing and interpolation turn these samples into a continuous path.
-The population vector becomes a radial mark, and the strongest learned cross-talk
+The project visualization explicitly mean-normalizes the population vector
+before using it as a radial mark, while scientific response APIs default to the
+publication's unnormalized sum. The strongest learned cross-talk
 weights become curved paths between the two modality contours. These are all
 implemented as ordinary `morph` and `combine(overlay)` derivations from existing
 primitives, so closure, content addressing, and the full provenance DAG remain
@@ -188,7 +207,7 @@ The tests cover:
 - Figure 7 parameter transcription;
 - population-vector angle recovery;
 - deterministic serialization and training;
-- zero self-coupling;
+- publication-default diagonal learning plus the optional zero-diagonal constraint;
 - distinct, finite, provenance-closed dirt paths from distinct thoughts;
 - an end-to-end deployed gallery using the neural projector.
 
