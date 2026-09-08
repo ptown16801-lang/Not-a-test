@@ -1,0 +1,104 @@
+name: Wolfram Linux capability probe 20260908
+
+on:
+  push:
+    branches:
+      - research/wolfram-history-20260908T015249Z-9bd256
+    paths:
+      - .github/workflows/wolfram-linux-probe-20260908.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  wolfram-linux-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout preserved research branch
+        uses: actions/checkout@v4
+
+      - name: Record environment
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p wolfram-probe
+          {
+            echo "timestamp_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            uname -a
+            cat /etc/os-release
+            echo "arch=$(uname -m)"
+            echo "dns_wolfram_com=$(getent hosts wolfram.com | head -1 || true)"
+            echo "dns_wolfr_am=$(getent hosts wolfr.am | head -1 || true)"
+          } | tee wolfram-probe/environment.txt
+
+      - name: Download official Wolfram Engine Debian package
+        shell: bash
+        run: |
+          set -o pipefail
+          {
+            echo "download_url=https://wolfr.am/wolfram-engine.deb"
+            curl -fL --retry 3 --connect-timeout 20 -o /tmp/wolfram-engine.deb https://wolfr.am/wolfram-engine.deb
+            ls -lh /tmp/wolfram-engine.deb
+            sha256sum /tmp/wolfram-engine.deb
+            dpkg-deb -I /tmp/wolfram-engine.deb | sed -n '1,80p'
+          } 2>&1 | tee wolfram-probe/download.txt
+
+      - name: Install Wolfram Engine package and dependencies
+        shell: bash
+        run: |
+          set -o pipefail
+          {
+            sudo apt-get update
+            sudo apt-get install -y /tmp/wolfram-engine.deb
+            echo "wolframscript=$(command -v wolframscript || true)"
+            echo "wolfram=$(command -v wolfram || true)"
+            find /opt/Wolfram /usr/local/Wolfram -maxdepth 5 -type f \( -name wolfram -o -name WolframKernel -o -name wolframscript \) -print 2>/dev/null || true
+            wolframscript --version || true
+          } 2>&1 | tee wolfram-probe/install.txt
+
+      - name: Attempt noninteractive Wolfram Language smoke test
+        shell: bash
+        run: |
+          set +e
+          {
+            echo "=== wolframscript local evaluation ==="
+            timeout 40s wolframscript -local -code 'Print[<|"Version"->$Version,"SystemID"->$SystemID,"Arithmetic"->N[Pi,30],"Symbolic"->FullSimplify[D[Sin[x]^2+Cos[x]^2,x]]|>]' </dev/null
+            echo "wolframscript_exit=$?"
+            echo "=== direct kernel candidates ==="
+            for k in /opt/Wolfram/WolframEngine/*/Executables/WolframKernel /opt/Wolfram/WolframEngine/*/Executables/wolfram /usr/local/Wolfram/WolframEngine/*/Executables/WolframKernel /usr/local/Wolfram/WolframEngine/*/Executables/wolfram; do
+              [ -x "$k" ] || continue
+              echo "kernel=$k"
+              timeout 40s "$k" -noprompt -run 'Print[<|"Version"->$Version,"SystemID"->$SystemID,"Arithmetic"->N[Pi,30],"Symbolic"->FullSimplify[D[Sin[x]^2+Cos[x]^2,x]]|>];Quit[]' </dev/null
+              echo "kernel_exit=$?"
+            done
+          } 2>&1 | tee wolfram-probe/smoke-test.txt
+          exit 0
+
+      - name: Summarize capability
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          out = Path('wolfram-probe')
+          smoke = (out/'smoke-test.txt').read_text(errors='replace') if (out/'smoke-test.txt').exists() else ''
+          install = (out/'install.txt').read_text(errors='replace') if (out/'install.txt').exists() else ''
+          if 'Arithmetic' in smoke and 'Symbolic' in smoke and ('wolframscript_exit=0' in smoke or 'kernel_exit=0' in smoke):
+              status = 'EXECUTION_CONFIRMED'
+          elif 'activation' in smoke.lower() or 'license' in smoke.lower() or 'wolfram id' in smoke.lower():
+              status = 'INSTALLED_BUT_ACTIVATION_REQUIRED'
+          elif 'wolframscript=' in install or 'WolframKernel' in install:
+              status = 'INSTALLED_BUT_EXECUTION_NOT_CONFIRMED'
+          else:
+              status = 'INSTALL_OR_ACCESS_FAILED'
+          (out/'STATUS.txt').write_text(status+'\n')
+          print(status)
+          PY
+
+      - name: Upload exact probe evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: wolfram-linux-probe-20260908
+          path: wolfram-probe/
+          if-no-files-found: error
