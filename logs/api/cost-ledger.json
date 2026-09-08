@@ -1,0 +1,9 @@
+{
+  "schema": "neural-engine-openai-cost-ledger/v1",
+  "pricing_as_of": "2026-09-07",
+  "project_lifetime_estimated_usd": 0.0,
+  "calls": 0,
+  "daily": {},
+  "experiments": {},
+  "qualification": "Initialized ledger. No authenticated OpenAI API call was executed during prototype creation."
+}
