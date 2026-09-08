@@ -1,0 +1,15 @@
+{
+  "schema": "neural-engine-history-validation/2.0.3",
+  "generated_at": "2026-09-08T03:11:23Z",
+  "snapshot_id": "20260908T031123Z-020e85977c08-0853bb5e",
+  "valid": true,
+  "errors": [],
+  "event_count": 154,
+  "scientific_sha256": "36a41ca35c5b77623e746752e006ce014a8dedd9ce2c29189924613a93e8e69c",
+  "nonscientific_sha256": "8760d58faf25a3dc5c4439ced919dc22f8b6e6360e8ca0628ef44a3ab82d4966",
+  "new_event_ids": [
+    "run:20260908:wolfram-connector-retry-2",
+    "run:20260908:wolfram-linux-install-activation-block",
+    "run:20260908:wolfram-credential-presence-probe"
+  ]
+}
