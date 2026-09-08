@@ -1,0 +1,104 @@
+{
+  "schema": "neural-engine-wolfram-dependency-recheck/v1",
+  "checkedAtUtc": "2026-09-08T01:47:14.210Z",
+  "project": "ptown16801-lang/Not-a-test",
+  "sourceCommit": "557ce0553224a8299abecd98cf71be142ad90b35",
+  "result": "blocked-no-fresh-wolfram-computation",
+  "newScientificResults": false,
+  "cloud": {
+    "catalogInstalled": true,
+    "catalogStatus": "ENABLED",
+    "endpoint": "https://agenttools.wolfram.com/mcp",
+    "attempts": [
+      {
+        "tool": "WolframContext",
+        "status": "error",
+        "errorType": "invalid_mcp_response",
+        "httpStatus": 404,
+        "message": "MCP SSE probe returned 404 from wolfram.com"
+      },
+      {
+        "tool": "WolframLanguageEvaluator",
+        "status": "error",
+        "errorType": "invalid_mcp_response",
+        "httpStatus": 404,
+        "message": "MCP SSE probe returned 404 from wolfram.com"
+      },
+      {
+        "tool": "WolframAlpha",
+        "status": "error",
+        "errorType": "invalid_mcp_response",
+        "httpStatus": 404,
+        "message": "MCP SSE probe returned 404 from wolfram.com"
+      },
+      {
+        "tool": "WolframLanguageEvaluator",
+        "retry": true,
+        "status": "error",
+        "errorType": "invalid_mcp_response",
+        "httpStatus": 404,
+        "message": "MCP SSE probe returned 404 from wolfram.com"
+      }
+    ],
+    "rootCause": "not-established",
+    "documentationTransport": "Streamable HTTP recommended; SSE deprecated",
+    "documentation": "https://www.wolfram.com/artificial-intelligence/mcp/cloud/wolfram-mcp-cloud/"
+  },
+  "local": {
+    "schema": "neural-engine-strict-wolfram-verification/v1",
+    "checkedAtUtc": "2026-09-08T01:47:14.210Z",
+    "status": "blocked",
+    "verified": false,
+    "scope": "Fresh local kernel probe plus existing Mathematica Node/MUnit/publication-derivation gates; not all experiments.",
+    "executable": "wolframscript",
+    "probe": {
+      "status": "executable-not-found",
+      "available": false
+    },
+    "suite": null,
+    "diagnostics": {
+      "probeExitCode": null,
+      "probeErrorCode": "ENOENT",
+      "probeStderr": ""
+    }
+  },
+  "directHttpRetry": {
+    "status": "blocked",
+    "error": "DNS resolution failed in this execution environment",
+    "serverReached": false
+  },
+  "historicalEvidence": {
+    "classification": "committed repository records, not freshly rerun",
+    "wolframVersion": "15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+    "publicationChecksPassed": 28,
+    "mUnitTestsPassed": 31,
+    "repeatedRandomFixturesPassed": 9,
+    "sourceFiles": [
+      "docs/scientific-audit-report.md",
+      "mathematica/benchmark-results/environment.json",
+      "test/mathematica-rewrite.test.js"
+    ]
+  },
+  "newGateTests": {
+    "tests": 20,
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "Node gate logic with synthetic subprocess fixtures plus real missing-executable CLI test; not neural-model verification"
+  },
+  "fullProjectSuiteRerun": false,
+  "unresolvedReconstructionChoices": [
+    "unreported author random seeds and training endpoints",
+    "integration step, tolerance and branch-selection policy",
+    "near-zero recurrent initialization distribution",
+    "input-radius noise convention not uniquely fixed by target paper"
+  ],
+  "unresolvedScientificRisk": "Near-critical residual convergence does not by itself certify state or gradient accuracy; no new condition-aware solver validated here.",
+  "modelEquationsModified": false,
+  "licensingAssumptionMade": false,
+  "sourceHashes": {
+    "scripts/verify-wolfram.js": "c9011a28e02766c574a393e486196f4233590a8009c41f6fe6271e3060b5833d",
+    "test/wolfram-verification-gate.test.js": "3157eafefae6e7dde696546ca1979d50cea6f0f6cad6597e84887e46bc8774a9",
+    "package.json": "4fa9acb39a418db5a3059292009dc78be16b3b220a6d47f5e100ddea7958e9e2"
+  }
+}
