@@ -1,0 +1,82 @@
+name: Append-only project histories v1
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'history/snapshots/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: neural-history-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Read complete source history
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+      - name: Set up Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Test append-only history machinery
+        run: |
+          mkdir -p "$RUNNER_TEMP/neural-engine-artifacts"
+          python maintenance/v1/test_history.py 2>&1 | tee "$RUNNER_TEMP/neural-engine-artifacts/history-tests.txt"
+      - name: Run existing Node suite in a disposable worktree
+        run: |
+          git worktree add --detach "$RUNNER_TEMP/neural-engine-test-worktree" HEAD
+          cd "$RUNNER_TEMP/neural-engine-test-worktree"
+          set +e
+          node --test test/*.test.js > "$RUNNER_TEMP/neural-node.tap" 2>&1
+          code=$?
+          set -e
+          printf '%s\n' "$code" > "$RUNNER_TEMP/neural-node.tap.exit"
+          tail -n 25 "$RUNNER_TEMP/neural-node.tap"
+          cp "$RUNNER_TEMP/neural-node.tap" "$RUNNER_TEMP/neural-node.tap.exit" "$RUNNER_TEMP/neural-engine-artifacts/"
+      - name: Create paired histories and real-kernel availability evidence
+        id: snapshot
+        run: |
+          snapshot=$(python maintenance/v1/history.py --root . --output-root history/snapshots --session-evidence maintenance/v1/session-evidence.json --node-tap "$RUNNER_TEMP/neural-node.tap")
+          printf 'directory=%s\n' "$snapshot" >> "$GITHUB_OUTPUT"
+          echo "Created $snapshot"
+          cp -a "$snapshot" "$RUNNER_TEMP/neural-engine-artifacts/snapshot"
+      - name: Package complete source and reachable Git history
+        if: always()
+        run: |
+          mkdir -p "$RUNNER_TEMP/neural-engine-artifacts"
+          git archive --format=zip --output="$RUNNER_TEMP/neural-engine-artifacts/project-source.zip" HEAD
+          git bundle create "$RUNNER_TEMP/neural-engine-artifacts/project-history.bundle" HEAD
+      - name: Save only the newly created history directory
+        if: steps.snapshot.outcome == 'success'
+        env:
+          SNAPSHOT_DIRECTORY: ${{ steps.snapshot.outputs.directory }}
+        run: |
+          git diff --exit-code HEAD
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$SNAPSHOT_DIRECTORY"
+          git commit -m "docs(history): append paired histories for ${GITHUB_SHA} [skip ci]"
+          git push origin HEAD:main
+          git rev-parse HEAD > "$RUNNER_TEMP/neural-engine-artifacts/SAVED_COMMIT.txt"
+      - name: Upload preserved history pair, sources and test evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: neural-engine-history-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/neural-engine-artifacts/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Enforce Node test outcome separately from Wolfram status
+        if: always()
+        run: |
+          test -f "$RUNNER_TEMP/neural-node.tap.exit"
+          test "$(cat "$RUNNER_TEMP/neural-node.tap.exit")" = '0'
