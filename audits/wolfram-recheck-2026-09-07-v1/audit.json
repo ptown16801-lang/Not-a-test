@@ -1,0 +1,286 @@
+{
+  "schema": "neural-engine-wolfram-recheck/v1",
+  "auditVersion": 1,
+  "runnerVersion": "1.0.0",
+  "auditDateLocal": "2026-09-07",
+  "timezone": "America/New_York",
+  "generatedAtUtc": "2026-09-08T01:50:05.587516+00:00",
+  "repository": "ptown16801-lang/Not-a-test",
+  "baselineRelease": "0.8.0",
+  "baselineCommit": "557ce0553224a8299abecd98cf71be142ad90b35",
+  "preservationBranch": "audit/wolfram-recheck-20260907-v1",
+  "result": {
+    "status": "blocked",
+    "freshWolframComputations": 0,
+    "freshScientificValidation": false,
+    "existingModelModified": false,
+    "historicalReportsPromotedToFreshEvidence": false,
+    "completeOriginalNodeSuiteRerun": false,
+    "fullRepositoryClonedLocally": false,
+    "reason": "Connector evaluation failed before kernel execution; no configured/discoverable local kernel; local DNS unavailable."
+  },
+  "preservation": {
+    "policy": "add-only in a newly created branch from the pinned baseline; no existing file replacement, no main update, no history rewriting",
+    "newDirectory": "audits/wolfram-recheck-2026-09-07-v1",
+    "finalRemoteCommit": "recorded separately in delivery receipt to avoid a self-referential commit hash"
+  },
+  "connectorAttempts": [
+    {
+      "tool": "WolframContext",
+      "result": {
+        "type": "invalid_mcp_response",
+        "message": "MCP SSE probe returned 404 from wolfram.com",
+        "level": "error",
+        "url": "https://agenttools.wolfram.com/mcp",
+        "status_code": 404,
+        "content_type": "text/html; charset=iso-8859-1",
+        "is_error": true
+      }
+    },
+    {
+      "tool": "WolframLanguageEvaluator",
+      "result": {
+        "type": "invalid_mcp_response",
+        "message": "MCP SSE probe returned 404 from wolfram.com",
+        "level": "error",
+        "url": "https://agenttools.wolfram.com/mcp",
+        "status_code": 404,
+        "content_type": "text/html; charset=iso-8859-1",
+        "is_error": true
+      }
+    },
+    {
+      "tool": "WolframAlpha",
+      "result": {
+        "type": "invalid_mcp_response",
+        "message": "MCP SSE probe returned 404 from wolfram.com",
+        "level": "error",
+        "url": "https://agenttools.wolfram.com/mcp",
+        "status_code": 404,
+        "content_type": "text/html; charset=iso-8859-1",
+        "is_error": true
+      }
+    }
+  ],
+  "evaluatorProbeCode": "ExportString[<|\"KernelVersion\" -> $Version, \"SystemID\" -> $SystemID, \"ArithmeticCheck\" -> (2 + 2), \"LinearSolveCheck\" -> LinearSolve[{{2, 1}, {1, 3}}, {1, 2}], \"PackageSupport\" -> NameQ[\"System`Get\"]|>, \"RawJSON\"]",
+  "alphaProbeQuery": "2+2",
+  "localRuntime": {
+    "executables": {
+      "wolframscript": null,
+      "WolframKernel": null,
+      "MathKernel": null,
+      "math": null,
+      "node": "/opt/nvm/versions/node/v22.16.0/bin/node"
+    },
+    "configured_kernel": false,
+    "configured_preload": false,
+    "network": {
+      "agenttools.wolfram.com": {
+        "error": "[Errno -3] Temporary failure in name resolution"
+      },
+      "wolfr.am": {
+        "error": "[Errno -3] Temporary failure in name resolution"
+      }
+    }
+  },
+  "actualLocalRunnerProbe": {
+    "summary": {
+      "schema": "neural-engine-wolfram-live-gate/v1",
+      "runnerVersion": "1.0.0",
+      "targetBaseCommit": "557ce0553224a8299abecd98cf71be142ad90b35",
+      "baseCommitVerifiedLocally": false,
+      "startedAtUtc": "2026-09-08T01:48:23.454Z",
+      "mode": "runtime-probe-only",
+      "status": "blocked",
+      "freshScientificValidation": false,
+      "gates": [],
+      "reason": "live kernel evaluation unavailable; see kernel-probe logs",
+      "finishedAtUtc": "2026-09-08T01:48:23.457Z"
+    },
+    "process": {
+      "executable": "wolframscript",
+      "args": [
+        "-code",
+        "Print[\"NEURAL_WOLFRAM_PROBE:\" <> ExportString[<|\"kernel\" -> $Version, \"systemId\" -> $SystemID, \"arithmetic\" -> (2 + 2), \"linearSolveResidual\" -> N[Norm[{{2, 1}, {1, 3}}.LinearSolve[{{2, 1}, {1, 3}}, {1, 2}] - {1, 2}]]|>, \"RawJSON\", \"Compact\" -> True]]"
+      ],
+      "exitStatus": null,
+      "signal": null,
+      "errorCode": "ENOENT",
+      "error": "spawnSync wolframscript ENOENT"
+    },
+    "stdout": "",
+    "stderr": "",
+    "exitStatus": 2,
+    "sourceScope": "Additive runner only; no claim that the full baseline was cloned locally."
+  },
+  "pluginDiscovery": {
+    "query": "Wolfram",
+    "matchingDistinctProviders": 1,
+    "installed": true,
+    "status": "ENABLED",
+    "configurationChanged": false
+  },
+  "transportFinding": {
+    "observed": "Connected tool error identifies an SSE probe returning HTTP 404.",
+    "officialDocumentation": "Streamable HTTP is recommended; SSE is deprecated.",
+    "interpretation": "Transport mismatch is a hypothesis only; not demonstrated, repaired, or tested via direct HTTP.",
+    "source": "https://www.wolfram.com/artificial-intelligence/mcp/cloud/wolfram-mcp-cloud/"
+  },
+  "runtimeScopeSource": "https://www.wolfram.com/artificial-intelligence/mcp/",
+  "licensingSource": "https://www.wolfram.com/engine/faq/",
+  "reviewedRepositoryEvidence": [
+    {
+      "path": "mathematica/README.md",
+      "gitBlobSha": "6a751fcbd028bb1bf79204a5576e21f3a7911624",
+      "scope": "full"
+    },
+    {
+      "path": "package.json",
+      "gitBlobSha": "e1bc3ffc0760eaa6f1c467567b70a6eb7085ffe5",
+      "scope": "full"
+    },
+    {
+      "path": "test/mathematica-rewrite.test.js",
+      "gitBlobSha": "19c320e0cd8fc8444bed9fc7d6dd92acce54fb7d",
+      "scope": "body and live-gate section"
+    },
+    {
+      "path": "mathematica/tests/RunTests.wls",
+      "gitBlobSha": "2c012f5019ee3b05e6b98f97f5bb1cc91db15eb2",
+      "scope": "full"
+    },
+    {
+      "path": "mathematica/verification/PublicationDerivation.wls",
+      "gitBlobSha": "18730d7a3bf1b0f15967e3a5b308db516dde52fd",
+      "scope": "lines 1-55 and 235-end"
+    },
+    {
+      "path": "mathematica/tests/SynesthesiaModel.wlt",
+      "gitBlobSha": "bc20b65ba663f6392c8346c9c075b090733237be",
+      "scope": "lines 1-100"
+    },
+    {
+      "path": "docs/scientific-audit-report.md",
+      "gitBlobSha": "068bc554ef8330257b8f70a1957a4e617b50c343",
+      "scope": "lines 1-180"
+    },
+    {
+      "path": "mathematica/verification/results/wolfram-test-report.json",
+      "gitBlobSha": "4e87c9738939f6125bc00d5098cba6e70e7b0dae",
+      "scope": "lines 1-38"
+    }
+  ],
+  "historicalEvidence": {
+    "classification": "existing repository evidence; not freshly executed here",
+    "munit": {
+      "passed": 31,
+      "total": 31,
+      "generatedAtUtc": "2026-09-07T12:57:36Z",
+      "kernel": "15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+      "source": "mathematica/verification/results/wolfram-test-report.json"
+    },
+    "publicationChecks": {
+      "passed": 28,
+      "total": 28,
+      "source": "docs/scientific-audit-report.md"
+    },
+    "repeatedFixtures": {
+      "passed": 9,
+      "total": 9,
+      "source": "docs/scientific-audit-report.md"
+    }
+  },
+  "assumptionLedger": [
+    {
+      "id": "W-01",
+      "kind": "dependency",
+      "description": "Fresh execution of 31 MUnit tests and 28 independent publication checks",
+      "status": "blocked",
+      "resolution": "Working real Wolfram runtime plus fresh reports; archived results are not substitutes."
+    },
+    {
+      "id": "W-02",
+      "kind": "evidence-provenance",
+      "description": "Previously committed Wolfram reports",
+      "status": "historical-preserved",
+      "resolution": "No upgraded freshness claim; compare a future run with archived results."
+    },
+    {
+      "id": "P-01",
+      "kind": "publication-omission",
+      "description": "Author random seeds, training endpoint, integration/convergence settings and initialization details",
+      "status": "declared-reconstruction-choices",
+      "resolution": "Sensitivity experiments can test robustness, not recover unreported author choices by assumption."
+    },
+    {
+      "id": "P-02",
+      "kind": "companion-convention",
+      "description": "Logistic activation and radius standard-deviation coefficient 0.1",
+      "status": "unchanged-labeled-conventions",
+      "resolution": "Do not attribute them to target Figure 7 as newly verified reported parameters."
+    },
+    {
+      "id": "N-01",
+      "kind": "numerical-reliability",
+      "description": "Small residual does not itself certify near-critical gradient accuracy",
+      "status": "historical-risk-remains",
+      "resolution": "Run conditioning- and gradient-aware tests; no new reliability score."
+    },
+    {
+      "id": "S-01",
+      "kind": "model-fidelity",
+      "description": "Exact factor history versus finite-rank compression",
+      "status": "unchanged-distinct-classes",
+      "resolution": "Do not enable approximation silently or present bounded execution as sustained scalability."
+    }
+  ],
+  "newFiles": [
+    {
+      "path": "verify-live.mjs",
+      "purpose": "Opt-in fail-closed orchestration around the two existing live Wolfram gates"
+    },
+    {
+      "path": "verify-live.test.mjs",
+      "purpose": "Explicit mock-only orchestration tests; not Wolfram evidence"
+    },
+    {
+      "path": "README.md",
+      "purpose": "Dated findings, change notation, preserved assumptions and reproducible commands"
+    },
+    {
+      "path": "audit.json",
+      "purpose": "Machine-readable evidence and complete test transcript"
+    }
+  ],
+  "newFileSha256": {
+    "README.md": "4aceb9d800ffddccd72fd463d9b1d054113dfd31bce447d22268804bde93a55c",
+    "verify-live.mjs": "c28ffb483f8384b348ac097a56407436e3995dd583498aa612f64fbd9a3ca589",
+    "verify-live.test.mjs": "8c3b84f926bbb6dd5ab85c689ecb6a79365c9cd36bf09b3f338d2470950996c8"
+  },
+  "orchestrationTests": {
+    "command": "node --test --test-reporter=tap verify-live.test.mjs",
+    "runtime": "Node.js v22.16.0",
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0,
+    "scientificMeaning": "None: verifies runner orchestration using mocked successful responses and real filesystem operations.",
+    "completeTap": "TAP version 13\n# Subtest: missing runtime is BLOCKED, not passed or skipped, and retains evidence\nok 1 - missing runtime is BLOCKED, not passed or skipped, and retains evidence\n  ---\n  duration_ms: 8.175268\n  type: 'test'\n  ...\n# Subtest: pre-existing output is refused without overwriting anything\nok 2 - pre-existing output is refused without overwriting anything\n  ---\n  duration_ms: 3.028523\n  type: 'test'\n  ...\n# Subtest: output inside original source is refused\nok 3 - output inside original source is refused\n  ---\n  duration_ms: 1.907945\n  type: 'test'\n  ...\n# Subtest: timeout cannot count as validation\nok 4 - timeout cannot count as validation\n  ---\n  duration_ms: 2.852307\n  type: 'test'\n  ...\n# Subtest: nonzero probe cannot count as validation\nok 5 - nonzero probe cannot count as validation\n  ---\n  duration_ms: 2.048176\n  type: 'test'\n  ...\n# Subtest: malformed probe cannot count as validation\nok 6 - malformed probe cannot count as validation\n  ---\n  duration_ms: 1.675454\n  type: 'test'\n  ...\n# Subtest: wrong arithmetic cannot count as validation\nok 7 - wrong arithmetic cannot count as validation\n  ---\n  duration_ms: 2.158382\n  type: 'test'\n  ...\n# Subtest: probe-only success cannot count as scientific validation\nok 8 - probe-only success cannot count as scientific validation\n  ---\n  duration_ms: 1.629205\n  type: 'test'\n  ...\n# Subtest: MOCK happy path: both fresh reports pass, original sources and old reports unchanged\nok 9 - MOCK happy path: both fresh reports pass, original sources and old reports unchanged\n  ---\n  duration_ms: 7.153929\n  type: 'test'\n  ...\n# Subtest: individual failure hidden by allPassed fails the live gate\nok 10 - individual failure hidden by allPassed fails the live gate\n  ---\n  duration_ms: 4.334441\n  type: 'test'\n  ...\n# Subtest: stale report fails the live gate\nok 11 - stale report fails the live gate\n  ---\n  duration_ms: 3.986767\n  type: 'test'\n  ...\n# Subtest: source hash mismatch fails the live gate\nok 12 - source hash mismatch fails the live gate\n  ---\n  duration_ms: 4.353239\n  type: 'test'\n  ...\n# Subtest: count mismatch fails the live gate\nok 13 - count mismatch fails the live gate\n  ---\n  duration_ms: 3.416709\n  type: 'test'\n  ...\n# Subtest: duplicate check names fails the live gate\nok 14 - duplicate check names fails the live gate\n  ---\n  duration_ms: 3.415186\n  type: 'test'\n  ...\n# Subtest: numerical tolerance failure fails the live gate\nok 15 - numerical tolerance failure fails the live gate\n  ---\n  duration_ms: 3.870972\n  type: 'test'\n  ...\n# Subtest: non-independent publication report fails the live gate\nok 16 - non-independent publication report fails the live gate\n  ---\n  duration_ms: 3.622178\n  type: 'test'\n  ...\n# Subtest: missing fresh report cannot be replaced by archived report\nok 17 - missing fresh report cannot be replaced by archived report\n  ---\n  duration_ms: 4.55952\n  type: 'test'\n  ...\n# Subtest: source symlinks are refused before running tests\nok 18 - source symlinks are refused before running tests\n  ---\n  duration_ms: 1.664127\n  type: 'test'\n  ...\n# Subtest: explicit direct-kernel mode uses -run and preserves configured preload\nok 19 - explicit direct-kernel mode uses -run and preserves configured preload\n  ---\n  duration_ms: 1.114449\n  type: 'test'\n  ...\n# Subtest: nonfinite gradient metric is rejected\nok 20 - nonfinite gradient metric is rejected\n  ---\n  duration_ms: 0.881689\n  type: 'test'\n  ...\n1..20\n# tests 20\n# suites 0\n# pass 20\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 136.855681\n"
+  },
+  "notPerformed": [
+    "fresh Wolfram derivation",
+    "fresh MUnit execution",
+    "repeated Wolfram fixtures",
+    "numerical-policy sensitivity sweep",
+    "paper figure reproduction",
+    "new scaling benchmark",
+    "600-neuron backpropagation experiment",
+    "full original Node test suite",
+    "model formula changes",
+    "main-branch changes",
+    "plugin reinstall or permission changes"
+  ],
+  "continuation": {
+    "automatedOrScheduled": false,
+    "required": "Actual usable Wolfram evaluation; then original live gates followed by sensitivity/criticality checks before any claims are upgraded."
+  }
+}
