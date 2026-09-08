@@ -18,6 +18,43 @@ Permanent rule:
 
 ## Credential setup
 
+### Wolfram and Mathematica credentials
+
+Mathematica does not have one general-purpose "Mathematica API key." Keep these
+credential types distinct:
+
+- **Wolfram Cloud client authentication:** connect the local kernel and generate
+  a secured authentication key:
+
+  ```wl
+  CloudConnect[]
+  key = GenerateSecuredAuthenticationKey[]
+  key["ConsumerKey"]
+  key["ConsumerSecret"]
+  ```
+
+  The consumer key and consumer secret are a pair. Store them only in an
+  approved local secret store; never commit either value.
+- **Locally stored credentials:** list record names with
+  `SystemCredentialKeys[All]` and retrieve a deliberately selected record with
+  `SystemCredential["credential-name"]`. Retrieval can reveal the secret on
+  screen, so do not copy the result into logs, screenshots, histories, or chat.
+- **Mathematica activation/license:** the serial number and activation key shown
+  under Products & Services in the user's Wolfram Account license Mathematica;
+  they are not API credentials.
+- **Wolfram|Alpha API:** uses its own developer AppID, separate from Wolfram
+  Cloud client credentials.
+- **OpenAI from Mathematica:** uses an OpenAI Platform API key, configured below;
+  it is not supplied by Wolfram.
+
+Official references:
+
+- https://reference.wolfram.com/language/workflow/ConnectPythonToTheWolframCloud.html
+- https://reference.wolfram.com/language/ref/SystemCredentialKeys.html
+- https://reference.wolfram.com/language/ref/SystemCredential.html
+
+### OpenAI credential used by this integration
+
 Preferred:
 
 ```wl
