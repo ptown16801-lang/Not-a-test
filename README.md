@@ -21,12 +21,15 @@ The publication package is anchored by the
 [`claim audit`](docs/scientific-claim-audit.json). The PDF, machine-readable
 ledgers, raw measurements, source fingerprints, and historical failed test
 attempt are retained so the favorable and unfavorable evidence can be audited.
+The [`600-neuron backpropagation report`](docs/backpropagation-600.md) separately
+tests recurrent learning gradients and raw-output-to-input reconstruction.
 
 Run:
 
 ```sh
 npm test
 npm run test:json
+npm run test:backprop-600
 npm run logs:all
 npm run demo
 npm run demo:neural

@@ -10,16 +10,16 @@
     "currentBranch": "main"
   },
   "snapshot": {
-    "generatedAtUtc": "2026-09-07T14:10:30.885Z",
-    "worktreeBaseCommit": "cf7696d3cdd7d8a3a20f439038789699d622bc12",
+    "generatedAtUtc": "2026-09-08T01:38:01.969Z",
+    "worktreeBaseCommit": "557ce0553224a8299abecd98cf71be142ad90b35",
     "historyStartsAtCommit": "bbc232c285b92d95c2722d7c33f6838cf10a711d",
-    "historyThroughCommit": "cf7696d3cdd7d8a3a20f439038789699d622bc12",
-    "commitCount": 26,
-    "fileCount": 139,
-    "totalBytes": 1759749,
-    "aggregateSha256": "c02e782e2ce34b2916531a3d49ee56cf98cc438a3578be0271a98f9d08f6469e",
+    "historyThroughCommit": "557ce0553224a8299abecd98cf71be142ad90b35",
+    "commitCount": 27,
+    "fileCount": 143,
+    "totalBytes": 1839601,
+    "aggregateSha256": "8ffdbb646e2a4075aae56be0c92a5bfdebe85ac4834edb5fd66b56b68e101649",
     "contentSnapshotIncludesWorkingTree": true,
-    "worktreeChangeCountExcludingThisLog": 10,
+    "worktreeChangeCountExcludingThisLog": 11,
     "exclusions": [
       {
         "path": ".git/",
@@ -46,7 +46,7 @@
   },
   "generation": {
     "generator": "scripts/generate-project-log.js",
-    "generatorSha256": "f6e9b47df72ba3aafd4cdf481e58869a7b845ada64e435286dd45e2ff0e025e8",
+    "generatorSha256": "8ee6f8245c0faa20efa67b65a4f983fa0bfff2ae5c0ca3db95dd66cc27cc0c0c",
     "ordering": "UTF-8 path lexical order",
     "aggregateDigestRecord": "path NUL byte-count NUL sha256 LF for every indexed file",
     "regenerate": "npm run logs:all",
@@ -234,6 +234,13 @@
       "authorName": "ptown16801-lang",
       "authorEmail": "ptown16801@gmail.com",
       "subject": "fix: validate Shriki fidelity and exact scaling"
+    },
+    {
+      "commit": "557ce0553224a8299abecd98cf71be142ad90b35",
+      "authoredAt": "2026-09-07T10:17:24-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "release: publish neural engine v0.8.0"
     }
   ],
   "subsystems": [
@@ -476,8 +483,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 7390,
-      "sha256": "8d7c4c4c256bf942291afafda2717f014ba97db132d7fc9adec5e8802849016e",
+      "bytes": 8033,
+      "sha256": "534389561f00fa13aa33404245ef74c9a092dd6272771af8fc53b59db71c3311",
       "category": "documentation"
     },
     {
@@ -488,8 +495,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 19131,
-      "sha256": "9fb4a27e5ff3c70dfb9172057810ef5819dca103c1f49a36e1f076f849a9f6c6",
+      "bytes": 19314,
+      "sha256": "a97d396deae6c0f8d56707ca2f160035018e90c2c677fa38fe6639fb28750b82",
       "category": "documentation"
     },
     {
@@ -617,6 +624,12 @@
       "bytes": 1820,
       "sha256": "d5f2f24f28052588b7fdec502f80d5443c21456b2bde04d05129e4a3ae157b91",
       "category": "demo"
+    },
+    {
+      "path": "docs/backpropagation-600.md",
+      "bytes": 4436,
+      "sha256": "e5e928d606e42199dff4f862e76fe469b226365e56f8582b1d436c6d66d1379f",
+      "category": "documentation"
     },
     {
       "path": "docs/figure-7-publication-audit.md",
@@ -1022,14 +1035,14 @@
     },
     {
       "path": "package.json",
-      "bytes": 1139,
-      "sha256": "4901540ec228a23f6b6193f90fe77e01d99fb454cadedbd694398001102d95b3",
+      "bytes": 1207,
+      "sha256": "35a6237947e867ea4e8e39706264563037eb995e45e41a420fb782ce0c9fbd2e",
       "category": "configuration-or-data"
     },
     {
       "path": "scripts/generate-master-project.js",
-      "bytes": 7653,
-      "sha256": "07dd77bc87b6e781c52757009c6e721df31a92e5582834f20fda574741ec8fb4",
+      "bytes": 9042,
+      "sha256": "147c69ddc07743395c993d891d707c0360d9fc53d2ed550bf667fb111558bccb",
       "category": "reproducibility-tooling"
     },
     {
@@ -1040,14 +1053,20 @@
     },
     {
       "path": "scripts/generate-project-log.js",
-      "bytes": 16652,
-      "sha256": "f6e9b47df72ba3aafd4cdf481e58869a7b845ada64e435286dd45e2ff0e025e8",
+      "bytes": 18041,
+      "sha256": "8ee6f8245c0faa20efa67b65a4f983fa0bfff2ae5c0ca3db95dd66cc27cc0c0c",
       "category": "reproducibility-tooling"
     },
     {
       "path": "scripts/generate-scientific-audit-pdf.py",
       "bytes": 18474,
       "sha256": "0b2d94d224d79ae7227a9cbba890f193868da4d256c41151d495fce5a52cac71",
+      "category": "reproducibility-tooling"
+    },
+    {
+      "path": "scripts/run-backpropagation-600.js",
+      "bytes": 32415,
+      "sha256": "45f6efd82a2bd6a4e20de3861faf28e5cae41841777738e21176435604d75f99",
       "category": "reproducibility-tooling"
     },
     {
@@ -1171,6 +1190,12 @@
       "category": "application-source"
     },
     {
+      "path": "test/backpropagation-600.test.js",
+      "bytes": 2974,
+      "sha256": "05022af4ea7fda23bde7a8239b4800cfadf59670510ab07ad3b3c46795995f88",
+      "category": "test-source"
+    },
+    {
       "path": "test/deployment.test.js",
       "bytes": 5792,
       "sha256": "809be8a34bedff583623dec12d2a7629785cb08fcd2f903ace97d2300c4df411",
@@ -1267,6 +1292,12 @@
       "category": "test-source"
     },
     {
+      "path": "verification/results/backpropagation-600.json",
+      "bytes": 35097,
+      "sha256": "3b975fef3971cd352544f882a693c5b85f914507adbd09dcbc1e4be0301b3f99",
+      "category": "scientific-validation"
+    },
+    {
       "path": "verification/results/node-test-report-attempt1.json",
       "bytes": 34934,
       "sha256": "87f0927ed8f17db00fd2fe6363c26e7fc32af4be1980f00569aadf3c5b637938",
@@ -1286,8 +1317,8 @@
     },
     {
       "path": "verification/results/node-test-report.json",
-      "bytes": 22532,
-      "sha256": "f6f6b2fee36978ada309c04a2b52b23900c241412fcc6df2415e22415309d578",
+      "bytes": 23790,
+      "sha256": "36d0f78d124ba28fedc5d2efaeb8d0c47704f6aac476ed8d024d5b69967f4a4d",
       "category": "scientific-validation"
     }
   ],
@@ -1306,6 +1337,7 @@
       "mathematica/verification/results/repeated-validation.json",
       "mathematica/verification/results/wolfram-test-report.json",
       "mathematica/verification/results/wolfram-validation.json",
+      "verification/results/backpropagation-600.json",
       "verification/results/node-test-report-attempt1.json",
       "verification/results/node-test-report-attempt2.json",
       "verification/results/node-test-report-v0.8.0.json",
@@ -1745,10 +1777,18 @@
     },
     {
       "path": "package.json",
-      "sha256": "4901540ec228a23f6b6193f90fe77e01d99fb454cadedbd694398001102d95b3",
-      "bytes": 1139,
+      "sha256": "35a6237947e867ea4e8e39706264563037eb995e45e41a420fb782ce0c9fbd2e",
+      "bytes": 1207,
       "schema": null,
       "generatedAtUtc": null,
+      "validJson": true
+    },
+    {
+      "path": "verification/results/backpropagation-600.json",
+      "sha256": "3b975fef3971cd352544f882a693c5b85f914507adbd09dcbc1e4be0301b3f99",
+      "bytes": 35097,
+      "schema": "neural-engine-backpropagation-600/v1",
+      "generatedAtUtc": "2026-09-08T01:34:28.801Z",
       "validJson": true
     },
     {
@@ -1777,10 +1817,10 @@
     },
     {
       "path": "verification/results/node-test-report.json",
-      "sha256": "f6f6b2fee36978ada309c04a2b52b23900c241412fcc6df2415e22415309d578",
-      "bytes": 22532,
+      "sha256": "36d0f78d124ba28fedc5d2efaeb8d0c47704f6aac476ed8d024d5b69967f4a4d",
+      "bytes": 23790,
       "schema": "neural-engine-node-test-report/v1",
-      "generatedAtUtc": "2026-09-07T12:57:55.560Z",
+      "generatedAtUtc": "2026-09-08T01:37:55.600Z",
       "validJson": true
     }
   ],
@@ -1788,14 +1828,14 @@
     "node": {
       "source": "verification/results/node-test-report.json",
       "allPassed": true,
-      "tests": 93,
+      "tests": 98,
       "suites": 0,
-      "passed": 93,
+      "passed": 96,
       "failed": 0,
       "cancelled": 0,
-      "skipped": 0,
+      "skipped": 2,
       "todo": 0,
-      "elapsedSeconds": 5.866933948
+      "elapsedSeconds": 0.727419727
     },
     "nodeCurrentRelease": {
       "source": "verification/results/node-test-report-v0.8.0.json",
@@ -1858,6 +1898,20 @@
         95
       ],
       "allOneStepObjectivesDecreased": true
+    },
+    "backpropagation600": {
+      "source": "verification/results/backpropagation-600.json",
+      "allPassed": true,
+      "outputNeurons": 600,
+      "recurrentParameters": 360000,
+      "weightedGateScore": 100,
+      "conservativeReliabilityScore": 95,
+      "noiselessInputInversions": 6,
+      "noiselessInputInversionTrials": 6,
+      "maximumNoiselessInputAbsoluteError": 9.592326932761353e-13,
+      "maximumCoordinateGradientRelativeError": 2.8633671260161054e-7,
+      "maximumDirectionalGradientScaledRelativeError": 1.1449162423367804e-8,
+      "nearCriticalPolicyGradientRelativeError": 0.6217629047156347
     }
   },
   "scalingSnapshot": {

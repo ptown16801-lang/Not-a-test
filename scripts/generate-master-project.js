@@ -50,6 +50,8 @@ const nodeReport = readJson('verification/results/node-test-report.json');
 const releaseNodeReportPath = 'verification/results/node-test-report-v0.8.0.json';
 const releaseNodeReport = fs.existsSync(path.join(root, releaseNodeReportPath))
   ? readJson(releaseNodeReportPath) : null;
+const backpropagation600Path = 'verification/results/backpropagation-600.json';
+const backpropagation600 = readJson(backpropagation600Path);
 const critical = readJson('mathematica/benchmark-results/critical-slowing-142.json');
 const criticalWorst = critical.results.at(-1);
 
@@ -129,6 +131,30 @@ const master = {
       settlingPolicyCases: policy.settlingPolicies.length,
       initializationCases: policy.initializationConditions.length,
       ...policy.summary
+    },
+    backpropagation600: {
+      allPassed: backpropagation600.allPassed,
+      source: backpropagation600Path,
+      outputNeurons:
+        backpropagation600.results.dimensionsAndFiniteness.outputNeurons,
+      recurrentParameters:
+        backpropagation600.results.dimensionsAndFiniteness.recurrentParameters,
+      weightedGateScore: backpropagation600.reliability.weightedGateScore,
+      conservativeReliabilityScore:
+        backpropagation600.reliability.conservativeScore,
+      noiselessInputInversions:
+        backpropagation600.results.inputInversion.noiseless.successCount,
+      noiselessInputInversionTrials:
+        backpropagation600.results.inputInversion.noiseless.trials.length,
+      maximumNoiselessInputAbsoluteError:
+        backpropagation600.results.inputInversion.noiseless.maximumInputAbsoluteError,
+      maximumCoordinateGradientRelativeError:
+        backpropagation600.results.coordinateGradient.maximumRelativeError,
+      maximumDirectionalGradientScaledRelativeError:
+        backpropagation600.results.directionalGradient.maximumScaledRelativeError,
+      nearCriticalPolicyGradientRelativeError:
+        backpropagation600.results.critical.policySettled.at(-1)
+          .gradientRelativeFrobeniusError
     }
   },
   scalingSummary: {

@@ -1,0 +1,971 @@
+{
+  "schema": "neural-engine-backpropagation-600/v1",
+  "generatedAtUtc": "2026-09-08T01:34:28.801Z",
+  "purpose": "Reproducible 600-output-neuron recurrent-gradient and raw-output-to-input inversion validation.",
+  "scope": {
+    "interpretationOfNeuronCount": "600 recurrent output/rate neurons, 300 per modality, plus four input coordinates",
+    "publicationStatus": "M=600 is an even-grid project scaling extension. The publication specifies M=142; it does not specify a cross-size scaling law.",
+    "backpropagationMeaningsTested": [
+      "negative gradient of the publication information objective with respect to all recurrent weights",
+      "gradient/Jacobian-based recovery of the four-dimensional input from all 600 equilibrium activities"
+    ],
+    "excludedClaim": "This does not test recovery from the rendered artwork, population-vector summaries, or another lossy representation."
+  },
+  "provenance": {
+    "testedBaseCommit": "557ce0553224a8299abecd98cf71be142ad90b35",
+    "modelSource": "src/neural-synesthesia.js",
+    "modelSourceSha256": "4b636f5c71b8bc0bed3dc7ac4aab8e3cface14bb7eb47a50029f561e345b33e4",
+    "script": "scripts/run-backpropagation-600.js",
+    "scriptSha256": "45f6efd82a2bd6a4e20de3861faf28e5cae41841777738e21176435604d75f99",
+    "runtime": {
+      "node": "v24.19.0",
+      "platform": "linux",
+      "architecture": "x64"
+    }
+  },
+  "numericalPolicy": {
+    "integrationStep": 1,
+    "tolerance": 1e-12,
+    "residualTolerance": 1e-12,
+    "convergenceCriterion": "step-and-residual",
+    "stableIterations": 3,
+    "maxIterations": 10000,
+    "provenance": "Declared project test policy; the paper does not report its integrator step, tolerance, stable-iteration count, or seed."
+  },
+  "modelPreparation": {
+    "initialization": "exact K=0 reconstruction condition",
+    "trainingUpdates": 10,
+    "trainingScenario": "mean radii [0.2,2]",
+    "trainingSeed": 8675309,
+    "learningRate": 0.00015,
+    "batchSize": 1,
+    "zeroDiagonal": false,
+    "derivativeFloor": 0,
+    "finalMaximumAbsoluteWeight": 0.000002713957002993145,
+    "finalWeightFrobeniusNorm": 0.0008814963702385365,
+    "lastTrainingRecord": {
+      "step": 10,
+      "objective": -3.8101099255095736,
+      "checkpointObjective": null,
+      "learningRate": 0.00015,
+      "meanSettleIterations": 6,
+      "maxAbsUpdate": 0.0030401392404889238,
+      "maxAbsWeight": 0.000002713957002993145
+    }
+  },
+  "results": {
+    "dimensionsAndFiniteness": {
+      "inputDimensions": 4,
+      "outputNeurons": 600,
+      "neuronsPerModality": [
+        300,
+        300
+      ],
+      "recurrentParameters": 360000,
+      "susceptibilityEntries": 2400,
+      "allStateFinite": true,
+      "allSusceptibilityFinite": true,
+      "allRecurrentGradientFinite": true,
+      "derivativeFloorApplied": false,
+      "equationSemantics": "publication-equations",
+      "pass": true
+    },
+    "fixedPoint": {
+      "exactZero": {
+        "iterations": 4,
+        "residual": 0,
+        "converged": true
+      },
+      "trained": {
+        "iterations": 6,
+        "residual": 0,
+        "converged": true
+      },
+      "pass": true
+    },
+    "susceptibility": {
+      "exactZero": {
+        "parameterStep": 0.00001,
+        "comparedEntries": 2400,
+        "maximumAbsoluteError": 1.2182213571243494e-11,
+        "relativeL2Error": 1.9201880276463166e-11,
+        "pass": true
+      },
+      "trained": {
+        "parameterStep": 0.00001,
+        "comparedEntries": 2400,
+        "maximumAbsoluteError": 4.635367090166653e-11,
+        "relativeL2Error": 7.70521206911079e-11,
+        "pass": true
+      },
+      "pass": true
+    },
+    "coordinateGradient": {
+      "checks": 16,
+      "maximumAbsoluteError": 2.0582697449634396e-10,
+      "maximumRelativeError": 2.8633671260161054e-7,
+      "signMatches": true,
+      "rows": [
+        {
+          "target": 0,
+          "source": 0,
+          "classification": "modality-1 self",
+          "parameterStep": 0.0001,
+          "analyticalDescent": 0.0012987062153445555,
+          "finiteDifferenceDescent": 0.0012987062447678,
+          "absoluteError": 2.942324443984401e-11,
+          "relativeError": 2.2655811934672485e-8
+        },
+        {
+          "target": 0,
+          "source": 299,
+          "classification": "modality-1 within",
+          "parameterStep": 0.0001,
+          "analyticalDescent": 0.0012986490114919103,
+          "finiteDifferenceDescent": 0.0012986489972277582,
+          "absoluteError": 1.426415214243748e-11,
+          "relativeError": 1.098383937169488e-8
+        },
+        {
+          "target": 0,
+          "source": 300,
+          "classification": "modality-2 to modality-1",
+          "parameterStep": 0.0001,
+          "analyticalDescent": -0.0004503647353791113,
+          "finiteDifferenceDescent": -0.00045036473217408,
+          "absoluteError": 3.2050312924469804e-12,
+          "relativeError": 7.116523654430949e-9
+        },
+        {
+          "target": 299,
+          "source": 599,
+          "classification": "modality-2 to modality-1 boundary",
+          "parameterStep": 0.0001,
+          "analyticalDescent": -0.0004425498617349694,
+          "finiteDifferenceDescent": -0.00044254986786285144,
+          "absoluteError": 6.1278820559507174e-12,
+          "relativeError": 1.384676055953491e-8
+        },
+        {
+          "target": 300,
+          "source": 0,
+          "classification": "modality-1 to modality-2",
+          "parameterStep": 0.0001,
+          "analyticalDescent": -0.0019389494373379028,
+          "finiteDifferenceDescent": -0.0019389494454458145,
+          "absoluteError": 8.107911694463232e-12,
+          "relativeError": 4.1816003576096404e-9
+        },
+        {
+          "target": 599,
+          "source": 299,
+          "classification": "modality-1 to modality-2 boundary",
+          "parameterStep": 0.0001,
+          "analyticalDescent": -0.0018927419319511505,
+          "finiteDifferenceDescent": -0.0018927419365155629,
+          "absoluteError": 4.564412433086251e-12,
+          "relativeError": 2.4115344754758758e-9
+        },
+        {
+          "target": 300,
+          "source": 300,
+          "classification": "modality-2 self",
+          "parameterStep": 0.0001,
+          "analyticalDescent": -0.0008157147604400436,
+          "finiteDifferenceDescent": -0.000815714780166843,
+          "absoluteError": 1.972679940405453e-11,
+          "relativeError": 2.4183452211102134e-8
+        },
+        {
+          "target": 599,
+          "source": 300,
+          "classification": "modality-2 within",
+          "parameterStep": 0.0001,
+          "analyticalDescent": -0.0007188284472020101,
+          "finiteDifferenceDescent": -0.0007188284412151802,
+          "absoluteError": 5.986829955395567e-12,
+          "relativeError": 8.32859353118103e-9
+        },
+        {
+          "target": 0,
+          "source": 0,
+          "classification": "modality-1 self",
+          "parameterStep": 0.00001,
+          "analyticalDescent": 0.0012987062153445555,
+          "finiteDifferenceDescent": 0.0012987060316049792,
+          "absoluteError": 1.8373957628818605e-10,
+          "relativeError": 1.4147893812877358e-7
+        },
+        {
+          "target": 0,
+          "source": 299,
+          "classification": "modality-1 within",
+          "parameterStep": 0.00001,
+          "analyticalDescent": 0.0012986490114919103,
+          "finiteDifferenceDescent": 0.0012986490549593555,
+          "absoluteError": 4.346744513807066e-11,
+          "relativeError": 3.3471279228267784e-8
+        },
+        {
+          "target": 0,
+          "source": 300,
+          "classification": "modality-2 to modality-1",
+          "parameterStep": 0.00001,
+          "analyticalDescent": -0.0004503647353791113,
+          "finiteDifferenceDescent": -0.00045036476770121675,
+          "absoluteError": 3.232210544134792e-11,
+          "relativeError": 7.176872561841075e-8
+        },
+        {
+          "target": 299,
+          "source": 599,
+          "classification": "modality-2 to modality-1 boundary",
+          "parameterStep": 0.00001,
+          "analyticalDescent": -0.0004425498617349694,
+          "finiteDifferenceDescent": -0.0004425497968085778,
+          "absoluteError": 6.492639157426941e-11,
+          "relativeError": 1.467097771079002e-7
+        },
+        {
+          "target": 300,
+          "source": 0,
+          "classification": "modality-1 to modality-2",
+          "parameterStep": 0.00001,
+          "analyticalDescent": -0.0019389494373379028,
+          "finiteDifferenceDescent": -0.0019389494454458143,
+          "absoluteError": 8.107911477622798e-12,
+          "relativeError": 4.18160024577566e-9
+        },
+        {
+          "target": 599,
+          "source": 299,
+          "classification": "modality-1 to modality-2 boundary",
+          "parameterStep": 0.00001,
+          "analyticalDescent": -0.0018927419319511505,
+          "finiteDifferenceDescent": -0.0018927420963876782,
+          "absoluteError": 1.6443652776226836e-10,
+          "relativeError": 8.687740821958656e-8
+        },
+        {
+          "target": 300,
+          "source": 300,
+          "classification": "modality-2 self",
+          "parameterStep": 0.00001,
+          "analyticalDescent": -0.0008157147604400436,
+          "finiteDifferenceDescent": -0.000815714695789893,
+          "absoluteError": 6.465015057587759e-11,
+          "relativeError": 7.925583023776788e-8
+        },
+        {
+          "target": 599,
+          "source": 300,
+          "classification": "modality-2 within",
+          "parameterStep": 0.00001,
+          "analyticalDescent": -0.0007188284472020101,
+          "finiteDifferenceDescent": -0.0007188282413750357,
+          "absoluteError": 2.0582697449634396e-10,
+          "relativeError": 2.8633671260161054e-7
+        }
+      ],
+      "pass": true
+    },
+    "directionalGradient": {
+      "directions": 7,
+      "gradientFrobeniusNorm": 0.817080882000574,
+      "maximumAbsoluteError": 2.5743329690186556e-10,
+      "maximumScaledRelativeError": 1.1449162423367804e-8,
+      "rows": [
+        {
+          "name": "gradient-aligned",
+          "parameterStep": 0.0001,
+          "analyticalDescent": 0.8170808820005818,
+          "finiteDifferenceDescent": 0.8170808817431485,
+          "absoluteError": 2.5743329690186556e-10,
+          "scaledRelativeError": 3.150646436268989e-10
+        },
+        {
+          "name": "modality-2-to-1 block",
+          "parameterStep": 0.0001,
+          "analyticalDescent": 0.00003879406820542325,
+          "finiteDifferenceDescent": 0.000038794081280713044,
+          "absoluteError": 1.307528979294266e-11,
+          "scaledRelativeError": 9.60146547127275e-9
+        },
+        {
+          "name": "modality-1-to-2 block",
+          "parameterStep": 0.0001,
+          "analyticalDescent": 0.000039281246340562646,
+          "finiteDifferenceDescent": 0.00003928124936436461,
+          "absoluteError": 3.0238019661961435e-12,
+          "scaledRelativeError": 2.2204425775763184e-9
+        },
+        {
+          "name": "deterministic-rademacher-1",
+          "parameterStep": 0.0001,
+          "analyticalDescent": -0.00010407762166682399,
+          "finiteDifferenceDescent": -0.00010407762873754223,
+          "absoluteError": 7.07071823779961e-12,
+          "scaledRelativeError": 5.192179912828735e-9
+        },
+        {
+          "name": "deterministic-rademacher-2",
+          "parameterStep": 0.0001,
+          "analyticalDescent": 0.0009879217266956645,
+          "finiteDifferenceDescent": 0.0009879217111041783,
+          "absoluteError": 1.559148621842199e-11,
+          "scaledRelativeError": 1.1449162423367804e-8
+        },
+        {
+          "name": "deterministic-rademacher-3",
+          "parameterStep": 0.0001,
+          "analyticalDescent": 0.001383400589385402,
+          "finiteDifferenceDescent": 0.0013834005940793759,
+          "absoluteError": 4.6939739421769655e-12,
+          "scaledRelativeError": 3.3930691964901944e-9
+        },
+        {
+          "name": "deterministic-rademacher-4",
+          "parameterStep": 0.0001,
+          "analyticalDescent": 0.0005006914732961202,
+          "finiteDifferenceDescent": 0.0005006914816085839,
+          "absoluteError": 8.312463673117165e-12,
+          "scaledRelativeError": 6.1040201940091356e-9
+        }
+      ],
+      "pass": true
+    },
+    "objectiveDescent": {
+      "batchSize": 4,
+      "learningRate": 0.00015,
+      "objectiveBefore": -3.663138604670772,
+      "objectiveAfter": -3.663160593045942,
+      "actualObjectiveChange": -0.00002198837516997898,
+      "predictedFirstOrderChange": -0.000021988418211668475,
+      "actualToPredictedRatio": 0.9999980425290678,
+      "pass": true
+    },
+    "inputInversion": {
+      "algorithm": "damped Gauss-Newton using the backpropagated gradient chi^T(s-target)",
+      "rawActivityRequired": true,
+      "noiseless": {
+        "trials": [
+          {
+            "trial": 1,
+            "expectedInput": [
+              0.19106729782512122,
+              0.05910404133226791,
+              0.9071922428511546,
+              1.7824147201228708
+            ],
+            "initialInput": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "recoveredInput": [
+              0.1910672978251212,
+              0.05910404133226788,
+              0.9071922428511546,
+              1.782414720122871
+            ],
+            "iterations": 5,
+            "stopReason": "output-residual",
+            "outputError": {
+              "halfMeanSquaredError": 7.289644839505688e-34,
+              "rootMeanSquaredError": 3.8182836037952154e-17,
+              "maximumAbsoluteResidual": 2.220446049250313e-16
+            },
+            "backpropagationError": {
+              "maximumAbsoluteError": 2.220446049250313e-16,
+              "relativeL2Error": 1.1218415567763884e-16
+            },
+            "algebraicRecoveredInput": [
+              0.19106729782512133,
+              0.05910404133226784,
+              0.907192242851155,
+              1.7824147201228717
+            ],
+            "algebraicError": {
+              "maximumAbsoluteError": 8.881784197001252e-16,
+              "relativeL2Error": 4.764075670383259e-16
+            },
+            "pass": true
+          },
+          {
+            "trial": 2,
+            "expectedInput": [
+              -1.4747874310824909,
+              1.350926361102302,
+              0.1393413418694331,
+              0.14347121817990457
+            ],
+            "initialInput": [
+              1,
+              -1,
+              -1,
+              1
+            ],
+            "recoveredInput": [
+              -1.4747874310815317,
+              1.3509263611014122,
+              0.1393413418694331,
+              0.1434712181799046
+            ],
+            "iterations": 5,
+            "stopReason": "output-residual",
+            "outputError": {
+              "halfMeanSquaredError": 3.9115819791996915e-27,
+              "rootMeanSquaredError": 8.844865153522343e-14,
+              "maximumAbsoluteResidual": 1.4721557306529576e-13
+            },
+            "backpropagationError": {
+              "maximumAbsoluteError": 9.592326932761353e-13,
+              "relativeL2Error": 6.509231249373537e-13
+            },
+            "algebraicRecoveredInput": [
+              -1.4747874310824904,
+              1.3509263611023015,
+              0.13934134186943312,
+              0.14347121817990444
+            ],
+            "algebraicError": {
+              "maximumAbsoluteError": 4.440892098500626e-16,
+              "relativeL2Error": 3.2029539430331206e-16
+            },
+            "pass": true
+          },
+          {
+            "trial": 3,
+            "expectedInput": [
+              1.9601331556824833,
+              0.39733866159012243,
+              -1.1496478930665384,
+              -1.6365542221288205
+            ],
+            "initialInput": [
+              -2,
+              2,
+              2,
+              -2
+            ],
+            "recoveredInput": [
+              1.9601331556824737,
+              0.39733866159012027,
+              -1.149647893066367,
+              -1.6365542221285658
+            ],
+            "iterations": 6,
+            "stopReason": "output-residual",
+            "outputError": {
+              "halfMeanSquaredError": 2.156515250072393e-28,
+              "rootMeanSquaredError": 2.076783691226601e-14,
+              "maximumAbsoluteResidual": 3.5083047578154947e-14
+            },
+            "backpropagationError": {
+              "maximumAbsoluteError": 2.546851618490109e-13,
+              "relativeL2Error": 1.0859596056374899e-13
+            },
+            "algebraicRecoveredInput": [
+              1.9601331556824833,
+              0.39733866159012193,
+              -1.1496478930665377,
+              -1.6365542221288194
+            ],
+            "algebraicError": {
+              "maximumAbsoluteError": 1.1102230246251565e-15,
+              "relativeL2Error": 4.906538933386797e-16
+            },
+            "pass": true
+          },
+          {
+            "trial": 4,
+            "expectedInput": [
+              0.11087486723583216,
+              -0.16645348844478025,
+              -0.11770022345106917,
+              0.16169928076391804
+            ],
+            "initialInput": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "recoveredInput": [
+              0.11087486723583218,
+              -0.16645348844478025,
+              -0.11770022345106916,
+              0.16169928076391807
+            ],
+            "iterations": 3,
+            "stopReason": "output-residual",
+            "outputError": {
+              "halfMeanSquaredError": 1.617781153285278e-34,
+              "rootMeanSquaredError": 1.798766884999431e-17,
+              "maximumAbsoluteResidual": 1.1102230246251565e-16
+            },
+            "backpropagationError": {
+              "maximumAbsoluteError": 2.7755575615628914e-17,
+              "relativeL2Error": 1.2018516789897273e-16
+            },
+            "algebraicRecoveredInput": [
+              0.11087486723583218,
+              -0.16645348844478028,
+              -0.11770022345106916,
+              0.16169928076391804
+            ],
+            "algebraicError": {
+              "maximumAbsoluteError": 2.7755575615628914e-17,
+              "relativeL2Error": 1.2018516789897273e-16
+            },
+            "pass": true
+          },
+          {
+            "trial": 5,
+            "expectedInput": [
+              0.1826940769312909,
+              0.007161788953342833,
+              1.3518863185797005,
+              -1.623919771038185
+            ],
+            "initialInput": [
+              1,
+              -1,
+              -1,
+              1
+            ],
+            "recoveredInput": [
+              0.18269407693129092,
+              0.007161788953342835,
+              1.3518863185793133,
+              -1.6239197710377318
+            ],
+            "iterations": 5,
+            "stopReason": "output-residual",
+            "outputError": {
+              "halfMeanSquaredError": 7.238528200011088e-28,
+              "rootMeanSquaredError": 3.804872717979167e-14,
+              "maximumAbsoluteResidual": 6.394884621840902e-14
+            },
+            "backpropagationError": {
+              "maximumAbsoluteError": 4.531930386519889e-13,
+              "relativeL2Error": 2.810654860142579e-13
+            },
+            "algebraicRecoveredInput": [
+              0.182694076931291,
+              0.0071617889533428574,
+              1.3518863185797003,
+              -1.6239197710381847
+            ],
+            "algebraicError": {
+              "maximumAbsoluteError": 2.220446049250313e-16,
+              "relativeL2Error": 1.5745862586831278e-16
+            },
+            "pass": true
+          },
+          {
+            "trial": 6,
+            "expectedInput": [
+              2.139444340785249,
+              0.1679948394015277,
+              -0.08503958143516699,
+              -0.14249516172698642
+            ],
+            "initialInput": [
+              -2,
+              2,
+              2,
+              -2
+            ],
+            "recoveredInput": [
+              2.1394443407852424,
+              0.16799483940152699,
+              -0.08503958143516697,
+              -0.14249516172698648
+            ],
+            "iterations": 6,
+            "stopReason": "output-residual",
+            "outputError": {
+              "halfMeanSquaredError": 8.893013617040468e-32,
+              "rootMeanSquaredError": 4.217348365274196e-16,
+              "maximumAbsoluteResidual": 8.881784197001252e-16
+            },
+            "backpropagationError": {
+              "maximumAbsoluteError": 6.661338147750939e-15,
+              "relativeL2Error": 3.113011206143733e-15
+            },
+            "algebraicRecoveredInput": [
+              2.1394443407852486,
+              0.16799483940152765,
+              -0.08503958143516695,
+              -0.1424951617269863
+            ],
+            "algebraicError": {
+              "maximumAbsoluteError": 4.440892098500626e-16,
+              "relativeL2Error": 2.1509859197299338e-16
+            },
+            "pass": true
+          }
+        ],
+        "successCount": 6,
+        "maximumInputAbsoluteError": 9.592326932761353e-13,
+        "maximumOutputRmsError": 8.844865153522343e-14,
+        "pass": true
+      },
+      "noisy": {
+        "trials": [
+          {
+            "trial": 1,
+            "outputNoiseDistribution": "deterministic uniform [-1e-4,1e-4]",
+            "realizedOutputNoiseRms": 0.00005870837672983321,
+            "recoveredInput": [
+              0.19109176028850738,
+              0.059114160396405414,
+              0.9071855832906206,
+              1.7824286274825205
+            ],
+            "iterations": 5,
+            "stopReason": "parameter-step",
+            "outputError": {
+              "halfMeanSquaredError": 1.716937210858312e-9,
+              "rootMeanSquaredError": 0.00005859926980531945,
+              "maximumAbsoluteResidual": 0.0001055876364973729
+            },
+            "inputError": {
+              "maximumAbsoluteError": 0.000024462463386165645,
+              "relativeL2Error": 0.000015242040390476797
+            },
+            "pass": true
+          },
+          {
+            "trial": 2,
+            "outputNoiseDistribution": "deterministic uniform [-1e-4,1e-4]",
+            "realizedOutputNoiseRms": 0.0000568580756566233,
+            "recoveredInput": [
+              -1.4747979191885483,
+              1.3509661174052818,
+              0.13934798039246593,
+              0.1434939160785567
+            ],
+            "iterations": 5,
+            "stopReason": "parameter-step",
+            "outputError": {
+              "halfMeanSquaredError": 1.6067239134482416e-9,
+              "rootMeanSquaredError": 0.000056687280997561375,
+              "maximumAbsoluteResidual": 0.00010693988465176885
+            },
+            "inputError": {
+              "maximumAbsoluteError": 0.00003975630297992083,
+              "relativeL2Error": 0.000023598480120665745
+            },
+            "pass": true
+          },
+          {
+            "trial": 3,
+            "outputNoiseDistribution": "deterministic uniform [-1e-4,1e-4]",
+            "realizedOutputNoiseRms": 0.00005876012636073181,
+            "recoveredInput": [
+              1.9601638314582033,
+              0.3973625663730891,
+              -1.1496618857929892,
+              -1.6365242955205497
+            ],
+            "iterations": 5,
+            "stopReason": "parameter-step",
+            "outputError": {
+              "halfMeanSquaredError": 1.716981272865296e-9,
+              "rootMeanSquaredError": 0.00005860002172124676,
+              "maximumAbsoluteResidual": 0.00010592593572822384
+            },
+            "inputError": {
+              "maximumAbsoluteError": 0.00003067577572002378,
+              "relativeL2Error": 0.00001804106475804854
+            },
+            "pass": true
+          }
+        ],
+        "successCount": 3,
+        "maximumInputAbsoluteError": 0.00003975630297992083,
+        "pass": true
+      },
+      "eightBit": {
+        "trials": [
+          {
+            "trial": 1,
+            "quantization": "round each raw activity to 8-bit",
+            "realizedOutputQuantizationRms": 0.0011576002731604228,
+            "recoveredInput": [
+              0.19089332713955337,
+              0.058839906010747255,
+              0.9067439337360753,
+              1.7826717462125135
+            ],
+            "iterations": 6,
+            "stopReason": "parameter-step",
+            "outputError": {
+              "halfMeanSquaredError": 6.678168841441235e-7,
+              "rootMeanSquaredError": 0.0011556962266479228,
+              "maximumAbsoluteResidual": 0.0020706471619554856
+            },
+            "inputError": {
+              "maximumAbsoluteError": 0.00044830911507931503,
+              "relativeL2Error": 0.0003014308866698957
+            },
+            "pass": true
+          },
+          {
+            "trial": 2,
+            "quantization": "round each raw activity to 8-bit",
+            "realizedOutputQuantizationRms": 0.0011424646139519396,
+            "recoveredInput": [
+              -1.474804479540037,
+              1.3503153679027509,
+              0.13908159820828223,
+              0.14323977144949512
+            ],
+            "iterations": 6,
+            "stopReason": "parameter-step",
+            "outputError": {
+              "halfMeanSquaredError": 6.501709857747878e-7,
+              "rootMeanSquaredError": 0.0011403253796831744,
+              "maximumAbsoluteResidual": 0.0020017393206547274
+            },
+            "inputError": {
+              "maximumAbsoluteError": 0.0006109931995510465,
+              "relativeL2Error": 0.00034990723605473923
+            },
+            "pass": true
+          },
+          {
+            "trial": 3,
+            "quantization": "round each raw activity to 8-bit",
+            "realizedOutputQuantizationRms": 0.001175267036383353,
+            "recoveredInput": [
+              1.96014814463263,
+              0.3975124271546191,
+              -1.1499005178529222,
+              -1.6369452032174832
+            ],
+            "iterations": 6,
+            "stopReason": "parameter-step",
+            "outputError": {
+              "halfMeanSquaredError": 6.899747977791433e-7,
+              "rootMeanSquaredError": 0.001174712558696078,
+              "maximumAbsoluteResidual": 0.001971246172354113
+            },
+            "inputError": {
+              "maximumAbsoluteError": 0.00039098108866264525,
+              "relativeL2Error": 0.0001757500478017993
+            },
+            "pass": true
+          }
+        ],
+        "successCount": 3,
+        "maximumInputAbsoluteError": 0.0006109931995510465,
+        "pass": true
+      },
+      "pass": true
+    },
+    "critical": {
+      "construction": "K=4 rho (I-11^T/M), x=0, known equilibrium s=0.5",
+      "purpose": "Separate analytical backpropagation correctness from error introduced by a tolerance-settled state near criticality.",
+      "exactKnownState": [
+        {
+          "rho": 0.9,
+          "seconds": 0.7019426890000031,
+          "iterations": 2,
+          "fixedPointResidual": 2.0539125955565396e-15,
+          "stateErrorFromKnownFixedPoint": 6.661338147750939e-16,
+          "numericalGradientFrobeniusNorm": 5.000000000000235,
+          "analyticalGradientFrobeniusNorm": 5.000000000000001,
+          "gradientRelativeFrobeniusError": 5.865110804458274e-14,
+          "maximumAbsoluteError": 1.0408340855860843e-15,
+          "pass": true
+        },
+        {
+          "rho": 0.99,
+          "seconds": 0.6951061320000008,
+          "iterations": 2,
+          "fixedPointResidual": 4.440892098500626e-15,
+          "stateErrorFromKnownFixedPoint": 4.6629367034256575e-15,
+          "numericalGradientFrobeniusNorm": 50.000000000000746,
+          "analyticalGradientFrobeniusNorm": 49.99999999999996,
+          "gradientRelativeFrobeniusError": 3.587762943052899e-12,
+          "maximumAbsoluteError": 5.223599330861362e-13,
+          "pass": true
+        },
+        {
+          "rho": 0.999,
+          "seconds": 0.7011124490000075,
+          "iterations": 2,
+          "fixedPointResidual": 3.0531133177191805e-15,
+          "stateErrorFromKnownFixedPoint": 3.885780586188048e-15,
+          "numericalGradientFrobeniusNorm": 499.9999999999954,
+          "analyticalGradientFrobeniusNorm": 499.99999999999955,
+          "gradientRelativeFrobeniusError": 2.4234048667512324e-11,
+          "maximumAbsoluteError": 3.661804193200169e-11,
+          "pass": true
+        },
+        {
+          "rho": 0.9999,
+          "seconds": 0.7054636920000048,
+          "iterations": 2,
+          "fixedPointResidual": 2.55351295663786e-15,
+          "stateErrorFromKnownFixedPoint": 2.886579864025407e-15,
+          "numericalGradientFrobeniusNorm": 5000.000000000064,
+          "analyticalGradientFrobeniusNorm": 5000.00000000055,
+          "gradientRelativeFrobeniusError": 1.0004336716930315e-10,
+          "maximumAbsoluteError": 1.8242829469272692e-9,
+          "pass": true
+        }
+      ],
+      "policySettled": [
+        {
+          "rho": 0.99,
+          "seconds": 1.403206951,
+          "iterations": 2298,
+          "fixedPointResidual": 9.87705695010277e-10,
+          "stateErrorFromKnownFixedPoint": 9.877053941398373e-8,
+          "numericalGradientFrobeniusNorm": 50.00000007649977,
+          "analyticalGradientFrobeniusNorm": 49.99999999999996,
+          "gradientRelativeFrobeniusError": 0.00005540379125293626,
+          "maximumAbsoluteError": 0.0000065188577930419545
+        },
+        {
+          "rho": 0.999,
+          "seconds": 6.531942895999993,
+          "iterations": 18294,
+          "fixedPointResidual": 9.986063642664078e-10,
+          "stateErrorFromKnownFixedPoint": 9.986062636802018e-7,
+          "numericalGradientFrobeniusNorm": 500.00820767911705,
+          "analyticalGradientFrobeniusNorm": 499.99999999999955,
+          "gradientRelativeFrobeniusError": 0.005730717329493769,
+          "maximumAbsoluteError": 0.0066507416138379405
+        },
+        {
+          "rho": 0.9999,
+          "seconds": 42.95714164799999,
+          "iterations": 129683,
+          "fixedPointResidual": 9.998668004662647e-10,
+          "stateErrorFromKnownFixedPoint": 0.000009998654199039336,
+          "numericalGradientFrobeniusNorm": 5887.649295978638,
+          "analyticalGradientFrobeniusNorm": 5000.00000000055,
+          "gradientRelativeFrobeniusError": 0.6217629047156347,
+          "maximumAbsoluteError": 6.665270808233553
+        }
+      ],
+      "exactKnownStatePass": true,
+      "warning": "A small fixed-point residual is not a forward- or gradient-error guarantee near a singular fixed-point operator."
+    },
+    "repeatability": {
+      "trainingKHashFirst": "c1f0ee260c087cc16c9b7c25848bfb4ba4e799e1a43a00ee94abd2b3a0683dcf",
+      "trainingKHashRepeat": "c1f0ee260c087cc16c9b7c25848bfb4ba4e799e1a43a00ee94abd2b3a0683dcf",
+      "trainedWeightsBitwiseIdentical": true,
+      "repeatedStateMaximumAbsoluteDifference": 0,
+      "repeatedGradientMaximumAbsoluteDifference": 0,
+      "pass": true
+    }
+  },
+  "reliability": {
+    "weightedGateScore": 100,
+    "possiblePoints": 100,
+    "gates": [
+      {
+        "id": "architecture-dimensions-and-finiteness",
+        "weight": 5,
+        "passed": true
+      },
+      {
+        "id": "fixed-point-convergence",
+        "weight": 10,
+        "passed": true
+      },
+      {
+        "id": "susceptibility-finite-differences",
+        "weight": 10,
+        "passed": true
+      },
+      {
+        "id": "recurrent-gradient-coordinate-finite-differences",
+        "weight": 15,
+        "passed": true
+      },
+      {
+        "id": "recurrent-gradient-whole-matrix-directions",
+        "weight": 15,
+        "passed": true
+      },
+      {
+        "id": "gradient-sign-and-objective-descent",
+        "weight": 10,
+        "passed": true
+      },
+      {
+        "id": "noiseless-output-to-input-backpropagation",
+        "weight": 15,
+        "passed": true
+      },
+      {
+        "id": "noisy-and-eight-bit-output-robustness",
+        "weight": 5,
+        "passed": true
+      },
+      {
+        "id": "near-critical-exact-state-analytical-gradient",
+        "weight": 10,
+        "passed": true
+      },
+      {
+        "id": "bitwise-repeatability",
+        "weight": 5,
+        "passed": true
+      }
+    ],
+    "conservativeScore": 95,
+    "conservativeScoreRationale": [
+      "The weighted gate score is a deterministic test score, not a probability of correctness.",
+      "Five points are withheld because finite fixtures cannot prove every input/recurrent matrix and fixed residual tolerances become unreliable extremely near criticality.",
+      "The conservative score applies only when the full 600-value equilibrium state and the exact known network parameters are available."
+    ],
+    "testedRegimeVerdict": "high reliability",
+    "nearCriticalOperationalVerdict": "condition-dependent; require condition-aware settling and a direct gradient-accuracy gate"
+  },
+  "limitations": [
+    "The six noiseless, three noisy, and three 8-bit trials are deterministic coverage, not a statistical population guarantee.",
+    "Raw-state inversion is overdetermined because 600 activities encode four inputs and W has full column rank; exact recovery is expected when the state and model are known.",
+    "The fixed-point identity admits a faster algebraic decoder; iterative backpropagation was retained here because that is the requested test.",
+    "A rendered synesthetic shape is a lossy downstream projection and cannot be assumed to preserve enough information for exact input recovery.",
+    "Near a critical or unstable recurrent fixed point, state selection, conditioning, and equilibrium error can dominate an otherwise correct analytical gradient."
+  ],
+  "timingsSeconds": {
+    "tenUpdateTraining": 6.1346469,
+    "repeatTraining": 6.543010158000001,
+    "zeroAnalysis": 0.053313776000000875,
+    "trainedAnalysis": 0.7973550679999989,
+    "repeatedAnalysis": 0.7603428380000005,
+    "zeroSusceptibilityFiniteDifference": 0.03526029199999903,
+    "trainedSusceptibilityFiniteDifference": 0.7795467840000001,
+    "coordinateGradientFiniteDifferences": 21.900732144000003,
+    "directionalGradientFiniteDifferences": 9.655121652000002,
+    "batchGradient": 2.7481036289999974,
+    "batchObjectiveAfterUpdate": 2.6567621139999975,
+    "noiselessInputInversion": 23.814763678999995,
+    "noisyInputInversion": 12.094124374000007,
+    "eightBitInputInversion": 13.934787926999997,
+    "criticalExactState": 2.803624962000016,
+    "criticalPolicySettling": 50.89229149499998,
+    "total": 155.890250689
+  },
+  "resourceUsage": {
+    "maxRssKilobytes": 404448,
+    "finalProcessMemoryBytes": {
+      "rss": 329519104,
+      "heapTotal": 165736448,
+      "heapUsed": 72999872,
+      "external": 73584297,
+      "arrayBuffers": 69875135
+    }
+  },
+  "allPassed": true
+}

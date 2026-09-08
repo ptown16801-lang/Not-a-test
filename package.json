@@ -10,6 +10,7 @@
     "test": "node --test test/*.test.js",
     "test:json": "node scripts/run-tests-with-json-log.js",
     "validate:neural": "node scripts/generate-neural-validation-log.js",
+    "test:backprop-600": "node scripts/run-backpropagation-600.js",
     "logs:master": "node scripts/generate-master-project.js",
     "logs:project": "node scripts/generate-project-log.js",
     "logs:all": "node scripts/generate-project-log.js && node scripts/generate-master-project.js",

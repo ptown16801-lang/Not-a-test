@@ -6,6 +6,17 @@ on which they landed in `main`.
 
 ## [Unreleased]
 
+### Backpropagation validation
+
+- Added a reproducible 600-output-neuron test of all 360,000 recurrent-gradient
+  entries using coordinate and whole-matrix directional finite differences.
+- Recovered the original four-dimensional input from the full raw equilibrium
+  state in six noiseless, three noisy, and three eight-bit trials, and compared
+  iterative Jacobian backpropagation with the fixed-point algebraic inverse.
+- Repeated the controlled criticality audit at 600 outputs, confirming that the
+  exact-state gradient remains accurate while a nominal `1e-9` settling
+  residual can still produce 62.2% gradient error at `rho=0.9999`.
+
 ## [0.8.0] - 2026-09-07
 
 ### Scientific validation and numerical correctness
