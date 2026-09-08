@@ -6,6 +6,30 @@ on which they landed in `main`.
 
 ## [Unreleased]
 
+### Mathematica + OpenAI integration prototype
+
+- Added an additive `wolfram/` integration layer that leaves the existing
+  `mathematica/` scientific model authoritative and implements the permanent
+  rule: Mathematica computes; GPT reasons over the computation.
+- Added compact versioned experiment/result, GPT-analysis, and approved-tool
+  schemas plus strict validation, finite-value checks, payload bounds, and
+  provenance fields.
+- Added a controlled Mathematica tool allowlist for fixed points, local
+  stability, analytic gradients, selected central finite-difference gradient
+  checks, and compact population statistics; arbitrary Wolfram evaluation is
+  not exposed.
+- Added direct OpenAI Responses API transport with structured-output analysis,
+  Luna/Terra/Sol routing, prompt-cache keys, credential lookup, redacted JSONL
+  interaction logs, a cumulative cost ledger, and USD 10 / 25 / 50 warning and
+  hard-limit policy with conservative preflight enforcement.
+- Added connectivity probes for Wolfram-native LLM functions,
+  `ServiceConnect["OpenAI"]`, and direct REST, while explicitly keeping all
+  three live-unverified in this revision because the available Wolfram MCP
+  endpoint returned HTTP 404 before kernel execution and the active runtime
+  had neither a local Wolfram kernel nor an OpenAI API key.
+- Added an OpenAI/Wolfram error registry and environment report. No new
+  600-neuron scientific result is claimed by this integration-only revision.
+
 ### Backpropagation validation
 
 - Added a reproducible 600-output-neuron test of all 360,000 recurrent-gradient
