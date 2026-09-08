@@ -1,0 +1,36 @@
+name: Final observed revision preservation 9bd256
+on:
+  push:
+    branches: ['research/wolfram-history-20260908T015249Z-9bd256']
+    paths: ['.github/workflows/final-recovery-9bd256.yml']
+permissions:
+  contents: read
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Preserve exact source and its ancestry without altering main
+        run: |
+          set -eu
+          mkdir evidence
+          git clone https://github.com/ptown16801-lang/Not-a-test.git project
+          cd project
+          git checkout --detach 020e85977c0858b521772041781cec8b4f3f6140
+          git bundle create ../evidence/final-observed-repository.bundle --all
+          git archive --format=tar HEAD | gzip > ../evidence/final-observed-source.tar.gz
+          git status --porcelain=v1 > ../evidence/worktree.txt
+          git show-ref > ../evidence/refs.txt
+          git diff 690385543b3a1563ae58e9764d546e5d16e12ec1 HEAD -- src mathematica package.json scripts test > ../evidence/model-diff.txt
+          git log --format='%H%x09%aI%x09%cI%x09%s' 690385543b3a1563ae58e9764d546e5d16e12ec1..HEAD > ../evidence/new-commits.tsv
+          date -u +%Y-%m-%dT%H:%M:%SZ > ../evidence/retrieved-at.txt
+          cd ../evidence
+          sha256sum * > SHA256SUMS.txt
+      - name: Save recovery evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-recovery-9bd256-${{ github.run_id }}
+          path: evidence/
+          retention-days: 90
+          if-no-files-found: error
