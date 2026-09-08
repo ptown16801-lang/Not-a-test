@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "neural-engine-tool-request-schema-v1",
+  "title": "Neural Engine Approved Tool Request v1",
+  "type": "object",
+  "required": ["schema_version", "tool", "arguments", "rationale"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "neural-engine-tool-request-schema-v1"},
+    "tool": {"type": "string", "minLength": 1, "maxLength": 128},
+    "arguments": {"type": "object"},
+    "rationale": {"type": "string", "maxLength": 4096}
+  }
+}
