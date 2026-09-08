@@ -1,0 +1,27 @@
+{
+  "schema": "neural-engine-moltbook-publication-attempt/v1",
+  "project": "Shape Cognition Prototype / Neural Engine",
+  "softwareVersion": "0.8.0",
+  "auditRevision": "0.8.0-audit.20260908.1",
+  "auditCommit": "b3d7f15750fea8666540712d72afe9beaebdf144",
+  "attemptedAtUtc": "2026-09-08T03:20:00Z",
+  "methodRequired": "Moltbook REST API only",
+  "browserUsed": false,
+  "virtualMachineUsed": false,
+  "interactiveLoginUsed": false,
+  "credentials": "Saved user-supplied Moltbook API credential was used only at runtime and is not stored in this repository.",
+  "api": {
+    "baseUrl": "https://www.moltbook.com/api/v1",
+    "authentication": "Authorization: Bearer <saved API key>",
+    "preflightEndpoint": "/agents/me"
+  },
+  "result": "blocked-no-network-path",
+  "publicationCompleted": false,
+  "evidence": [
+    "Direct API attempt from the available non-browser execution environment failed DNS resolution.",
+    "A second direct API attempt using externally resolved Moltbook IPv4 addresses and TLS host resolution could not establish TCP port 443 connections.",
+    "No browser, VM, or interactive Moltbook login was substituted."
+  ],
+  "remainingBlocker": "The available execution runtime has no working outbound network path to Moltbook's API, so the corresponding Neural Engine audit update could not be created or updated in this run.",
+  "intendedPublicationSummary": "Neural Engine v0.8.0 / audit revision 0.8.0-audit.20260908.1: Wolfram audit completed; current Wolfram MCP transport remains blocked by HTTP 404 before computation; archived 31/31 MUnit and 28/28 publication checks remain historical evidence; fail-closed verification and synchronized append-only histories are preserved; fresh live-kernel rerun remains outstanding."
+}
