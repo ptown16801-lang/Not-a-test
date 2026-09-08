@@ -1,0 +1,82 @@
+{
+  "document_type": "planning_provenance",
+  "schema_version": 1,
+  "id": "NE-MATHEMATICA-OPENAI-PLAN-ORIGIN-2026-09-07",
+  "created_at": "2026-09-07T23:26:00-04:00",
+  "project": "Shape Cognition Prototype / Neural Engine",
+  "repository": "ptown16801-lang/Not-a-test",
+  "branch": "main",
+  "source_commit_before_change": "a8b7243514309ef2cfcbd74fb54351b53155fa7b",
+  "release_context": "v0.8.0 + Unreleased",
+  "linked_plan": "docs/mathematica-openai-integration-plan-2026-09-07.md",
+  "status": "planned_work",
+  "what_generated_this_plan": {
+    "conversation_sequence": [
+      {
+        "step": 1,
+        "user_intent": "Investigate whether it would be practical to use a ChatGPT/OpenAI API key from within Mathematica.",
+        "resulting_design_input": "Consider Mathematica as an OpenAI API client rather than depending only on ChatGPT-to-Wolfram integration."
+      },
+      {
+        "step": 2,
+        "design_conclusion": "Use Mathematica/Wolfram Language as the authoritative numerical and symbolic layer and an OpenAI model as a scientific reasoning/interpretation layer.",
+        "connection_routes": [
+          "native Wolfram LLM interface where available",
+          "ServiceConnect[\"OpenAI\"] where supported",
+          "direct OpenAI HTTPS/REST fallback from Wolfram Language"
+        ]
+      },
+      {
+        "step": 3,
+        "user_intent": "Estimate the cost of the proposed integration.",
+        "resulting_design_input": "Keep large numerical work inside Mathematica, transmit compact summaries, use model routing/caching where applicable, and begin with a $10-$30 development target and a $50 hard development cap."
+      },
+      {
+        "step": 4,
+        "user_intent": "Generate a project plan implementing the discussed techniques.",
+        "resulting_design_input": "Produce a phased scientific/engineering plan including connectivity, secure credentials, schemas, bounded tool use, 600-neuron verification, population-to-shape experiments, cost control, provenance, testing, and project-history integration."
+      },
+      {
+        "step": 5,
+        "user_intent": "Update the project files with the structured plan and a summary of what generated it.",
+        "resulting_action": "Persist the plan and this provenance summary as additive project documentation and allow the repository's paired-history workflow to capture the change."
+      }
+    ],
+    "existing_project_context_that_shaped_the_plan": [
+      "The project is treated as a scientific research and engineering project with explicit evidence boundaries.",
+      "A Wolfram audit and dependency recheck already exist and must not be silently replaced by assumptions.",
+      "The repository already contains a 600-output-neuron backpropagation verification target suitable for the first end-to-end integration experiment.",
+      "The project includes population-to-shape and synesthetic visualization work, motivating a later observer/interpretation layer.",
+      "The repository uses append-only paired scientific and non-scientific histories and forbids silent overwriting of legacy aggregates.",
+      "Prior project policy requires blocked/skipped Wolfram verification to remain clearly distinguished from passed verification."
+    ]
+  },
+  "core_rationale": {
+    "numerical_authority": "Mathematica/Wolfram Language",
+    "reasoning_role": "OpenAI model interprets structured evidence, identifies anomalies, and proposes bounded follow-up tests.",
+    "permanent_rule": "No GPT interpretation may replace a calculation that Mathematica can perform directly.",
+    "fallback_strategy": "Retain direct HTTPS/REST access from Wolfram Language so higher-level Wolfram/OpenAI connector failure is not the only integration path."
+  },
+  "cost_assumptions": {
+    "development_target_usd": {
+      "min": 10,
+      "max": 30
+    },
+    "hard_development_cap_usd": 50,
+    "optimization_principles": [
+      "summarize arrays locally in Mathematica",
+      "avoid repeatedly transmitting full neuron/weight/timestep state",
+      "use lower-cost models for routine analysis and higher-capability reasoning only when justified",
+      "use prompt caching where supported",
+      "measure actual token usage and cost per experiment"
+    ],
+    "caveat": "API prices, model names, and model availability are time-sensitive and must be reverified before implementation or budgeting."
+  },
+  "evidence_boundaries": [
+    "This provenance file documents planning intent, not a completed integration.",
+    "No OpenAI API credential is stored here.",
+    "No new Wolfram computation is claimed by this planning change.",
+    "No prior Wolfram failure is promoted to pass by this planning change.",
+    "No Neural Engine equation or release version is changed by this planning change."
+  ]
+}
