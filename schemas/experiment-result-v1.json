@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "neural-engine-result-schema-v1",
+  "title": "Neural Engine Compact Scientific Result v1",
+  "type": "object",
+  "required": ["schema_version", "experiment_id", "network", "test", "results", "anomalies", "samples", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "neural-engine-result-schema-v1"},
+    "experiment_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "network": {
+      "type": "object",
+      "required": ["neurons", "architecture", "seed"],
+      "additionalProperties": false,
+      "properties": {
+        "neurons": {"type": "integer", "minimum": 1, "maximum": 10000000},
+        "architecture": {"type": "string", "minLength": 1, "maxLength": 512},
+        "seed": {"type": ["integer", "null"]}
+      }
+    },
+    "test": {"type": "string", "minLength": 1, "maxLength": 128},
+    "results": {"type": "object"},
+    "anomalies": {"type": "array", "maxItems": 128},
+    "samples": {"type": "array", "maxItems": 128},
+    "provenance": {
+      "type": "object",
+      "required": ["code_version", "commit", "timestamp", "mathematica_version"],
+      "additionalProperties": false,
+      "properties": {
+        "code_version": {"type": "string"},
+        "commit": {"type": "string"},
+        "timestamp": {"type": "string"},
+        "mathematica_version": {"type": "string"}
+      }
+    }
+  }
+}
