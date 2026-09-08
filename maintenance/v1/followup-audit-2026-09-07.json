@@ -1,0 +1,123 @@
+{
+  "schema": "neural-engine-maintenance-followup/v1",
+  "audit_date_local": "2026-09-07",
+  "timezone": "America/New_York",
+  "source_commit_audited": "2702344c27a0e0e6389b238fabb6e8eeabee1818",
+  "initial_request_baseline": "48f5a19f4434010e1e6def3c3086b98218183b1a",
+  "immediate_premaintenance_commit": "b92afe4471c796a8227146ba7e066d2fdc43c526",
+  "first_snapshot_saved_commit": "68247e8928b85715f3c5b836f34ce0ed94d0d3ad",
+  "first_snapshot_directory": "history/snapshots/20260908T015700Z-2702344c27a0-ebcc56bb",
+  "fresh_wolfram": {
+    "status": "blocked_not_a_pass",
+    "connector_attempts": 2,
+    "connector_error": "MCP SSE probe returned 404 from wolfram.com",
+    "endpoint": "https://agenttools.wolfram.com/mcp",
+    "local_kernel_available": false,
+    "hosted_runner_kernel_available": false,
+    "fresh_scientific_wolfram_results": false,
+    "no_substitute_engine_used": true
+  },
+  "historical_wolfram_provenance": {
+    "qualification": "Reports were already committed. Source SHA-256 comparisons were actually performed in this maintenance session. Hash matching is not a new Wolfram execution and cannot authenticate a report's original execution by itself.",
+    "all_nine_recorded_source_hash_comparisons_match": true,
+    "reports": [
+      {
+        "path": "mathematica/verification/results/wolfram-test-report.json",
+        "report_sha256": "f6f4657451a2cff6349eda9094658316ce5b2b79aa6426b61c72cb21aa5aafc9",
+        "reported_at_utc": "2026-09-07T12:57:36Z",
+        "reported_tests": 31,
+        "reported_passed": 31,
+        "verified_source_fields": ["modelSourceSha256", "testFileSha256", "runnerSha256"],
+        "all_recorded_sources_match": true
+      },
+      {
+        "path": "mathematica/verification/results/wolfram-validation.json",
+        "report_sha256": "7fd44ce413f4448950a03a1a49890695709a772fc9f2ab3c515faac82b22a835",
+        "reported_at_utc": "2026-09-07T12:57:38Z",
+        "reported_checks": 28,
+        "reported_passed": 28,
+        "verified_source_fields": ["provenance.scriptSha256", "provenance.sourceManifestSha256"],
+        "all_recorded_sources_match": true
+      },
+      {
+        "path": "mathematica/verification/results/repeated-validation.json",
+        "report_sha256": "03340e541cf4b58f41b47641bb766396688e1f13affa875d50a081a7ecacf499",
+        "verified_source_fields": ["provenance.scriptSha256", "provenance.modelSourceSha256"],
+        "all_recorded_sources_match": true,
+        "reported_all_passed": true
+      },
+      {
+        "path": "mathematica/verification/results/numerical-policy-sensitivity.json",
+        "report_sha256": "7406c38e664e9df0e49976f5d5d7aa13a9ce448cd0bb15bb333b03cd40da8b47",
+        "verified_source_fields": ["provenance.scriptSha256", "provenance.modelSourceSha256"],
+        "all_recorded_sources_match": true,
+        "reported_all_passed": null,
+        "qualification": "This report has no global allPassed field. Its individual measurements and summary are preserved; no invented global pass is assigned."
+      }
+    ]
+  },
+  "snapshot_verification": {
+    "source_artifact_fingerprints_checked": 155,
+    "source_artifact_fingerprints_matched": 155,
+    "integrity_manifest_files_checked": 3,
+    "integrity_manifest_files_matched": 3,
+    "reachable_commits_in_first_snapshot": 41,
+    "scientific_and_plain_language_event_ids_match": true
+  },
+  "fresh_tests": {
+    "history_machinery": {
+      "tests": 10, "passed": 10, "failed": 0,
+      "scope": "Append-only generator and evidence-status logic, not neural mathematics.",
+      "runner_log_sha256": "ff8e12a5d0c5c87ac9678449721dbc33e403a07926005f2d9f83b46f3d23edcd"
+    },
+    "original_baseline_local": {
+      "source_commit": "48f5a19f4434010e1e6def3c3086b98218183b1a",
+      "tests": 98, "passed": 96, "failed": 0, "skipped": 2, "exit_code": 0,
+      "skipped_reasons": ["Licensed Wolfram kernel unavailable: MUnit", "Licensed Wolfram kernel unavailable: independent derivation"],
+      "tap_sha256": "784682cededdd11e6f7946f180f62984af97656a13d44dd07d5fcb7ad2836ff2"
+    },
+    "immediate_premaintenance_local": {
+      "source_commit": "b92afe4471c796a8227146ba7e066d2fdc43c526",
+      "tests": 118, "passed": 114, "failed": 2, "skipped": 2, "exit_code": 1,
+      "tap_sha256": "ea5f57e695feb3d252bab104bcea917b1bf81533e99909fd7d2e3117f224a785"
+    },
+    "maintenance_source_hosted_runner": {
+      "source_commit": "2702344c27a0e0e6389b238fabb6e8eeabee1818",
+      "workflow_run": 34178351391,
+      "tests": 118, "passed": 113, "failed": 2, "skipped": 3, "exit_code": 1,
+      "tap_sha256": "404e74b10967796f24302fadd30afd96caee4df05a5bfb218b2221386e6f89a8",
+      "additional_skip": "Pillow was unavailable on the hosted runner; the JPEG recompression test passed in the local premaintenance run."
+    }
+  },
+  "legacy_manifest_failures": {
+    "count": 2,
+    "test_file": "test/project-log.test.js",
+    "test_names": [
+      "master JSON embeds every other project JSON artifact with verified integrity",
+      "project-wide JSON log hashes every indexed repository artifact"
+    ],
+    "observed_error": "package.json byte count: actual 1263, archived expected 1207",
+    "cause_evidence": "Commit dd91dba2c13912a6f1a92427509da87efa6224da added the verify:wolfram script entry to package.json before these six maintenance files were added. The legacy aggregates were not regenerated. The same two failures reproduce at immediate premaintenance commit b92afe4471c796a8227146ba7e066d2fdc43c526.",
+    "status": "known_unresolved_legacy_snapshot_vs_current_source_incompatibility",
+    "not_a_neural_calculation_failure": true,
+    "not_silently_ignored": true,
+    "resolution_in_this_revision": "Preserve the old aggregates unchanged and provide new source-fingerprinted history snapshots. The default Node suite remains failing on these two old current-file assertions; it is not represented as fully passing."
+  },
+  "preservation": {
+    "six_maintenance_source_files_added": true,
+    "existing_files_modified_by_maintenance_source_commits": [],
+    "existing_files_deleted_by_maintenance_source_commits": [],
+    "initial_baseline_bytes_preserved_for": [
+      "MASTER_PROJECT.json", "PROJECT_LOG.json", "mathematica/SynesthesiaModel.wl", "mathematica/verification/results/*"
+    ],
+    "earlier_snapshot_overwritten": false,
+    "model_equations_modified": false,
+    "project_release_version_changed": false
+  },
+  "remaining_limits": [
+    "Actual new Wolfram verification remains blocked; a connector HTTP 404 does not establish whether the underlying cause is transport, service, authentication or routing.",
+    "The original authors' unpublished code and reconstruction settings remain unknown; no missing settings were invented.",
+    "The v1 optional sensitivity runner deliberately withholds global success when the existing report omits allPassed. It records output as unqualified rather than fabricating a pass.",
+    "Histories cover reachable Git records, saved project evidence and explicitly supplied conversation milestones, not unavailable private conversations."
+  ]
+}
