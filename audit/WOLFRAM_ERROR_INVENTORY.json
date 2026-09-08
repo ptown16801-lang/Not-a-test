@@ -1,0 +1,74 @@
+{
+  "schema": "neural-engine-wolfram-openai-error-registry/v1",
+  "created_at_utc": "2026-09-08T03:35:00Z",
+  "software_version": "0.8.0",
+  "integration_revision": "0.8.0-openai-prototype.1",
+  "entries": [
+    {
+      "error_id": "WOLFRAM-OPENAI-001",
+      "component": "Wolfram MCP transport",
+      "status": "unresolved",
+      "symptom": "WolframLanguageEvaluator returned invalid_mcp_response / HTTP 404 before kernel evaluation.",
+      "cause": "Current connected Wolfram MCP transport endpoint is unavailable to this session; no kernel-side cause was observed.",
+      "workaround": "Use an activated local Mathematica/Wolfram Engine kernel when available; do not treat another numerical engine as Wolfram verification.",
+      "evidence": "Fresh 2026-09-07 session probe; consistent with docs/wolfram-audit-final-2026-09-07.json.",
+      "first_seen": "2026-09-07",
+      "last_tested": "2026-09-07"
+    },
+    {
+      "error_id": "WOLFRAM-OPENAI-002",
+      "component": "local Wolfram runtime",
+      "status": "unresolved",
+      "symptom": "No wolframscript/WolframKernel executable is available in the active implementation runtime.",
+      "cause": "Runtime dependency absent.",
+      "workaround": "Execute this package in the previously activated Mathematica/Wolfram Engine environment or another licensed/activated kernel.",
+      "evidence": "Active runtime command lookup; prior audit records the same class of local dependency blocker.",
+      "first_seen": "2026-09-07",
+      "last_tested": "2026-09-07"
+    },
+    {
+      "error_id": "WOLFRAM-OPENAI-003",
+      "component": "OpenAI credential",
+      "status": "workaround_available",
+      "symptom": "OPENAI_API_KEY is absent from the active implementation runtime, so authenticated API proof cannot be executed here.",
+      "cause": "Credential was intentionally not embedded in the repository/runtime.",
+      "workaround": "Store the key in SystemCredential[\"OPENAI_API_KEY\"] or set OPENAI_API_KEY externally.",
+      "evidence": "Active runtime environment check. No key value was read into project artifacts.",
+      "first_seen": "2026-09-07",
+      "last_tested": "2026-09-07"
+    },
+    {
+      "error_id": "WOLFRAM-OPENAI-004",
+      "component": "Native Wolfram LLM interface",
+      "status": "skipped",
+      "symptom": "LLMSynthesize/LLMFunction/LLMTool could not be executed in a live kernel during this implementation step.",
+      "cause": "Blocked Wolfram transport and absent local kernel.",
+      "workaround": "Connectivity probe is preserved in the integration package; rerun in a live kernel.",
+      "evidence": "Current Wolfram documentation confirms the interfaces exist; no fresh live invocation completed.",
+      "first_seen": "2026-09-07",
+      "last_tested": "2026-09-07"
+    },
+    {
+      "error_id": "WOLFRAM-OPENAI-005",
+      "component": "ServiceConnect[\"OpenAI\"]",
+      "status": "skipped",
+      "symptom": "ServiceConnect OpenAI authentication/chat could not be executed in a live kernel during this implementation step.",
+      "cause": "Blocked Wolfram transport and absent local kernel.",
+      "workaround": "Keep direct Responses API as the production fallback; re-test ServiceConnect independently when a kernel is available.",
+      "evidence": "Current Wolfram documentation confirms ServiceConnect[\"OpenAI\"] remains documented; no fresh live invocation completed.",
+      "first_seen": "2026-09-07",
+      "last_tested": "2026-09-07"
+    },
+    {
+      "error_id": "WOLFRAM-OPENAI-006",
+      "component": "Direct OpenAI REST from Wolfram",
+      "status": "skipped",
+      "symptom": "The direct /v1/responses code path is implemented but could not be authenticated/executed in this runtime.",
+      "cause": "No local Wolfram kernel and no OpenAI API key were available here.",
+      "workaround": "Run NEOpenAIConnect[\"Probe\"->True] in an activated kernel with externally supplied credentials.",
+      "evidence": "Static implementation and current OpenAI Responses API documentation; no live API result is claimed.",
+      "first_seen": "2026-09-07",
+      "last_tested": "2026-09-07"
+    }
+  ]
+}
