@@ -1,0 +1,39 @@
+{
+  "schema": "neural-engine-wolfram-transport-followup/v1",
+  "checked_at_utc": "2026-09-08T02:04:15.109414+00:00",
+  "checked_date_local": "2026-09-07",
+  "timezone": "America/New_York",
+  "purpose": "Test whether the documented Streamable HTTP transport avoids the installed connector's failing SSE probe, without assuming a transport-specific root cause.",
+  "official_documentation": "https://www.wolfram.com/artificial-intelligence/mcp/cloud/wolfram-mcp-cloud/",
+  "endpoint": "https://agenttools.wolfram.com/mcp",
+  "local_attempt": {
+    "checked_at_utc": "2026-09-08T02:03:12.206316+00:00",
+    "transport": "Streamable HTTP initialize POST",
+    "credentials_sent": false,
+    "error": "URLError",
+    "message": "<urlopen error [Errno -3] Temporary failure in name resolution>"
+  },
+  "independent_runner_attempt": {
+    "network_source": "GitHub-hosted runner",
+    "workflow_run": 34178767709,
+    "workflow_source_commit": "ba2355e87355337ef71f163d7b4933e81a6a9446",
+    "workflow_source_branch": "audit/wolfram-streamable-20260907-v1",
+    "workflow_source_path": ".github/workflows/wolfram-streamable-audit-20260907.yml",
+    "artifact_id": 10038148607,
+    "artifact_zip_sha256": "92426f6869d1bb0d29090da6d2f6c7bfb7ac13bb66378120996175530b6f6fd8",
+    "transport": "Streamable HTTP",
+    "method": "initialize",
+    "protocol_version_requested": "2025-03-26",
+    "credentials_sent": false,
+    "http_status": 404,
+    "content_type": "text/html; charset=iso-8859-1",
+    "response_body": "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html><head>\n<title>404 Not Found</title>\n</head><body>\n<h1>Not Found</h1>\n<p>The requested URL was not found on this server.</p>\n</body></html>\n",
+    "initialization_succeeded": false,
+    "scientific_project_code_executed": false
+  },
+  "conclusion": "Fresh Wolfram computation remains blocked. The direct documented transport also fails from a separate network. This is not merely a local DNS problem, but the underlying service, routing, access or deployment cause has not been established.",
+  "scientific_results_added": false,
+  "prior_reports_remain_historical_only": true,
+  "no_existing_file_overwritten": true,
+  "change_notes": "Added one preserved transport-audit record. Existing equations, test reports, old histories and earlier failed attempts remain unchanged. The diagnostic workflow is preserved on its named audit branch. The next paired history includes this record without rewriting earlier snapshots."
+}
