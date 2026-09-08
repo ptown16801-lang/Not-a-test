@@ -1,0 +1,79 @@
+{
+  "schema": "neural-engine-wolfram-recheck-session/v1",
+  "request_local_date": "2026-09-07",
+  "timezone": "America/New_York",
+  "baseline_commit": "48f5a19f4434010e1e6def3c3086b98218183b1a",
+  "user_requirements": [
+    "Revisit previously inaccessible Wolfram work rather than making unsupported assumptions.",
+    "Preserve all earlier work and make change notes; do not overwrite existing artifacts.",
+    "Maintain scientific and non-scientific JSON histories of the entire project."
+  ],
+  "connector_rechecks": [
+    {
+      "tool": "WolframContext",
+      "execution": "attempted_this_session",
+      "result": "invalid_mcp_response",
+      "message": "MCP SSE probe returned 404 from wolfram.com",
+      "endpoint": "https://agenttools.wolfram.com/mcp",
+      "http_status": 404,
+      "kernel_computation_completed": false
+    },
+    {
+      "tool": "WolframLanguageEvaluator",
+      "execution": "attempted_this_session",
+      "requested_check": "Actual kernel version, arithmetic, symbolic differentiation, and TestReport availability.",
+      "result": "invalid_mcp_response",
+      "message": "MCP SSE probe returned 404 from wolfram.com",
+      "endpoint": "https://agenttools.wolfram.com/mcp",
+      "http_status": 404,
+      "kernel_computation_completed": false
+    }
+  ],
+  "alternative_access_checked": [
+    "Plugin directory lookup returned one installed/enabled Wolfram integration, not a separate working connection.",
+    "Local command lookup found no wolframscript, WolframKernel, or math executable; standard installation locations contained no Wolfram installation.",
+    "Direct GitHub cloning in the local environment failed DNS resolution; connected GitHub reads remained available."
+  ],
+  "historical_findings_to_verify_by_source_hash": [
+    {
+      "report": "mathematica/verification/results/wolfram-test-report.json",
+      "reported_at_utc": "2026-09-07T12:57:36Z",
+      "reported_tests": 31,
+      "reported_passes": 31,
+      "qualification": "Retrieved historical evidence, not newly executed in this session."
+    },
+    {
+      "report": "mathematica/verification/results/wolfram-validation.json",
+      "reported_at_utc": "2026-09-07T12:57:38Z",
+      "reported_checks": 28,
+      "reported_passes": 28,
+      "qualification": "Retrieved historical independent-publication report, not newly executed in this session."
+    }
+  ],
+  "unresolved_assumptions": [
+    {"item": "Authors' original MATLAB source and random seeds", "status": "not supplied by the publication/repository evidence reviewed", "resolution": "Remain unknown; Wolfram availability alone cannot recover them."},
+    {"item": "Original integration step, stopping threshold, Figure 4 input grid, and training lengths", "status": "explicit reconstruction choices in the project ledger", "resolution": "Keep labeled, do not silently turn chosen defaults into published parameters."},
+    {"item": "Fresh access to a licensed Wolfram kernel", "status": "blocked in this session", "resolution": "Use real kernel execution only; a stored report, wrapper version, or another algebra engine is not a substitute."}
+  ],
+  "plain_language_project_story": [
+    {"period": "Initial concept", "summary": "An interactive art environment grew from the window/cornfield idea: geometric thoughts can leave visible marks in a persistent field.", "evidence": "Available project conversation context; conceptual scope, not a claim about the original paper."},
+    {"period": "2026-09-05", "summary": "The project gained repeatable shape generation, eight allowed shape operations, and a history showing how one shape came from earlier shapes.", "evidence": "CHANGELOG.md"},
+    {"period": "2026-09-05", "summary": "Neural activity and text inputs were connected to geometric artwork. The text seed and the scientific network are separate parts of the system.", "evidence": "CHANGELOG.md"},
+    {"period": "2026-09-05", "summary": "The corn and clouds gained subtle movement. The dirt renderer gained rules for density, chronological placement, identities, and overwriting policies.", "evidence": "CHANGELOG.md"},
+    {"period": "2026-09-05", "summary": "Touch-temperature and sound features were built as dormant extensions. The documented temperature implementation covers 20 to 120 degrees Fahrenheit around 70, in 3-degree steps.", "evidence": "CHANGELOG.md; earlier spoken temperature wording should not be assumed identical to this implementation."},
+    {"period": "2026-09-05 to 2026-09-06", "summary": "The web interface, submission gateway, deployment setup, and floating viewer were added and repaired.", "evidence": "CHANGELOG.md"},
+    {"period": "2026-09-07", "summary": "The 2016 synesthesia model was independently reconstructed in JavaScript and Wolfram Language. The authors' original unpublished code and settings were not recovered.", "evidence": "mathematica/README.md; CHANGELOG.md"},
+    {"period": "2026-09-07", "summary": "Scientific audits corrected normalization, recurrent diagonal learning, tiny-number handling, and checkpoint comparisons while preserving the distinction between exact and approximate versions.", "evidence": "CHANGELOG.md"},
+    {"period": "2026-09-07", "summary": "Scaling experiments and the 600-neuron backpropagation tests were recorded. Large brief tests do not prove long-term performance, and recovering internal numeric inputs do not prove that a picture can be decoded.", "evidence": "CHANGELOG.md; docs/backpropagation-600.md"},
+    {"period": "This maintenance revision", "summary": "Wolfram access was retried, historical test reports were located for hash checking, and paired append-only project histories were introduced.", "evidence": "This session's connector results and the generated integrity manifests."}
+  ],
+  "conversation_milestones": [
+    {"date": "2026-09-07", "topic": "Separate fields for isolated crop-circle artworks and artworks that can overwrite prior work", "status": "user design direction; not newly implemented by this maintenance task"},
+    {"date": "2026-09-07", "topic": "Investigate inscriptions, messages, and relationships between art and an AI's internal representations", "status": "research direction; no claim of thought decoding"},
+    {"date": "2026-09-07", "topic": "Use a second agent to observe visual outputs and test whether useful inferences can be made", "status": "requested investigation; not a completed experiment in this revision"}
+  ],
+  "primary_documentation_checked": [
+    "https://www.wolfram.com/artificial-intelligence/mcp/local/wolfram-mcp-local/",
+    "https://support.wolfram.com/74530"
+  ]
+}
