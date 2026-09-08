@@ -15,6 +15,7 @@
     "logs:project": "node scripts/generate-project-log.js",
     "logs:all": "node scripts/generate-project-log.js && node scripts/generate-master-project.js",
     "test:mathematica": "node --test test/mathematica-rewrite.test.js",
+    "verify:wolfram": "node scripts/verify-wolfram.js",
     "smoke:deployment": "node --test test/deployment.test.js",
     "demo": "node demo/balance.js",
     "demo:dirt": "node demo/dirt-balance.js",
