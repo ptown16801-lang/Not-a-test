@@ -74,9 +74,10 @@ was separately run and correctly reported blocked. The full project suite and
 the successful live-Wolfram path were not rerun in this environment.
 
 No neural equations, numerical defaults, prior scientific outputs, benchmarks,
-or release version were changed. `MASTER_PROJECT.json` and `PROJECT_LOG.json`
-remain the prior release snapshots; this recheck is an additional record, not
-a regenerated complete release bundle.
+or release version were changed by this work. This change does not regenerate
+`MASTER_PROJECT.json` or `PROJECT_LOG.json`; their own provenance defines their
+snapshot scope. A concurrent addition of `test:backprop-600` to `package.json`
+was preserved when merging the new command.
 
 ## Unresolved assumptions and scientific limits
 
