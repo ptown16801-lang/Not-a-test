@@ -1,0 +1,41 @@
+name: Recover concurrent history and primary sources 9bd256
+on:
+  push:
+    branches: ['research/wolfram-history-20260908T015249Z-9bd256']
+    paths: ['.github/workflows/recover-history-9bd256.yml']
+permissions:
+  contents: read
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Recover pinned newly arrived history without modifying it
+        shell: bash
+        run: |
+          set -eu
+          mkdir evidence
+          git clone https://github.com/ptown16801-lang/Not-a-test.git project
+          cd project
+          git checkout --detach 690385543b3a1563ae58e9764d546e5d16e12ec1
+          git bundle create ../evidence/concurrent-repository.bundle --all
+          git archive --format=tar HEAD | gzip > ../evidence/concurrent-source.tar.gz
+          git show-ref > ../evidence/refs.txt
+          git status --porcelain=v1 > ../evidence/worktree.txt
+          cd ../evidence
+          date -u +%Y-%m-%dT%H:%M:%SZ > retrieved-at.txt
+          set +e
+          curl --fail --location --max-time 90 'https://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1004959&type=printable' -o primary-paper.pdf 2> paper-fetch.log
+          echo $? > paper-fetch.exit
+          curl --fail --location --max-time 90 'https://journals.plos.org/ploscompbiol/article/file?id=10.1371%2Fjournal.pcbi.1004959.s001&type=supplementary' -o primary-appendix.docx 2> appendix-fetch.log
+          echo $? > appendix-fetch.exit
+          set -e
+          sha256sum * > SHA256SUMS.txt
+      - name: Preserve evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: concurrent-history-9bd256-${{ github.run_id }}
+          path: evidence/
+          retention-days: 90
+          if-no-files-found: error
