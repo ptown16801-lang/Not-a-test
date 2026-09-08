@@ -1,0 +1,94 @@
+{
+  "schema": "neural-engine-progress-provenance/v1",
+  "record_type": "immutable_progress_snapshot",
+  "created_at_utc": "2026-09-08T04:33:37Z",
+  "created_at_local": "2026-09-08T00:33:37-04:00",
+  "preservation": {
+    "append_only": true,
+    "overwritten_files": [],
+    "rule": "Never silently replace prior project history, evidence, audit results, failed runs, uncertainty, or superseded interpretations. New records reference and, when needed, supersede earlier records explicitly.",
+    "source_state_is_frozen": true
+  },
+  "project": {
+    "name": "Shape Cognition Prototype / Neural Engine",
+    "repository": "https://github.com/ptown16801-lang/Not-a-test",
+    "branch": "main",
+    "declared_project_version": "0.8.0",
+    "source_commit": "4201e4da898aefd3f43a2654ea8a17ebc3f7c225",
+    "source_commit_time_utc": "2026-09-08T04:01:11Z"
+  },
+  "standards_basis": [
+    {"name":"W3C PROV","purpose":"Represent provenance as entities, activities, agents, derivation, attribution, versioning, and reproducible process history.","source":"https://www.w3.org/TR/prov-overview/"},
+    {"name":"FAIR Guiding Principles","purpose":"Keep research objects findable, accessible, interoperable, reusable, richly described, and associated with detailed provenance.","source":"https://doi.org/10.1038/sdata.2016.18"},
+    {"name":"RO-Crate","purpose":"Provide a future-compatible JSON-LD packaging model for research objects, files, software, workflows, people, and provenance.","source":"https://www.researchobject.org/ro-crate/"},
+    {"name":"Keep a Changelog","purpose":"Maintain a curated human-readable version history rather than treating raw Git commits as the changelog.","source":"https://keepachangelog.com/"},
+    {"name":"Semantic Versioning 2.0.0","purpose":"Use version numbers to communicate compatibility-impacting changes; do not mutate released versions.","source":"https://semver.org/"}
+  ],
+  "notation_policy": {
+    "layers": [
+      {"layer":"git","role":"Exact source-control chronology and file-level change evidence."},
+      {"layer":"CHANGELOG.md","role":"Human-curated notable release changes, grouped by change type."},
+      {"layer":"paired_history_snapshots","role":"Immutable synchronized scientific and non-scientific histories with matching event identifiers."},
+      {"layer":"progress_provenance","role":"Why work was done, what was learned, evidence strength, unresolved questions, dependencies, decisions, and supersession."},
+      {"layer":"scientific_evidence","role":"Claim audits, source ledgers, experiment outputs, test results, numerical verification, and error inventories."}
+    ],
+    "required_event_fields": ["event_id","occurred_at","event_type","summary","status","evidence","interpretation","uncertainty","artifacts","related_commits","supersedes","superseded_by"],
+    "event_types": ["concept","decision","implementation","experiment","verification","audit","bug_fix","integration","release","blocker","documentation"],
+    "status_vocabulary": ["proposed","implemented","verified","partially_verified","reported_not_reexecuted","blocked","skipped","failed","superseded","unknown"],
+    "scientific_claim_labels": ["observation","measured_result","reproduction","inference","hypothesis","engineering_decision","not_a_scientific_claim"],
+    "rules": [
+      "Use UTC ISO-8601 timestamps in machine records; local time may be added as secondary context.",
+      "Give every progress event a stable event_id.",
+      "Reference exact commits, artifact paths, test outputs, hashes, and source identifiers whenever available.",
+      "Separate raw evidence from interpretation.",
+      "Record failed, skipped, unavailable, and inconclusive work instead of omitting it.",
+      "When a conclusion changes, create a new record that explicitly supersedes the older interpretation; never rewrite history.",
+      "Do not treat a commit message or historical report as proof that a test was freshly executed.",
+      "Do not record secrets or credentials in provenance artifacts.",
+      "Distinguish exact paper reproduction from engineering extensions, approximations, and artistic interpretations.",
+      "At each release, bind release notes to a commit/tag and immutable evidence snapshot."
+    ]
+  },
+  "existing_preservation_system": {
+    "legacy_machine_history": ["PROJECT_LOG.json","MASTER_PROJECT.json"],
+    "human_release_history": ["CHANGELOG.md","RELEASE.md"],
+    "scientific_audit_assets": ["docs/scientific-source-ledger.json","docs/scientific-claim-audit.json","audit/WOLFRAM_ERROR_INVENTORY.json"],
+    "current_snapshot_pattern": "history/snapshots/<timestamp>-<source-commit>-<digest>/",
+    "paired_snapshot_files": ["SCIENTIFIC_HISTORY.json","NONSCIENTIFIC_HISTORY.json","CHANGE_NOTES.json","INTEGRITY.json"],
+    "note": "The paired-history mechanism already preserves earlier snapshots rather than overwriting them; this provenance snapshot complements that system."
+  },
+  "progress_summary": [
+    {
+      "period":"2026-09-05",
+      "phase":"Shape Cognition and persistent art environment",
+      "progress":["Initialized the Shape Cognition v0.7.0 line.","Built deterministic geometric thought operations and a derivation/history model.","Connected text and neural-state inputs to geometric/artistic rendering.","Built the dirt/cornfield renderer, environmental motion, web interface, deployment support, tests, and dormant sensory extensions."],
+      "claim_boundary":"These are engineering and artistic-system milestones, not evidence that the system reads thoughts."
+    },
+    {
+      "period":"2026-09-07",
+      "phase":"Scientific reconstruction and verification",
+      "progress":["Added an independent JavaScript and Wolfram Language reconstruction of the Shriki et al. 2016 synesthesia model.","Introduced publication-fidelity gates, source/claim audits, numerical checks, scaling measurements, and corrections to model details.","Recorded 600-neuron backpropagation work and scaling tests while preserving limits on what those tests establish.","Expanded whole-project history and integrity tracking."],
+      "claim_boundary":"Missing or unpublished original-paper settings remain unknown; independent reproduction is not identical to recovering the authors' original implementation."
+    },
+    {
+      "period":"2026-09-08",
+      "phase":"Wolfram audit, paired histories, and bounded Mathematica/OpenAI integration",
+      "progress":["Finalized and preserved Wolfram audit material and timestamped paired scientific/non-scientific histories.","Implemented scientific data contracts, an approved Wolfram tool layer, compact verification results, and a bounded OpenAI Responses integration.","Added integration contract tests, GPT/tool-request schemas, an OpenAI cost ledger, environment/error inventories, and an API artifact policy.","Recorded a Mathematica/OpenAI integration prototype and session evidence.","Scheduled an aggregate-integrity repair and generated a new paired history snapshot."],
+      "claim_boundary":"The repository records unresolved Wolfram MCP/local-runtime constraints for some live verification paths; implemented code paths must not be relabeled as live-tested where execution was skipped."
+    }
+  ],
+  "key_current_evidence": [
+    {"event_id":"git:cf7696d3cdd7d8a3a20f439038789699d622bc12","type":"verification","summary":"Validated Shriki fidelity and exact scaling.","status":"reported_not_reexecuted","evidence":["Git commit cf7696d3cdd7d8a3a20f439038789699d622bc12","historical project audit artifacts"],"interpretation":"Historical verification milestone preserved as evidence of what was recorded at the time.","uncertainty":"This provenance pass did not independently rerun the numerical suite.","artifacts":[],"related_commits":["cf7696d3cdd7d8a3a20f439038789699d622bc12"],"supersedes":[],"superseded_by":[]},
+    {"event_id":"git:b3d7f15750fea8666540712d72afe9beaebdf144","type":"audit","summary":"Finalized Wolfram audit and synchronized histories.","status":"implemented","evidence":["docs/wolfram-audit-final-2026-09-07.json","timestamped history snapshot"],"interpretation":"The project adopted explicit preservation of blockers, failures, uncertainty, and synchronized scientific/plain-language histories.","uncertainty":"Live Wolfram availability is environment-dependent and separately tracked.","artifacts":["docs/wolfram-audit-final-2026-09-07.json"],"related_commits":["b3d7f15750fea8666540712d72afe9beaebdf144"],"supersedes":[],"superseded_by":[]},
+    {"event_id":"git:8cad37408f4d7167684a80ca19cccf59d5e14c6e","type":"blocker","summary":"Recorded Wolfram/OpenAI error inventory.","status":"implemented","evidence":["audit/WOLFRAM_ERROR_INVENTORY.json"],"interpretation":"Known transport/runtime/credential and skipped-live-test conditions are explicitly preserved rather than hidden.","uncertainty":"Several integration paths remained unresolved or skipped at the recorded test time.","artifacts":["audit/WOLFRAM_ERROR_INVENTORY.json"],"related_commits":["8cad37408f4d7167684a80ca19cccf59d5e14c6e"],"supersedes":[],"superseded_by":[]},
+    {"event_id":"git:1af8f85fc0b5d01e3c41d243fe6b669ee2387570","type":"integration","summary":"Added bounded OpenAI Responses integration from the Wolfram side.","status":"implemented","evidence":["Git commit 1af8f85fc0b5d01e3c41d243fe6b669ee2387570","subsequent contract tests and schemas"],"interpretation":"The architecture now has a production-oriented direct API path with explicit data/tool contracts and cost logging.","uncertainty":"Implementation is distinct from successful authenticated live execution in every runtime.","artifacts":[],"related_commits":["1af8f85fc0b5d01e3c41d243fe6b669ee2387570","cea4dc21ea3a020c18de84bcfbe96c43e1f32dfe","b41ac0b7d1b539cb67127f544812c8e826d63723","28c86184e1b8b5dabcdc43492163dc28dd90f210"],"supersedes":[],"superseded_by":[]},
+    {"event_id":"git:4201e4da898aefd3f43a2654ea8a17ebc3f7c225","type":"documentation","summary":"Generated the latest paired history snapshot for source commit 9ab36fd0f1de5189431b703c8d53b73250bfa054.","status":"verified","evidence":["Git branch main head","history/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/"],"interpretation":"The project history system is operating as an additive snapshot mechanism.","uncertainty":"The later commit that stores a snapshot is necessarily not contained inside that snapshot's source history.","artifacts":["history/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/SCIENTIFIC_HISTORY.json","history/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/NONSCIENTIFIC_HISTORY.json","history/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/CHANGE_NOTES.json","history/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/INTEGRITY.json"],"related_commits":["4201e4da898aefd3f43a2654ea8a17ebc3f7c225"],"supersedes":[],"superseded_by":[]}
+  ],
+  "recommended_future_practice": {
+    "on_every_meaningful_work_session":["Add one immutable provenance event or snapshot referencing the exact source commit.","Record objective, activity, result, evidence, uncertainty, blockers, and next scientific question.","Link generated data/results by path plus SHA-256 where practical."],
+    "on_every_experiment":["Record code commit, parameters, random seed, runtime/software versions, input artifact hashes, outputs, metrics, pass/fail criteria, and whether the result was freshly executed or only retrieved.","Preserve failed and null results."],
+    "on_every_scientific_conclusion":["Link conclusion to source evidence and claim-audit entry.","Label confidence/evidence class.","Create an explicit supersession event if the interpretation later changes."],
+    "on_every_release":["Update the human changelog.","Apply the declared versioning policy.","Bind release/tag to an immutable paired history snapshot and integrity manifest.","Optionally emit RO-Crate JSON-LD metadata for archival/publication."]
+  },
+  "integrity": {"content_sha256_note":"The downloadable file SHA-256 is computed after serialization and reported alongside the file; this field intentionally does not self-hash the containing JSON."}
+}
