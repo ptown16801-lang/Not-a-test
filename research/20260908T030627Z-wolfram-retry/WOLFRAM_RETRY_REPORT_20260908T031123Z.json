@@ -1,0 +1,40 @@
+{
+  "schema": "neural-engine-wolfram-retry-report/1",
+  "generated_at": "2026-09-08T03:11:23Z",
+  "status": "DEPENDENCIES_INSTALLED_BUT_WOLFRAM_EXECUTION_BLOCKED_BY_ACTIVATION",
+  "connector": {
+    "status": "blocked",
+    "http_status": 404,
+    "kernel_execution": false
+  },
+  "linux": {
+    "os": "Ubuntu 24.04.4 LTS",
+    "engine": "15.0.0+20260602263",
+    "wolframscript": "1.14.0",
+    "status": "INSTALLED_BUT_ACTIVATION_REQUIRED",
+    "wolframscript_exit": 255,
+    "direct_kernel_exit": 70
+  },
+  "github": {
+    "branch": "research/wolfram-history-20260908T015249Z-9bd256",
+    "linux_probe_commit": "442c71bf7e84cd1ea55d82d189a5a3224ceb5a83",
+    "credential_probe_commit": "ad6363298b355345f112c3c3fdd2c9ed73a2ca69",
+    "linux_probe_run": 34182237548,
+    "credential_probe_run": 34182492680,
+    "artifact_id": 10039328079,
+    "artifact_sha256": "97aa0a6650797d19c7c8ea5001b6f2116363a9729f3d6ef176f6e4a10c4dc101"
+  },
+  "activation_probe": {
+    "credential_pair_found": false,
+    "entitlement_found": false,
+    "activation_key_found": false,
+    "secrets_exposed": false
+  },
+  "history": {
+    "version": "2.0.3",
+    "snapshot_id": "20260908T031123Z-020e85977c08-0853bb5e",
+    "validated": true,
+    "event_count": 154
+  },
+  "next_required_capability": "Authorized Wolfram activation or a repaired authenticated Wolfram connector."
+}
