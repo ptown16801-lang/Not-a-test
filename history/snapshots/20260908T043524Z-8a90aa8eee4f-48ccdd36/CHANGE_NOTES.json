@@ -1,0 +1,12 @@
+{
+  "action": "append_only_history_and_wolfram_recheck",
+  "model_equations_modified": false,
+  "legacy_files_overwritten": [],
+  "source_commit": "8a90aa8eee4f91f0f27abff9fabdc5bf390c329a",
+  "notes": [
+    "Added paired scientific/plain-language histories with matching event IDs.",
+    "Rechecked Wolfram availability and matched archived validation source hashes.",
+    "Preserved uncertainty, missing publication parameters, failed runs, and earlier snapshots.",
+    "Preserved legacy PROJECT_LOG.json and MASTER_PROJECT.json byte-for-byte."
+  ]
+}
