@@ -99,6 +99,11 @@
   "sourceHashes": {
     "scripts/verify-wolfram.js": "c9011a28e02766c574a393e486196f4233590a8009c41f6fe6271e3060b5833d",
     "test/wolfram-verification-gate.test.js": "3157eafefae6e7dde696546ca1979d50cea6f0f6cad6597e84887e46bc8774a9",
-    "package.json": "4fa9acb39a418db5a3059292009dc78be16b3b220a6d47f5e100ddea7958e9e2"
+    "package.json": "ebd8fd884cd49048c6942bc2f1a9f95e4bc398f1bbbcc20072bf42cf11b06420"
+  },
+  "integration": {
+    "commandCommit": "dd91dba2c13912a6f1a92427509da87efa6224da",
+    "concurrentBackpropagation600CommandPreserved": true,
+    "baselineScientificAuditNotReexecuted": true
   }
 }
