@@ -1,0 +1,88 @@
+name: One-shot project aggregate integrity repair
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-project-aggregates-once.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: neural-history-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out latest main with complete history
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          ref: main
+      - name: Set up Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Patch recursive aggregate handling and remove this one-shot workflow
+        run: |
+          git pull --ff-only origin main
+          git rm -- .github/workflows/refresh-project-aggregates-once.yml
+          python - <<'PY'
+          from pathlib import Path
+
+          project = Path('scripts/generate-project-log.js')
+          text = project.read_text()
+          old = "  {path: 'MASTER_PROJECT.json', reason: 'The master aggregate embeds this manifest and is generated after it; excluding the aggregate prevents a circular digest dependency.'},\n  {path: 'tmp/', reason: 'Ephemeral render and diagnostic files are not project artifacts.'}"
+          new = "  {path: 'MASTER_PROJECT.json', reason: 'The master aggregate embeds this manifest and is generated after it; excluding the aggregate prevents a circular digest dependency.'},\n  {path: 'history/snapshots/', reason: 'Immutable append-only history snapshots are archival containers and are excluded from the mutable legacy aggregate to prevent recursive re-embedding and geometric file growth.'},\n  {path: 'tmp/', reason: 'Ephemeral render and diagnostic files are not project artifacts.'}"
+          if old not in text:
+              raise SystemExit('project-log exclusion insertion point not found')
+          text = text.replace(old, new, 1)
+          old = "    relative !== 'MASTER_PROJECT.json' && !relative.startsWith('tmp/'))"
+          new = "    relative !== 'MASTER_PROJECT.json' && !relative.startsWith('history/snapshots/') &&\n    !relative.startsWith('tmp/'))"
+          if old not in text:
+              raise SystemExit('project-log file filter insertion point not found')
+          project.write_text(text.replace(old, new, 1))
+
+          master = Path('scripts/generate-master-project.js')
+          text = master.read_text()
+          old = "  .filter(relative => relative.endsWith('.json') && !excludedJson.has(relative))"
+          new = "  .filter(relative => relative.endsWith('.json') && !excludedJson.has(relative) &&\n    !relative.startsWith('history/snapshots/'))"
+          if old not in text:
+              raise SystemExit('master JSON filter insertion point not found')
+          text = text.replace(old, new, 1)
+          old = "    exclusions: [\n      {path: outputRelative, reason: 'Excluded to avoid self-reference.'}\n    ],"
+          new = "    exclusions: [\n      {path: outputRelative, reason: 'Excluded to avoid self-reference.'},\n      {path: 'history/snapshots/', reason: 'Immutable append-only history containers remain preserved separately and are excluded here to prevent recursive re-embedding and geometric aggregate growth.'}\n    ],"
+          if old not in text:
+              raise SystemExit('master exclusion metadata insertion point not found')
+          master.write_text(text.replace(old, new, 1))
+          PY
+      - name: Regenerate legacy project inventories
+        run: npm run logs:all
+      - name: Run full Node suite and retain TAP evidence
+        run: |
+          set +e
+          node --test test/*.test.js > "$RUNNER_TEMP/neural-node.tap" 2>&1
+          code=$?
+          set -e
+          tail -n 30 "$RUNNER_TEMP/neural-node.tap"
+          test "$code" = '0'
+      - name: Append paired scientific and non-scientific histories
+        id: snapshot
+        run: |
+          snapshot=$(python maintenance/v1/history.py --root . --output-root history/snapshots --session-evidence maintenance/v1/session-evidence.json --node-tap "$RUNNER_TEMP/neural-node.tap")
+          printf 'directory=%s\n' "$snapshot" >> "$GITHUB_OUTPUT"
+          echo "Created $snapshot"
+      - name: Commit repaired generators, aggregates, and history pair
+        env:
+          SNAPSHOT_DIRECTORY: ${{ steps.snapshot.outputs.directory }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- scripts/generate-project-log.js scripts/generate-master-project.js PROJECT_LOG.json MASTER_PROJECT.json "$SNAPSHOT_DIRECTORY"
+          git add -A -- .github/workflows/refresh-project-aggregates-once.yml
+          git commit -m 'fix(history): prevent recursive aggregate growth [skip ci]'
+          git push origin HEAD:main
