@@ -1,0 +1,83 @@
+name: Wolfram Streamable HTTP audit 20260907
+on:
+  push:
+    branches: [audit/wolfram-streamable-20260907-v1]
+    paths: [.github/workflows/wolfram-streamable-audit-20260907.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe documented public protocol without credentials
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/wolfram-transport-audit"
+          python - <<'PY'
+          import json, os, pathlib, urllib.request, urllib.error, datetime
+          endpoint = 'https://agenttools.wolfram.com/mcp'
+          headers = {'Content-Type':'application/json','Accept':'application/json, text/event-stream'}
+          report = {'schema':'neural-engine-wolfram-streamable-probe/v1',
+                    'checked_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                    'endpoint':endpoint,'transport':'Streamable HTTP','credentials_sent':False,
+                    'network_source':'GitHub-hosted runner','calls':[],
+                    'scientific_project_code_executed':False}
+          def rpc(method, params=None, ident=None):
+              payload={'jsonrpc':'2.0','method':method}
+              if ident is not None: payload['id']=ident
+              if params is not None: payload['params']=params
+              row={'method':method,'id':ident}
+              request=urllib.request.Request(endpoint,data=json.dumps(payload).encode(),headers=headers,method='POST')
+              try:
+                  with urllib.request.urlopen(request,timeout=30) as response:
+                      body=response.read(262144).decode(errors='replace')
+                      row.update(http_status=response.status,content_type=response.headers.get('Content-Type'),body=body)
+                      session=response.headers.get('Mcp-Session-Id')
+                      if session: headers['Mcp-Session-Id']=session
+              except urllib.error.HTTPError as exc:
+                  row.update(http_status=exc.code,content_type=exc.headers.get('Content-Type'),body=exc.read(8192).decode(errors='replace'))
+              except Exception as exc:
+                  row.update(error=type(exc).__name__,message=str(exc))
+              report['calls'].append(row)
+              if row.get('http_status') not in [200,202]: return None
+              body=row.get('body','')
+              try: return json.loads(body)
+              except ValueError:
+                  for line in body.splitlines():
+                      if line.startswith('data:'):
+                          try:
+                              obj=json.loads(line[5:].strip())
+                              if obj.get('id')==ident:return obj
+                          except ValueError:pass
+              return None
+          init=rpc('initialize',{'protocolVersion':'2025-03-26','capabilities':{},'clientInfo':{'name':'neural-engine-readonly-audit','version':'1.0'}},1)
+          if init and 'result' in init:
+              report['initialization_succeeded']=True
+              headers['MCP-Protocol-Version']=init['result'].get('protocolVersion','2025-03-26')
+              rpc('notifications/initialized')
+              listed=rpc('tools/list',{},2)
+              tools={tool['name']:tool for tool in (listed or {}).get('result',{}).get('tools',[])}
+              report['tool_names']=list(tools)
+              ctx=tools.get('WolframContext')
+              if ctx and 'context' in ctx.get('inputSchema',{}).get('properties',{}):
+                  rpc('tools/call',{'name':'WolframContext','arguments':{'context':'Read-only verification of access to a genuine Wolfram Language kernel for Neural Engine. Need kernel version and exact arithmetic. Do not claim project-model tests ran.'}},3)
+              ev=tools.get('WolframLanguageEvaluator')
+              if ev and 'code' in ev.get('inputSchema',{}).get('properties',{}):
+                  report['arithmetic_probe_requested']=True
+                  rpc('tools/call',{'name':'WolframLanguageEvaluator','arguments':{'code':'ExportString[<|"version"->$Version,"arithmetic"->(2+2),"derivative"->ToString[D[x^3,x],InputForm]|>,"RawJSON"]'}},4)
+          else:
+              report['initialization_succeeded']=False
+          output=pathlib.Path(os.environ['RUNNER_TEMP'])/'wolfram-transport-audit'/'streamable-http-probe.json'
+          with output.open('x') as stream:json.dump(report,stream,indent=2)
+          print(json.dumps({'initialization_succeeded':report['initialization_succeeded'],'http_statuses':[row.get('http_status') for row in report['calls']],'tools':report.get('tool_names',[])},indent=2))
+          PY
+      - name: Preserve diagnostic report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: wolfram-streamable-audit-${{ github.run_id }}
+          path: ${{ runner.temp }}/wolfram-transport-audit/
+          if-no-files-found: error
+          retention-days: 90
