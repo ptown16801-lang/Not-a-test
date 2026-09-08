@@ -1,0 +1,64 @@
+{
+  "schema": "neural-engine-paired-history/v1",
+  "snapshot_id": "20260908T031500Z-020e85977c08-wolfram-final",
+  "generated_at_utc": "2026-09-08T03:15:00Z",
+  "source_commit": "020e85977c0858b521772041781cec8b4f3f6140",
+  "project_version": "0.8.0",
+  "audit_revision": "0.8.0-audit.20260908.1",
+  "history_mode": "append_only_successor",
+  "prior_snapshot": {
+    "snapshot_id": "20260908T020523Z-0114d669a67b-e502f501",
+    "scientific_sha256": "7d59290b97b03935cdb84181236e433361aef6549446de9cff84c2a47e0a1b99",
+    "nonscientific_sha256": "8b36ff0af224ddd997fbc07e421f70433e137683c304cc34ea07f78c67b6ba67",
+    "change_notes_sha256": "6c8ea143a470dabe391ba965c511e14294f39ed83369ea0f52f71b244e11f5ec",
+    "coverage_through_commit": "0114d669a67b194271d8f8adf02b0fee3f07cb92"
+  },
+  "preservation": {
+    "legacy_files_overwritten": [],
+    "prior_snapshots_removed": [],
+    "model_equations_modified": false
+  },
+  "audience": "scientific",
+  "coverage": {
+    "scope": "Complete project history is represented as an append-only hash-linked chain: the prior full scientific snapshot plus commits/events from its coverage point through this audit completion.",
+    "new_commits_since_prior_snapshot": [
+      {
+        "commit": "020e85977c0858b521772041781cec8b4f3f6140",
+        "message": "docs(history): append paired histories for 0114d669a67b194271d8f8adf02b0fee3f07cb92 [skip ci]"
+      }
+    ],
+    "current_event_id": "audit:wolfram-final:20260908T031500Z"
+  },
+  "audit_event": {
+    "event_id": "audit:wolfram-final:20260908T031500Z",
+    "what_changed": [
+      "Retried WolframContext, WolframLanguageEvaluator, and WolframAlpha through the currently available Wolfram integration.",
+      "All three failed before computation with invalid_mcp_response and HTTP 404 from the shared MCP endpoint.",
+      "Classified the Wolfram MCP transport as an unresolved integration blocker and retained the prior local wolframscript ENOENT blocker.",
+      "Preserved archived 31/31 MUnit and 28/28 publication verification results as historical evidence only, not fresh execution.",
+      "Closed the audit phase for publication purposes without asserting that the blocked fresh rerun passed."
+    ],
+    "scientific_outcome": "Equation-level reconstruction remains supported by archived validated evidence; fresh independent live-kernel reproducibility is currently blocked by Wolfram access/integration, and author-unreported run choices remain underdetermined.",
+    "error_inventory_ref": "docs/wolfram-audit-final-2026-09-07.json",
+    "remaining_blockers": [
+      "Wolfram MCP transport currently returns HTTP 404 for context, evaluator, and Wolfram|Alpha actions.",
+      "No usable local wolframscript executable is available in the previously tested worker.",
+      "Author-unreported reconstruction choices remain scientifically underdetermined.",
+      "Fresh live-kernel rerun of the complete Wolfram verification suite remains outstanding."
+    ],
+    "resolved_or_ameliorated": [
+      "Wolfram-dependent mathematical reconstruction is implemented and has archived passing MUnit/publication-verification evidence.",
+      "A strict fail-closed Wolfram verification gate exists so missing Wolfram cannot be silently treated as a pass.",
+      "Source hashes and archived Wolfram validation artifacts were matched during the earlier audit sequence.",
+      "Paired scientific and non-scientific immutable histories are in place, with integrity manifests and preserved legacy PROJECT_LOG.json / MASTER_PROJECT.json.",
+      "The current retry distinguishes transport availability from mathematical correctness and records all failed attempts."
+    ],
+    "new_scientific_results": false
+  },
+  "version_notes": {
+    "softwareVersionChanged": false,
+    "softwareVersion": "0.8.0",
+    "auditRevision": "0.8.0-audit.20260908.1",
+    "reason": "Audit changes evidence/provenance state, not the model equations or runtime API."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "action": "complete_wolfram_audit_and_open_publication_gate",
+  "software_version": "0.8.0",
+  "audit_revision": "0.8.0-audit.20260908.1",
+  "source_commit": "020e85977c0858b521772041781cec8b4f3f6140",
+  "model_equations_modified": false,
+  "legacy_files_overwritten": [],
+  "notes": [
+    "Completed the requested Wolfram availability audit with fresh direct retries of all currently exposed Wolfram actions.",
+    "Recorded shared MCP HTTP 404 transport failure as unresolved rather than treating archived successful reports as a fresh pass.",
+    "Preserved prior local wolframscript ENOENT evidence, skipped verifications, archived passes, unresolved paper assumptions, and numerical-risk qualification.",
+    "Added synchronized scientific and non-scientific successor histories without deleting or modifying earlier snapshots.",
+    "Publication/update phase is permitted only after this audit-completion record."
+  ]
+}

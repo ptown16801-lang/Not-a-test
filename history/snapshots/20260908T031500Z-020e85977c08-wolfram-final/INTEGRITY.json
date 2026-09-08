@@ -1,0 +1,25 @@
+{
+  "schema": "neural-engine-history-integrity/v1",
+  "snapshot_id": "20260908T031500Z-020e85977c08-wolfram-final",
+  "source_commit": "020e85977c0858b521772041781cec8b4f3f6140",
+  "files": {
+    "WOLFRAM_AUDIT.json": {
+      "sha256": "146d95ff82d65c2be40788eca7b6294b3df4be025a61d568fba90e51f9c25d76",
+      "bytes": 6549
+    },
+    "SCIENTIFIC_HISTORY.json": {
+      "sha256": "474701a4df9dfcb5fc5e52e9bb9bc353f46980d4eacf1d3dfffec22c2b2d7812",
+      "bytes": 3954
+    },
+    "NONSCIENTIFIC_HISTORY.json": {
+      "sha256": "1169797129af0edf9738c9cf2f7e4c36b4a5d40312e2a7fa0721e40bb7b33cc2",
+      "bytes": 2587
+    },
+    "CHANGE_NOTES.json": {
+      "sha256": "6885dcc6047b93f77f7b8cd837ce2c9a26df011a5904602400a9f75d40894268",
+      "bytes": 957
+    }
+  },
+  "prior_snapshot_id": "20260908T020523Z-0114d669a67b-e502f501",
+  "pair_event_id": "audit:wolfram-final:20260908T031500Z"
+}

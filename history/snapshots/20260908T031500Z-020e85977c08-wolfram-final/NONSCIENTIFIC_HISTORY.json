@@ -1,0 +1,50 @@
+{
+  "schema": "neural-engine-paired-history/v1",
+  "snapshot_id": "20260908T031500Z-020e85977c08-wolfram-final",
+  "generated_at_utc": "2026-09-08T03:15:00Z",
+  "source_commit": "020e85977c0858b521772041781cec8b4f3f6140",
+  "project_version": "0.8.0",
+  "audit_revision": "0.8.0-audit.20260908.1",
+  "history_mode": "append_only_successor",
+  "prior_snapshot": {
+    "snapshot_id": "20260908T020523Z-0114d669a67b-e502f501",
+    "scientific_sha256": "7d59290b97b03935cdb84181236e433361aef6549446de9cff84c2a47e0a1b99",
+    "nonscientific_sha256": "8b36ff0af224ddd997fbc07e421f70433e137683c304cc34ea07f78c67b6ba67",
+    "change_notes_sha256": "6c8ea143a470dabe391ba965c511e14294f39ed83369ea0f52f71b244e11f5ec",
+    "coverage_through_commit": "0114d669a67b194271d8f8adf02b0fee3f07cb92"
+  },
+  "preservation": {
+    "legacy_files_overwritten": [],
+    "prior_snapshots_removed": [],
+    "model_equations_modified": false
+  },
+  "audience": "non_scientific",
+  "coverage": {
+    "scope": "This file continues the complete plain-language project history by pointing to the previous full snapshot and adding everything that changed after it.",
+    "current_event_id": "audit:wolfram-final:20260908T031500Z"
+  },
+  "audit_event": {
+    "event_id": "audit:wolfram-final:20260908T031500Z",
+    "summary": "The Wolfram audit is finished enough to proceed with publication, but the current Wolfram connection is still broken. Three separate Wolfram actions all hit the same HTTP 404 before any calculation ran. Earlier successful Wolfram test reports stay valid as saved historical evidence, but they were not pretended to be new runs.",
+    "what_was_fixed_or_improved": [
+      "The project now fails closed when Wolfram is missing instead of silently skipping it.",
+      "Prior successful Wolfram evidence and its hashes were preserved.",
+      "Scientific and plain-language histories remain synchronized and append-only.",
+      "The current transport failure is recorded explicitly."
+    ],
+    "what_is_still_blocked": [
+      "Fresh Wolfram calculations through the current MCP connection.",
+      "Fresh local Wolfram runs in workers without wolframscript.",
+      "Exact recovery of settings the original paper did not publish."
+    ],
+    "model_changed": false,
+    "software_version": "0.8.0",
+    "audit_revision": "0.8.0-audit.20260908.1"
+  },
+  "version_notes": {
+    "softwareVersionChanged": false,
+    "softwareVersion": "0.8.0",
+    "auditRevision": "0.8.0-audit.20260908.1",
+    "reason": "Audit changes evidence/provenance state, not the model equations or runtime API."
+  }
+}
