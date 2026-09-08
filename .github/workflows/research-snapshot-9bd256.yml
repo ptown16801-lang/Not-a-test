@@ -1,0 +1,46 @@
+name: Isolated research baseline 9bd256
+on:
+  push:
+    branches: ['research/wolfram-history-20260908T015249Z-9bd256']
+    paths: ['.github/workflows/research-snapshot-9bd256.yml']
+permissions:
+  contents: read
+jobs:
+  preserve-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Preserve pinned public repository and run regression suite
+        shell: bash
+        run: |
+          set -eu
+          mkdir evidence
+          git clone https://github.com/ptown16801-lang/Not-a-test.git project
+          cd project
+          git checkout --detach e82ac65d28274dec9b2594a7999cd62d6cda96a0
+          git status --porcelain=v1 > ../evidence/worktree-before.txt
+          git show-ref > ../evidence/refs.txt
+          git bundle create ../evidence/repository.bundle --all
+          git archive --format=tar HEAD | gzip > ../evidence/pinned-source.tar.gz
+          git log --all --date=iso-strict --format='%H%x09%P%x09%aI%x09%cI%x09%s' > ../evidence/git-history.tsv
+          { date -u +%Y-%m-%dT%H:%M:%SZ; uname -a; node --version; npm --version; python3 --version; command -v wolframscript WolframKernel MathKernel math || true; } > ../evidence/environment.txt
+          set +e
+          npm test > ../evidence/node-tests.tap 2>&1
+          echo $? > ../evidence/node-tests.exit
+          npm run verify:wolfram > ../evidence/wolfram-gate.log 2>&1
+          echo $? > ../evidence/wolfram-gate.exit
+          set -e
+          git status --porcelain=v1 > ../evidence/worktree-after.txt
+          cd ../evidence
+          sha256sum * > SHA256SUMS.txt
+          cat environment.txt
+          tail -n 18 node-tests.tap
+          cat node-tests.exit wolfram-gate.log wolfram-gate.exit
+      - name: Retain evidence without changing model or historical reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-baseline-9bd256-${{ github.run_id }}
+          path: evidence/
+          retention-days: 90
+          if-no-files-found: error
