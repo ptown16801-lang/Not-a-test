@@ -1,0 +1,10 @@
+{
+  "downloaded_script_sha256": "5a4b16e9eba21508999892f733b2d7c2ec9bdbc0114558799de9833f41896b6d",
+  "source_commit": "d02f1af72c9b90825065d856536476acd194ce83",
+  "all_parts_downloaded_from_github": true,
+  "complete_archive_sha256": "717f51cda085d7e7dcb579d22f5f10773a512182792b4b204cf58a5f2c3cde04",
+  "complete_archive_bytes": 105171853,
+  "byte_identical_to_original_distribution": true,
+  "zip_integrity_passed": true,
+  "elapsed_seconds": 64.085740085
+}
