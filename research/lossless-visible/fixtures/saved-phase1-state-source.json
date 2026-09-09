@@ -1,0 +1,84 @@
+{
+  "sourcePath": "/workspace/scratch/2a39ffd38648/neural-engine-phase1/experiments/phase1/confirmatory-run/records.jsonl.gz",
+  "record": {
+    "id": "sha256:f5b92d0badbfb8e64bc5fe81a25a81e829d8b798e4292d817ead7e7496e197b7",
+    "schema": "neural-state-measurement/v1",
+    "pipeline": "shared",
+    "stage": "neural-state",
+    "numeric": {
+      "format": "IEEE-754-binary64",
+      "negativeZero": "normalize-to-positive-zero",
+      "nonFinite": "reject",
+      "higherPrecision": "typed-string-with-explicit-precision",
+      "canonicalization": "ne-canonical-binary64/v1",
+      "hashing": "sha256/v1"
+    },
+    "parents": [
+      {
+        "role": "network",
+        "hash": "sha256:302657afd172e91b387bf75b1430ff99fdb74d682f121c5f6201f33e375f9d25"
+      },
+      {
+        "role": "trial",
+        "hash": "sha256:415be18af03e08862418d3bf3938f9089bffb6ee18b02bda5f94b2ff062dea84"
+      }
+    ],
+    "supersedes": null,
+    "payload": {
+      "trialId": "sha256:415be18af03e08862418d3bf3938f9089bffb6ee18b02bda5f94b2ff062dea84",
+      "steps": [
+        1,
+        2,
+        3
+      ],
+      "variables": "firing rates s_i after synchronous Euler updates",
+      "states": [
+        [
+          0.60430727463389,
+          0.537969743656332,
+          0.4351932759982222,
+          0.3971239908096569,
+          0.47265312513918023,
+          0.57699802980218,
+          0.5101299410752502,
+          0.581418424674743,
+          0.5848670285802247,
+          0.4940546784001175,
+          0.4090950609930486,
+          0.42339038895438774
+        ],
+        [
+          0.6523666501302143,
+          0.5681384655683883,
+          0.41616196942746975,
+          0.3495623055897866,
+          0.4482270763761519,
+          0.6013419389349489,
+          0.41780753662077763,
+          0.40246809118749777,
+          0.493149028336168,
+          0.5883558283574442,
+          0.585672189005659,
+          0.5204303577581916
+        ],
+        [
+          0.5994591516990033,
+          0.5954455446836584,
+          0.5020061627936954,
+          0.40410324745594695,
+          0.4246429012993961,
+          0.517629987306564,
+          0.557636629840745,
+          0.5579862811476742,
+          0.5200131124941748,
+          0.4465636371860381,
+          0.42693571291886956,
+          0.4959971865318624
+        ]
+      ],
+      "units": "dimensionless-firing-rate",
+      "coordinateSystem": "neuron-index"
+    }
+  },
+  "scope": "states only; steps, trial, network, parents and record identity excluded"
+}

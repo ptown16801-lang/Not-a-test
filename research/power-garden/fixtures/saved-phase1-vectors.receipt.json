@@ -1,0 +1,10 @@
+{
+  "scope": "only complete numeric vectors at the explicitly selected path",
+  "selected_path": "record.payload.states",
+  "complete_source_recoverable": false,
+  "omitted": "all other fields, parameters, metadata, weights, labels and history",
+  "source_path": "research/lossless-visible/fixtures/saved-phase1-state-source.json",
+  "source_sha256": "e8e33a9156f0dbd92f9f0760caa979f3938caaf7ffcd8932ce9d782b3548ffcd",
+  "scene_sha256": "38703bc034ce0202ba7b6900c548dac42f5fb5f9f6999b72c46484df4806f100",
+  "decoder_receives_receipt": false
+}

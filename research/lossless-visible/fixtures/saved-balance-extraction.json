@@ -1,0 +1,74 @@
+{
+  "sourcePath": "demo/balance-output.json",
+  "sourceSha256": "653b53858666680f1b4fc4e4a84fd2bda5ec242a1c02fe4ee57aa78df181ee1e",
+  "status": "explicit partial extraction",
+  "originalStreamRecoverable": false,
+  "omittedTopLevel": [
+    "schema",
+    "seed",
+    "operators",
+    "steps",
+    "active",
+    "render"
+  ],
+  "omitted": [
+    {
+      "index": 0,
+      "fields": [
+        "id",
+        "provenance",
+        "tags"
+      ],
+      "reason": "outside the primitive geometry contract"
+    },
+    {
+      "index": 1,
+      "field": "whole shape",
+      "reason": "derived geometry DAG has no exact primitive contract"
+    },
+    {
+      "index": 2,
+      "field": "whole shape",
+      "reason": "derived geometry DAG has no exact primitive contract"
+    },
+    {
+      "index": 3,
+      "fields": [
+        "id",
+        "provenance",
+        "tags"
+      ],
+      "reason": "outside the primitive geometry contract"
+    },
+    {
+      "index": 4,
+      "field": "whole shape",
+      "reason": "derived geometry DAG has no exact primitive contract"
+    },
+    {
+      "index": 5,
+      "field": "whole shape",
+      "reason": "derived geometry DAG has no exact primitive contract"
+    },
+    {
+      "index": 6,
+      "field": "whole shape",
+      "reason": "derived geometry DAG has no exact primitive contract"
+    },
+    {
+      "index": 7,
+      "field": "whole shape",
+      "reason": "derived geometry DAG has no exact primitive contract"
+    },
+    {
+      "index": 8,
+      "field": "whole shape",
+      "reason": "derived geometry DAG has no exact primitive contract"
+    },
+    {
+      "index": 9,
+      "field": "whole shape",
+      "reason": "derived geometry DAG has no exact primitive contract"
+    }
+  ]
+}

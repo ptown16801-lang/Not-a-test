@@ -1,0 +1,78 @@
+[
+  {
+    "QMP": {
+      "version": {
+        "qemu": {
+          "micro": 2,
+          "minor": 2,
+          "major": 8
+        },
+        "package": "Debian 1:8.2.2+ds-0ubuntu1.18"
+      },
+      "capabilities": [
+        "oob"
+      ]
+    }
+  },
+  {
+    "qmp_capabilities": {
+      "return": {}
+    }
+  },
+  {
+    "query-status": {
+      "return": {
+        "status": "running",
+        "singlestep": false,
+        "running": true
+      }
+    }
+  },
+  {
+    "query-version": {
+      "return": {
+        "qemu": {
+          "micro": 2,
+          "minor": 2,
+          "major": 8
+        },
+        "package": "Debian 1:8.2.2+ds-0ubuntu1.18"
+      }
+    }
+  },
+  {
+    "query-name": {
+      "return": {
+        "name": "Power-Garden-VM"
+      }
+    }
+  },
+  {
+    "query-cpus-fast": {
+      "return": [
+        {
+          "thread-id": 12,
+          "props": {
+            "core-id": 0,
+            "thread-id": 0,
+            "socket-id": 0
+          },
+          "qom-path": "/machine/unattached/device[0]",
+          "cpu-index": 0,
+          "target": "x86_64"
+        },
+        {
+          "thread-id": 13,
+          "props": {
+            "core-id": 1,
+            "thread-id": 0,
+            "socket-id": 0
+          },
+          "qom-path": "/machine/unattached/device[2]",
+          "cpu-index": 1,
+          "target": "x86_64"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,701 @@
+{
+  "timestamp": "2026-09-09T05:12:34.870210+00:00",
+  "repository": "ptown16801-lang/Not-a-test",
+  "source_path": "/workspace/scratch/2a39ffd38648/neural-engine-phase1",
+  "source_commit": "1d89ec7e1dd818020db0f9d0b0e177e598c29dff",
+  "branch": "research/phase1-separation-local",
+  "remote_main_verified": "c843381f671565ec7b96865bd7ec7f8b0f29e1b4",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 342,
+      "sha256": "1efcd9d85c78205702b6c91bd114098bfc6ca61b0f1bc49756a3cc9f02f41dee",
+      "stable_while_read": true
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 10167,
+      "sha256": "da7560dec9fcbb1078aecfb0cc630e0f64fc6a71ff014fb1f211159ce2af319e",
+      "stable_while_read": true
+    },
+    {
+      "path": "FINAL_VALIDATION.json",
+      "bytes": 37275,
+      "sha256": "a847a64dc877f14dc2bf9b5efdd26e64ea956e5504805fd8fcd5b1a10f9fcbe9",
+      "stable_while_read": true
+    },
+    {
+      "path": "MASTER_PROJECT.json",
+      "bytes": 39896046,
+      "sha256": "c933e683682158bc0ee7fa694c0e3dcf55903d765a777625804f1e4cd3166511",
+      "stable_while_read": true
+    },
+    {
+      "path": "PROJECT_LOG.json",
+      "bytes": 166910,
+      "sha256": "466d328c02aba060a45fb59364ec8f6ac369e1cc3c67b08fcc2358498fd7ac76",
+      "stable_while_read": true
+    },
+    {
+      "path": "README.md",
+      "bytes": 19449,
+      "sha256": "47ae05a6dad7c01e44d5e839fd87f164aa6f7dde868b8714233869cbf4ee4e94",
+      "stable_while_read": true
+    },
+    {
+      "path": "RELEASE.md",
+      "bytes": 4404,
+      "sha256": "ca71b02bcbdc0313792778c23c7f27ba953ef0bd3c43df1a416e1c636d58bfbb",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/.gitignore",
+      "bytes": 54,
+      "sha256": "b072609d9d38b6a0cc837cc220a373b5ef0ffba81e6083da349893d1ea30beaf",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/README.md",
+      "bytes": 2342,
+      "sha256": "14b2f009600e22747c3d61bde90fce402e3dd10c776c18b516224cde3738ff69",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/AndroidManifest.xml",
+      "bytes": 1125,
+      "sha256": "09dbc7f84f8437e1c66fefcaa1e103ccbfade4af916e27298a09cf1b012dd6f5",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/assets/web/app.js",
+      "bytes": 3733,
+      "sha256": "522dddcd1648f4a113e6718a9f0249d4b1f269e14855bde70c430f51569bbb1a",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/assets/web/favicon.svg",
+      "bytes": 454,
+      "sha256": "cf41f13929c9ed5fd8ca29067ab74d4ebb026919791b8c458680c162e2deca57",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/assets/web/index.html",
+      "bytes": 2703,
+      "sha256": "b2ce0b54ee0f24f98c16403c69c3c60c2c9763ba14207a585e64bd52ed77d4cc",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/assets/web/styles.css",
+      "bytes": 5414,
+      "sha256": "3df7077b564ff379054a2b2ee9d69c51d5a603778b1d704adbdcfde4c37cc455",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/java/org/neuralengine/asciicornfield/HttpAssetServer.java",
+      "bytes": 14400,
+      "sha256": "62dc883ec4576cc6242179e11a76aee19ebd5bc703ebded19d82c18cbba37c97",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/java/org/neuralengine/asciicornfield/MainActivity.java",
+      "bytes": 7541,
+      "sha256": "9cede762505a260d7417cf6accf149d85a8564f77d9862eca3cf6067897ee58f",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/res/drawable/ic_launcher.xml",
+      "bytes": 893,
+      "sha256": "b6b3171157ef94c49ae7db4e95e8eb7fadc7c87b5c34a30af36ac04cccdcc8c6",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/res/values/colors.xml",
+      "bytes": 197,
+      "sha256": "a9a94a093236bbc60b1d91058d2b8ee18257aae63f4d78a95a9791e413f24ead",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/res/values/strings.xml",
+      "bytes": 132,
+      "sha256": "44c66f4afe147692a4ed916b85198d2e85532a6919fedc78939e3725a473086b",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/res/values/styles.xml",
+      "bytes": 741,
+      "sha256": "bed58a7a36bc2d14e15c11cdcdfb421050bf7469fa5868692678a43291f91b1d",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/app/src/main/res/xml/network_security_config.xml",
+      "bytes": 342,
+      "sha256": "9187f485f22fde712aea8de5243664710440a9ee08e9f1b172978eef96a15001",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/scripts/build.sh",
+      "bytes": 5000,
+      "sha256": "257fc023ad40474185995e4e2e3647ab063b6fc3c2658925bf63736112e13088",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/scripts/create-asset-manifest.mjs",
+      "bytes": 1249,
+      "sha256": "761e34939e2b2c192e76a76549f7c016d195595847be3fdaad23b799ef35cecf",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/scripts/emulator-smoke.sh",
+      "bytes": 6763,
+      "sha256": "d6d8f604d78a8feb8379030d34e4079eaa32d3e6f12fa4d1f15cdd55a9a88dce",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/scripts/install.sh",
+      "bytes": 754,
+      "sha256": "a162d3edae7d1e7d30cf7217effa7082596fabed1ba7fcd94737de4a15e53579",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/scripts/test.sh",
+      "bytes": 1804,
+      "sha256": "742ef53e3fe86743c6293736b4691048b289abbe7e014635ce775d127f3f568b",
+      "stable_while_read": true
+    },
+    {
+      "path": "android/ascii-cornfield-app/tests/java/org/neuralengine/asciicornfield/ServerContractTest.java",
+      "bytes": 5956,
+      "sha256": "a1aefe75a2e4913b7c9239247ad8f2e717f8e72fedb0f07ab0d202caf13d8781",
+      "stable_while_read": true
+    },
+    {
+      "path": "docs/ascii-prototype.md",
+      "bytes": 1745,
+      "sha256": "d75bbcb83b6d91f10289b71dde907739451dfb2008abe9e6d8797e0163d4d078",
+      "stable_while_read": true
+    },
+    {
+      "path": "docs/phase1-architecture.md",
+      "bytes": 3846,
+      "sha256": "df3ec964b5bf2c55a5e76a4e12e466ff261acf3f9977bf48dad2a23fbff1d3e0",
+      "stable_while_read": true
+    },
+    {
+      "path": "docs/phase1-changed-files.json",
+      "bytes": 4203,
+      "sha256": "cd4b7a985cbe3a2c01aee939af5052a4c9a4da9a8132afa009614ccec01c6e64",
+      "stable_while_read": true
+    },
+    {
+      "path": "docs/phase1-method.md",
+      "bytes": 5975,
+      "sha256": "88553ebddb18a97f8a59049abf55d2a10d2911f040139368dc45f40e4e47689f",
+      "stable_while_read": true
+    },
+    {
+      "path": "docs/phase1-provenance.md",
+      "bytes": 4542,
+      "sha256": "b43dd31d9ee729a6c743d677134203c8b07eb4988de942edae33b86116425d86",
+      "stable_while_read": true
+    },
+    {
+      "path": "docs/phase1-report.md",
+      "bytes": 21211,
+      "sha256": "32fcf70de2d361bba75e2dc6ba345a6028fa899950eac436dd74d193634f78d0",
+      "stable_while_read": true
+    },
+    {
+      "path": "docs/phase1-summary.json",
+      "bytes": 13610,
+      "sha256": "7982f148b79d4b57b6b68bf8a5c3c316126effc9f9bceb06f70553c7709349c5",
+      "stable_while_read": true
+    },
+    {
+      "path": "docs/provenance-research-2026-09-08.md",
+      "bytes": 11842,
+      "sha256": "c880d450699e2cfd16dd11642884524d8bf6ba57617cbea960b25d520a580eaf",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/confirmatory-run/.canonical-records.jsonl.2nfCc8",
+      "bytes": 219676672,
+      "sha256": "d65122428540918335945f63c1ef3764f38c62fcea67b592020f2cc8b5591f8a",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/confirmatory-run/.canonical-records.jsonl.eIwY32",
+      "bytes": 270008320,
+      "sha256": "05cf5d0ce0ca6b9e66a8153782b93802744c1dc5538ec1502a9dfa6c305b2641",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/confirmatory-run/.records.jsonl.gz.prUYpp",
+      "bytes": 47185920,
+      "sha256": "638a3d405976778e17b80ef13d2d0991d933c10a48adec1cca599bcf810805e0",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/confirmatory-run/canonical-records.jsonl.gz",
+      "bytes": 73425974,
+      "sha256": "c3a42bd020267bb43ccbdc57b46920a4e364c4ad2a10bc8c7e741e8c211c6b51",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/confirmatory-run/dataset.jsonl.gz",
+      "bytes": 10320625,
+      "sha256": "8351baac1e2b0c16fa7fcf433a97db5b9a44a398c7b1f654aa3066b59d150d99",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/confirmatory-run/manifest.json",
+      "bytes": 8997,
+      "sha256": "b8283236d70ceb6548a9f8f9f1c00dfcb06f67e14fb521de8a66325c0684ded0",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/confirmatory-run/records.jsonl.gz",
+      "bytes": 59716986,
+      "sha256": "bf9198311f76f758f54af7f0453f27f0bd19fd13561ca2a72334c7e68c50b88e",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/decoding/decoders.jsonl.gz",
+      "bytes": 1822726,
+      "sha256": "729c70762f4f0facf7657cef941f3b0f555365d6471db62be9db5a090b1b0a17",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/decoding/predictions.jsonl.gz",
+      "bytes": 15379510,
+      "sha256": "0882dfcf39a5aea1d4c889f84fc386e4377c9829e3e9f78e2e1d608c5b541217",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/decoding/results.json",
+      "bytes": 892160,
+      "sha256": "b9e173faa220b11eff43f8f3faa5ab2a80ba7738db7595ec958c233e25029ede",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/registration.json",
+      "bytes": 4828,
+      "sha256": "b2b6ed448b1a13202aa795f8bc26b103a152351cca43a89109c002c3150aab79",
+      "stable_while_read": true
+    },
+    {
+      "path": "experiments/phase1/specification.json",
+      "bytes": 7563,
+      "sha256": "fababb68753e7fcd1e2388d5fe5a2e9bde236e05e7823e5e6cae2ecf38113afe",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091419Z-1d89ec7e1dd8-phase1-local/CHANGE_NOTES.json",
+      "bytes": 14973,
+      "sha256": "d8c6da562de821e40e1fbd1ce86815b992034760d4bc65427f68ac6a72240337",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091419Z-1d89ec7e1dd8-phase1-local/INTEGRITY.json",
+      "bytes": 724,
+      "sha256": "83c7e20c9601905290d3b3fe3919999bf93eb76e61fd938f53fa3cf2665d7eda",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091419Z-1d89ec7e1dd8-phase1-local/NONSCIENTIFIC_HISTORY.json",
+      "bytes": 69780,
+      "sha256": "53345af5b500ca097798f9c36eb6641552af8ca479baa56adcff00bd298d4300",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091419Z-1d89ec7e1dd8-phase1-local/SCIENTIFIC_HISTORY.json",
+      "bytes": 115075,
+      "sha256": "35e70723c0a63a84910673412710188d8ea56e2e7ce7a427b5794b01a7b274fc",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091450Z-1d89ec7e1dd8-phase1-local/CHANGE_NOTES.json",
+      "bytes": 15220,
+      "sha256": "a5a88e44332eb72a754535ebca18aeac83f28d791e92004f719dbc98667ba867",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091450Z-1d89ec7e1dd8-phase1-local/INTEGRITY.json",
+      "bytes": 724,
+      "sha256": "027b7678f26c23537fa3dc529219aeeb13d475f3bc4fcdbc085a06f453dc3599",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091450Z-1d89ec7e1dd8-phase1-local/NONSCIENTIFIC_HISTORY.json",
+      "bytes": 71365,
+      "sha256": "ecbefd39a9dbc660bb4fe692d273cf7dc455bcc0d713e8eeba20262e2faff296",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091450Z-1d89ec7e1dd8-phase1-local/SCIENTIFIC_HISTORY.json",
+      "bytes": 116907,
+      "sha256": "96a177f0b579af5950b9958a7ce137728707f24a8da92ec2e83b05ebe87646a2",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091939Z-1d89ec7e1dd8-phase1-local/CHANGE_NOTES.json",
+      "bytes": 15220,
+      "sha256": "a5a88e44332eb72a754535ebca18aeac83f28d791e92004f719dbc98667ba867",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091939Z-1d89ec7e1dd8-phase1-local/INTEGRITY.json",
+      "bytes": 724,
+      "sha256": "c448d4d36600c1f0f7ab07047149ac9fecec63422bde0d4aac249e5c6f514d0b",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091939Z-1d89ec7e1dd8-phase1-local/NONSCIENTIFIC_HISTORY.json",
+      "bytes": 72742,
+      "sha256": "6b0ac968f1a4ae0604dc89a423fef724eed0dfc96499b05ae25080ea5c391ad9",
+      "stable_while_read": true
+    },
+    {
+      "path": "history/snapshots/20260908T091939Z-1d89ec7e1dd8-phase1-local/SCIENTIFIC_HISTORY.json",
+      "bytes": 118284,
+      "sha256": "606e0539a8d7f0c65c4124ac45df37ac77ef5c28ac13942652e4acd6efff4859",
+      "stable_while_read": true
+    },
+    {
+      "path": "package.json",
+      "bytes": 1542,
+      "sha256": "4f8de96cb5c21c98bc3f15893e097e7250d461755ce172774e2a7c2d312a671b",
+      "stable_while_read": true
+    },
+    {
+      "path": "preservation/hybrid-v0.8.0-1d89ec7e1dd8/BASELINE.json",
+      "bytes": 37653,
+      "sha256": "3ee6738115554bd9ef96ac5fc7f7f3854c04446728a133551bd8e31f8ec25dfa",
+      "stable_while_read": true
+    },
+    {
+      "path": "preservation/hybrid-v0.8.0-1d89ec7e1dd8/history.bundle",
+      "bytes": 1589320,
+      "sha256": "88a492f0f29a65a0b240a0602c103ea0ac6be91649cfc7b3c94e9254aaf087a1",
+      "stable_while_read": true
+    },
+    {
+      "path": "preservation/hybrid-v0.8.0-1d89ec7e1dd8/source.tar.gz",
+      "bytes": 4670784,
+      "sha256": "c98a36d6f2fc67a5f824e50c0718d688f862517e87553a8b26cc8523de9bc1cf",
+      "stable_while_read": true
+    },
+    {
+      "path": "preservation/phase1-registered-source.tar.gz",
+      "bytes": 74802,
+      "sha256": "8a7ea5885ebf6865536fcfe5fb386444c8fe95887536b5bbad4fb23875519654",
+      "stable_while_read": true
+    },
+    {
+      "path": "prototypes/ascii-cornfield/cli.js",
+      "bytes": 2761,
+      "sha256": "df6ef4a9ff97d3d798201c942a7b6de13ecc1c6f4b781d735572e7be0fb1e995",
+      "stable_while_read": true
+    },
+    {
+      "path": "prototypes/ascii-cornfield/package.json",
+      "bytes": 141,
+      "sha256": "6af574abc11f9d1c0ad7b154e5e18e09c2fb31aff2d97bda4c9de468b682b913",
+      "stable_while_read": true
+    },
+    {
+      "path": "prototypes/ascii-cornfield/prototype.js",
+      "bytes": 3883,
+      "sha256": "a0c4bafa51157aad66747e6f4560596e1a9409aa245dd8281cefd49c8270395b",
+      "stable_while_read": true
+    },
+    {
+      "path": "prototypes/ascii-cornfield/renderer.js",
+      "bytes": 10377,
+      "sha256": "f59ef99b5f1e64c9267ee7c773956c62c8574e54b3b071f71533b14f90c563a9",
+      "stable_while_read": true
+    },
+    {
+      "path": "prototypes/ascii-cornfield/runtime/engine.js",
+      "bytes": 13241,
+      "sha256": "fa68ff114dce95c3d25ce132e8d51825f9c937dac9201ad6e023f62311d9e51b",
+      "stable_while_read": true
+    },
+    {
+      "path": "prototypes/ascii-cornfield/runtime/provenance.js",
+      "bytes": 7649,
+      "sha256": "aaa8119ac559376849c0287248b9993c72e189f732f13533aa968b6150149019",
+      "stable_while_read": true
+    },
+    {
+      "path": "prototypes/ascii-cornfield/runtime/text-perception.js",
+      "bytes": 5557,
+      "sha256": "7fbb4d2a1801c10e473ef9b7a90523804c1d62c9c97618f9de4a67ba63888236",
+      "stable_while_read": true
+    },
+    {
+      "path": "prototypes/ascii-cornfield/runtime/types.js",
+      "bytes": 1649,
+      "sha256": "d1f2b220a073f5d116cbe773e6fe27a721fef9b410650c1aacd55fec11c1ffa8",
+      "stable_while_read": true
+    },
+    {
+      "path": "prototypes/ascii-cornfield/server.js",
+      "bytes": 6453,
+      "sha256": "deb9cad0f8653f839b676d6c92acd8d996fb7223e27fa55a82f785f66f5f2659",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/append-phase1-history.py",
+      "bytes": 5078,
+      "sha256": "42808edd24ceba520067b7e9bb4590f2217eb2a14bd86eca410143d69ee1606b",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/generate-master-project.js",
+      "bytes": 9354,
+      "sha256": "733ae7e2012d193b9f3a057d725eb58bf02d0f6755d55ceea1524afa1c4e156e",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/generate-project-log.js",
+      "bytes": 18577,
+      "sha256": "ffbc6c6c8d9ae27607278530d4a4cdc2ea14705a8c763bdd9ccc0dac4838c48d",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/phase1/build-corpus.js",
+      "bytes": 2895,
+      "sha256": "4e992059d9f0116e4c658cfba751090f6b2a7ade3af5207a71f755874a4a9a90",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/phase1/canonical.py",
+      "bytes": 1442,
+      "sha256": "710c825e3d2de229772032a46a80151f8a1d154b0599d082b877bca1387faa99",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/phase1/common.js",
+      "bytes": 2679,
+      "sha256": "488da3ee82a2f9c8ff7affc9825b6fb5f7c9bb66fb49159cec56fdc39b50e691",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/phase1/decode.py",
+      "bytes": 8841,
+      "sha256": "e0cf32f87d68244fcc496eb37933dfddd8a4bf46544cedc05d72f88853a31577",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/phase1/run.js",
+      "bytes": 12523,
+      "sha256": "5cd74d9b8526e5d30d3249268c4bc3d342920beef8c40eb755283ec1249934f3",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/phase1/test_decode.py",
+      "bytes": 1234,
+      "sha256": "153bddbdd8f9c26a9379a0170be05c31f486aac95b69ea57145af427792e5a75",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/phase1/verify-corpus.py",
+      "bytes": 3956,
+      "sha256": "2954e1b80b7bee97fa3953aaf9cc4b6a03fe5cf3007ab9a83caddaad5093ed49",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/summarize-phase1.py",
+      "bytes": 5425,
+      "sha256": "0ff0774f66bab2593222703ffd89500838a97256c4bc2a89a75b3ac73393c0d6",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/verify-phase1-archive.py",
+      "bytes": 2882,
+      "sha256": "89df72381661ac939a4346ed9e6f50e9bbf96afc006b6eaaa3d44e72f7203385",
+      "stable_while_read": true
+    },
+    {
+      "path": "scripts/write-phase1-report.py",
+      "bytes": 15495,
+      "sha256": "22153af19f479c2d2b8e6e876e9f3ad0eab2ab76e9b72b629049f8ea3e9631b0",
+      "stable_while_read": true
+    },
+    {
+      "path": "src/dirt-renderer.js",
+      "bytes": 17048,
+      "sha256": "825a52edc157ea1ad0b10bf510eb1d32f8c47fac16d841f1b18b97b0a0ceb010",
+      "stable_while_read": true
+    },
+    {
+      "path": "src/engine.js",
+      "bytes": 13241,
+      "sha256": "fa68ff114dce95c3d25ce132e8d51825f9c937dac9201ad6e023f62311d9e51b",
+      "stable_while_read": true
+    },
+    {
+      "path": "src/neural-shape-bridge.js",
+      "bytes": 6414,
+      "sha256": "1b157aa787d363d6b716334d4b414d4b95b1d15d9c6b88587ef4e27a4ef23ba4",
+      "stable_while_read": true
+    },
+    {
+      "path": "src/numerical-gates.js",
+      "bytes": 5669,
+      "sha256": "cf3f818a3e0b2e3e37cbdc81dab382e98fed846f82d45dd478fa8d473cc78f1c",
+      "stable_while_read": true
+    },
+    {
+      "path": "src/provenance.js",
+      "bytes": 7649,
+      "sha256": "aaa8119ac559376849c0287248b9993c72e189f732f13533aa968b6150149019",
+      "stable_while_read": true
+    },
+    {
+      "path": "src/random-streams.js",
+      "bytes": 1270,
+      "sha256": "46dc89a67a72cd945a2ee9d99feedfee1690909812ea1aad5a87af285647616b",
+      "stable_while_read": true
+    },
+    {
+      "path": "src/scientific-trace.js",
+      "bytes": 3867,
+      "sha256": "d57d1308c9eed7273f30f89dd152cfeae04844c089d16219e63490f28d7155f4",
+      "stable_while_read": true
+    },
+    {
+      "path": "src/thought-intake.js",
+      "bytes": 11890,
+      "sha256": "3ebddc34d1b97c34fadd3b501e60f0839d2228a038c8c546d247195a50ebb589",
+      "stable_while_read": true
+    },
+    {
+      "path": "test/android-ascii-app.test.js",
+      "bytes": 2517,
+      "sha256": "2a567253d6b6d59f1aef2df3b7ae738900f1a64c9fc9b268544bc52cf34ad68e",
+      "stable_while_read": true
+    },
+    {
+      "path": "test/ascii-prototype.test.js",
+      "bytes": 4456,
+      "sha256": "39fd699c8a15fc5311f90a8b6a2cc08545a993ce9c9d1706ed0059bc858b5c8b",
+      "stable_while_read": true
+    },
+    {
+      "path": "test/engine.test.js",
+      "bytes": 1788,
+      "sha256": "8876d907d0e61d551d8f27112375a71b7f018279a32b3b9eb6b1128b2d3c4dc7",
+      "stable_while_read": true
+    },
+    {
+      "path": "test/phase1-archive.test.js",
+      "bytes": 2339,
+      "sha256": "4e9debc4f66a1d927be92849433e8bee863839a523d9c9f8957aaadd88734848",
+      "stable_while_read": true
+    },
+    {
+      "path": "test/phase1.test.js",
+      "bytes": 10050,
+      "sha256": "0cb9e75d05500d92235e7a7279ff3fdc39dd4c39a085d7f511c3cd7dda944bd0",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/Verify.wls",
+      "bytes": 2552,
+      "sha256": "ec933bc45fad80e739618e376bd5fa16e40f2ba9f51bea44254f0fa103473069",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/archive-tests.txt",
+      "bytes": 504,
+      "sha256": "3fc15d78363235ae868536b7e9c86db0cc8302b276461ee279a2665af27e6f80",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/baseline-tests-concurrent-fatal.tap",
+      "bytes": 613,
+      "sha256": "d00f64dc2278a3285617b88a2451a71c243038d70c1626b75d098f88b4fd288d",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/baseline-tests.tap",
+      "bytes": 11810,
+      "sha256": "230e373aff3b09b66e5901bec7318860b4f98f1acc5c397dc08b842e8f487719",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/complete-tests.txt",
+      "bytes": 12086,
+      "sha256": "c615e898a4e91185325f255cc3a5cd9c0c98601df94f0255f1e3f10021d0327e",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/corpus.json",
+      "bytes": 25120,
+      "sha256": "3c2c849e36fcffa28f46ef824c53a3f5712158fb8e9ac6c151aad1830ba80189",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/decoder-unit-tests.log",
+      "bytes": 102,
+      "sha256": "ccf7b54f144d3e9682c95e71a54d347376487292982197f61b4f9bb2d6f65cc8",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/environment.json",
+      "bytes": 2388,
+      "sha256": "19e29ce32560098a2b8a9a1b33a1667b0d52a365c3c32fc47c6ea26ae9c2532b",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/error-inventory.json",
+      "bytes": 3213,
+      "sha256": "1ba167c11902c58f39f3a8957007c28d3d5e4a911ea398a3705877141c25c60a",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/history-tests.log",
+      "bytes": 1161,
+      "sha256": "98b9f5ded4140bb807b12b372027dc7a065d1f83878d169c62e7283bb0313064",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/implementation-tests-attempt1.tap",
+      "bytes": 14378,
+      "sha256": "f351de7073e6615c20ccd0786c10183e1d28ff1bacf98efe4a205df46b841739",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/phase1-preflight.tap",
+      "bytes": 2010,
+      "sha256": "795ad2f1a92a83527508f89fafd2ee01f705e88e3c3633ac10f057470c305837",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/phase1-unit-attempt1.tap",
+      "bytes": 1761,
+      "sha256": "3e36893aca8b97a7d645178aaf870cea1c18ab6caf36c180a1b8fe6c1c643e88",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/python-verification.json",
+      "bytes": 4609,
+      "sha256": "69a9a9850835498d31a79dd20902470434756cc04ee39df04f0d2d50519cdda2",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/replay-audit.json",
+      "bytes": 14637,
+      "sha256": "87ef7c56e8c8828516eb760d282d856402e37ce1012c0e678ef40b0369083b3c",
+      "stable_while_read": true
+    },
+    {
+      "path": "verification/phase1/wolfram-probe.json",
+      "bytes": 514,
+      "sha256": "17dbb0cdb099bf0df4f8aff2f0ddc712eaec743cf9462619258aef2ebcedd770",
+      "stable_while_read": true
+    }
+  ],
+  "status_stable": true
+}

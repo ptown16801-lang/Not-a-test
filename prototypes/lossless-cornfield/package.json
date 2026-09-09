@@ -1,0 +1,8 @@
+{
+  "name": "neural-engine-visible-renderer-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python3 preview.py --host 0.0.0.0"
+  }
+}

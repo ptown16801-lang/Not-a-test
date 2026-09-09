@@ -1,0 +1,9 @@
+{
+  "command": "python maintenance/v1/test_history.py",
+  "returncode": 0,
+  "tests_run": 10,
+  "duration_seconds": 6.436,
+  "result": "OK",
+  "source": "captured execution output, 2026-09-09",
+  "qualification": "history machinery only; no neural engine executed"
+}

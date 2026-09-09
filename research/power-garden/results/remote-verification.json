@@ -1,0 +1,12 @@
+{
+  "checked_at_utc": "2026-09-09T07:37:46.681527+00:00",
+  "repository": "ptown16801-lang/Not-a-test",
+  "repository_id": "1356871190",
+  "visibility": "public",
+  "default_branch": "main",
+  "remote_main": "c843381f671565ec7b96865bd7ec7f8b0f29e1b4",
+  "commit_url": "https://github.com/ptown16801-lang/Not-a-test/commit/c843381f671565ec7b96865bd7ec7f8b0f29e1b4",
+  "evidence": "GitHub repository metadata and GET branches/main connector results",
+  "remote_mutations": false,
+  "supersedes_initial_recovery_limitation": "Public web page failed, but authenticated repository API subsequently verified remote main"
+}

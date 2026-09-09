@@ -1,0 +1,82 @@
+{
+  "schema": "visible-cornfield/v1",
+  "shapes": [
+    {
+      "geometry": {
+        "kind": "disk",
+        "center": [
+          0,
+          0
+        ],
+        "radius": 0.18
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 1,
+        "edges": [],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          5.555556
+        ],
+        "symmetry": [
+          "radial"
+        ],
+        "bounds": [
+          -0.18,
+          -0.18,
+          0.18,
+          0.18
+        ]
+      },
+      "depth": 0,
+      "createdAtStep": 0
+    },
+    {
+      "geometry": {
+        "kind": "segment",
+        "a": [
+          -0.62,
+          0
+        ],
+        "b": [
+          0.62,
+          0
+        ]
+      },
+      "topology": {
+        "dimension": 1,
+        "nodes": 2,
+        "edges": [
+          [
+            0,
+            1
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0
+        ],
+        "symmetry": [],
+        "bounds": [
+          -0.62,
+          0,
+          0.62,
+          0
+        ]
+      },
+      "depth": 0,
+      "createdAtStep": 0
+    }
+  ],
+  "states": []
+}

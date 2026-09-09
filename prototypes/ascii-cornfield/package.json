@@ -1,0 +1,8 @@
+{
+  "name": "neural-engine-ascii-cornfield-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js"
+  }
+}

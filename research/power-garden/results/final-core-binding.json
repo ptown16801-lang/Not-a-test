@@ -1,0 +1,15 @@
+{
+  "run_01_core_unchanged": true,
+  "core_sha256": {
+    "apps/power-garden/render.py": "31ef93f2011ee546cc7ef306a2cd4766ddd01303104ab809453d9e54b82baadd",
+    "apps/power-garden/contract.py": "f924f418c1c3f30a7c09e17e227287ed6d47cfd2ef435d5a2537fd3e965dc87d",
+    "apps/power-garden/inverse.mjs": "f16e41dde1e95f6a07d2a774a7e72c89e0a8cebaef8b848bd66776c1a0995a1d"
+  },
+  "changed_since_run_01": [
+    "app.py: fresh process permission wrapper added",
+    "CONTRACT.md: single-vector capacity corrected from 2376 to 2382",
+    "validate.py: faulty capacity expectation corrected"
+  ],
+  "followup": "followup-01/results.json",
+  "run_01_failure_preserved": true
+}

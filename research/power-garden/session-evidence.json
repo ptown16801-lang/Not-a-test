@@ -1,0 +1,47 @@
+{
+  "event_id": "power-garden-20260909-standalone-v1",
+  "project": "Neural Engine / Shape Cognition",
+  "engineering_status": "implemented and executed for the declared finite geometry/vector domain",
+  "scientific_status": "not validated; no neural or semantic improvement claim",
+  "old_engine_executed": false,
+  "native_cases": 47,
+  "scalar_occurrences": 14675,
+  "final_assertions_passed": 66,
+  "final_assertions_failed": 0,
+  "altered_observations_measured": 39,
+  "starting_revision": "17b6bb7201440239ae3f0c1983f7ca262cfc84de",
+  "remote_main_observed": "c843381f671565ec7b96865bd7ec7f8b0f29e1b4",
+  "executed_revision": "0c967cf82b17485ff291876b2228972b7bf149bb",
+  "maximum_single_vector_values": 2382,
+  "maximum_native_dimensions": [
+    1712,
+    35280
+  ],
+  "preserved_negative_results": [
+    "initial off-by-one capacity expectation",
+    "strict JSON large-integer output defect, repaired and full suite rerun",
+    "one complete leaf deletion silently changes a value",
+    "JPEG Q50 and below failed on the measured sample",
+    "actual screenshot and native desktop execution blocked"
+  ],
+  "unsupported": [
+    "complete Shape Cognition stream and derived DAG",
+    "complete neural checkpoint including 600x600 weights",
+    "arbitrary strings, tags and extra attributes",
+    "nonfinite values and inexact integer conversion",
+    "source sentence recovery"
+  ],
+  "plain_language_project_story": [
+    "A completely new standalone renderer represents each supplied number with visible corn leaves at fixed powers of two.",
+    "An independent decoder recovered all supported fields using only PNG pixels.",
+    "Saved 600-neuron vectors and complex paths passed; full engine histories and weights are not reconstructed.",
+    "Two discovered test/interface problems were preserved and corrected; the final suite passed.",
+    "Original files remain unchanged; the new work is on an isolated local branch."
+  ],
+  "evidence_paths": [
+    "research/power-garden/REPORT.md",
+    "research/power-garden/results/run-02/results.json",
+    "research/power-garden/results/final-core-binding-02.json",
+    "research/power-garden/results/environment-limits.json"
+  ]
+}

@@ -1,0 +1,13 @@
+test_01_all_primitive_kinds_and_topology (__main__.VisibleRendererTests.test_01_all_primitive_kinds_and_topology) ... ok
+test_02_transform_order_attribute_distinctions (__main__.VisibleRendererTests.test_02_transform_order_attribute_distinctions) ... ok
+test_03_binary64_exponents_adjacent_and_random (__main__.VisibleRendererTests.test_03_binary64_exponents_adjacent_and_random) ... ok
+test_04_exhaustive_reduced_domain_and_morphology (__main__.VisibleRendererTests.test_04_exhaustive_reduced_domain_and_morphology) ... ok
+test_05_project_fixtures (__main__.VisibleRendererTests.test_05_project_fixtures) ... ok
+test_06_degenerate_and_capacity (__main__.VisibleRendererTests.test_06_degenerate_and_capacity) ... ok
+test_07_unsupported_rejected_without_output (__main__.VisibleRendererTests.test_07_unsupported_rejected_without_output) ... ok
+test_08_export_reopening_and_transforms (__main__.VisibleRendererTests.test_08_export_reopening_and_transforms) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 173.553s
+
+OK

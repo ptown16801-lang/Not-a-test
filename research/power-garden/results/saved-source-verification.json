@@ -1,0 +1,14 @@
+{
+  "phase1_record_found_and_equal": true,
+  "phase1_gzip_line": 6,
+  "phase1_source": "/workspace/scratch/2a39ffd38648/neural-engine-phase1/experiments/phase1/confirmatory-run/records.jsonl.gz",
+  "phase2_npz_dtype": "float64",
+  "phase2_array_shape": [
+    128,
+    13,
+    12
+  ],
+  "phase2_source_sha256": "050ec63442cad10ea8cc956b7121e44e104ea52712ede5464ded05c0cb8f4172",
+  "phase2_matches_previous_source_hash": true,
+  "old_engine_executed": false
+}

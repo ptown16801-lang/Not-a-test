@@ -1,0 +1,28 @@
+{
+  "executed_baseline_commit": "41f1b35b8517e7a99eb155dc8389bd38cced9ccc",
+  "source_was_uncommitted_during_execution": true,
+  "matching_implementation_commit": "8e66f97e91d8d08cc33ace5a2f2eedb47a2a7eec",
+  "files": {
+    "prototypes/lossless-cornfield/render.py": {
+      "executed_sha256": "ee407ac4404b3b3779725432fd26421ca8daeb6a7614b2ee42ad491d2ed5c58d",
+      "committed_sha256": "ee407ac4404b3b3779725432fd26421ca8daeb6a7614b2ee42ad491d2ed5c58d",
+      "matches": true
+    },
+    "prototypes/lossless-cornfield/decode.py": {
+      "executed_sha256": "7833cda8c27436838f480105ee1a8379ccc85e12e2ec976063e75ce0006847c2",
+      "committed_sha256": "7833cda8c27436838f480105ee1a8379ccc85e12e2ec976063e75ce0006847c2",
+      "matches": true
+    },
+    "prototypes/lossless-cornfield/rules.json": {
+      "executed_sha256": "626504869dbfddf9aad0bbb79a1fe52475cbd721a5892c753305953efb7b20e8",
+      "committed_sha256": "626504869dbfddf9aad0bbb79a1fe52475cbd721a5892c753305953efb7b20e8",
+      "matches": true
+    },
+    "research/lossless-visible/test_renderer.py": {
+      "executed_sha256": "571c5c97d44f3cfbd2fb7840fbeb0c07acc26c97a75d6ad1f3fb25af63ed14dd",
+      "committed_sha256": "571c5c97d44f3cfbd2fb7840fbeb0c07acc26c97a75d6ad1f3fb25af63ed14dd",
+      "matches": true
+    }
+  },
+  "all_match": true
+}

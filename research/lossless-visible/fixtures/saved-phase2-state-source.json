@@ -1,0 +1,11 @@
+{
+  "sourcePath": "/workspace/scratch/848d3ae0dcda/neural-engine-phase2-implementation/experiments/phase2b/confirmatory/order-00/states.npz",
+  "sourceSha256": "050ec63442cad10ea8cc956b7121e44e104ea52712ede5464ded05c0cb8f4172",
+  "arrayKey": "recurrent__decoder_train",
+  "trialIndex": 0,
+  "arrayShape": [
+    13,
+    12
+  ],
+  "scope": "complete neural vectors for this saved trial; no network weights/history"
+}

@@ -1,0 +1,15 @@
+{
+  "checked_at_utc": "2026-09-09T07:38:24.411660+00:00",
+  "qualified_run": "run-02",
+  "executed_revision": "0c967cf82b17485ff291876b2228972b7bf149bb",
+  "executable_files_match": true,
+  "sha256": {
+    "apps/power-garden/render.py": "31ef93f2011ee546cc7ef306a2cd4766ddd01303104ab809453d9e54b82baadd",
+    "apps/power-garden/contract.py": "f924f418c1c3f30a7c09e17e227287ed6d47cfd2ef435d5a2537fd3e965dc87d",
+    "apps/power-garden/inverse.mjs": "4c386811b31c36502c1a4627d0d178c64a141529d44fb9d7a9977c7213676e4b",
+    "apps/power-garden/isolated.py": "362b61392229fe16e877176ca7ca5fa5410e82a50c9a78c73fe9e439efde5d41",
+    "apps/power-garden/app.py": "fb405a2106280b40cbe456561b1e01861008be0ff8c519e9b9efd435ba3d7df7"
+  },
+  "supersedes": "final-core-binding.json (prior to the JSON serializer repair)",
+  "later_changes": "README/result documentation only"
+}

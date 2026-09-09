@@ -1,0 +1,16 @@
+{
+  "observation": "one normal viewport screenshot of the fitted preview",
+  "image": "browser-preview-20260909.jpg",
+  "format": "JPEG",
+  "dimensions": [
+    1363,
+    936
+  ],
+  "decoder_status": "rejected",
+  "detail": "InvalidImage: native width required",
+  "seconds": 0.6298212340043392,
+  "offscreen_pixels_used": false,
+  "DOM_coordinates_given_to_decoder": false,
+  "native_PNG_API_decode_passed": true,
+  "qualification": "The preview button reads the complete PNG, not the screenshot. The screenshot itself is a separate failed observation."
+}

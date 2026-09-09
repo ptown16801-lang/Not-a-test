@@ -1,0 +1,7 @@
+{
+  "cases": 4153,
+  "random_seed": 20260909,
+  "every_magnitude_exponent": 2098,
+  "random_and_adjacent_pairs": 1024,
+  "proof_required_beyond_samples": true
+}

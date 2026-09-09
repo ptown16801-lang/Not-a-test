@@ -1,0 +1,151 @@
+{
+  "schema": "power-garden/v1",
+  "shapes": [
+    {
+      "geometry": {
+        "kind": "polyline",
+        "vertices": [
+          [
+            -0.5,
+            0.0,
+            1.0
+          ],
+          [
+            0.5,
+            0.0,
+            1.0
+          ],
+          [
+            0.5,
+            1.0,
+            1.0
+          ],
+          [
+            -0.5,
+            0.0,
+            1.0
+          ]
+        ],
+        "closed": false
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0.125,
+          -0.0
+        ],
+        "symmetry": [
+          "bilateral",
+          "radial",
+          "bilateral"
+        ],
+        "bounds": [
+          -0.5,
+          -1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "depth": 3,
+      "createdAtStep": 17
+    },
+    {
+      "geometry": {
+        "kind": "polyline",
+        "vertices": [
+          [
+            -0.5,
+            0.0,
+            1.0
+          ],
+          [
+            0.5,
+            0.0,
+            1.0
+          ],
+          [
+            0.5,
+            1.0,
+            1.0
+          ],
+          [
+            -0.5,
+            0.0,
+            1.0
+          ]
+        ],
+        "closed": false
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#000001",
+        "material": "glossy",
+        "texture": 0.20000000000000004,
+        "curvature": [
+          2.0,
+          1.0
+        ],
+        "symmetry": [
+          "radial",
+          "bilateral"
+        ],
+        "bounds": [
+          0.0,
+          -0.0,
+          1.0,
+          -1.0
+        ]
+      },
+      "depth": 3,
+      "createdAtStep": 17
+    }
+  ],
+  "states": []
+}

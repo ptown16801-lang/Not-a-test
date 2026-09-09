@@ -1,0 +1,105 @@
+{
+  "event_id": "power-garden-20260909-native-vm",
+  "project": "Neural Engine / Shape Cognition",
+  "engineering_status": "native application executed in a separate QEMU Linux guest; exact native and screenshot-region recovery on the six-value sample",
+  "scientific_status": "runtime verification only; no neural or semantic improvement claim",
+  "old_engine_executed": false,
+  "application_source_revision": "b3ec523e3a25eba16ba385f19432e112539e90e5",
+  "application_sources_modified": false,
+  "guest_runtime": {
+    "guest": {
+      "system": "Linux",
+      "node": "(none)",
+      "release": "6.8.0-139-generic",
+      "version": "#139-Ubuntu SMP PREEMPT_DYNAMIC Sat Aug  1 03:52:05 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+    "node": "v24.19.0",
+    "source_commit": "b3ec523e3a25eba16ba385f19432e112539e90e5",
+    "render": {
+      "width": 1712,
+      "height": 432,
+      "pixels": 739584,
+      "rgb_bytes": 2218752
+    },
+    "independent_decoder_exact": true,
+    "pillow": "10.2.0",
+    "tk": 8.6,
+    "gui_decode_button_exact": true,
+    "screenshot_image_rect": [
+      80,
+      91,
+      1712,
+      432
+    ],
+    "screenshot_image_pixels_exact": true,
+    "screenshot_crop_decode_exact": true,
+    "window_geometry": "1760x650+80+60",
+    "display_size": [
+      1920,
+      800
+    ],
+    "guest_elapsed_seconds": 56.11703252
+  },
+  "preserved_negative_results": [
+    "remote browser backend unavailable",
+    "system package installation failed",
+    "run-01 host Unix control socket restriction",
+    "run-02 QEMU module lookup failure",
+    "run-03 missing separately packaged Pillow ImageTk component"
+  ],
+  "plain_language_project_story": [
+    "The standalone application now has an executed native-window capture from a real Linux virtual machine.",
+    "Its actual Decode this image button recovered the sample exactly.",
+    "The complete image region of the screenshot retained every pixel and decoded exactly.",
+    "This resolves the earlier desktop blocker for this sample; the existing reconstruction limits are unchanged."
+  ],
+  "evidence_paths": [
+    "research/power-garden/vm/README.md",
+    "research/power-garden/vm/run-04/VM-Run.json",
+    "research/power-garden/vm/run-04/Power-Garden-VM.png",
+    "research/power-garden/vm/run-04/launch.json",
+    "research/power-garden/vm/run-04/qmp.json",
+    "research/power-garden/vm/replay-check/VM-Run.json"
+  ],
+  "packaged_replay_executed": true,
+  "packaged_replay_runtime": {
+    "guest": {
+      "system": "Linux",
+      "node": "(none)",
+      "release": "6.8.0-139-generic",
+      "version": "#139-Ubuntu SMP PREEMPT_DYNAMIC Sat Aug  1 03:52:05 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+    "node": "v24.19.0",
+    "source_commit": "b3ec523e3a25eba16ba385f19432e112539e90e5",
+    "render": {
+      "width": 1712,
+      "height": 432,
+      "pixels": 739584,
+      "rgb_bytes": 2218752
+    },
+    "independent_decoder_exact": true,
+    "pillow": "10.2.0",
+    "tk": 8.6,
+    "gui_decode_button_exact": true,
+    "screenshot_image_rect": [
+      80,
+      91,
+      1712,
+      432
+    ],
+    "screenshot_image_pixels_exact": true,
+    "screenshot_crop_decode_exact": true,
+    "window_geometry": "1760x650+80+60",
+    "display_size": [
+      1920,
+      800
+    ],
+    "guest_elapsed_seconds": 54.337238979999995
+  }
+}

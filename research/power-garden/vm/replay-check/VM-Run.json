@@ -1,0 +1,37 @@
+{
+  "guest": {
+    "system": "Linux",
+    "node": "(none)",
+    "release": "6.8.0-139-generic",
+    "version": "#139-Ubuntu SMP PREEMPT_DYNAMIC Sat Aug  1 03:52:05 UTC 2026",
+    "machine": "x86_64",
+    "processor": ""
+  },
+  "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+  "node": "v24.19.0",
+  "source_commit": "b3ec523e3a25eba16ba385f19432e112539e90e5",
+  "render": {
+    "width": 1712,
+    "height": 432,
+    "pixels": 739584,
+    "rgb_bytes": 2218752
+  },
+  "independent_decoder_exact": true,
+  "pillow": "10.2.0",
+  "tk": 8.6,
+  "gui_decode_button_exact": true,
+  "screenshot_image_rect": [
+    80,
+    91,
+    1712,
+    432
+  ],
+  "screenshot_image_pixels_exact": true,
+  "screenshot_crop_decode_exact": true,
+  "window_geometry": "1760x650+80+60",
+  "display_size": [
+    1920,
+    800
+  ],
+  "guest_elapsed_seconds": 54.337238979999995
+}

@@ -1,0 +1,18 @@
+{
+  "status": "reproduced strict-parser rejection",
+  "error": "states[0][0]: nonfinite or inexact integer conversion",
+  "input": {
+    "schema": "power-garden/v1",
+    "shapes": [],
+    "states": [
+      [
+        1.152921504606847e+18,
+        -1.152921504606847e+18,
+        1.1529215046068472e+18
+      ]
+    ]
+  },
+  "decoded_text": "{\"schema\":\"power-garden/v1\",\"shapes\":[],\"states\":[[1152921504606847000,-1152921504606847000,1152921504606847200]]}\n",
+  "inverse_sha256": "f16e41dde1e95f6a07d2a774a7e72c89e0a8cebaef8b848bd66776c1a0995a1d",
+  "scope": "pixel inversion produced correct JavaScript Number values, but ordinary decimal formatting was incompatible with strict integral JSON literal policy; preserved before fix"
+}

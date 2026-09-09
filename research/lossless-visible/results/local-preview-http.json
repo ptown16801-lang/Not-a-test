@@ -1,0 +1,23 @@
+{
+  "/": {
+    "status": 200,
+    "bytes": 3919,
+    "content_type": "text/html; charset=utf-8"
+  },
+  "/image/display-sample.png": {
+    "status": 200,
+    "bytes": 3718,
+    "content_type": "image/png"
+  },
+  "/decode/display-sample.png": {
+    "status": 200,
+    "bytes": 223,
+    "content_type": "application/json",
+    "audit": {
+      "files_opened": [
+        "image"
+      ],
+      "decoder": "independent-pixel-inverse/v1"
+    }
+  }
+}

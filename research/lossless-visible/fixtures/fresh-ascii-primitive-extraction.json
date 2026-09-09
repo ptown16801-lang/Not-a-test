@@ -1,0 +1,628 @@
+{
+  "scene": {
+    "schema": "visible-cornfield/v1",
+    "shapes": [
+      {
+        "geometry": {
+          "kind": "disk",
+          "center": [
+            0,
+            0
+          ],
+          "radius": 0.299
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 1,
+          "edges": [],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            3.344482
+          ],
+          "symmetry": [
+            "radial"
+          ],
+          "bounds": [
+            -0.299,
+            -0.299,
+            0.299,
+            0.299
+          ]
+        },
+        "depth": 0,
+        "createdAtStep": 0
+      },
+      {
+        "geometry": {
+          "kind": "polygon",
+          "vertices": [
+            [
+              0.299,
+              0
+            ],
+            [
+              0.186423,
+              0.233768
+            ],
+            [
+              -0.066534,
+              0.291503
+            ],
+            [
+              -0.26939,
+              0.129731
+            ],
+            [
+              -0.26939,
+              -0.129731
+            ],
+            [
+              -0.066534,
+              -0.291503
+            ],
+            [
+              0.186423,
+              -0.233768
+            ]
+          ]
+        },
+        "topology": {
+          "dimension": 2,
+          "nodes": 7,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              6,
+              0
+            ]
+          ],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [
+            "dihedral-7"
+          ],
+          "bounds": [
+            -0.299,
+            -0.299,
+            0.299,
+            0.299
+          ]
+        },
+        "depth": 0,
+        "createdAtStep": 0
+      },
+      {
+        "geometry": {
+          "kind": "curve",
+          "controlPoints": [
+            [
+              -0.9,
+              0
+            ],
+            [
+              -0.35,
+              -0.165
+            ],
+            [
+              0.35,
+              0.165
+            ],
+            [
+              0.9,
+              0
+            ]
+          ]
+        },
+        "topology": {
+          "dimension": 1,
+          "nodes": 4,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "components": 1
+        },
+        "attributes": {
+          "color": "#d8a03f",
+          "material": "matte",
+          "texture": 0.2,
+          "curvature": [
+            0
+          ],
+          "symmetry": [],
+          "bounds": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "depth": 0,
+        "createdAtStep": 0
+      }
+    ],
+    "states": []
+  },
+  "scope": {
+    "status": "explicit partial extraction",
+    "originalStreamRecoverable": false,
+    "omittedTopLevel": [
+      "manifestId",
+      "schema",
+      "pipeline",
+      "identity",
+      "seed",
+      "operators",
+      "steps",
+      "active",
+      "render"
+    ],
+    "omitted": [
+      {
+        "index": 0,
+        "fields": [
+          "id",
+          "schema",
+          "pipeline",
+          "stage",
+          "numeric",
+          "units",
+          "coordinateSystem",
+          "provenance",
+          "tags"
+        ],
+        "reason": "outside the primitive geometry contract"
+      },
+      {
+        "index": 1,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 2,
+        "fields": [
+          "id",
+          "schema",
+          "pipeline",
+          "stage",
+          "numeric",
+          "units",
+          "coordinateSystem",
+          "provenance",
+          "tags"
+        ],
+        "reason": "outside the primitive geometry contract"
+      },
+      {
+        "index": 3,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 4,
+        "fields": [
+          "id",
+          "schema",
+          "pipeline",
+          "stage",
+          "numeric",
+          "units",
+          "coordinateSystem",
+          "provenance",
+          "tags"
+        ],
+        "reason": "outside the primitive geometry contract"
+      },
+      {
+        "index": 5,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 6,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 7,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 8,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 9,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 10,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 11,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 12,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 13,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 14,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 15,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 16,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 17,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 18,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 19,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 20,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 21,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 22,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 23,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 24,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 25,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 26,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 27,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 28,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 29,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 30,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 31,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 32,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 33,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 34,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 35,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 36,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 37,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 38,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 39,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 40,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 41,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 42,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 43,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 44,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 45,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 46,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 47,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 48,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 49,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 50,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 51,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 52,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 53,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 54,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 55,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 56,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 57,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 58,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 59,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 60,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 61,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 62,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 63,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 64,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 65,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 66,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 67,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 68,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 69,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 70,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 71,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 72,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 73,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 74,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 75,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 76,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      },
+      {
+        "index": 77,
+        "field": "whole shape",
+        "reason": "derived geometry DAG has no exact primitive contract"
+      }
+    ]
+  }
+}

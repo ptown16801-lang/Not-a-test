@@ -1,0 +1,22 @@
+{
+  "event_id": "visible-renderer-v1-8e66f97e91d8",
+  "generated_at_utc": "2026-09-09T05:46:09.082022+00:00",
+  "implementation_commit": "8e66f97e91d8d08cc33ace5a2f2eedb47a2a7eec",
+  "renderer_contract": "visible-cornfield/v1",
+  "engineering_status": "implemented and tested for declared primitive/numeric-state domain",
+  "full_project_requirement": "partial; whole engine streams and history unsupported",
+  "scientific_validation": "no new neural cognition claim",
+  "primary_test_groups_passed": 8,
+  "primary_fresh_process_roundtrips": 45,
+  "negative_results_preserved": true,
+  "model_equations_modified": false,
+  "legacy_files_overwritten": [],
+  "report": "research/lossless-visible/REPORT.md",
+  "plain_language_project_story": [
+    "Built an exact picture of supported geometry and neural values using visible stalks.",
+    "Every tested native PNG recovered the accepted input exactly, including three full 600-neuron states.",
+    "The older ASCII view still loses information. Screenshots and JPEG do not inherit the native PNG promise.",
+    "The complete engine history and original sentence are not recovered."
+  ],
+  "conversation_milestones": []
+}

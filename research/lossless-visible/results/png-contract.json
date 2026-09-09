@@ -1,0 +1,11 @@
+{
+  "chunks": [
+    "IHDR",
+    "IDAT",
+    "IEND"
+  ],
+  "ancillary_chunks": false,
+  "mode": "RGB",
+  "alpha": false,
+  "lossless_reexport_exact": true
+}

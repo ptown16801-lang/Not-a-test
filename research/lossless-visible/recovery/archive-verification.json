@@ -1,0 +1,8 @@
+{
+  "archive": "ascii-uncommitted-before-edits.tar.gz",
+  "archive_bytes": 341081116,
+  "archive_sha256": "3977d393806f2ebdfee916b49404d028cbbf577a20bc54881362bebfd3080c55",
+  "file_count": 115,
+  "all_file_hashes_match": true,
+  "base_commit": "1d89ec7e1dd818020db0f9d0b0e177e598c29dff"
+}

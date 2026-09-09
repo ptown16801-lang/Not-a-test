@@ -1,0 +1,19 @@
+{
+  "schema": "neural-engine-history-integrity/v1",
+  "snapshot_id": "20260909T073946Z-507d068dbab7-037cf1ea",
+  "source_commit": "507d068dbab7393af64a84a18d6ed11b57a86462",
+  "files": {
+    "CHANGE_NOTES.json": {
+      "sha256": "585ff8dc9d9f87eae45f3c1b56102023b92c8ae290e288d403f152b2d6f723b1",
+      "bytes": 553
+    },
+    "NONSCIENTIFIC_HISTORY.json": {
+      "sha256": "231b20fa887430118e37a1cc8033190730e12eaac91e17dbb6216176fed16bd9",
+      "bytes": 124511
+    },
+    "SCIENTIFIC_HISTORY.json": {
+      "sha256": "965d848b90da13ffabe2a88b7d23bd7772b0e0f25fe1ecdd4f9753c156ef057a",
+      "bytes": 6883705
+    }
+  }
+}

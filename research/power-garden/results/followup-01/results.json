@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "name": "true-400-row-capacity",
+      "status": "pass",
+      "numbers": 2382,
+      "width": 1712,
+      "height": 35280,
+      "pixels": 60399360,
+      "rgb_bytes": 181198080,
+      "png_bytes": 533973,
+      "render_seconds": 6.716973801005224,
+      "decode_seconds": 7.795678434995352,
+      "stderr": ""
+    },
+    {
+      "name": "2383-rejected-without-output",
+      "status": "pass"
+    },
+    {
+      "name": "original-failed-test-was-wrong-2377-is-legal",
+      "status": "pass"
+    },
+    {
+      "name": "strict-json-negative-zero-and-adjacent-values",
+      "status": "pass"
+    },
+    {
+      "name": "reject-duplicate",
+      "status": "pass"
+    },
+    {
+      "name": "reject-infinite",
+      "status": "pass"
+    },
+    {
+      "name": "reject-inexact-integer",
+      "status": "pass"
+    },
+    {
+      "name": "public-cli-isolated-decode",
+      "status": "pass"
+    }
+  ],
+  "passed": 8,
+  "failed": 0,
+  "correction": "run-01 expected a rejection at 2377 values. The 400-row contract permits through 2382. The renderer was correct; only test expectation/documented single-vector count and CLI isolation wrapper changed.",
+  "preserved_failure": "../run-01/results.json",
+  "unchanged_core": {
+    "render.py": "31ef93f2011ee546cc7ef306a2cd4766ddd01303104ab809453d9e54b82baadd",
+    "contract.py": "f924f418c1c3f30a7c09e17e227287ed6d47cfd2ef435d5a2537fd3e965dc87d",
+    "inverse.mjs": "f16e41dde1e95f6a07d2a774a7e72c89e0a8cebaef8b848bd66776c1a0995a1d"
+  }
+}

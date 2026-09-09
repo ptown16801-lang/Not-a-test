@@ -1,0 +1,19 @@
+{
+  "native_desktop_preview_execution": "TclError: no display name and no $DISPLAY environment variable",
+  "actual_browser_screenshot_execution": "blocked: browser execution backend failed to start, Connection closed, in two attempts",
+  "screenshot_status": "not tested; neither a generated PNG nor a resize simulation is labeled a screenshot",
+  "os_isolation_attempts": [
+    {
+      "method": "bwrap",
+      "status": "blocked",
+      "error": "open /proc/7/ns/ns failed: No such file or directory"
+    },
+    {
+      "method": "chroot",
+      "status": "blocked",
+      "error": "Operation not permitted"
+    }
+  ],
+  "active_inverse_isolation": "fresh process, generic image filename, no stdin, stripped environment, Node --permission allowing reads only of the copied inverse.mjs and observation.png; separate source-read denial control",
+  "security_scope": "Node permission model prevents accidental access by this trusted inverse; not an OS sandbox for adversarial code"
+}

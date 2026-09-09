@@ -1,0 +1,22 @@
+[
+  {
+    "stage": "browser connection",
+    "result": "blocked",
+    "detail": "Cloud browser rejected direct loopback URL; used the documented supervised preview."
+  },
+  {
+    "stage": "supervised preview first start",
+    "result": "failed",
+    "detail": "Restricted checkout root lacked parent paths; repaired sample staging and accepted forwarded port arguments."
+  },
+  {
+    "stage": "preview decode button first test",
+    "result": "failed",
+    "detail": "Restricted Python lacked NumPy. Staged fixed public NumPy/Pillow dependencies and added an explicit import fallback; rerun required."
+  },
+  {
+    "stage": "cross-call local HTTP probe",
+    "result": "failed",
+    "detail": "Separate command context could not connect to retained local process. A same-process-group HTTP integration test follows."
+  }
+]

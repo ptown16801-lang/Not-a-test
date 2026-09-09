@@ -1,0 +1,46 @@
+{
+  "source_revision": "b3ec523e3a25eba16ba385f19432e112539e90e5",
+  "all_guest_app_files_equal_repository": true,
+  "files": [
+    {
+      "file": "apps/power-garden/isolated.py",
+      "sha256": "362b61392229fe16e877176ca7ca5fa5410e82a50c9a78c73fe9e439efde5d41"
+    },
+    {
+      "file": "apps/power-garden/render.py",
+      "sha256": "31ef93f2011ee546cc7ef306a2cd4766ddd01303104ab809453d9e54b82baadd"
+    },
+    {
+      "file": "apps/power-garden/contract.py",
+      "sha256": "f924f418c1c3f30a7c09e17e227287ed6d47cfd2ef435d5a2537fd3e965dc87d"
+    },
+    {
+      "file": "apps/power-garden/CONTRACT.md",
+      "sha256": "8073873f6563c055711140ee24df18efb62af5d6895978cc1f1d54f3d1bfaa96"
+    },
+    {
+      "file": "apps/power-garden/app.py",
+      "sha256": "fb405a2106280b40cbe456561b1e01861008be0ff8c519e9b9efd435ba3d7df7"
+    },
+    {
+      "file": "apps/power-garden/README.md",
+      "sha256": "698d945dfa3c2a1e668bacf039b22e56157f8b58430387c3385913835ee292c5"
+    },
+    {
+      "file": "apps/power-garden/requirements.txt",
+      "sha256": "d3d476ce521df01ece4f8dc646430089b03786f763e80c103d6436296033b475"
+    },
+    {
+      "file": "apps/power-garden/inverse.mjs",
+      "sha256": "4c386811b31c36502c1a4627d0d178c64a141529d44fb9d7a9977c7213676e4b"
+    },
+    {
+      "file": "apps/power-garden/.gitignore",
+      "sha256": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793"
+    },
+    {
+      "file": "apps/power-garden/extract.py",
+      "sha256": "794c24453ca5df950bb094330cd95d6a730905604aa3db4be6eff7e50bd97f6c"
+    }
+  ]
+}

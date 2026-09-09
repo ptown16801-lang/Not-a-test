@@ -1,0 +1,8 @@
+{
+  "scope": "all coordinates/topology/attributes of the saved path fixture; prior replay had already sampled and projected source geometry; no original curve/DAG recovery",
+  "complete_source_recoverable": false,
+  "source_path": "research/lossless-visible/fixtures/fresh-ascii-paths.json",
+  "source_sha256": "d769a3606b2df822cc55109e580e6480714d8572d917bf4c855c6c8049c89466",
+  "scene_sha256": "7ef9a9a47f45a15358e33a12a2f1ec63f498f46142f516b91935a0f377372a12",
+  "decoder_receives_receipt": false
+}

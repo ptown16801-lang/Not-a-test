@@ -1,0 +1,533 @@
+{
+  "schema": "power-garden/v1",
+  "shapes": [
+    {
+      "geometry": {
+        "kind": "point",
+        "p": [
+          0.0,
+          -0.0
+        ]
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0.125,
+          -0.0
+        ],
+        "symmetry": [
+          "bilateral",
+          "radial",
+          "spherical",
+          "linear",
+          "lattice",
+          "radialRotate",
+          "dihedral-3",
+          "dihedral-4",
+          "dihedral-5",
+          "dihedral-6",
+          "dihedral-7",
+          "dihedral-8",
+          "dihedral-9",
+          "dihedral-10",
+          "dihedral-11",
+          "dihedral-12",
+          "dihedral-13",
+          "dihedral-14",
+          "dihedral-15",
+          "dihedral-16"
+        ],
+        "bounds": [
+          -0.5,
+          -1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "depth": 3,
+      "createdAtStep": 17
+    },
+    {
+      "geometry": {
+        "kind": "segment",
+        "a": [
+          0.0,
+          0.0
+        ],
+        "b": [
+          0.0,
+          0.0
+        ]
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0.125,
+          -0.0
+        ],
+        "symmetry": [
+          "bilateral",
+          "radial",
+          "bilateral"
+        ],
+        "bounds": [
+          -0.5,
+          -1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "depth": 3,
+      "createdAtStep": 17
+    },
+    {
+      "geometry": {
+        "kind": "ray",
+        "a": [
+          0.0,
+          1.0,
+          2.0
+        ],
+        "b": [
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0.125,
+          -0.0
+        ],
+        "symmetry": [
+          "bilateral",
+          "radial",
+          "bilateral"
+        ],
+        "bounds": [
+          -0.5,
+          -1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "depth": 3,
+      "createdAtStep": 17
+    },
+    {
+      "geometry": {
+        "kind": "disk",
+        "center": [
+          0.0,
+          1.0
+        ],
+        "radius": -0.0
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0.125,
+          -0.0
+        ],
+        "symmetry": [
+          "bilateral",
+          "radial",
+          "bilateral"
+        ],
+        "bounds": [
+          -0.5,
+          -1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "depth": 3,
+      "createdAtStep": 17
+    },
+    {
+      "geometry": {
+        "kind": "ball",
+        "center": [
+          0.0,
+          1.0,
+          2.0
+        ],
+        "radius": 1.7976931348623157e+308
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0.125,
+          -0.0
+        ],
+        "symmetry": [
+          "bilateral",
+          "radial",
+          "bilateral"
+        ],
+        "bounds": [
+          -0.5,
+          -1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "depth": 3,
+      "createdAtStep": 17
+    },
+    {
+      "geometry": {
+        "kind": "polygon",
+        "vertices": []
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0.125,
+          -0.0
+        ],
+        "symmetry": [
+          "bilateral",
+          "radial",
+          "bilateral"
+        ],
+        "bounds": [
+          -0.5,
+          -1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "depth": 3,
+      "createdAtStep": 17
+    },
+    {
+      "geometry": {
+        "kind": "curve",
+        "controlPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.125,
+            0.12500000000000003
+          ],
+          [
+            0.5,
+            -0.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0.125,
+          -0.0
+        ],
+        "symmetry": [
+          "bilateral",
+          "radial",
+          "bilateral"
+        ],
+        "bounds": [
+          -0.5,
+          -1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "depth": 3,
+      "createdAtStep": 17
+    },
+    {
+      "geometry": {
+        "kind": "surface",
+        "seed": [
+          0.0,
+          1.0,
+          -1.0,
+          5e-324
+        ]
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0.125,
+          -0.0
+        ],
+        "symmetry": [
+          "bilateral",
+          "radial",
+          "bilateral"
+        ],
+        "bounds": [
+          -0.5,
+          -1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "depth": 3,
+      "createdAtStep": 17
+    },
+    {
+      "geometry": {
+        "kind": "polyline",
+        "vertices": [],
+        "closed": true
+      },
+      "topology": {
+        "dimension": 2,
+        "nodes": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "components": 1
+      },
+      "attributes": {
+        "color": "#d8a03f",
+        "material": "matte",
+        "texture": 0.2,
+        "curvature": [
+          0.125,
+          -0.0
+        ],
+        "symmetry": [
+          "bilateral",
+          "radial",
+          "bilateral"
+        ],
+        "bounds": [
+          -0.5,
+          -1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "depth": 3,
+      "createdAtStep": 17
+    }
+  ],
+  "states": []
+}

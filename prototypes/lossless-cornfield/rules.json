@@ -1,0 +1,79 @@
+{
+  "schema": "visible-cornfield/v1",
+  "width": 1488,
+  "margin": 64,
+  "sky": 64,
+  "columns": 12,
+  "tile_width": 112,
+  "tile_height": 160,
+  "max_rows": 240,
+  "max_scalars": 2880,
+  "max_shapes": 32,
+  "max_vertices": 256,
+  "max_states": 32,
+  "max_neurons": 1200,
+  "background": [
+    239,
+    218,
+    149
+  ],
+  "ink": [
+    25,
+    62,
+    33
+  ],
+  "sky_color": [
+    238,
+    161,
+    84
+  ],
+  "roles": [
+    "point",
+    "segment",
+    "ray",
+    "disk",
+    "polygon",
+    "curve",
+    "ball",
+    "surface",
+    "polyline",
+    "coordinates",
+    "radius",
+    "seed",
+    "edges",
+    "matte",
+    "glossy",
+    "bounds",
+    "curvature",
+    "symmetry",
+    "state",
+    "coordinates2",
+    "coordinates3"
+  ],
+  "symmetries": [
+    "bilateral",
+    "radial",
+    "spherical",
+    "linear",
+    "lattice",
+    "radialRotate",
+    "dihedral-3",
+    "dihedral-4",
+    "dihedral-5",
+    "dihedral-6",
+    "dihedral-7",
+    "dihedral-8",
+    "dihedral-9",
+    "dihedral-10",
+    "dihedral-11",
+    "dihedral-12",
+    "dihedral-13",
+    "dihedral-14",
+    "dihedral-15",
+    "dihedral-16"
+  ],
+  "materials": [
+    "matte",
+    "glossy"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "scope": "only complete numeric vectors at the explicitly selected path",
+  "selected_path": "states",
+  "complete_source_recoverable": false,
+  "omitted": "all other fields, parameters, metadata, weights, labels and history",
+  "source_path": "research/lossless-visible/fixtures/fresh-neural-600.json",
+  "source_sha256": "19abf52691a1eaba9cce54e52bfd8a870c9def40476bbed9f46ab44b122a379a",
+  "scene_sha256": "9199f873b38f23675c5b9c17e7565bb72dbe48563d59a0776009d6616ec5b486",
+  "decoder_receives_receipt": false
+}

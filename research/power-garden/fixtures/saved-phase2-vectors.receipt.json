@@ -1,0 +1,10 @@
+{
+  "scope": "all 13 complete neuron vectors from saved NPZ trial 0; other trials and arrays explicitly excluded",
+  "complete_source_recoverable": false,
+  "npz_key": "recurrent__decoder_train",
+  "trial_index": 0,
+  "source_path": "/workspace/scratch/848d3ae0dcda/neural-engine-phase2-implementation/experiments/phase2b/confirmatory/order-00/states.npz",
+  "source_sha256": "050ec63442cad10ea8cc956b7121e44e104ea52712ede5464ded05c0cb8f4172",
+  "scene_sha256": "06e69fdf493f73a5788a71c1ee610a2e87d14b4e9a09302a6fad2d27b29bb82f",
+  "decoder_receives_receipt": false
+}

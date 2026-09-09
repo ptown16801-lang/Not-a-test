@@ -1,0 +1,191 @@
+{
+  "files": [
+    {
+      "path": "prototypes/lossless-cornfield/.gitignore",
+      "sha256": "3f70db69b10c5869eff5ebb1ead32ae69d35573d20f039ba422f9182793c3162",
+      "bytes": 17
+    },
+    {
+      "path": "prototypes/lossless-cornfield/CONTRACT.md",
+      "sha256": "3322c98ad07e3889196a7e320f56f139c673513b87cacdd7e12dce962e3459eb",
+      "bytes": 15698
+    },
+    {
+      "path": "prototypes/lossless-cornfield/adapter.js",
+      "sha256": "77ea4e799430f4e5fd53d22c9d3f84b549181f997bea1f3529a80031b19c3521",
+      "bytes": 2018
+    },
+    {
+      "path": "prototypes/lossless-cornfield/cli.js",
+      "sha256": "6681b9ee706b863b970fd2b77d5f9435da375e08f2163bf12c3d43b55fae9d06",
+      "bytes": 1972
+    },
+    {
+      "path": "prototypes/lossless-cornfield/decode.py",
+      "sha256": "7833cda8c27436838f480105ee1a8379ccc85e12e2ec976063e75ce0006847c2",
+      "bytes": 10456
+    },
+    {
+      "path": "prototypes/lossless-cornfield/package.json",
+      "sha256": "f9262bea97b93b41b13a9e22c3575d3d99cbbb513873ba809b0309274a61bc73",
+      "bytes": 161
+    },
+    {
+      "path": "prototypes/lossless-cornfield/prepare-preview.py",
+      "sha256": "4d4cce0fdfc658ea8e786e98d27bb07f60cc5307aeb7e75b3882f927c4d16a31",
+      "bytes": 1026
+    },
+    {
+      "path": "prototypes/lossless-cornfield/preview.py",
+      "sha256": "a3e82797009d0ca8d1d5d4e5ea2753394300c0cb8967864da0d4040f13b6c1a6",
+      "bytes": 6904
+    },
+    {
+      "path": "prototypes/lossless-cornfield/render.py",
+      "sha256": "ee407ac4404b3b3779725432fd26421ca8daeb6a7614b2ee42ad491d2ed5c58d",
+      "bytes": 10420
+    },
+    {
+      "path": "prototypes/lossless-cornfield/requirements.txt",
+      "sha256": "e32056a5263b5972e789540468f3d3e1e8e2d1649d21ef65e814317727be4897",
+      "bytes": 28
+    },
+    {
+      "path": "prototypes/lossless-cornfield/rules.json",
+      "sha256": "626504869dbfddf9aad0bbb79a1fe52475cbd721a5892c753305953efb7b20e8",
+      "bytes": 1158
+    },
+    {
+      "path": "prototypes/ascii-cornfield/cli.js",
+      "sha256": "df6ef4a9ff97d3d798201c942a7b6de13ecc1c6f4b781d735572e7be0fb1e995",
+      "bytes": 2761
+    },
+    {
+      "path": "prototypes/ascii-cornfield/package.json",
+      "sha256": "6af574abc11f9d1c0ad7b154e5e18e09c2fb31aff2d97bda4c9de468b682b913",
+      "bytes": 141
+    },
+    {
+      "path": "prototypes/ascii-cornfield/prototype.js",
+      "sha256": "a0c4bafa51157aad66747e6f4560596e1a9409aa245dd8281cefd49c8270395b",
+      "bytes": 3883
+    },
+    {
+      "path": "prototypes/ascii-cornfield/renderer.js",
+      "sha256": "f59ef99b5f1e64c9267ee7c773956c62c8574e54b3b071f71533b14f90c563a9",
+      "bytes": 10377
+    },
+    {
+      "path": "prototypes/ascii-cornfield/runtime/engine.js",
+      "sha256": "fa68ff114dce95c3d25ce132e8d51825f9c937dac9201ad6e023f62311d9e51b",
+      "bytes": 13241
+    },
+    {
+      "path": "prototypes/ascii-cornfield/runtime/provenance.js",
+      "sha256": "aaa8119ac559376849c0287248b9993c72e189f732f13533aa968b6150149019",
+      "bytes": 7649
+    },
+    {
+      "path": "prototypes/ascii-cornfield/runtime/text-perception.js",
+      "sha256": "7fbb4d2a1801c10e473ef9b7a90523804c1d62c9c97618f9de4a67ba63888236",
+      "bytes": 5557
+    },
+    {
+      "path": "prototypes/ascii-cornfield/runtime/types.js",
+      "sha256": "d1f2b220a073f5d116cbe773e6fe27a721fef9b410650c1aacd55fec11c1ffa8",
+      "bytes": 1649
+    },
+    {
+      "path": "prototypes/ascii-cornfield/server.js",
+      "sha256": "deb9cad0f8653f839b676d6c92acd8d996fb7223e27fa55a82f785f66f5f2659",
+      "bytes": 6453
+    },
+    {
+      "path": "research/lossless-visible/fixtures/fresh-ascii-24-step-stream.json",
+      "sha256": "700656c3bc60e835039cb49a3a5678052497bdd4d068127b55750ac9d758f76c",
+      "bytes": 1805954
+    },
+    {
+      "path": "research/lossless-visible/fixtures/fresh-ascii-paths.json",
+      "sha256": "d769a3606b2df822cc55109e580e6480714d8572d917bf4c855c6c8049c89466",
+      "bytes": 59745
+    },
+    {
+      "path": "research/lossless-visible/fixtures/fresh-ascii-primitive-extraction.json",
+      "sha256": "785f099d91e8206595f9e44ac9cff7d844182cd7ea7fe1c3cf9e9b75d820973b",
+      "bytes": 15426
+    },
+    {
+      "path": "research/lossless-visible/fixtures/fresh-ascii-scope.json",
+      "sha256": "e46f44133427c5a67107a52abde393336c8be55377e47556243da56d4e96b475",
+      "bytes": 159
+    },
+    {
+      "path": "research/lossless-visible/fixtures/fresh-neural-600-source.json",
+      "sha256": "1666b49da380a492a4f868fe522d12e3d495ec5a8d563f37064eab6f83de9b5d",
+      "bytes": 768
+    },
+    {
+      "path": "research/lossless-visible/fixtures/fresh-neural-600.json",
+      "sha256": "19abf52691a1eaba9cce54e52bfd8a870c9def40476bbed9f46ab44b122a379a",
+      "bytes": 47159
+    },
+    {
+      "path": "research/lossless-visible/fixtures/saved-balance-extraction.json",
+      "sha256": "79a154433e6781453de896d15582727536470b79a7d10f8b12c120ab69c9f02a",
+      "bytes": 1734
+    },
+    {
+      "path": "research/lossless-visible/fixtures/saved-balance-primitives.json",
+      "sha256": "60b6d2338f276df6042cff8fa1dc364268d176cf0c93464d396490a42ee5c156",
+      "bytes": 1361
+    },
+    {
+      "path": "research/lossless-visible/fixtures/saved-phase1-state-source.json",
+      "sha256": "e8e33a9156f0dbd92f9f0760caa979f3938caaf7ffcd8932ce9d782b3548ffcd",
+      "bytes": 2514
+    },
+    {
+      "path": "research/lossless-visible/fixtures/saved-phase1-state.json",
+      "sha256": "f00a56c868284de59d3f3be92fbd12cc0b6804d74586fccad302ab3e71f8c632",
+      "bytes": 1042
+    },
+    {
+      "path": "research/lossless-visible/fixtures/saved-phase2-state-source.json",
+      "sha256": "244c5b89b397ebb5d8811d6d0c2badb758a041c20d5db33b210c2137bb5eb64b",
+      "bytes": 415
+    },
+    {
+      "path": "research/lossless-visible/fixtures/saved-phase2-state.json",
+      "sha256": "dcd03041b9d5b8565f7816dbc9f55e930d09256f53af5ce0f579b48dbf98e516",
+      "bytes": 4152
+    },
+    {
+      "path": "research/lossless-visible/fixtures/smoke.json",
+      "sha256": "40a4398a40d19a7cd8f301bdd007af78e51a2aa6b67976f675dc43279923b4b6",
+      "bytes": 131
+    },
+    {
+      "path": "src/neural-synesthesia.js",
+      "sha256": "4b636f5c71b8bc0bed3dc7ac4aab8e3cface14bb7eb47a50029f561e345b33e4",
+      "bytes": 32324
+    },
+    {
+      "path": "MASTER_PROJECT.json",
+      "sha256": "9b41a4c3f6d8794299fe6f30f026e9e37236743b41076fad5158dd214d26c69b",
+      "bytes": 1326116
+    },
+    {
+      "path": "PROJECT_LOG.json",
+      "sha256": "07f5ec1e7cdcda883a1f206919b5af495ab2deb824f062bb9ec91cf7895dafec",
+      "bytes": 73939
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "d80719bf840ebd84a48c7b7a64f8c0cb859c6542e195145a0dee3ca25c128363",
+      "bytes": 1937
+    }
+  ],
+  "architecture": "x86_64",
+  "node": "v24.19.0"
+}

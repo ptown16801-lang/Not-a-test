@@ -1,0 +1,54 @@
+{
+  "byte_identical": true,
+  "source": {
+    "config": {
+      "neuronsPerModality": 300,
+      "seed": 410,
+      "initialRecurrentScale": 0.001
+    },
+    "inputs": [
+      [
+        0.1,
+        0.2,
+        0.3,
+        0.4
+      ],
+      [
+        0.2,
+        -0.1,
+        0.5,
+        -0.4
+      ],
+      [
+        0.01,
+        0.02,
+        0.03,
+        0.04
+      ]
+    ],
+    "settle": {
+      "maxIterations": 10000,
+      "tolerance": 1e-12,
+      "residualTolerance": 1e-12
+    },
+    "trained": false,
+    "sourceSha256": "4b636f5c71b8bc0bed3dc7ac4aab8e3cface14bb7eb47a50029f561e345b33e4",
+    "results": [
+      {
+        "iterations": 40,
+        "converged": true,
+        "fixedPointResidual": 1.3344880755994382e-13
+      },
+      {
+        "iterations": 40,
+        "converged": true,
+        "fixedPointResidual": 1.582067810090848e-13
+      },
+      {
+        "iterations": 36,
+        "converged": true,
+        "fixedPointResidual": 2.37476704967321e-13
+      }
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+qemu-system-x86_64: -qmp unix:/workspace/scratch/e23f8538817b/power-garden-vm/run-01/qmp.sock,server=on,wait=off: Failed to create Unix socket: Operation not permitted

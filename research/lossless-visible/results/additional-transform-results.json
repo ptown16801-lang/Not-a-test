@@ -1,0 +1,157 @@
+[
+  {
+    "scale": 0.25,
+    "filter": "nearest",
+    "observation": "resized then restored to native dimensions",
+    "exact": false,
+    "status": "rejected",
+    "RGB_pixels_changed": 6571,
+    "detail": "InvalidImage: missing complete bottom boundary (clipping)",
+    "seconds": 0.6952187770002638
+  },
+  {
+    "scale": 0.25,
+    "filter": "lanczos",
+    "observation": "resized then restored to native dimensions",
+    "exact": false,
+    "status": "rejected",
+    "RGB_pixels_changed": 88970,
+    "detail": "InvalidImage: missing complete bottom boundary (clipping)",
+    "seconds": 0.6629022389970487
+  },
+  {
+    "scale": 0.5,
+    "filter": "nearest",
+    "observation": "resized then restored to native dimensions",
+    "exact": false,
+    "status": "rejected",
+    "RGB_pixels_changed": 3677,
+    "detail": "InvalidImage: missing complete bottom boundary (clipping)",
+    "seconds": 0.7475959739967948
+  },
+  {
+    "scale": 0.5,
+    "filter": "lanczos",
+    "observation": "resized then restored to native dimensions",
+    "exact": false,
+    "status": "rejected",
+    "RGB_pixels_changed": 64278,
+    "detail": "InvalidImage: missing complete bottom boundary (clipping)",
+    "seconds": 0.6858708039944759
+  },
+  {
+    "scale": 0.75,
+    "filter": "nearest",
+    "observation": "resized then restored to native dimensions",
+    "exact": false,
+    "status": "rejected",
+    "RGB_pixels_changed": 1450,
+    "detail": "InvalidImage: unknown categorical morphology",
+    "seconds": 0.7037384570066934
+  },
+  {
+    "scale": 0.75,
+    "filter": "lanczos",
+    "observation": "resized then restored to native dimensions",
+    "exact": false,
+    "status": "rejected",
+    "RGB_pixels_changed": 47027,
+    "detail": "InvalidImage: missing complete bottom boundary (clipping)",
+    "seconds": 0.665486254998541
+  },
+  {
+    "scale": 0.99,
+    "filter": "nearest",
+    "observation": "resized then restored to native dimensions",
+    "exact": false,
+    "status": "rejected",
+    "RGB_pixels_changed": 6,
+    "detail": "InvalidImage: leaf extent is not on the fixed ruler",
+    "seconds": 0.6889104950023466
+  },
+  {
+    "scale": 0.99,
+    "filter": "lanczos",
+    "observation": "resized then restored to native dimensions",
+    "exact": false,
+    "status": "rejected",
+    "RGB_pixels_changed": 41324,
+    "detail": "InvalidImage: ambiguous or missing sign tassel",
+    "seconds": 0.6545502309963922
+  },
+  {
+    "scale": 1.01,
+    "filter": "nearest",
+    "observation": "resized then restored to native dimensions",
+    "exact": true,
+    "status": "exact",
+    "RGB_pixels_changed": 0,
+    "detail": {
+      "files_opened": [
+        "image"
+      ],
+      "decoder": "independent-pixel-inverse/v1"
+    },
+    "seconds": 0.669135488999018
+  },
+  {
+    "scale": 1.01,
+    "filter": "lanczos",
+    "observation": "resized then restored to native dimensions",
+    "exact": false,
+    "status": "rejected",
+    "RGB_pixels_changed": 41124,
+    "detail": "InvalidImage: unknown categorical morphology",
+    "seconds": 0.6226458879973507
+  },
+  {
+    "scale": 1.5,
+    "filter": "nearest",
+    "observation": "resized then restored to native dimensions",
+    "exact": true,
+    "status": "exact",
+    "RGB_pixels_changed": 0,
+    "detail": {
+      "files_opened": [
+        "image"
+      ],
+      "decoder": "independent-pixel-inverse/v1"
+    },
+    "seconds": 0.6401798849983606
+  },
+  {
+    "scale": 1.5,
+    "filter": "lanczos",
+    "observation": "resized then restored to native dimensions",
+    "exact": false,
+    "status": "rejected",
+    "RGB_pixels_changed": 44105,
+    "detail": "InvalidImage: ambiguous or missing sign tassel",
+    "seconds": 0.7494984000004479
+  },
+  {
+    "scale": 2.0,
+    "filter": "nearest",
+    "observation": "resized then restored to native dimensions",
+    "exact": true,
+    "status": "exact",
+    "RGB_pixels_changed": 0,
+    "detail": {
+      "files_opened": [
+        "image"
+      ],
+      "decoder": "independent-pixel-inverse/v1"
+    },
+    "seconds": 0.7888751889986452
+  },
+  {
+    "scale": 2.0,
+    "filter": "lanczos",
+    "observation": "resized then restored to native dimensions",
+    "exact": false,
+    "status": "rejected",
+    "RGB_pixels_changed": 47016,
+    "detail": "InvalidImage: ambiguous or missing sign tassel",
+    "seconds": 0.6823875940026483
+  }
+]

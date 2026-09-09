@@ -1,0 +1,19 @@
+{
+  "rejections_tested": 13,
+  "cases": [
+    "NaN",
+    "infinity",
+    "negative zero",
+    "nonrepresentable Python integer",
+    "tags",
+    "IDs",
+    "unknown fields",
+    "derived DAG",
+    "unknown symmetry",
+    "unknown material",
+    "noncanonical color",
+    "full project stream",
+    "duplicate JSON keys"
+  ],
+  "no_silent_projection": true
+}

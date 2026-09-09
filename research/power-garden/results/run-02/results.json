@@ -1,0 +1,1364 @@
+{
+  "finished_at_utc": "2026-09-09T07:36:42.538311+00:00",
+  "source_unchanged_during_execution": true,
+  "passed": 66,
+  "failed": 0,
+  "measured": 39,
+  "cases": [
+    {
+      "name": "display-sample",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 6,
+      "width": 1712,
+      "height": 432,
+      "pixels": 739584,
+      "rgb_bytes": 2218752,
+      "render_seconds": 0.05969036200258415,
+      "decode_seconds": 0.4632377389934845,
+      "png_bytes": 3989,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "empty-scene",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 0,
+      "width": 1712,
+      "height": 168,
+      "pixels": 287616,
+      "rgb_bytes": 862848,
+      "render_seconds": 0.021751918997324537,
+      "decode_seconds": 0.41835718900256325,
+      "png_bytes": 1606,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "large-integer-json-closure",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 3,
+      "width": 1712,
+      "height": 432,
+      "pixels": 739584,
+      "rgb_bytes": 2218752,
+      "render_seconds": 0.03958987600344699,
+      "decode_seconds": 0.3933688059987617,
+      "png_bytes": 3805,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-000",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.6200285149971023,
+      "decode_seconds": 1.193431186999078,
+      "png_bytes": 36787,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-016",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.5024124490009854,
+      "decode_seconds": 1.2057756200010772,
+      "png_bytes": 36694,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-032",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.2911535429957439,
+      "decode_seconds": 1.3627779269954772,
+      "png_bytes": 36718,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-048",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.2953514679975342,
+      "decode_seconds": 1.127748603001237,
+      "png_bytes": 36857,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-064",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.28086035900196293,
+      "decode_seconds": 1.191111293999711,
+      "png_bytes": 36672,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-080",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.2899564979961724,
+      "decode_seconds": 1.1476171580070513,
+      "png_bytes": 36506,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-096",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.2661468459991738,
+      "decode_seconds": 1.1513826759983203,
+      "png_bytes": 36536,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-112",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.2524838999961503,
+      "decode_seconds": 1.1145883349963697,
+      "png_bytes": 36692,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-128",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.28149531099916203,
+      "decode_seconds": 1.3940682460015523,
+      "png_bytes": 36653,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-144",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.3001002189994324,
+      "decode_seconds": 1.2096040239994181,
+      "png_bytes": 36490,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-160",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.2642088430002332,
+      "decode_seconds": 1.3894758259993978,
+      "png_bytes": 36448,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-176",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.2758468910033116,
+      "decode_seconds": 1.1430386120046023,
+      "png_bytes": 36607,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-192",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.3487849480006844,
+      "decode_seconds": 1.1686183909987449,
+      "png_bytes": 36794,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-208",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.28234251500543905,
+      "decode_seconds": 1.0940989070004434,
+      "png_bytes": 36667,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-224",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.27099474200076656,
+      "decode_seconds": 1.4459285750053823,
+      "png_bytes": 36630,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "exhaustive-four-values-240",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 64,
+      "width": 1712,
+      "height": 4392,
+      "pixels": 7519104,
+      "rgb_bytes": 22557312,
+      "render_seconds": 0.3896719080003095,
+      "decode_seconds": 1.2292397470009746,
+      "png_bytes": 36712,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "every-power-0000",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 1024,
+      "width": 1712,
+      "height": 15656,
+      "pixels": 26803072,
+      "rgb_bytes": 80409216,
+      "render_seconds": 1.9099411759962095,
+      "decode_seconds": 3.0558822349994443,
+      "png_bytes": 162317,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "every-power-0512",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 1024,
+      "width": 1712,
+      "height": 15656,
+      "pixels": 26803072,
+      "rgb_bytes": 80409216,
+      "render_seconds": 1.9332200610006112,
+      "decode_seconds": 3.379214761996991,
+      "png_bytes": 161955,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "every-power-1024",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 1024,
+      "width": 1712,
+      "height": 15656,
+      "pixels": 26803072,
+      "rgb_bytes": 80409216,
+      "render_seconds": 2.0863884639984462,
+      "decode_seconds": 3.3854222009977093,
+      "png_bytes": 161940,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "every-power-1536",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 1024,
+      "width": 1712,
+      "height": 15656,
+      "pixels": 26803072,
+      "rgb_bytes": 80409216,
+      "render_seconds": 2.292750143999001,
+      "decode_seconds": 3.5587545899979887,
+      "png_bytes": 162005,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "every-power-2048",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 100,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.2064599739969708,
+      "decode_seconds": 0.8074102570026298,
+      "png_bytes": 20620,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "random-adjacent-0000",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 700,
+      "width": 1712,
+      "height": 10640,
+      "pixels": 18215680,
+      "rgb_bytes": 54647040,
+      "render_seconds": 2.117297728000267,
+      "decode_seconds": 2.4990536570039694,
+      "png_bytes": 164257,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "random-adjacent-0700",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 700,
+      "width": 1712,
+      "height": 10640,
+      "pixels": 18215680,
+      "rgb_bytes": 54647040,
+      "render_seconds": 1.6982834290029132,
+      "decode_seconds": 2.7922039219993167,
+      "png_bytes": 164120,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "random-adjacent-1400",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 656,
+      "width": 1712,
+      "height": 10024,
+      "pixels": 17161088,
+      "rgb_bytes": 51483264,
+      "render_seconds": 1.2842913439963013,
+      "decode_seconds": 3.0159774779967847,
+      "png_bytes": 153421,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "overlapping-duplicate-paths",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 78,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.3731258970001363,
+      "decode_seconds": 1.0903752769954735,
+      "png_bytes": 20135,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "translation",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 78,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.1612559360000887,
+      "decode_seconds": 0.8242295419986476,
+      "png_bytes": 20329,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "independent-axis-scales",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 78,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.20954835699376417,
+      "decode_seconds": 0.7185597380012041,
+      "png_bytes": 20139,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "adjacent-coordinate",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 78,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.1646490939965588,
+      "decode_seconds": 0.8696176939993165,
+      "png_bytes": 20146,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "below-character-cell",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 78,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.22033965400623856,
+      "decode_seconds": 1.0536439080024138,
+      "png_bytes": 20256,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "geometric-depth",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 78,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.14496446900011506,
+      "decode_seconds": 0.85231792400009,
+      "png_bytes": 20138,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "derivation-depth",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 78,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.1915321250053239,
+      "decode_seconds": 0.9037196349963779,
+      "png_bytes": 20135,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "creation-step",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 78,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.19665123500453774,
+      "decode_seconds": 0.8071789360037656,
+      "png_bytes": 20136,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "duplicate-self-reversed-edges",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 78,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.18268248600361403,
+      "decode_seconds": 0.8075633839980583,
+      "png_bytes": 20129,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "closure",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 78,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.18760872400162043,
+      "decode_seconds": 0.72727648900036,
+      "png_bytes": 20142,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "all-attributes",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 77,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.20931922500312794,
+      "decode_seconds": 0.9631129540066468,
+      "png_bytes": 20055,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "object-order",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 77,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.19238882399804424,
+      "decode_seconds": 0.7742651560038212,
+      "png_bytes": 20054,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "vertex-order",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 78,
+      "width": 1712,
+      "height": 2104,
+      "pixels": 3602048,
+      "rgb_bytes": 10806144,
+      "render_seconds": 0.17747539199626772,
+      "decode_seconds": 0.9201463159988634,
+      "png_bytes": 20134,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "distinct-geometric-changes",
+      "status": "pass",
+      "kind": "pixel-distinction",
+      "masks": {
+        "translation": "dd9d1aec95e43e8ac12dd0dbef3f95f93c8497499c1428333cbdf4f583573644",
+        "independent-axis-scales": "691d16f8155f9a5c01e40cb72df81d8afa680dbbcf27dc39a7bcad67d63111a0",
+        "adjacent-coordinate": "5dd0503c6bc61a763aa7f53026f81d8ba106a2aa460cdc0364c84c194cf9feb2",
+        "below-character-cell": "0d6a60a6e385c990025816cc9c7c94a3ee2b62f9dd7d185aac82c92f36f4a998",
+        "geometric-depth": "3db8058e61ea222d18e5a74f5f69a4d185c70bc1d296ae4339e60e24c579aba3",
+        "derivation-depth": "86b56393ee55dea86b1d877d9c94002457f2d926530a4114eddd184fa5c3556c",
+        "creation-step": "f3e4f0f9f60c229ada6c2ab663291ad235493da84ffb710adaad3cf5bac4e418",
+        "duplicate-self-reversed-edges": "bd4e9434b07f85cc2f37afc5cf87c8b439c88836517091d212ccf3f6dd644be5",
+        "closure": "1901430f7bfe101c8d6a9d99a7c9d96e28a7eed3a748d89bd90d0bbf2f4af162",
+        "all-attributes": "9dceea7d9511765928beaf4d674fa8e021dc09da46957005aa662a94693bb432",
+        "object-order": "0665bae655873bdd97934424ec8fbaf87abb58aec2d5ed898a1172eb49a91314",
+        "vertex-order": "60a876dafbc1f06773a61b644cd722d1860d9195724b21756cf54d9113fed5d5",
+        "original": "e118db4593657965cb0cce04a0c3e4d9f13f76b2ae9a303b1fe15cf5598c9019"
+      }
+    },
+    {
+      "name": "all-kinds-degeneracies-and-categories",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 283,
+      "width": 1712,
+      "height": 8616,
+      "pixels": 14750592,
+      "rgb_bytes": 44251776,
+      "render_seconds": 0.8831253569951514,
+      "decode_seconds": 1.924953078996623,
+      "png_bytes": 80137,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "maximum-capacity",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 2382,
+      "width": 1712,
+      "height": 35280,
+      "pixels": 60399360,
+      "rgb_bytes": 181198080,
+      "render_seconds": 5.151637725997716,
+      "decode_seconds": 7.749175065997406,
+      "png_bytes": 534130,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "capacity-one-scalar-over",
+      "status": "pass",
+      "kind": "capacity",
+      "observed": "rejected",
+      "reason": "401 rows require 1712x35368=60550016 pixels; limit 400 rows; no clipping"
+    },
+    {
+      "name": "full-600x600-matrix",
+      "status": "pass",
+      "kind": "capacity",
+      "observed": "rejected",
+      "reason": "states[0]: 360000 entries exceed 2400; no truncation"
+    },
+    {
+      "name": "unknown-root",
+      "status": "pass",
+      "kind": "unsupported",
+      "observed": "rejected",
+      "reason": "root: expected exactly {schema shapes states}"
+    },
+    {
+      "name": "unsupported-number-nan",
+      "status": "pass",
+      "kind": "unsupported",
+      "observed": "rejected",
+      "reason": "states[0][0]: nonfinite or inexact integer conversion"
+    },
+    {
+      "name": "unsupported-number-inf",
+      "status": "pass",
+      "kind": "unsupported",
+      "observed": "rejected",
+      "reason": "states[0][0]: nonfinite or inexact integer conversion"
+    },
+    {
+      "name": "unsupported-number--inf",
+      "status": "pass",
+      "kind": "unsupported",
+      "observed": "rejected",
+      "reason": "states[0][0]: nonfinite or inexact integer conversion"
+    },
+    {
+      "name": "unsupported-number-9007199254740993",
+      "status": "pass",
+      "kind": "unsupported",
+      "observed": "rejected",
+      "reason": "states[0][0]: nonfinite or inexact integer conversion"
+    },
+    {
+      "name": "unknown-attribute",
+      "status": "pass",
+      "kind": "unsupported",
+      "observed": "rejected",
+      "reason": "shapes[0].attributes: expected exactly {color material texture curvature symmetry bounds}"
+    },
+    {
+      "name": "mixed-dimensions",
+      "status": "pass",
+      "kind": "unsupported",
+      "observed": "rejected",
+      "reason": "shapes[0].vertices: 2D or 3D required"
+    },
+    {
+      "name": "structural-negative-zero",
+      "status": "pass",
+      "kind": "unsupported",
+      "observed": "rejected",
+      "reason": "shapes[0].depth: integer 0..128 required; structural -0 unsupported"
+    },
+    {
+      "name": "derived-geometry",
+      "status": "pass",
+      "kind": "unsupported",
+      "observed": "rejected",
+      "reason": "shapes[0]: unsupported geometry"
+    },
+    {
+      "name": "saved-complex-primitives.scene",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 89,
+      "width": 1712,
+      "height": 3072,
+      "pixels": 5259264,
+      "rgb_bytes": 15777792,
+      "render_seconds": 0.3572459569986677,
+      "decode_seconds": 1.050264679994143,
+      "png_bytes": 30769,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "saved-phase1-vectors.scene",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 36,
+      "width": 1712,
+      "height": 1224,
+      "pixels": 2095488,
+      "rgb_bytes": 6286464,
+      "render_seconds": 0.16708836999896448,
+      "decode_seconds": 0.7304414539976278,
+      "png_bytes": 13822,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "saved-phase2-vectors.scene",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 156,
+      "width": 1712,
+      "height": 4744,
+      "pixels": 8121728,
+      "rgb_bytes": 24365184,
+      "render_seconds": 0.3905288809983176,
+      "decode_seconds": 1.2591878919993178,
+      "png_bytes": 53920,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "saved-sampled-complex-paths.scene",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 1632,
+      "width": 1712,
+      "height": 28328,
+      "pixels": 48497536,
+      "rgb_bytes": 145492608,
+      "render_seconds": 3.58689444999618,
+      "decode_seconds": 6.392420803000277,
+      "png_bytes": 350686,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "saved-three-600-neuron-vectors.scene",
+      "status": "pass",
+      "kind": "native_exact_recovery",
+      "numbers": 1800,
+      "width": 1712,
+      "height": 27096,
+      "pixels": 46388352,
+      "rgb_bytes": 139165056,
+      "render_seconds": 4.174938264004595,
+      "decode_seconds": 5.665360597995459,
+      "png_bytes": 403887,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "entire-saved-shape-stream",
+      "status": "pass",
+      "kind": "unsupported",
+      "observed": "rejected",
+      "reason": "root: expected exactly {schema shapes states}"
+    },
+    {
+      "name": "png-reexport-0",
+      "status": "pass",
+      "kind": "lossless-reexport",
+      "decode_seconds": 0.6873651400019298
+    },
+    {
+      "name": "png-reexport-1",
+      "status": "pass",
+      "kind": "lossless-reexport",
+      "decode_seconds": 0.6224441669983207
+    },
+    {
+      "name": "png-reexport-9",
+      "status": "pass",
+      "kind": "lossless-reexport",
+      "decode_seconds": 0.5144810959973256
+    },
+    {
+      "name": "metadata-independence",
+      "status": "pass",
+      "kind": "ancillary-data-ignored"
+    },
+    {
+      "name": "native-png-chunks",
+      "status": "pass",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "name": "resize-0.25-nearest",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.3302823849953711,
+      "dimensions": [
+        428,
+        108
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-0.25-nearest",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "rejected",
+      "decode_seconds": 0.4138129499988281,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: damaged row grouping\n",
+      "expected": null
+    },
+    {
+      "name": "resize-0.25-lanczos",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.3338596910034539,
+      "dimensions": [
+        428,
+        108
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-0.25-lanczos",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "rejected",
+      "decode_seconds": 0.5514453649957431,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: unknown row role\n",
+      "expected": null
+    },
+    {
+      "name": "resize-0.5-nearest",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.34139419400162296,
+      "dimensions": [
+        856,
+        216
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-0.5-nearest",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "rejected",
+      "decode_seconds": 0.4827624109966564,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: damaged row grouping\n",
+      "expected": null
+    },
+    {
+      "name": "resize-0.5-lanczos",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.29562181900109863,
+      "dimensions": [
+        856,
+        216
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-0.5-lanczos",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "rejected",
+      "decode_seconds": 0.4499692649987992,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: damaged row grouping\n",
+      "expected": null
+    },
+    {
+      "name": "resize-0.75-nearest",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.34076021800137823,
+      "dimensions": [
+        1284,
+        324
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-0.75-nearest",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "rejected",
+      "decode_seconds": 0.4615189649994136,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: unknown row role\n",
+      "expected": null
+    },
+    {
+      "name": "resize-0.75-lanczos",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.37870269999984885,
+      "dimensions": [
+        1284,
+        324
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-0.75-lanczos",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "rejected",
+      "decode_seconds": 0.5510967199952574,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: damaged row grouping\n",
+      "expected": null
+    },
+    {
+      "name": "resize-0.99-nearest",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.28504604299814673,
+      "dimensions": [
+        1695,
+        428
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-0.99-nearest",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "rejected",
+      "decode_seconds": 0.48168871700181626,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: damaged or noncanonical plant\n",
+      "expected": null
+    },
+    {
+      "name": "resize-0.99-lanczos",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.3412552110021352,
+      "dimensions": [
+        1695,
+        428
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-0.99-lanczos",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "rejected",
+      "decode_seconds": 0.4654386669935775,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: damaged or noncanonical plant\n",
+      "expected": null
+    },
+    {
+      "name": "resize-1.01-nearest",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.3222929719995591,
+      "dimensions": [
+        1729,
+        436
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-1.01-nearest",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "exact",
+      "decode_seconds": 0.5173674570032745,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "",
+      "expected": null
+    },
+    {
+      "name": "resize-1.01-lanczos",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.3912588480015984,
+      "dimensions": [
+        1729,
+        436
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-1.01-lanczos",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "rejected",
+      "decode_seconds": 0.4450529869936872,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: damaged or noncanonical plant\n",
+      "expected": null
+    },
+    {
+      "name": "resize-1.5-nearest",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.32639592400664696,
+      "dimensions": [
+        2568,
+        648
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-1.5-nearest",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "exact",
+      "decode_seconds": 0.4774042639983236,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "",
+      "expected": null
+    },
+    {
+      "name": "resize-1.5-lanczos",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.34631874399929075,
+      "dimensions": [
+        2568,
+        648
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-1.5-lanczos",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "exact",
+      "decode_seconds": 1.0055529349992867,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "",
+      "expected": null
+    },
+    {
+      "name": "resize-2.0-nearest",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.7029703680018429,
+      "dimensions": [
+        3424,
+        864
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-2.0-nearest",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "exact",
+      "decode_seconds": 0.7622981800013804,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "",
+      "expected": null
+    },
+    {
+      "name": "resize-2.0-lanczos",
+      "status": "measured",
+      "kind": "resized-dimensions",
+      "observed": "rejected",
+      "decode_seconds": 0.44240522200561827,
+      "dimensions": [
+        3424,
+        864
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "restore-2.0-lanczos",
+      "status": "measured",
+      "kind": "resize-back-to-native",
+      "observed": "exact",
+      "decode_seconds": 0.5695660730052623,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "",
+      "expected": null
+    },
+    {
+      "name": "jpeg-100-pixels",
+      "status": "measured",
+      "kind": "jpeg",
+      "observed": "exact",
+      "decode_seconds": 0.6435096259956481,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "",
+      "expected": null
+    },
+    {
+      "name": "jpeg-95-pixels",
+      "status": "measured",
+      "kind": "jpeg",
+      "observed": "exact",
+      "decode_seconds": 0.4242843169995467,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "",
+      "expected": null
+    },
+    {
+      "name": "jpeg-85-pixels",
+      "status": "measured",
+      "kind": "jpeg",
+      "observed": "exact",
+      "decode_seconds": 0.5020342600037111,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "",
+      "expected": null
+    },
+    {
+      "name": "jpeg-70-pixels",
+      "status": "measured",
+      "kind": "jpeg",
+      "observed": "exact",
+      "decode_seconds": 0.39671800599899143,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "",
+      "expected": null
+    },
+    {
+      "name": "jpeg-50-pixels",
+      "status": "measured",
+      "kind": "jpeg",
+      "observed": "rejected",
+      "decode_seconds": 0.4637967029993888,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: damaged or noncanonical plant\n",
+      "expected": null
+    },
+    {
+      "name": "jpeg-30-pixels",
+      "status": "measured",
+      "kind": "jpeg",
+      "observed": "rejected",
+      "decode_seconds": 0.45343934900301974,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: damaged or noncanonical plant\n",
+      "expected": null
+    },
+    {
+      "name": "jpeg-10-pixels",
+      "status": "measured",
+      "kind": "jpeg",
+      "observed": "rejected",
+      "decode_seconds": 0.4024628230035887,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: damaged row grouping\n",
+      "expected": null
+    },
+    {
+      "name": "jpeg-1-pixels",
+      "status": "measured",
+      "kind": "jpeg",
+      "observed": "rejected",
+      "decode_seconds": 0.4156270349994884,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "ImageRejected: damaged row grouping\n",
+      "expected": null
+    },
+    {
+      "name": "crop-one-bottom-row",
+      "status": "measured",
+      "kind": "crop",
+      "observed": "rejected",
+      "decode_seconds": 0.2758181760000298,
+      "dimensions": [
+        1712,
+        431
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "crop-one-right-column",
+      "status": "measured",
+      "kind": "crop",
+      "observed": "rejected",
+      "decode_seconds": 0.31015775299601955,
+      "dimensions": [
+        1711,
+        432
+      ],
+      "stderr": "ImageRejected: native dimensions required\n",
+      "expected": null
+    },
+    {
+      "name": "erase-complete-unit-leaf",
+      "status": "measured",
+      "kind": "valid-image-mutation",
+      "observed": "valid-but-wrong",
+      "decode_seconds": 0.5670034309951006,
+      "dimensions": [
+        1712,
+        432
+      ],
+      "stderr": "",
+      "expected": "can silently change 1 to 0"
+    },
+    {
+      "name": "source-read-permission-denied",
+      "status": "pass",
+      "stderr": "node:fs:622\n  return binding.open(\n                 ^\n\nError: Access to this API has been restricted. Use --allow-fs-read to manage permissions.\n    at Object.openSync (node:fs:622:18)\n    at Object.readFileSync (node:fs:488:35)\n    at [eval]:1:20\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30)\n    at evalTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_string:71:3 {\n  code: 'ERR_ACCESS_DENIED',\n  permission: 'FileSystemRead',\n  resource: '/workspace/scratch/e23f8538817b/neural-engine-power-garden/research/power-garden/results/run-02/display-sample.input.json'\n}\n\nNode.js v24.19.0\n"
+    }
+  ],
+  "incidents": [],
+  "scientific_validation": "not tested; no semantic or neural improvement claim"
+}
