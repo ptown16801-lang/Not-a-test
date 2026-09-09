@@ -1,0 +1,1699 @@
+{
+  "schema": "neural-engine-paired-history/v1",
+  "audience": "non_scientific",
+  "snapshot_id": "20260909T030109Z-809a379a47e8-c88c9ff6",
+  "generated_at_utc": "2026-09-09T03:01:09Z",
+  "source_commit": "809a379a47e86456e8da04b35c5620d87b7387ba",
+  "project_version": "0.8.0",
+  "coverage": {
+    "scope": "All Git commits reachable from the source commit; tracked project documents and JSON evidence at that commit; explicitly supplied conversation milestones.",
+    "commit_count": 76,
+    "history_start": "bbc232c285b92d95c2722d7c33f6838cf10a711d",
+    "history_through": "809a379a47e86456e8da04b35c5620d87b7387ba",
+    "source_artifact_count": 183,
+    "excluded_from_recursive_embedding": "Earlier history snapshots are hash-indexed, not embedded recursively.",
+    "limitations": [
+      "Private or unavailable conversations and unreachable/deleted Git objects are not claimed recovered.",
+      "The later commit saving this snapshot cannot be contained in its own source history.",
+      "Historical reports are preserved as reports, not relabeled as fresh executions."
+    ]
+  },
+  "change_notes": {
+    "action": "append_only_history_and_wolfram_recheck",
+    "model_equations_modified": false,
+    "legacy_files_overwritten": [],
+    "source_commit": "809a379a47e86456e8da04b35c5620d87b7387ba",
+    "notes": [
+      "Added paired scientific/plain-language histories with matching event IDs.",
+      "Rechecked Wolfram availability and matched archived validation source hashes.",
+      "Preserved uncertainty, missing publication parameters, failed runs, and earlier snapshots.",
+      "Preserved legacy PROJECT_LOG.json and MASTER_PROJECT.json byte-for-byte."
+    ]
+  },
+  "project_story": [
+    {
+      "event_id": "research:numpy-scipy-sha256:20260909.1",
+      "summary": "Published this thread's NumPy/SciPy linear-algebra investigation and SHA-256 compatibility findings to GitHub and Moltbook.",
+      "findings": [
+        "Direct solve was about three times faster at 600 neurons in the original isolated CPU benchmark, but slower at 12 neurons.",
+        "All five saved-state susceptibility checks passed existing tolerances; this does not validate new equilibria or full training gradients.",
+        "A separate publication-time replay also passed the five saved-state checks. Its timings remain distinct from the original results.",
+        "SHA-256 identifiers work with 64-bit numerical arithmetic; canonical records and random-stream definitions must be preserved."
+      ],
+      "scope": "Research evidence and documentation only; no production engine changes or new engine release.",
+      "moltbook_url": "https://www.moltbook.com/post/b2bb1cb2-833b-4db0-bf03-3b02d00a5c55"
+    }
+  ],
+  "timeline": [
+    {
+      "event_id": "git:bbc232c285b92d95c2722d7c33f6838cf10a711d",
+      "when": "2026-09-05T00:33:11-04:00",
+      "commit": "bbc232c285b92d95c2722d7c33f6838cf10a711d",
+      "what_was_recorded": "Initialize Shape Cognition v0.7.0",
+      "files_changed": [
+        "A\tREADME.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:ca9f69350b003b391ec39a611fdf6a4c27ee7e80",
+      "when": "2026-09-05T00:37:30-04:00",
+      "commit": "ca9f69350b003b391ec39a611fdf6a4c27ee7e80",
+      "what_was_recorded": "Assemble Shape Cognition v0.7.0 web server, sensory art, dirt renderer and tests\n\nInclude the complete 52-file release, dependency-free production modules, browser gallery, Docker configuration, neural checkpoint and demos.\nKeep thermal/sound adapters and Moltbook identity disabled by default. Fix local ledger defaults and protect runtime credentials with .gitignore.\n\nVerified locally: 58/58 tests, including deployment restart and JPEG Q95/Q85/Q70, plus all four demos.",
+      "files_changed": [
+        "A\t.dockerignore",
+        "A\t.env.example",
+        "A\t.gitignore",
+        "A\tDockerfile",
+        "A\tRELEASE.md",
+        "A\tassets/neural-preview-checkpoint.json",
+        "A\tcompose.yaml",
+        "A\tdemo/balance-output.json",
+        "A\tdemo/balance.js",
+        "A\tdemo/dirt-balance-output.json",
+        "A\tdemo/dirt-balance.js",
+        "A\tdemo/intake-browser.html",
+        "A\tdemo/intake-server.js",
+        "A\tdemo/neural-synesthesia-output.json",
+        "A\tdemo/neural-synesthesia.js",
+        "A\tdemo/neural-synesthesia.svg",
+        "A\tdemo/projective-synesthesia-output.json",
+        "A\tdemo/projective-synesthesia.js",
+        "A\tdemo/projective-synesthesia.svg",
+        "A\tdemo/run-neural-experiment.js",
+        "A\tdemo/thought-submission.json",
+        "A\tdemo/train-neural-checkpoint.js",
+        "A\tdocs/moltbook-participation.md",
+        "A\tdocs/shriki-2016-reconstruction.md",
+        "A\tpackage.json",
+        "A\tsrc/dirt-renderer.js",
+        "A\tsrc/dirt-texture.js",
+        "A\tsrc/engine.js",
+        "A\tsrc/moltbook-identity.js",
+        "A\tsrc/neural-shape-bridge.js",
+        "A\tsrc/neural-synesthesia.js",
+        "A\tsrc/sensory-art.js",
+        "A\tsrc/sensory-encoders.js",
+        "A\tsrc/server-config.js",
+        "A\tsrc/stego.js",
+        "A\tsrc/synesthetic-geometry.js",
+        "A\tsrc/thought-gateway.js",
+        "A\tsrc/thought-intake.js",
+        "A\tsrc/types.js",
+        "A\ttest/deployment.test.js",
+        "A\ttest/dirt-renderer.test.js",
+        "A\ttest/dirt-texture.test.js",
+        "A\ttest/engine.test.js",
+        "A\ttest/jpeg_roundtrip.py",
+        "A\ttest/moltbook-identity.test.js",
+        "A\ttest/neural-synesthesia.test.js",
+        "A\ttest/sensory-encoders.test.js",
+        "A\ttest/server-config.test.js",
+        "A\ttest/stego.test.js",
+        "A\ttest/synesthetic-geometry.test.js",
+        "A\ttest/thought-intake.test.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:ecb019f947341a38b376b79ff3da1751d4aed59b",
+      "when": "2026-09-05T02:34:01-04:00",
+      "commit": "ecb019f947341a38b376b79ff3da1751d4aed59b",
+      "what_was_recorded": "Add seamless cloud rolling loop",
+      "files_changed": [
+        "A\tsrc/cloud-loop.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:2cd5e4c167311c1b5ec2a30fa03460de10859638",
+      "when": "2026-09-05T02:34:05-04:00",
+      "commit": "2cd5e4c167311c1b5ec2a30fa03460de10859638",
+      "what_was_recorded": "Add cloud loop motion layer styles",
+      "files_changed": [
+        "A\tassets/cloud-loop.css"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:875d89d858c26a4808dd1838c0f0b8cf3b660cc2",
+      "when": "2026-09-05T02:41:20-04:00",
+      "commit": "875d89d858c26a4808dd1838c0f0b8cf3b660cc2",
+      "what_was_recorded": "Add deterministic text perceptual mapper",
+      "files_changed": [
+        "A\tsrc/text-perception.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:00f03408565002a9c4c37c6cc68aa3742c6dd98a",
+      "when": "2026-09-05T02:41:27-04:00",
+      "commit": "00f03408565002a9c4c37c6cc68aa3742c6dd98a",
+      "what_was_recorded": "Test text perceptual mapper",
+      "files_changed": [
+        "A\ttest/text-perception.test.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:aa340001d811f513ce2c05736c3d976d4f3da25a",
+      "when": "2026-09-05T02:41:36-04:00",
+      "commit": "aa340001d811f513ce2c05736c3d976d4f3da25a",
+      "what_was_recorded": "Bridge text perception into neural visualizer",
+      "files_changed": [
+        "A\tsrc/text-neural-bridge.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:082b6dd6e5d450420a79a88263b45082db1667a8",
+      "when": "2026-09-05T02:41:48-04:00",
+      "commit": "082b6dd6e5d450420a79a88263b45082db1667a8",
+      "what_was_recorded": "Add runnable text seed synesthesia demo",
+      "files_changed": [
+        "A\tdemo/text-seed-synesthesia.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:76155ec5a42ae1cc637a0480895aba4a707343f3",
+      "when": "2026-09-05T02:45:19-04:00",
+      "commit": "76155ec5a42ae1cc637a0480895aba4a707343f3",
+      "what_was_recorded": "Wire text seed renderer into intake server",
+      "files_changed": [
+        "M\tdemo/intake-server.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:02e89a7876a3d063ca9a099fb9a83d5cd1e0a1ba",
+      "when": "2026-09-05T02:45:42-04:00",
+      "commit": "02e89a7876a3d063ca9a099fb9a83d5cd1e0a1ba",
+      "what_was_recorded": "Add text seed render endpoint",
+      "files_changed": [
+        "M\tsrc/thought-gateway.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:47af19e31c5dfdf4a8fe7d1e7e5f4d2c268b0621",
+      "when": "2026-09-05T02:46:19-04:00",
+      "commit": "47af19e31c5dfdf4a8fe7d1e7e5f4d2c268b0621",
+      "what_was_recorded": "Add floating text seed render test window",
+      "files_changed": [
+        "M\tdemo/intake-browser.html"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:970a0b8e029d18d3f6b755909738e4bf4e45b054",
+      "when": "2026-09-05T02:47:34-04:00",
+      "commit": "970a0b8e029d18d3f6b755909738e4bf4e45b054",
+      "what_was_recorded": "Harden seamless cloud loop and cleanup",
+      "files_changed": [
+        "M\tsrc/cloud-loop.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:85b964726b5a83ccc12acf400c283b68d08a4ae3",
+      "when": "2026-09-05T02:47:41-04:00",
+      "commit": "85b964726b5a83ccc12acf400c283b68d08a4ae3",
+      "what_was_recorded": "Update cloud loop wrapper styles",
+      "files_changed": [
+        "M\tassets/cloud-loop.css"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:7d38a51a1b98c874cb65ded2eb62253f47193729",
+      "when": "2026-09-05T02:47:53-04:00",
+      "commit": "7d38a51a1b98c874cb65ded2eb62253f47193729",
+      "what_was_recorded": "Add subtle randomized corn breeze animation",
+      "files_changed": [
+        "A\tsrc/corn-breeze.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:cb4c6f575cea22c2ec6312bc8d4d32a431dd0aa3",
+      "when": "2026-09-05T02:48:47-04:00",
+      "commit": "cb4c6f575cea22c2ec6312bc8d4d32a431dd0aa3",
+      "what_was_recorded": "Test text seed render endpoint and updated capabilities",
+      "files_changed": [
+        "M\ttest/deployment.test.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:6f521a4a152800aa481a0f0d360a9854d72ec81f",
+      "when": "2026-09-05T02:49:04-04:00",
+      "commit": "6f521a4a152800aa481a0f0d360a9854d72ec81f",
+      "what_was_recorded": "Add environment motion integration controller",
+      "files_changed": [
+        "A\tsrc/environment-motion.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:696e7592c0db7cca11fe91064a43228fff4aab98",
+      "when": "2026-09-05T02:49:35-04:00",
+      "commit": "696e7592c0db7cca11fe91064a43228fff4aab98",
+      "what_was_recorded": "Fix renderer window sizing and fullscreen behavior",
+      "files_changed": [
+        "M\tdemo/intake-browser.html"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:a67e1b40aa3790ee58becdbf4f6299cebb9e8930",
+      "when": "2026-09-05T02:50:00-04:00",
+      "commit": "a67e1b40aa3790ee58becdbf4f6299cebb9e8930",
+      "what_was_recorded": "Limit cloud overlap to seam crossfade",
+      "files_changed": [
+        "M\tsrc/cloud-loop.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:2decd5c180df92780c88b6cbd022465a5b266713",
+      "when": "2026-09-05T02:50:24-04:00",
+      "commit": "2decd5c180df92780c88b6cbd022465a5b266713",
+      "what_was_recorded": "Fix cloud loop opacity at reset boundary",
+      "files_changed": [
+        "M\tsrc/cloud-loop.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:335302c77d1ea28a7d5dbfa6b638f72991fde887",
+      "when": "2026-09-06T22:50:14-04:00",
+      "commit": "335302c77d1ea28a7d5dbfa6b638f72991fde887",
+      "what_was_recorded": "Fix cloud preview and renderer window state",
+      "files_changed": [
+        "M\tREADME.md",
+        "A\tdemo/dev-server.js",
+        "M\tdemo/intake-browser.html",
+        "M\tpackage.json",
+        "M\ttest/deployment.test.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:91bac517333a1232076ea1da4b485fdd8856f00a",
+      "when": "2026-09-07T00:14:00-04:00",
+      "commit": "91bac517333a1232076ea1da4b485fdd8856f00a",
+      "what_was_recorded": "Add scalable Mathematica paper reconstruction",
+      "files_changed": [
+        "M\t.gitignore",
+        "M\tREADME.md",
+        "A\tmathematica/PaperFigures.wl",
+        "A\tmathematica/README.md",
+        "A\tmathematica/RunAll.wls",
+        "A\tmathematica/SCALING_AUDIT.md",
+        "A\tmathematica/ScalingBenchmark.wls",
+        "A\tmathematica/Shriki2016Reproduction.nb",
+        "A\tmathematica/SynesthesiaModel.wl",
+        "A\tmathematica/paper-spec.json",
+        "A\tmathematica/tests/RunTests.wls",
+        "A\tmathematica/tests/SynesthesiaModel.wlt",
+        "M\tpackage.json",
+        "A\ttest/mathematica-rewrite.test.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:9f3e163e469be40c5d5248be8e66ef3b7945b672",
+      "when": "2026-09-07T00:15:39-04:00",
+      "commit": "9f3e163e469be40c5d5248be8e66ef3b7945b672",
+      "what_was_recorded": "add Shriki paper fidelity audit gate",
+      "files_changed": [
+        "A\tdocs/paper-fidelity-audit.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:0c6618228a17b4c98dbb9030088c8cfc70519a1a",
+      "when": "2026-09-07T03:57:00-04:00",
+      "commit": "0c6618228a17b4c98dbb9030088c8cfc70519a1a",
+      "what_was_recorded": "establish Shriki publication fidelity",
+      "files_changed": [
+        "M\tdemo/run-neural-experiment.js",
+        "M\tdemo/train-neural-checkpoint.js",
+        "A\tdocs/figure-7-publication-audit.md",
+        "M\tdocs/paper-fidelity-audit.md",
+        "M\tdocs/shriki-2016-reconstruction.md",
+        "M\tmathematica/PaperFigures.wl",
+        "M\tmathematica/Shriki2016Reproduction.nb",
+        "M\tmathematica/SynesthesiaModel.wl",
+        "M\tmathematica/paper-spec.json",
+        "M\tmathematica/tests/SynesthesiaModel.wlt",
+        "A\tmathematica/verification/NumericalPolicySensitivity.wls",
+        "A\tmathematica/verification/PublicationDerivation.wls",
+        "A\tmathematica/verification/results/numerical-policy-sensitivity.json",
+        "A\tmathematica/verification/results/wolfram-validation.json",
+        "A\tmathematica/verification/source-manifest.json",
+        "M\tsrc/neural-shape-bridge.js",
+        "M\tsrc/neural-synesthesia.js",
+        "M\ttest/neural-synesthesia.test.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:d5ada19065c756743e7cea2d574f0ca61f6cf727",
+      "when": "2026-09-07T03:58:20-04:00",
+      "commit": "d5ada19065c756743e7cea2d574f0ca61f6cf727",
+      "what_was_recorded": "bench: measure exact Shriki scaling limits",
+      "files_changed": [
+        "A\tdocs/modern-compute-scaling-results.md",
+        "A\tmathematica/AggregateScalingResults.wls",
+        "A\tmathematica/CriticalSlowingBenchmark.wls",
+        "A\tmathematica/ExactBenchmarkPoint.wls",
+        "M\tmathematica/README.md",
+        "M\tmathematica/SCALING_AUDIT.md",
+        "A\tmathematica/benchmark-results/README.md",
+        "A\tmathematica/benchmark-results/critical-slowing-142.json",
+        "A\tmathematica/benchmark-results/dense-1136.json",
+        "A\tmathematica/benchmark-results/dense-142.json",
+        "A\tmathematica/benchmark-results/dense-2272.json",
+        "A\tmathematica/benchmark-results/dense-284.json",
+        "A\tmathematica/benchmark-results/dense-4544.json",
+        "A\tmathematica/benchmark-results/dense-568.json",
+        "A\tmathematica/benchmark-results/environment.json",
+        "A\tmathematica/benchmark-results/factorhistory-1136.json",
+        "A\tmathematica/benchmark-results/factorhistory-142-train1000.json",
+        "A\tmathematica/benchmark-results/factorhistory-142-window10.json",
+        "A\tmathematica/benchmark-results/factorhistory-142.json",
+        "A\tmathematica/benchmark-results/factorhistory-18176.json",
+        "A\tmathematica/benchmark-results/factorhistory-2272.json",
+        "A\tmathematica/benchmark-results/factorhistory-284.json",
+        "A\tmathematica/benchmark-results/factorhistory-36352.json",
+        "A\tmathematica/benchmark-results/factorhistory-4544.json",
+        "A\tmathematica/benchmark-results/factorhistory-568-train50.json",
+        "A\tmathematica/benchmark-results/factorhistory-568.json",
+        "A\tmathematica/benchmark-results/factorhistory-72704.json",
+        "A\tmathematica/benchmark-results/factorhistory-9088.json",
+        "A\tmathematica/benchmark-results/scaling-measurements.csv",
+        "A\tmathematica/benchmark-results/scaling-summary.json",
+        "M\ttest/mathematica-rewrite.test.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:50a4ca808e34f6e02ff691172d76b4ba716e4ad8",
+      "when": "2026-09-07T04:07:52-04:00",
+      "commit": "50a4ca808e34f6e02ff691172d76b4ba716e4ad8",
+      "what_was_recorded": "summarize neural engine evolution",
+      "files_changed": [
+        "A\tCHANGELOG.md",
+        "M\tREADME.md",
+        "A\tdocs/project-change-summary.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:cf7696d3cdd7d8a3a20f439038789699d622bc12",
+      "when": "2026-09-07T09:07:53-04:00",
+      "commit": "cf7696d3cdd7d8a3a20f439038789699d622bc12",
+      "what_was_recorded": "validate Shriki fidelity and exact scaling",
+      "files_changed": [
+        "M\t.gitignore",
+        "M\tCHANGELOG.md",
+        "A\tPROJECT_LOG.json",
+        "M\tREADME.md",
+        "M\tdocs/figure-7-publication-audit.md",
+        "M\tdocs/modern-compute-scaling-results.md",
+        "M\tdocs/paper-fidelity-audit.md",
+        "M\tdocs/project-change-summary.md",
+        "A\tdocs/scientific-audit-report.md",
+        "A\tdocs/scientific-claim-audit.json",
+        "A\tdocs/scientific-source-ledger.json",
+        "M\tdocs/shriki-2016-reconstruction.md",
+        "M\tmathematica/AggregateScalingResults.wls",
+        "M\tmathematica/CriticalSlowingBenchmark.wls",
+        "M\tmathematica/ExactBenchmarkPoint.wls",
+        "M\tmathematica/README.md",
+        "M\tmathematica/SCALING_AUDIT.md",
+        "M\tmathematica/SynesthesiaModel.wl",
+        "M\tmathematica/benchmark-results/README.md",
+        "A\tmathematica/benchmark-results/benchmark-qualification.json",
+        "M\tmathematica/benchmark-results/critical-slowing-142.json",
+        "M\tmathematica/benchmark-results/dense-142.json",
+        "A\tmathematica/benchmark-results/factorhistory-1136-v2.json",
+        "A\tmathematica/benchmark-results/factorhistory-142-train1000-v2.json",
+        "A\tmathematica/benchmark-results/factorhistory-18176-v2.json",
+        "A\tmathematica/benchmark-results/factorhistory-2272-v2.json",
+        "A\tmathematica/benchmark-results/factorhistory-284-v2.json",
+        "A\tmathematica/benchmark-results/factorhistory-36352-v2.json",
+        "A\tmathematica/benchmark-results/factorhistory-4544-v2.json",
+        "A\tmathematica/benchmark-results/factorhistory-568-v2.json",
+        "A\tmathematica/benchmark-results/factorhistory-72704-v2.json",
+        "A\tmathematica/benchmark-results/factorhistory-9088-v2.json",
+        "M\tmathematica/benchmark-results/scaling-measurements.csv",
+        "M\tmathematica/benchmark-results/scaling-summary.json",
+        "M\tmathematica/paper-spec.json",
+        "M\tmathematica/tests/RunTests.wls",
+        "M\tmathematica/tests/SynesthesiaModel.wlt",
+        "M\tmathematica/verification/NumericalPolicySensitivity.wls",
+        "M\tmathematica/verification/PublicationDerivation.wls",
+        "A\tmathematica/verification/RepeatedValidation.wls",
+        "A\tmathematica/verification/results/javascript-adversarial-validation.json",
+        "M\tmathematica/verification/results/numerical-policy-sensitivity.json",
+        "A\tmathematica/verification/results/repeated-validation.json",
+        "A\tmathematica/verification/results/wolfram-test-report.json",
+        "M\tmathematica/verification/results/wolfram-validation.json",
+        "A\toutput/pdf/shriki-2016-publication-grade-audit.pdf",
+        "M\tpackage.json",
+        "A\tscripts/generate-neural-validation-log.js",
+        "A\tscripts/generate-project-log.js",
+        "A\tscripts/generate-scientific-audit-pdf.py",
+        "A\tscripts/run-tests-with-json-log.js",
+        "M\tsrc/neural-synesthesia.js",
+        "M\ttest/mathematica-rewrite.test.js",
+        "M\ttest/neural-synesthesia.test.js",
+        "A\ttest/project-log.test.js",
+        "A\ttest/scientific-validation-log.test.js",
+        "A\tverification/results/node-test-report-attempt1.json",
+        "A\tverification/results/node-test-report-attempt2.json",
+        "A\tverification/results/node-test-report.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:557ce0553224a8299abecd98cf71be142ad90b35",
+      "when": "2026-09-07T10:17:24-04:00",
+      "commit": "557ce0553224a8299abecd98cf71be142ad90b35",
+      "what_was_recorded": "release: publish neural engine v0.8.0",
+      "files_changed": [
+        "M\tCHANGELOG.md",
+        "A\tMASTER_PROJECT.json",
+        "M\tPROJECT_LOG.json",
+        "M\tREADME.md",
+        "M\tRELEASE.md",
+        "M\tpackage.json",
+        "A\tscripts/generate-master-project.js",
+        "M\tscripts/generate-project-log.js",
+        "M\tscripts/run-tests-with-json-log.js",
+        "M\ttest/project-log.test.js",
+        "A\tverification/results/node-test-report-v0.8.0.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:48f5a19f4434010e1e6def3c3086b98218183b1a",
+      "when": "2026-09-07T21:44:54-04:00",
+      "commit": "48f5a19f4434010e1e6def3c3086b98218183b1a",
+      "what_was_recorded": "validate 600-neuron backpropagation",
+      "files_changed": [
+        "M\tCHANGELOG.md",
+        "M\tMASTER_PROJECT.json",
+        "M\tPROJECT_LOG.json",
+        "M\tREADME.md",
+        "A\tdocs/backpropagation-600.md",
+        "M\tpackage.json",
+        "M\tscripts/generate-master-project.js",
+        "M\tscripts/generate-project-log.js",
+        "A\tscripts/run-backpropagation-600.js",
+        "A\ttest/backpropagation-600.test.js",
+        "A\tverification/results/backpropagation-600.json",
+        "M\tverification/results/node-test-report.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:25838233b1191b5aedca6ff1d68eb6fb8c975ee9",
+      "when": "2026-09-07T21:49:08-04:00",
+      "commit": "25838233b1191b5aedca6ff1d68eb6fb8c975ee9",
+      "what_was_recorded": "verification: add fail-closed live Wolfram gate",
+      "files_changed": [
+        "A\tscripts/verify-wolfram.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:5d5f735d170b9cf0f83961ffab6183b89f6cf6b9",
+      "when": "2026-09-07T21:49:35-04:00",
+      "commit": "5d5f735d170b9cf0f83961ffab6183b89f6cf6b9",
+      "what_was_recorded": "cover strict Wolfram availability and no-skip enforcement",
+      "files_changed": [
+        "A\ttest/wolfram-verification-gate.test.js"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:9b3ebea935ecccb26f51eb9e6d8f58e7ecc88ebc",
+      "when": "2026-09-07T21:49:56-04:00",
+      "commit": "9b3ebea935ecccb26f51eb9e6d8f58e7ecc88ebc",
+      "what_was_recorded": "record Wolfram retry evidence and unresolved assumptions",
+      "files_changed": [
+        "A\tdocs/wolfram-dependency-recheck-2026-09-07.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:970974308ac2e3f2c8e39c99e25d1b4e77804929",
+      "when": "2026-09-07T21:50:55-04:00",
+      "commit": "970974308ac2e3f2c8e39c99e25d1b4e77804929",
+      "what_was_recorded": "verification: preserve machine-readable blocked Wolfram retry evidence",
+      "files_changed": [
+        "A\tdocs/wolfram-dependency-recheck-2026-09-07.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:dd91dba2c13912a6f1a92427509da87efa6224da",
+      "when": "2026-09-07T21:51:31-04:00",
+      "commit": "dd91dba2c13912a6f1a92427509da87efa6224da",
+      "what_was_recorded": "verification: expose strict Wolfram gate alongside 600-neuron backprop test",
+      "files_changed": [
+        "M\tpackage.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:d2b497ff422021518e4625d512c19569e251969c",
+      "when": "2026-09-07T21:52:27-04:00",
+      "commit": "d2b497ff422021518e4625d512c19569e251969c",
+      "what_was_recorded": "clarify retry scope and preserve concurrent backpropagation work",
+      "files_changed": [
+        "M\tdocs/wolfram-dependency-recheck-2026-09-07.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:b92afe4471c796a8227146ba7e066d2fdc43c526",
+      "when": "2026-09-07T21:52:53-04:00",
+      "commit": "b92afe4471c796a8227146ba7e066d2fdc43c526",
+      "what_was_recorded": "verification: record merged source hashes and retained backprop command",
+      "files_changed": [
+        "M\tdocs/wolfram-dependency-recheck-2026-09-07.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:e82ac65d28274dec9b2594a7999cd62d6cda96a0",
+      "when": "2026-09-07T21:54:13-04:00",
+      "commit": "e82ac65d28274dec9b2594a7999cd62d6cda96a0",
+      "what_was_recorded": "add append-only paired histories and genuine Wolfram recheck",
+      "files_changed": [
+        "A\tmaintenance/v1/history.py"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:a09f1e205e53db415c468b4486154404d626e5ba",
+      "when": "2026-09-07T21:54:50-04:00",
+      "commit": "a09f1e205e53db415c468b4486154404d626e5ba",
+      "what_was_recorded": "verify non-overwrite, full coverage, hashes and blocked-result handling",
+      "files_changed": [
+        "A\tmaintenance/v1/test_history.py"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:5124eb634791a55805865b4607e5b91174b6797d",
+      "when": "2026-09-07T21:55:15-04:00",
+      "commit": "5124eb634791a55805865b4607e5b91174b6797d",
+      "what_was_recorded": "preserve Wolfram retry failures, prior reports and project milestones",
+      "files_changed": [
+        "A\tmaintenance/v1/session-evidence.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:3bb99488b2f5a49131f49dc9aee00bf399770578",
+      "when": "2026-09-07T21:55:27-04:00",
+      "commit": "3bb99488b2f5a49131f49dc9aee00bf399770578",
+      "what_was_recorded": "preserve project work and require paired evidence-qualified histories",
+      "files_changed": [
+        "A\tAGENTS.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:f3a6003c0e6b7f05d36c8e98476548a3137c5724",
+      "when": "2026-09-07T21:56:15-04:00",
+      "commit": "f3a6003c0e6b7f05d36c8e98476548a3137c5724",
+      "what_was_recorded": "explain preservation, provenance, execution and coverage limits",
+      "files_changed": [
+        "A\tmaintenance/v1/README.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:2702344c27a0e0e6389b238fabb6e8eeabee1818",
+      "when": "2026-09-07T21:56:49-04:00",
+      "commit": "2702344c27a0e0e6389b238fabb6e8eeabee1818",
+      "what_was_recorded": "generate, test and save immutable scientific and plain-language snapshots",
+      "files_changed": [
+        "A\t.github/workflows/project-history-v1.yml"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:68247e8928b85715f3c5b836f34ce0ed94d0d3ad",
+      "when": "2026-09-08T01:57:00Z",
+      "commit": "68247e8928b85715f3c5b836f34ce0ed94d0d3ad",
+      "what_was_recorded": "append paired histories for 2702344c27a0e0e6389b238fabb6e8eeabee1818 [skip ci]",
+      "files_changed": [
+        "A\thistory/snapshots/20260908T015700Z-2702344c27a0-ebcc56bb/CHANGE_NOTES.json",
+        "A\thistory/snapshots/20260908T015700Z-2702344c27a0-ebcc56bb/INTEGRITY.json",
+        "A\thistory/snapshots/20260908T015700Z-2702344c27a0-ebcc56bb/NONSCIENTIFIC_HISTORY.json",
+        "A\thistory/snapshots/20260908T015700Z-2702344c27a0-ebcc56bb/SCIENTIFIC_HISTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:ee09492ef8cbc0c4c8c0d987adbe223d897c52ae",
+      "when": "2026-09-07T22:01:52-04:00",
+      "commit": "ee09492ef8cbc0c4c8c0d987adbe223d897c52ae",
+      "what_was_recorded": "preserve hash verification and isolate legacy manifest test failures",
+      "files_changed": [
+        "A\tmaintenance/v1/followup-audit-2026-09-07.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:690385543b3a1563ae58e9764d546e5d16e12ec1",
+      "when": "2026-09-08T02:02:03Z",
+      "commit": "690385543b3a1563ae58e9764d546e5d16e12ec1",
+      "what_was_recorded": "append paired histories for ee09492ef8cbc0c4c8c0d987adbe223d897c52ae [skip ci]",
+      "files_changed": [
+        "A\thistory/snapshots/20260908T020202Z-ee09492ef8cb-9ce5588d/CHANGE_NOTES.json",
+        "A\thistory/snapshots/20260908T020202Z-ee09492ef8cb-9ce5588d/INTEGRITY.json",
+        "A\thistory/snapshots/20260908T020202Z-ee09492ef8cb-9ce5588d/NONSCIENTIFIC_HISTORY.json",
+        "A\thistory/snapshots/20260908T020202Z-ee09492ef8cb-9ce5588d/SCIENTIFIC_HISTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:0114d669a67b194271d8f8adf02b0fee3f07cb92",
+      "when": "2026-09-07T22:05:13-04:00",
+      "commit": "0114d669a67b194271d8f8adf02b0fee3f07cb92",
+      "what_was_recorded": "preserve direct Streamable HTTP 404 evidence from independent runner",
+      "files_changed": [
+        "A\tmaintenance/v1/transport-audit-2026-09-07.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:020e85977c0858b521772041781cec8b4f3f6140",
+      "when": "2026-09-08T02:05:23Z",
+      "commit": "020e85977c0858b521772041781cec8b4f3f6140",
+      "what_was_recorded": "append paired histories for 0114d669a67b194271d8f8adf02b0fee3f07cb92 [skip ci]",
+      "files_changed": [
+        "A\thistory/snapshots/20260908T020523Z-0114d669a67b-e502f501/CHANGE_NOTES.json",
+        "A\thistory/snapshots/20260908T020523Z-0114d669a67b-e502f501/INTEGRITY.json",
+        "A\thistory/snapshots/20260908T020523Z-0114d669a67b-e502f501/NONSCIENTIFIC_HISTORY.json",
+        "A\thistory/snapshots/20260908T020523Z-0114d669a67b-e502f501/SCIENTIFIC_HISTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:b3d7f15750fea8666540712d72afe9beaebdf144",
+      "when": "2026-09-07T23:19:32-04:00",
+      "commit": "b3d7f15750fea8666540712d72afe9beaebdf144",
+      "what_was_recorded": "finalize Wolfram audit and synchronized histories",
+      "files_changed": [
+        "A\tdocs/wolfram-audit-final-2026-09-07.json",
+        "A\thistory/snapshots/20260908T031500Z-020e85977c08-wolfram-final/CHANGE_NOTES.json",
+        "A\thistory/snapshots/20260908T031500Z-020e85977c08-wolfram-final/INTEGRITY.json",
+        "A\thistory/snapshots/20260908T031500Z-020e85977c08-wolfram-final/NONSCIENTIFIC_HISTORY.json",
+        "A\thistory/snapshots/20260908T031500Z-020e85977c08-wolfram-final/SCIENTIFIC_HISTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:c12d7f30f49145f05a6545bb1dda4eb0c8b35615",
+      "when": "2026-09-08T03:19:47Z",
+      "commit": "c12d7f30f49145f05a6545bb1dda4eb0c8b35615",
+      "what_was_recorded": "append paired histories for b3d7f15750fea8666540712d72afe9beaebdf144 [skip ci]",
+      "files_changed": [
+        "A\thistory/snapshots/20260908T031947Z-b3d7f15750fe-3301d3dd/CHANGE_NOTES.json",
+        "A\thistory/snapshots/20260908T031947Z-b3d7f15750fe-3301d3dd/INTEGRITY.json",
+        "A\thistory/snapshots/20260908T031947Z-b3d7f15750fe-3301d3dd/NONSCIENTIFIC_HISTORY.json",
+        "A\thistory/snapshots/20260908T031947Z-b3d7f15750fe-3301d3dd/SCIENTIFIC_HISTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:8ebc4c0c7599e32135e6f47b3e2d192f7d543572",
+      "when": "2026-09-07T23:20:49-04:00",
+      "commit": "8ebc4c0c7599e32135e6f47b3e2d192f7d543572",
+      "what_was_recorded": "record API-only Moltbook publication blocker",
+      "files_changed": [
+        "A\tdocs/moltbook-publication-attempt-2026-09-07.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:a8b7243514309ef2cfcbd74fb54351b53155fa7b",
+      "when": "2026-09-08T03:21:07Z",
+      "commit": "a8b7243514309ef2cfcbd74fb54351b53155fa7b",
+      "what_was_recorded": "append paired histories for 8ebc4c0c7599e32135e6f47b3e2d192f7d543572 [skip ci]",
+      "files_changed": [
+        "A\thistory/snapshots/20260908T032107Z-8ebc4c0c7599-e9b698d9/CHANGE_NOTES.json",
+        "A\thistory/snapshots/20260908T032107Z-8ebc4c0c7599-e9b698d9/INTEGRITY.json",
+        "A\thistory/snapshots/20260908T032107Z-8ebc4c0c7599-e9b698d9/NONSCIENTIFIC_HISTORY.json",
+        "A\thistory/snapshots/20260908T032107Z-8ebc4c0c7599-e9b698d9/SCIENTIFIC_HISTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:8f343ddcf2bc15af9b8d29e3747555c6cc7d93f1",
+      "when": "2026-09-07T23:36:25-04:00",
+      "commit": "8f343ddcf2bc15af9b8d29e3747555c6cc7d93f1",
+      "what_was_recorded": "add Mathematica OpenAI integration plan and provenance",
+      "files_changed": [
+        "A\tdocs/mathematica-openai-integration-plan-2026-09-07.md",
+        "A\tdocs/mathematica-openai-integration-plan-origin-2026-09-07.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:d199feec5aade48e805650480950c6c156b4465d",
+      "when": "2026-09-08T03:36:41Z",
+      "commit": "d199feec5aade48e805650480950c6c156b4465d",
+      "what_was_recorded": "append paired histories for 8f343ddcf2bc15af9b8d29e3747555c6cc7d93f1 [skip ci]",
+      "files_changed": [
+        "A\thistory/snapshots/20260908T033641Z-8f343ddcf2bc-b91f5175/CHANGE_NOTES.json",
+        "A\thistory/snapshots/20260908T033641Z-8f343ddcf2bc-b91f5175/INTEGRITY.json",
+        "A\thistory/snapshots/20260908T033641Z-8f343ddcf2bc-b91f5175/NONSCIENTIFIC_HISTORY.json",
+        "A\thistory/snapshots/20260908T033641Z-8f343ddcf2bc-b91f5175/SCIENTIFIC_HISTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:19e1d663e617c01d7bf3074cda60fa2cf32e88f1",
+      "when": "2026-09-07T23:49:01-04:00",
+      "commit": "19e1d663e617c01d7bf3074cda60fa2cf32e88f1",
+      "what_was_recorded": "add scientific data contracts",
+      "files_changed": [
+        "A\twolfram/NeuralEngineSchemas.wl"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:e70df6747b37ca0f02a8ff198064727b9151f117",
+      "when": "2026-09-07T23:49:36-04:00",
+      "commit": "e70df6747b37ca0f02a8ff198064727b9151f117",
+      "what_was_recorded": "add approved scientific tool layer",
+      "files_changed": [
+        "A\twolfram/NeuralEngineTools.wl"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:3865cda9974b2836339cd2e01adeea1bfa56549b",
+      "when": "2026-09-07T23:49:54-04:00",
+      "commit": "3865cda9974b2836339cd2e01adeea1bfa56549b",
+      "what_was_recorded": "add compact verification result builder",
+      "files_changed": [
+        "A\twolfram/NeuralEngineVerification.wl"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:1af8f85fc0b5d01e3c41d243fe6b669ee2387570",
+      "when": "2026-09-07T23:51:05-04:00",
+      "commit": "1af8f85fc0b5d01e3c41d243fe6b669ee2387570",
+      "what_was_recorded": "add bounded OpenAI Responses integration",
+      "files_changed": [
+        "A\twolfram/NeuralEngineOpenAI.wl"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:8bb06127b429e57fe63f73da9a2929bb6c456d0e",
+      "when": "2026-09-07T23:51:20-04:00",
+      "commit": "8bb06127b429e57fe63f73da9a2929bb6c456d0e",
+      "what_was_recorded": "document OpenAI integration boundaries",
+      "files_changed": [
+        "A\twolfram/README.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:cea4dc21ea3a020c18de84bcfbe96c43e1f32dfe",
+      "when": "2026-09-07T23:51:31-04:00",
+      "commit": "cea4dc21ea3a020c18de84bcfbe96c43e1f32dfe",
+      "what_was_recorded": "add OpenAI integration contract tests",
+      "files_changed": [
+        "A\twolfram/tests/OpenAIIntegration.wlt"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:155adf34c361f80118655456482ae1a1acd6d5bf",
+      "when": "2026-09-07T23:51:39-04:00",
+      "commit": "155adf34c361f80118655456482ae1a1acd6d5bf",
+      "what_was_recorded": "add compact experiment result contract",
+      "files_changed": [
+        "A\tschemas/experiment-result-v1.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:b41ac0b7d1b539cb67127f544812c8e826d63723",
+      "when": "2026-09-07T23:51:46-04:00",
+      "commit": "b41ac0b7d1b539cb67127f544812c8e826d63723",
+      "what_was_recorded": "add GPT analysis contract",
+      "files_changed": [
+        "A\tschemas/gpt-analysis-v1.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:28c86184e1b8b5dabcdc43492163dc28dd90f210",
+      "when": "2026-09-07T23:51:50-04:00",
+      "commit": "28c86184e1b8b5dabcdc43492163dc28dd90f210",
+      "what_was_recorded": "add approved tool request contract",
+      "files_changed": [
+        "A\tschemas/tool-request-v1.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:8cad37408f4d7167684a80ca19cccf59d5e14c6e",
+      "when": "2026-09-07T23:52:05-04:00",
+      "commit": "8cad37408f4d7167684a80ca19cccf59d5e14c6e",
+      "what_was_recorded": "add Wolfram OpenAI error inventory",
+      "files_changed": [
+        "A\taudit/WOLFRAM_ERROR_INVENTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:5a564e50b6348cb39a71a0c1dbd38c90a1e54921",
+      "when": "2026-09-07T23:52:18-04:00",
+      "commit": "5a564e50b6348cb39a71a0c1dbd38c90a1e54921",
+      "what_was_recorded": "add Wolfram OpenAI environment report",
+      "files_changed": [
+        "A\taudit/WOLFRAM_OPENAI_ENVIRONMENT_REPORT.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:1fda127a1086a0695e8f32872769c9b6b0707329",
+      "when": "2026-09-07T23:52:23-04:00",
+      "commit": "1fda127a1086a0695e8f32872769c9b6b0707329",
+      "what_was_recorded": "initialize OpenAI cost ledger",
+      "files_changed": [
+        "A\tlogs/api/cost-ledger.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:c61c2ca09818c59862644af5080be02e43531eee",
+      "when": "2026-09-07T23:52:28-04:00",
+      "commit": "c61c2ca09818c59862644af5080be02e43531eee",
+      "what_was_recorded": "document API artifact policy",
+      "files_changed": [
+        "A\tlogs/api/README.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:72f0971d9b932e3fa20db4c4330c71cf3e695a3c",
+      "when": "2026-09-07T23:52:37-04:00",
+      "commit": "72f0971d9b932e3fa20db4c4330c71cf3e695a3c",
+      "what_was_recorded": "add OpenAI key placeholder",
+      "files_changed": [
+        "M\t.env.example"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:8bde0d59c63b5132bdf7dbb6cb607be438f112b0",
+      "when": "2026-09-07T23:53:13-04:00",
+      "commit": "8bde0d59c63b5132bdf7dbb6cb607be438f112b0",
+      "what_was_recorded": "record Mathematica OpenAI integration prototype",
+      "files_changed": [
+        "M\tCHANGELOG.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:8619862063a0d991cfb40d20280654837fba6768",
+      "when": "2026-09-07T23:55:14-04:00",
+      "commit": "8619862063a0d991cfb40d20280654837fba6768",
+      "what_was_recorded": "append Mathematica OpenAI session evidence",
+      "files_changed": [
+        "M\tmaintenance/v1/session-evidence.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:65db3015a5e2860f7cde85d77b98669523ddbe5f",
+      "when": "2026-09-08T03:55:42Z",
+      "commit": "65db3015a5e2860f7cde85d77b98669523ddbe5f",
+      "what_was_recorded": "append paired histories for 8619862063a0d991cfb40d20280654837fba6768 [skip ci]",
+      "files_changed": [
+        "A\thistory/snapshots/20260908T035542Z-8619862063a0-1650c518/CHANGE_NOTES.json",
+        "A\thistory/snapshots/20260908T035542Z-8619862063a0-1650c518/INTEGRITY.json",
+        "A\thistory/snapshots/20260908T035542Z-8619862063a0-1650c518/NONSCIENTIFIC_HISTORY.json",
+        "A\thistory/snapshots/20260908T035542Z-8619862063a0-1650c518/SCIENTIFIC_HISTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:9ab36fd0f1de5189431b703c8d53b73250bfa054",
+      "when": "2026-09-08T00:01:00-04:00",
+      "commit": "9ab36fd0f1de5189431b703c8d53b73250bfa054",
+      "what_was_recorded": "schedule one-shot aggregate integrity repair",
+      "files_changed": [
+        "A\t.github/workflows/refresh-project-aggregates-once.yml"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:4201e4da898aefd3f43a2654ea8a17ebc3f7c225",
+      "when": "2026-09-08T04:01:11Z",
+      "commit": "4201e4da898aefd3f43a2654ea8a17ebc3f7c225",
+      "what_was_recorded": "append paired histories for 9ab36fd0f1de5189431b703c8d53b73250bfa054 [skip ci]",
+      "files_changed": [
+        "A\thistory/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/CHANGE_NOTES.json",
+        "A\thistory/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/INTEGRITY.json",
+        "A\thistory/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/NONSCIENTIFIC_HISTORY.json",
+        "A\thistory/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/SCIENTIFIC_HISTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:8a90aa8eee4f91f0f27abff9fabdc5bf390c329a",
+      "when": "2026-09-08T00:35:13-04:00",
+      "commit": "8a90aa8eee4f91f0f27abff9fabdc5bf390c329a",
+      "what_was_recorded": "add immutable progress provenance snapshot",
+      "files_changed": [
+        "A\thistory/provenance/20260908T043337Z/PROGRESS_PROVENANCE.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:909a7376372b529fca4747de3705adbe6d01cb96",
+      "when": "2026-09-08T04:35:25Z",
+      "commit": "909a7376372b529fca4747de3705adbe6d01cb96",
+      "what_was_recorded": "append paired histories for 8a90aa8eee4f91f0f27abff9fabdc5bf390c329a [skip ci]",
+      "files_changed": [
+        "A\thistory/snapshots/20260908T043524Z-8a90aa8eee4f-48ccdd36/CHANGE_NOTES.json",
+        "A\thistory/snapshots/20260908T043524Z-8a90aa8eee4f-48ccdd36/INTEGRITY.json",
+        "A\thistory/snapshots/20260908T043524Z-8a90aa8eee4f-48ccdd36/NONSCIENTIFIC_HISTORY.json",
+        "A\thistory/snapshots/20260908T043524Z-8a90aa8eee4f-48ccdd36/SCIENTIFIC_HISTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:f8bad17e7d298539fb538bdcdab9f816a028f7a3",
+      "when": "2026-09-08T01:10:50-04:00",
+      "commit": "f8bad17e7d298539fb538bdcdab9f816a028f7a3",
+      "what_was_recorded": "distinguish project credential types",
+      "files_changed": [
+        "M\twolfram/README.md"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:1d89ec7e1dd818020db0f9d0b0e177e598c29dff",
+      "when": "2026-09-08T05:11:02Z",
+      "commit": "1d89ec7e1dd818020db0f9d0b0e177e598c29dff",
+      "what_was_recorded": "append paired histories for f8bad17e7d298539fb538bdcdab9f816a028f7a3 [skip ci]",
+      "files_changed": [
+        "A\thistory/snapshots/20260908T051101Z-f8bad17e7d29-2c0a5acf/CHANGE_NOTES.json",
+        "A\thistory/snapshots/20260908T051101Z-f8bad17e7d29-2c0a5acf/INTEGRITY.json",
+        "A\thistory/snapshots/20260908T051101Z-f8bad17e7d29-2c0a5acf/NONSCIENTIFIC_HISTORY.json",
+        "A\thistory/snapshots/20260908T051101Z-f8bad17e7d29-2c0a5acf/SCIENTIFIC_HISTORY.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    },
+    {
+      "event_id": "git:809a379a47e86456e8da04b35c5620d87b7387ba",
+      "when": "2026-09-08T22:58:16-04:00",
+      "commit": "809a379a47e86456e8da04b35c5620d87b7387ba",
+      "what_was_recorded": "record NumPy/SciPy findings and SHA-256 compatibility [skip ci]",
+      "files_changed": [
+        "A\tdocs/research/numpy-scipy-sha256-20260909.md",
+        "A\tresearch/numpy-scipy-sha256/20260909/moltbook-post.md",
+        "A\tresearch/numpy-scipy-sha256/20260909/publication-replay.json",
+        "A\tresearch/numpy-scipy-sha256/20260909/reproduce.py",
+        "A\tresearch/numpy-scipy-sha256/20260909/source-evidence.json",
+        "A\tresearch/numpy-scipy-sha256/20260909/susceptibility-corpus.json",
+        "A\tresearch/numpy-scipy-sha256/20260909/thread-results.json"
+      ],
+      "meaning_of_this_entry": "A saved change record, not by itself proof that every described result was verified."
+    }
+  ],
+  "current_findings": {
+    "wolfram_now": "New Wolfram validation is blocked or not fully qualified; it has NOT been counted as a pass.",
+    "wolfram_details": {
+      "checked_at_utc": "2026-09-09T03:01:09Z",
+      "backend": "genuine Wolfram Language kernel only",
+      "status": "blocked_no_local_wolframscript",
+      "execution_attempted": false,
+      "all_passed": false,
+      "tests_passed": null,
+      "runs": {}
+    },
+    "earlier_wolfram_results": {
+      "munit": {
+        "status": "historical_report_source_matched",
+        "fresh_execution": false,
+        "source": "mathematica/verification/results/wolfram-test-report.json",
+        "report_sha256": "f6f4657451a2cff6349eda9094658316ce5b2b79aa6426b61c72cb21aa5aafc9",
+        "reported_at_utc": "2026-09-07T12:57:36Z",
+        "reported_kernel": "15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+        "reported_all_passed": true,
+        "reported_count": 31,
+        "source_checks": [
+          {
+            "path": "mathematica/SynesthesiaModel.wl",
+            "expected_sha256": "5f0ef5d0e64532effc04f478d6d3e1b4bad42bd0fecf6a2880f98d8174ef497c",
+            "actual_sha256": "5f0ef5d0e64532effc04f478d6d3e1b4bad42bd0fecf6a2880f98d8174ef497c",
+            "matches": true
+          },
+          {
+            "path": "mathematica/tests/SynesthesiaModel.wlt",
+            "expected_sha256": "8375cd2e9515c07a3a0afe4d7b2f91c83b02ee0032b06cf8e8ba0073d49f323d",
+            "actual_sha256": "8375cd2e9515c07a3a0afe4d7b2f91c83b02ee0032b06cf8e8ba0073d49f323d",
+            "matches": true
+          },
+          {
+            "path": "mathematica/tests/RunTests.wls",
+            "expected_sha256": "ef6a6bdddd5aa165c5dbc030e012f68229928d34dd49452117cf774cafd3e5d0",
+            "actual_sha256": "ef6a6bdddd5aa165c5dbc030e012f68229928d34dd49452117cf774cafd3e5d0",
+            "matches": true
+          }
+        ],
+        "qualification": "A stored report and matching hashes are provenance evidence, not a new execution or proof of biological validity."
+      },
+      "publication": {
+        "status": "historical_report_source_matched",
+        "fresh_execution": false,
+        "source": "mathematica/verification/results/wolfram-validation.json",
+        "report_sha256": "7fd44ce413f4448950a03a1a49890695709a772fc9f2ab3c515faac82b22a835",
+        "reported_at_utc": "2026-09-07T12:57:38Z",
+        "reported_kernel": "15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+        "reported_all_passed": true,
+        "reported_count": 28,
+        "source_checks": [
+          {
+            "path": "mathematica/verification/PublicationDerivation.wls",
+            "expected_sha256": "c64f329c83e69119abd16d0c7e3fb0bc119563176f78976530451daebdcf7f56",
+            "actual_sha256": "c64f329c83e69119abd16d0c7e3fb0bc119563176f78976530451daebdcf7f56",
+            "matches": true
+          },
+          {
+            "path": "mathematica/verification/source-manifest.json",
+            "expected_sha256": "73040da225d266c013f74d28c609e652ec54f30123850de776e6af11bc465584",
+            "actual_sha256": "73040da225d266c013f74d28c609e652ec54f30123850de776e6af11bc465584",
+            "matches": true
+          }
+        ],
+        "qualification": "A stored report and matching hashes are provenance evidence, not a new execution or proof of biological validity."
+      },
+      "repeated": {
+        "status": "historical_report_not_fully_source_checked",
+        "fresh_execution": false,
+        "source": "mathematica/verification/results/repeated-validation.json",
+        "report_sha256": "03340e541cf4b58f41b47641bb766396688e1f13affa875d50a081a7ecacf499",
+        "reported_at_utc": "2026-09-07T11:24:17Z",
+        "reported_kernel": "15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+        "reported_all_passed": true,
+        "reported_count": null,
+        "source_checks": [],
+        "qualification": "A stored report and matching hashes are provenance evidence, not a new execution or proof of biological validity."
+      },
+      "numerical_policy": {
+        "status": "historical_report_not_fully_source_checked",
+        "fresh_execution": false,
+        "source": "mathematica/verification/results/numerical-policy-sensitivity.json",
+        "report_sha256": "7406c38e664e9df0e49976f5d5d7aa13a9ce448cd0bb15bb333b03cd40da8b47",
+        "reported_at_utc": "2026-09-07T11:24:31Z",
+        "reported_kernel": "15.0.0 for Linux x86 (64-bit) (May 31, 2026)",
+        "reported_all_passed": null,
+        "reported_count": null,
+        "source_checks": [],
+        "qualification": "A stored report and matching hashes are provenance evidence, not a new execution or proof of biological validity."
+      }
+    },
+    "software_tests": {
+      "status": "not_run_this_snapshot",
+      "fresh_execution": false,
+      "all_passed": null
+    },
+    "what_was_not_changed": "The network mathematics, old results, original project logs, and existing artwork code were not overwritten."
+  },
+  "original_change_log": "# Changelog\n\nAll notable changes to the neural engine project are recorded here. The project\ncurrently uses a single prototype release line; entries are grouped by the dates\non which they landed in `main`.\n\n## [Unreleased]\n\n### Mathematica + OpenAI integration prototype\n\n- Added an additive `wolfram/` integration layer that leaves the existing\n  `mathematica/` scientific model authoritative and implements the permanent\n  rule: Mathematica computes; GPT reasons over the computation.\n- Added compact versioned experiment/result, GPT-analysis, and approved-tool\n  schemas plus strict validation, finite-value checks, payload bounds, and\n  provenance fields.\n- Added a controlled Mathematica tool allowlist for fixed points, local\n  stability, analytic gradients, selected central finite-difference gradient\n  checks, and compact population statistics; arbitrary Wolfram evaluation is\n  not exposed.\n- Added direct OpenAI Responses API transport with structured-output analysis,\n  Luna/Terra/Sol routing, prompt-cache keys, credential lookup, redacted JSONL\n  interaction logs, a cumulative cost ledger, and USD 10 / 25 / 50 warning and\n  hard-limit policy with conservative preflight enforcement.\n- Added connectivity probes for Wolfram-native LLM functions,\n  `ServiceConnect[\"OpenAI\"]`, and direct REST, while explicitly keeping all\n  three live-unverified in this revision because the available Wolfram MCP\n  endpoint returned HTTP 404 before kernel execution and the active runtime\n  had neither a local Wolfram kernel nor an OpenAI API key.\n- Added an OpenAI/Wolfram error registry and environment report. No new\n  600-neuron scientific result is claimed by this integration-only revision.\n\n### Backpropagation validation\n\n- Added a reproducible 600-output-neuron test of all 360,000 recurrent-gradient\n  entries using coordinate and whole-matrix directional finite differences.\n- Recovered the original four-dimensional input from the full raw equilibrium\n  state in six noiseless, three noisy, and three eight-bit trials, and compared\n  iterative Jacobian backpropagation with the fixed-point algebraic inverse.\n- Repeated the controlled criticality audit at 600 outputs, confirming that the\n  exact-state gradient remains accurate while a nominal `1e-9` settling\n  residual can still produce 62.2% gradient error at `rho=0.9999`.\n\n## [0.8.0] - 2026-09-07\n\n### Scientific validation and numerical correctness\n\n- Independently reconstructed and verified the published equations in Wolfram\n  Language before admitting any benchmark result.\n- Corrected extreme-scale susceptibility evaluation with scaled QR, corrected\n  the optional derivative-floor curvature path, and added explicit surrogate\n  semantics plus Gram-underflow regression tests.\n- Demonstrated that a nominal `1e-9` fixed-point residual can still produce\n  62.2% recurrent-gradient error near criticality, requiring condition-aware\n  fidelity gates for future endpoint studies.\n- Isolated live Wolfram test outputs from committed evidence files so parallel\n  manifest verification cannot race with validation-report regeneration.\n\n### Scaling evidence\n\n- Qualified the 142-output, 1,000-update reference trajectory and the requested\n  early-training ladder through 9,088 outputs using source-fingerprinted v2\n  benchmark records.\n- Preserved one/two-update exact feasibility probes through 72,704 outputs while\n  explicitly declining to infer an unmeasured sustained practical limit.\n- Separated equation-preserving, tolerance-equivalent, approximate, and\n  model-changing expansion techniques through a primary-source numerical audit.\n\n### Documentation and reproducibility\n\n- Added this changelog and a consolidated project-change summary.\n- Added a project-wide machine-readable history and JSON artifact registry in\n  `PROJECT_LOG.json`, with tests that detect missing, invalid, or unindexed\n  scientific logs.\n- Added a publication-grade source/claim ledger, benchmark qualification gate,\n  and manuscript-style scientific audit report.\n- Added archived full-suite JSON logs, including preserved failed attempts, so\n  provenance failures are visible rather than overwritten.\n- Added `MASTER_PROJECT.json`, a generated single-file aggregate containing\n  every other project JSON artifact, its parsed contents, and its SHA-256.\n\n## [0.7.0] - 2026-09-07\n\n### Neural model and scientific fidelity\n\n- Reconstructed the recurrent Infomax synaesthesia model from Shriki, Sadeh &\n  Ward (2016) in dependency-free JavaScript.\n- Added an executable Wolfram Language/Mathematica reconstruction with notebook,\n  figure builders, headless runners, MUnit tests, and machine-readable parameters.\n- Established a publication-first verification gate using an independent Wolfram\n  derivation, central finite differences, fixed-point checks, and cross-language\n  fixtures.\n- Corrected population-vector normalization to use the publication's sum by\n  default; retained mean normalization as an explicitly labeled visualization\n  option.\n- Restored diagonal recurrent learning in the general model, removed the silent\n  activation-derivative floor, and corrected best-checkpoint evaluation to use a\n  fixed input ensemble.\n- Documented unresolved publication details—including integration step,\n  tolerance, near-zero initialization, and training length—so reconstructed\n  choices are not presented as author-specified parameters.\n\n### Scaling and benchmarks\n\n- Added dense and exact factor-history implementations for scaling experiments.\n- Benchmarked the paper-sized declared reconstruction and completed 1,000\n  learning updates in 4.03 minutes including validation on the recorded Work\n  machine.\n- Preserved historical exploratory dense runs through 4,544 output neurons;\n  current source-qualified evidence comprises the exact early-training ladder\n  through 9,088 neurons and feasibility probes through 72,704 neurons.\n- Added a controlled critical-slowing benchmark reaching 129,683 equilibrium\n  iterations near the critical point and showing that a nominal `1e-9`\n  residual can still yield 62.2% gradient error.\n- Published raw JSON/CSV benchmark results, environment metadata, exactness\n  labels, source fingerprints, and an evidence-qualified scaling analysis; no\n  unsupported sustained cross-size practical limit is claimed.\n\n## [0.7.0] - 2026-09-06\n\n### Browser demo and preview\n\n- Added a zero-configuration local development server.\n- Fixed cloud preview state and floating renderer window behavior.\n- Corrected renderer sizing, minimize/restore, close/reopen, and fullscreen\n  behavior.\n\n## [0.7.0] - 2026-09-05\n\n### Shape cognition and visualization\n\n- Created immutable, content-addressed geometric thoughts with deterministic\n  seeded generation, eight legal operators, and a replayable provenance DAG.\n- Added complex synesthetic geometry motifs—spirals, tunnels, cobwebs,\n  honeycombs, and spatial sequences—without expanding the core operator set.\n- Added a neural population-to-shape bridge that turns tuning curves, population\n  vectors, and learned cross-modal connections into contours and weave paths.\n- Added deterministic text perception and a text-to-neural bridge, runnable demo,\n  and `POST /v1/render-text` endpoint.\n- Added the initial seed-prompt renderer and floating browser test window.\n\n### Environment artwork and motion\n\n- Added a seamless cloud-drift loop, then hardened its reset boundary,\n  crossfade, overlap, opacity, and wrapper styling.\n- Added subtle randomized corn-breeze motion.\n- Added a shared environment-motion controller and reduced-motion-safe behavior.\n\n### Sensory extensions\n\n- Added dormant thermal-touch perception over a 20–120 °F range centered on\n  70 °F, quantized in 3 °F increments.\n- Added dormant sound perception for bounded PCM input, including loudness,\n  peak, zero-crossing, spectral-centroid, and dominant-frequency features.\n- Added artistic heat spirals, cold crystal forms, and sound pulse motifs, all\n  expressed through the same legal shape/provenance system.\n\n### Dirt renderer and identification\n\n- Added the Dirt Inscription Renderer v0 with chronological zones, margins,\n  density budgets, rounded motion paths, overwrite policies, and actuator-neutral\n  commands.\n- Added deterministic soil texture recipes with opaque grooves, feathered\n  shoulders, and roughness fields.\n- Added versioned agent/thought stamps with exact LSB, robust watermark, and\n  JPEG-oriented carriers plus CRC and wrong-key rejection tests.\n\n### Intake, authentication, and deployment\n\n- Added the `thought-intake/v1` bounded DAG contract, validator/compiler, and\n  authenticated HTTP gateway.\n- Added server-owned identities, monotonic per-agent sequences, signed receipts,\n  ledger verification/recovery, a public gallery, readiness metadata, and tool\n  schema.\n- Added dormant Moltbook identity-token verification support.\n- Added Docker and Compose deployment files, environment configuration, and\n  deployment smoke tests.\n\n### Testing\n\n- Added coverage for the core engine, neural equations and gradients, text\n  mapping, sensory encoders, geometry, dirt rendering and texture,\n  steganography, Moltbook identity, gateway policy, deployment, and Mathematica\n  artifacts.\n\n[Unreleased]: https://github.com/ptown16801-lang/Not-a-test/compare/main...HEAD\n[0.8.0]: https://github.com/ptown16801-lang/Not-a-test/compare/50a4ca808e34f6e02ff691172d76b4ba716e4ad8...main\n[0.7.0]: https://github.com/ptown16801-lang/Not-a-test/tree/50a4ca808e34f6e02ff691172d76b4ba716e4ad8\n",
+  "earlier_project_history": [
+    {
+      "commit": "bbc232c285b92d95c2722d7c33f6838cf10a711d",
+      "authoredAt": "2026-09-05T00:33:11-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Initialize Shape Cognition v0.7.0"
+    },
+    {
+      "commit": "ca9f69350b003b391ec39a611fdf6a4c27ee7e80",
+      "authoredAt": "2026-09-05T00:37:30-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Assemble Shape Cognition v0.7.0 web server, sensory art, dirt renderer and tests"
+    },
+    {
+      "commit": "ecb019f947341a38b376b79ff3da1751d4aed59b",
+      "authoredAt": "2026-09-05T02:34:01-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add seamless cloud rolling loop"
+    },
+    {
+      "commit": "2cd5e4c167311c1b5ec2a30fa03460de10859638",
+      "authoredAt": "2026-09-05T02:34:05-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add cloud loop motion layer styles"
+    },
+    {
+      "commit": "875d89d858c26a4808dd1838c0f0b8cf3b660cc2",
+      "authoredAt": "2026-09-05T02:41:20-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add deterministic text perceptual mapper"
+    },
+    {
+      "commit": "00f03408565002a9c4c37c6cc68aa3742c6dd98a",
+      "authoredAt": "2026-09-05T02:41:27-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Test text perceptual mapper"
+    },
+    {
+      "commit": "aa340001d811f513ce2c05736c3d976d4f3da25a",
+      "authoredAt": "2026-09-05T02:41:36-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Bridge text perception into neural visualizer"
+    },
+    {
+      "commit": "082b6dd6e5d450420a79a88263b45082db1667a8",
+      "authoredAt": "2026-09-05T02:41:48-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add runnable text seed synesthesia demo"
+    },
+    {
+      "commit": "76155ec5a42ae1cc637a0480895aba4a707343f3",
+      "authoredAt": "2026-09-05T02:45:19-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Wire text seed renderer into intake server"
+    },
+    {
+      "commit": "02e89a7876a3d063ca9a099fb9a83d5cd1e0a1ba",
+      "authoredAt": "2026-09-05T02:45:42-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add text seed render endpoint"
+    },
+    {
+      "commit": "47af19e31c5dfdf4a8fe7d1e7e5f4d2c268b0621",
+      "authoredAt": "2026-09-05T02:46:19-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add floating text seed render test window"
+    },
+    {
+      "commit": "970a0b8e029d18d3f6b755909738e4bf4e45b054",
+      "authoredAt": "2026-09-05T02:47:34-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Harden seamless cloud loop and cleanup"
+    },
+    {
+      "commit": "85b964726b5a83ccc12acf400c283b68d08a4ae3",
+      "authoredAt": "2026-09-05T02:47:41-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Update cloud loop wrapper styles"
+    },
+    {
+      "commit": "7d38a51a1b98c874cb65ded2eb62253f47193729",
+      "authoredAt": "2026-09-05T02:47:53-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add subtle randomized corn breeze animation"
+    },
+    {
+      "commit": "cb4c6f575cea22c2ec6312bc8d4d32a431dd0aa3",
+      "authoredAt": "2026-09-05T02:48:47-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Test text seed render endpoint and updated capabilities"
+    },
+    {
+      "commit": "6f521a4a152800aa481a0f0d360a9854d72ec81f",
+      "authoredAt": "2026-09-05T02:49:04-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add environment motion integration controller"
+    },
+    {
+      "commit": "696e7592c0db7cca11fe91064a43228fff4aab98",
+      "authoredAt": "2026-09-05T02:49:35-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Fix renderer window sizing and fullscreen behavior"
+    },
+    {
+      "commit": "a67e1b40aa3790ee58becdbf4f6299cebb9e8930",
+      "authoredAt": "2026-09-05T02:50:00-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Limit cloud overlap to seam crossfade"
+    },
+    {
+      "commit": "2decd5c180df92780c88b6cbd022465a5b266713",
+      "authoredAt": "2026-09-05T02:50:24-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Fix cloud loop opacity at reset boundary"
+    },
+    {
+      "commit": "335302c77d1ea28a7d5dbfa6b638f72991fde887",
+      "authoredAt": "2026-09-06T22:50:14-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Fix cloud preview and renderer window state"
+    },
+    {
+      "commit": "91bac517333a1232076ea1da4b485fdd8856f00a",
+      "authoredAt": "2026-09-07T00:14:00-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "Add scalable Mathematica paper reconstruction"
+    },
+    {
+      "commit": "9f3e163e469be40c5d5248be8e66ef3b7945b672",
+      "authoredAt": "2026-09-07T00:15:39-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "docs: add Shriki paper fidelity audit gate"
+    },
+    {
+      "commit": "0c6618228a17b4c98dbb9030088c8cfc70519a1a",
+      "authoredAt": "2026-09-07T03:57:00-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "fix: establish Shriki publication fidelity"
+    },
+    {
+      "commit": "d5ada19065c756743e7cea2d574f0ca61f6cf727",
+      "authoredAt": "2026-09-07T03:58:20-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "bench: measure exact Shriki scaling limits"
+    },
+    {
+      "commit": "50a4ca808e34f6e02ff691172d76b4ba716e4ad8",
+      "authoredAt": "2026-09-07T04:07:52-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "docs: summarize neural engine evolution"
+    },
+    {
+      "commit": "cf7696d3cdd7d8a3a20f439038789699d622bc12",
+      "authoredAt": "2026-09-07T09:07:53-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "fix: validate Shriki fidelity and exact scaling"
+    },
+    {
+      "commit": "557ce0553224a8299abecd98cf71be142ad90b35",
+      "authoredAt": "2026-09-07T10:17:24-04:00",
+      "authorName": "ptown16801-lang",
+      "authorEmail": "ptown16801@gmail.com",
+      "subject": "release: publish neural engine v0.8.0"
+    }
+  ],
+  "planned_art_directions_not_claimed_implemented": [],
+  "plain_language_limits": [
+    "The project makes art from simulated neural activity. This is not evidence that it reads an AI's thoughts.",
+    "Recovering an input from all internal numbers is different from recovering it from a rendered picture.",
+    "Some original research settings were never published. Missing information must stay labeled unknown.",
+    "The companion scientific JSON contains the full technical evidence and source fingerprints."
+  ],
+  "scientific_companion": "SCIENTIFIC_HISTORY.json",
+  "previous_snapshot_artifacts": [
+    {
+      "path": "history/snapshots/20260908T015700Z-2702344c27a0-ebcc56bb/CHANGE_NOTES.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "6c52bfaeec3d8c941addf56a8eb413fc6d7689a6",
+      "bytes": 553,
+      "sha256": "fccb65ea0f6ef139695e84b3ad0f1bddda6fe617a2c6433105e067f1e9f28cf3"
+    },
+    {
+      "path": "history/snapshots/20260908T015700Z-2702344c27a0-ebcc56bb/INTEGRITY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "ae0858e37e81f695362f663b2b70fd728b1a6165",
+      "bytes": 624,
+      "sha256": "3e1bac77d317cbe19f1e2ee41f36171ff7f8c947659bb08bdb0caf15f55c089a"
+    },
+    {
+      "path": "history/snapshots/20260908T015700Z-2702344c27a0-ebcc56bb/NONSCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "84e2442dbfefba61c678eb2fdd41207a19e219a1",
+      "bytes": 55101,
+      "sha256": "3638789b58bbcd7e63271e5302b3399869fa1f316f42fd8ff63d483c71000e41"
+    },
+    {
+      "path": "history/snapshots/20260908T015700Z-2702344c27a0-ebcc56bb/SCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "c836e384f9811c62330967ffa8a183c2962cfffb",
+      "bytes": 2990820,
+      "sha256": "ef7ca42df4117675d03870bc9788ff1405fd35ced2788a558e19a0f85d91af84"
+    },
+    {
+      "path": "history/snapshots/20260908T020202Z-ee09492ef8cb-9ce5588d/CHANGE_NOTES.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "e37ef27e7fbd9421fe10b30b1b899fa3b04e3140",
+      "bytes": 553,
+      "sha256": "e07aec229bd0a22b4417ffb844b926947c882c6f997c543e28321708c8b8e8f3"
+    },
+    {
+      "path": "history/snapshots/20260908T020202Z-ee09492ef8cb-9ce5588d/INTEGRITY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "5917fcbd4857472daa8080202c8fdc1da53c18db",
+      "bytes": 624,
+      "sha256": "1392a904f45d174a35101a9c682d9fe8ec51780b20f81c383c2ad42818819dd9"
+    },
+    {
+      "path": "history/snapshots/20260908T020202Z-ee09492ef8cb-9ce5588d/NONSCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "646229896cd31276523a5496b39ad0321824b639",
+      "bytes": 57682,
+      "sha256": "44a37d80c33b6d1ba94f493d12e8ebd49ae620326f4a31cf675100792f02c427"
+    },
+    {
+      "path": "history/snapshots/20260908T020202Z-ee09492ef8cb-9ce5588d/SCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "4a6b36a815a505a70429d41d1ebeb904f7aecfed",
+      "bytes": 3001952,
+      "sha256": "d4a1cc159dc52bb1658da462694cc628c9cffe4652b66cdbb47012bd0fd035a6"
+    },
+    {
+      "path": "history/snapshots/20260908T020523Z-0114d669a67b-e502f501/CHANGE_NOTES.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "4d97d628cfb5f0ff1373b8b5043513805756f731",
+      "bytes": 553,
+      "sha256": "6c8ea143a470dabe391ba965c511e14294f39ed83369ea0f52f71b244e11f5ec"
+    },
+    {
+      "path": "history/snapshots/20260908T020523Z-0114d669a67b-e502f501/INTEGRITY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "169c2b7911bf3194e640a66eb3c4af402c08fd90",
+      "bytes": 624,
+      "sha256": "8d1ca8404d48b2f643b237012993d68f16f79591a81ada5c048fd960cdb44825"
+    },
+    {
+      "path": "history/snapshots/20260908T020523Z-0114d669a67b-e502f501/NONSCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "162b9dfa8207581bb6cb6dcb8f182e9b0470407e",
+      "bytes": 60262,
+      "sha256": "8b36ff0af224ddd997fbc07e421f70433e137683c304cc34ea07f78c67b6ba67"
+    },
+    {
+      "path": "history/snapshots/20260908T020523Z-0114d669a67b-e502f501/SCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "820bbb11030d7674cbfbd69e729a6c52266a92f6",
+      "bytes": 3007782,
+      "sha256": "7d59290b97b03935cdb84181236e433361aef6549446de9cff84c2a47e0a1b99"
+    },
+    {
+      "path": "history/snapshots/20260908T031500Z-020e85977c08-wolfram-final/CHANGE_NOTES.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "a07c32fe3acbb19912f48cb44ddb17c5534a440d",
+      "bytes": 930,
+      "sha256": "6885dcc6047b93f77f7b8cd837ce2c9a26df011a5904602400a9f75d40894268"
+    },
+    {
+      "path": "history/snapshots/20260908T031500Z-020e85977c08-wolfram-final/INTEGRITY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "88fd2757eaacbad1fc51134b417e0b9835175c6e",
+      "bytes": 888,
+      "sha256": "d30a2973dba302a866bfff554140fa9a137be541ae2d953de8adbb87f54f3f7e"
+    },
+    {
+      "path": "history/snapshots/20260908T031500Z-020e85977c08-wolfram-final/NONSCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "9b7d317b6ef1c3a7d3122d37e876bc7bc5826eb6",
+      "bytes": 2587,
+      "sha256": "1169797129af0edf9738c9cf2f7e4c36b4a5d40312e2a7fa0721e40bb7b33cc2"
+    },
+    {
+      "path": "history/snapshots/20260908T031500Z-020e85977c08-wolfram-final/SCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "e652874424992589e02013f5152fcd12242c4c36",
+      "bytes": 3954,
+      "sha256": "474701a4df9dfcb5fc5e52e9bb9bc353f46980d4eacf1d3dfffec22c2b2d7812"
+    },
+    {
+      "path": "history/snapshots/20260908T031947Z-b3d7f15750fe-3301d3dd/CHANGE_NOTES.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "62f7217b646a81ec4a9f9714a293eb7b449878f1",
+      "bytes": 553,
+      "sha256": "e50c99661cf1a98467a242e7986d93cefacb4a5b4c40a6eee026e6352de4e3ce"
+    },
+    {
+      "path": "history/snapshots/20260908T031947Z-b3d7f15750fe-3301d3dd/INTEGRITY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "b494e79aa33212d6427567ead76c2ba70afecfc2",
+      "bytes": 624,
+      "sha256": "ba192738a86b8850ffaa2db84b5f1e4d4f95f91fe21e96d4792f87655088d1ef"
+    },
+    {
+      "path": "history/snapshots/20260908T031947Z-b3d7f15750fe-3301d3dd/NONSCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "8207fd1f36708249f173584f75e78a6a1d77d77a",
+      "bytes": 64503,
+      "sha256": "f1dc43089718eb8573d624d8912937b683cddaf137463f42ec4a605159e58a76"
+    },
+    {
+      "path": "history/snapshots/20260908T031947Z-b3d7f15750fe-3301d3dd/SCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "6ec418005c17ee6b83575946b8741a48a066a334",
+      "bytes": 3019760,
+      "sha256": "0e3e3f961515b357b30e4ce4b27c3f067fedfcd428e9134648e53fae8b7e6d1c"
+    },
+    {
+      "path": "history/snapshots/20260908T032107Z-8ebc4c0c7599-e9b698d9/CHANGE_NOTES.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "6abf6760afbfe67d838f738dae25441f30128e49",
+      "bytes": 553,
+      "sha256": "3649ad6845f5bc011dae76ef2488eedae6498a353e14482466c7d552b1164e3b"
+    },
+    {
+      "path": "history/snapshots/20260908T032107Z-8ebc4c0c7599-e9b698d9/INTEGRITY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "b414a8184382cc4756b3230dc64f5a7f4aedc772",
+      "bytes": 624,
+      "sha256": "30177c52f666d8e6fb892adbf9b21ea10cc07c5c47f568dd4adc7092097ee2ab"
+    },
+    {
+      "path": "history/snapshots/20260908T032107Z-8ebc4c0c7599-e9b698d9/NONSCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "826c35ccbc4835e83d01a43a24a0cb09cb8b00db",
+      "bytes": 67062,
+      "sha256": "324be19d2092b3b9489a12dbc4713b3d69a585ec71614620f22d26cf2d0245e2"
+    },
+    {
+      "path": "history/snapshots/20260908T032107Z-8ebc4c0c7599-e9b698d9/SCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "560351997db702f3b0a5771cccd1c1f900498ae1",
+      "bytes": 3024784,
+      "sha256": "95697bc400f6eaab6127d9bc66b37bda0408a717611b24b8f1fe70d7581bbaaf"
+    },
+    {
+      "path": "history/snapshots/20260908T033641Z-8f343ddcf2bc-b91f5175/CHANGE_NOTES.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "2957c6a20bac1744e006ff757dfe0d33a95385b4",
+      "bytes": 553,
+      "sha256": "4caa40d4a5506747f747cd362ef8297ca3a957a974602c6225b31c79d0f3ccd9"
+    },
+    {
+      "path": "history/snapshots/20260908T033641Z-8f343ddcf2bc-b91f5175/INTEGRITY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "7f334db127d348df5dedaa0c2e8d9a522a244c0e",
+      "bytes": 624,
+      "sha256": "36d741a12788a64b0a728e54d41abe20bfa91d978b5e7b705f8bb8e894e78fa3"
+    },
+    {
+      "path": "history/snapshots/20260908T033641Z-8f343ddcf2bc-b91f5175/NONSCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "aa1b72591a7a7d87220496dcab46fa1eac2aca3d",
+      "bytes": 69714,
+      "sha256": "3d30db2cd185491afa933ac4137fcd8da91a20ff5532ee8fbf71032e7b3902fa"
+    },
+    {
+      "path": "history/snapshots/20260908T033641Z-8f343ddcf2bc-b91f5175/SCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "8fc7914712258b1c23c3390c803b98efe6f770c4",
+      "bytes": 3053827,
+      "sha256": "7a5d475e5504008a0f2c23f2d964f8cd74cfc3d88a9082cb469c269bb444b7da"
+    },
+    {
+      "path": "history/snapshots/20260908T035542Z-8619862063a0-1650c518/CHANGE_NOTES.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "73833a83a39307deff35634ee9c7eb1c66beee4c",
+      "bytes": 553,
+      "sha256": "7827d202ae3832dc891f8a3e449aa664da09e7ca8dad528ac038d765bfb29557"
+    },
+    {
+      "path": "history/snapshots/20260908T035542Z-8619862063a0-1650c518/INTEGRITY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "aa2a8359e1511f37dcedd5c9b638bcfb07d1c9e9",
+      "bytes": 624,
+      "sha256": "7ed6883b68a56a1a7b1f32a29c5b670e4bcc1d917f69c996f2c0dba8fe82279c"
+    },
+    {
+      "path": "history/snapshots/20260908T035542Z-8619862063a0-1650c518/NONSCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "787a211d587443b2ea20cb43446c742894b325e2",
+      "bytes": 80364,
+      "sha256": "76c684673b31313d0db00aaa306ec40ad9c71e1cbe1f00bc83266c67a4558021"
+    },
+    {
+      "path": "history/snapshots/20260908T035542Z-8619862063a0-1650c518/SCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "bcc62d6055dfbc5f7f8a8d49d8ed5ebfdf48b718",
+      "bytes": 3093503,
+      "sha256": "fef104f7c65069ebbbf95b474b167fc021fad174f2d3ecbe2b2de1f666087d83"
+    },
+    {
+      "path": "history/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/CHANGE_NOTES.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "f8b7ef3bc23cb30b26e37842b8096e07f75b394f",
+      "bytes": 553,
+      "sha256": "128d75f062990dd1bae523d50493bad741da662c17f3c7bef415748ad7a602c4"
+    },
+    {
+      "path": "history/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/INTEGRITY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "6b277bc36042a447e913920ba298e566b3a255aa",
+      "bytes": 624,
+      "sha256": "d13b29b72d0d4fb6ee2999b3283717f17f2630856bb74b17a95a8715681bd4dd"
+    },
+    {
+      "path": "history/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/NONSCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "8511d58393b2cab0d97ae749606255c7dbf2fa57",
+      "bytes": 82927,
+      "sha256": "7719cd2d187fd60040e4b988d5eda49f45296e5f7781d268c9c48eb44bd222ee"
+    },
+    {
+      "path": "history/snapshots/20260908T040111Z-9ab36fd0f1de-95d992ee/SCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "162b7ca77d8d6b4bc1c9953fef5e027e19abbf65",
+      "bytes": 3096608,
+      "sha256": "e3d43a833aa4d1abddb82e28ad5a08222696162842ddacde1d175a7efa942f9f"
+    },
+    {
+      "path": "history/snapshots/20260908T043524Z-8a90aa8eee4f-48ccdd36/CHANGE_NOTES.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "785fe7310281077e5ce62d7a8879c5c302832269",
+      "bytes": 553,
+      "sha256": "83a7b5713ebaeb83b88f063130143271066ce08652e4210fad0470d2620cbd0e"
+    },
+    {
+      "path": "history/snapshots/20260908T043524Z-8a90aa8eee4f-48ccdd36/INTEGRITY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "e78126380106984e6b9ea83773447864d8eb55c6",
+      "bytes": 624,
+      "sha256": "2be4c99ff9c5c835124a25119bbc6ab38bf015738c413e0988ac8a5312c67e7c"
+    },
+    {
+      "path": "history/snapshots/20260908T043524Z-8a90aa8eee4f-48ccdd36/NONSCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "11f6d87c081e4650afd07eb357548a5beddb846c",
+      "bytes": 85495,
+      "sha256": "f2dc47c2e5dea4f033267edec64b786fa8a5384b098cba61b264e99a88ff7fb1"
+    },
+    {
+      "path": "history/snapshots/20260908T043524Z-8a90aa8eee4f-48ccdd36/SCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "7abb8f43328fb01e77455ff0ea354a7b9c7e178e",
+      "bytes": 3114885,
+      "sha256": "020198eb54044f5e3a01e85c8759af16a662419ee6a46907768bd11bd3ee1730"
+    },
+    {
+      "path": "history/snapshots/20260908T051101Z-f8bad17e7d29-2c0a5acf/CHANGE_NOTES.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "19e54f569d25480ccae674dc97065f7965f3a2da",
+      "bytes": 553,
+      "sha256": "9572f18352d445fa4b6211ed9680335c3ac906118c337d0a2b711f1f4a0b2d9a"
+    },
+    {
+      "path": "history/snapshots/20260908T051101Z-f8bad17e7d29-2c0a5acf/INTEGRITY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "4b4aa8c451d56a6b348e8bb2c7ce271fa3acb7f1",
+      "bytes": 624,
+      "sha256": "642275b64d67c442e7467ced504e9272eb1eaf845f94cb24d5cea6eb4ba2078e"
+    },
+    {
+      "path": "history/snapshots/20260908T051101Z-f8bad17e7d29-2c0a5acf/NONSCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "ad1b1a6c2129ad3dfbcb4be5b5e3a14da7266a02",
+      "bytes": 88014,
+      "sha256": "295461594dcec7e70aae8dd82104c4737634e59366e88f37a37deb23b649bc13"
+    },
+    {
+      "path": "history/snapshots/20260908T051101Z-f8bad17e7d29-2c0a5acf/SCIENTIFIC_HISTORY.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob": "b1222dde00e2e8c3f49a23f42e89ab1ff21d42da",
+      "bytes": 3119217,
+      "sha256": "a848f803efab4b5474b682c108a0265c86c589d21f748cd1ac46056c902f144b"
+    }
+  ]
+}

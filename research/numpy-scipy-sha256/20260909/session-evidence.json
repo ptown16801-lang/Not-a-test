@@ -1,0 +1,499 @@
+{
+  "schema": "neural-research-publication-session/v1",
+  "record_revision": "numpy-scipy-sha256/20260909.1",
+  "recorded_at_utc": "2026-09-09T03:01:00.389916+00:00",
+  "source_commit": "809a379a47e86456e8da04b35c5620d87b7387ba",
+  "user_authorization": "User explicitly requested GitHub update and a Moltbook post using the API key; clarified that the results from this thread, including NumPy and SciPy, must be included.",
+  "event_id": "research:numpy-scipy-sha256:20260909.1",
+  "plain_language_project_story": [
+    {
+      "event_id": "research:numpy-scipy-sha256:20260909.1",
+      "summary": "Published this thread's NumPy/SciPy linear-algebra investigation and SHA-256 compatibility findings to GitHub and Moltbook.",
+      "findings": [
+        "Direct solve was about three times faster at 600 neurons in the original isolated CPU benchmark, but slower at 12 neurons.",
+        "All five saved-state susceptibility checks passed existing tolerances; this does not validate new equilibria or full training gradients.",
+        "A separate publication-time replay also passed the five saved-state checks. Its timings remain distinct from the original results.",
+        "SHA-256 identifiers work with 64-bit numerical arithmetic; canonical records and random-stream definitions must be preserved."
+      ],
+      "scope": "Research evidence and documentation only; no production engine changes or new engine release.",
+      "moltbook_url": "https://www.moltbook.com/post/b2bb1cb2-833b-4db0-bf03-3b02d00a5c55"
+    }
+  ],
+  "research_results": {
+    "schema": "neural-linear-algebra-thread-results/v1",
+    "recordRevision": "numpy-scipy-sha256/20260909.1",
+    "evidenceType": "retrospective_capture_of_actual_tool_output_earlier_in_this_conversation",
+    "originalRunDate": "2026-09-08",
+    "exactOriginalRunTimestamp": null,
+    "publicationDate": "2026-09-09",
+    "freshExecutionDuringPublication": false,
+    "originalRawTimingBlocksRetained": false,
+    "originalCorpusSha256RecordedAtExecution": null,
+    "runtime": {
+      "python": "3.12.13",
+      "numpy": "2.3.5",
+      "scipy": "1.17.0",
+      "openblas": "0.3.30",
+      "blasThreads": 1,
+      "blasArchitecture": "Haswell",
+      "dtype": "float64",
+      "sympy": "not installed; recommendation only"
+    },
+    "method": {
+      "rngSeed": 20260908,
+      "rightHandSides": 4,
+      "timingBlocks": 7,
+      "warmupCallsPerMethod": 2,
+      "statistic": "median milliseconds per call",
+      "repetitionsPerBlock": {
+        "12": 300,
+        "142": 25,
+        "600": 3
+      },
+      "methodOrder": "shuffled per block",
+      "finiteChecks": "SciPy defaults retained",
+      "excluded": [
+        "imports and startup",
+        "matrix construction",
+        "serialization",
+        "whole-engine execution"
+      ]
+    },
+    "cases": [
+      {
+        "case": "stable-coupled",
+        "n": 4,
+        "m": 2,
+        "max_absolute_error_vs_saved": 5.551115123125783e-17,
+        "within_corpus_tolerance": true,
+        "normalized_linear_residual": 2.1087125767588625e-17,
+        "condition_2": 1.1530525214308582
+      },
+      {
+        "case": "no-recurrence",
+        "n": 4,
+        "m": 2,
+        "max_absolute_error_vs_saved": 0,
+        "within_corpus_tolerance": true,
+        "normalized_linear_residual": 0,
+        "condition_2": 1
+      },
+      {
+        "case": "saturated-finite",
+        "n": 4,
+        "m": 2,
+        "max_absolute_error_vs_saved": 4.336808689942018e-19,
+        "within_corpus_tolerance": true,
+        "normalized_linear_residual": 6.704917232031943e-17,
+        "condition_2": 1.0018618928072491
+      },
+      {
+        "case": "critical-0.9",
+        "n": 4,
+        "m": 4,
+        "max_absolute_error_vs_saved": 3.3306690738754696e-16,
+        "within_corpus_tolerance": true,
+        "normalized_linear_residual": 4.763214912101482e-17,
+        "condition_2": 9.999999999999991
+      },
+      {
+        "case": "critical-0.9999",
+        "n": 4,
+        "m": 4,
+        "max_absolute_error_vs_saved": 1.609805622138083e-10,
+        "within_corpus_tolerance": true,
+        "normalized_linear_residual": 6.382256130297291e-17,
+        "condition_2": 9999.960022920275
+      }
+    ],
+    "benchmarks": [
+      {
+        "n": 12,
+        "RHS": 4,
+        "median_ms": {
+          "inverse_then_multiply": 0.032387,
+          "general_solve_including_factor": 0.0776,
+          "LU_factor_and_solve": 0.047183,
+          "reuse_existing_LU_solve_only": 0.0253
+        },
+        "maximum_difference": 5.551115123125783e-17
+      },
+      {
+        "n": 142,
+        "RHS": 4,
+        "median_ms": {
+          "inverse_then_multiply": 1.214487,
+          "general_solve_including_factor": 0.587696,
+          "LU_factor_and_solve": 0.377849,
+          "reuse_existing_LU_solve_only": 0.093461
+        },
+        "maximum_difference": 4.996003610813204e-16
+      },
+      {
+        "n": 600,
+        "RHS": 4,
+        "median_ms": {
+          "inverse_then_multiply": 35.296283,
+          "general_solve_including_factor": 11.786771,
+          "LU_factor_and_solve": 10.266627,
+          "reuse_existing_LU_solve_only": 1.041205
+        },
+        "maximum_difference": 8.881784197001252e-16
+      }
+    ],
+    "findings": {
+      "directSolve": "About 3x faster than inverse-plus-product at 600; slower at 12 in this run.",
+      "savedStateChecks": "All five saved susceptibility comparisons passed existing tolerances.",
+      "sha256": "Digest identity is separate from binary64 arithmetic; NumPy/SciPy/SymPy remain compatible.",
+      "integration": [
+        "Preserve canonical serialization across runtimes.",
+        "Treat exact hash identity separately from numerical tolerance agreement.",
+        "Preserve SHA-derived random-stream definitions."
+      ]
+    },
+    "limits": [
+      "No whole-engine speedup was measured.",
+      "Saved-state calculations do not validate new equilibrium solves or gradients.",
+      "No fresh Wolfram or SymPy validation was executed by this investigation.",
+      "No GPU or SHA-256 overhead benchmark was performed.",
+      "Full original Infomax-gradient optimization remains future work.",
+      "No production engine implementation change is published here."
+    ]
+  },
+  "publication_replay": {
+    "schema": "neural-linear-algebra-replay/v1",
+    "executed_at_utc": "2026-09-09T02:56:23.227351+00:00",
+    "fresh_execution": true,
+    "runtime": {
+      "python": "3.12.13",
+      "numpy": "2.3.5",
+      "scipy": "1.17.0",
+      "BLAS": [
+        {
+          "internal_api": "openblas",
+          "version": "0.3.30",
+          "num_threads": 1,
+          "architecture": "Haswell"
+        },
+        {
+          "internal_api": "openblas",
+          "version": "0.3.30",
+          "num_threads": 1,
+          "architecture": "Haswell"
+        }
+      ],
+      "platform": "Linux-6.18.35-x86_64-with-glibc2.39"
+    },
+    "corpus_sha256": "3c2c849e36fcffa28f46ef824c53a3f5712158fb8e9ac6c151aad1830ba80189",
+    "reproduction_script_sha256": "3e1964067d53f1aac0e2097c5637b488b6071bc11daaf64b7f3895bc2a6477f5",
+    "method": {
+      "dtype": "float64",
+      "blas_threads": 1,
+      "rng_seed": 20260908,
+      "timing_blocks": 7,
+      "right_hand_sides": 4,
+      "includes": "SciPy default finite checks; factorization except explicitly reused-LU case",
+      "excludes": [
+        "imports",
+        "matrix construction",
+        "serialization",
+        "whole-engine execution"
+      ]
+    },
+    "cases": [
+      {
+        "case": "stable-coupled",
+        "n": 4,
+        "m": 2,
+        "max_absolute_error_vs_saved": 5.551115123125783e-17,
+        "within_corpus_tolerance": true,
+        "normalized_linear_residual": 2.1087125767588625e-17,
+        "condition_2": 1.1530525214308582
+      },
+      {
+        "case": "no-recurrence",
+        "n": 4,
+        "m": 2,
+        "max_absolute_error_vs_saved": 0.0,
+        "within_corpus_tolerance": true,
+        "normalized_linear_residual": 0.0,
+        "condition_2": 1.0
+      },
+      {
+        "case": "saturated-finite",
+        "n": 4,
+        "m": 2,
+        "max_absolute_error_vs_saved": 4.336808689942018e-19,
+        "within_corpus_tolerance": true,
+        "normalized_linear_residual": 6.704917232031943e-17,
+        "condition_2": 1.0018618928072491
+      },
+      {
+        "case": "critical-0.9",
+        "n": 4,
+        "m": 4,
+        "max_absolute_error_vs_saved": 3.3306690738754696e-16,
+        "within_corpus_tolerance": true,
+        "normalized_linear_residual": 4.763214912101482e-17,
+        "condition_2": 9.999999999999991
+      },
+      {
+        "case": "critical-0.9999",
+        "n": 4,
+        "m": 4,
+        "max_absolute_error_vs_saved": 1.609805622138083e-10,
+        "within_corpus_tolerance": true,
+        "normalized_linear_residual": 6.382256130297291e-17,
+        "condition_2": 9999.960022920275
+      }
+    ],
+    "all_saved_state_susceptibility_comparisons_passed": true,
+    "benchmarks": [
+      {
+        "n": 12,
+        "RHS": 4,
+        "repetitions_per_block": 300,
+        "median_ms": {
+          "inverse_then_multiply": 0.041427,
+          "general_solve_including_factor": 0.096594,
+          "LU_factor_and_solve": 0.057301,
+          "reuse_existing_LU_solve_only": 0.028268
+        },
+        "timing_block_samples_ms": {
+          "inverse_then_multiply": [
+            0.031795566666666664,
+            0.04306596666666667,
+            0.06387646,
+            0.06470117,
+            0.03301668,
+            0.04142671333333333,
+            0.03554956333333333
+          ],
+          "general_solve_including_factor": [
+            0.12091236,
+            0.09034964,
+            0.1399931266666667,
+            0.08484271666666666,
+            0.09659374333333333,
+            0.09074969666666667,
+            0.10448308333333332
+          ],
+          "LU_factor_and_solve": [
+            0.06468187333333333,
+            0.04978536,
+            0.07927058333333332,
+            0.08787556333333334,
+            0.05261573333333333,
+            0.05730116333333333,
+            0.05570253666666667
+          ],
+          "reuse_existing_LU_solve_only": [
+            0.03497508333333334,
+            0.025000126666666667,
+            0.056093239999999996,
+            0.027184836666666667,
+            0.027082043333333333,
+            0.030019426666666665,
+            0.028267683333333335
+          ]
+        },
+        "maximum_difference": 5.551115123125783e-17
+      },
+      {
+        "n": 142,
+        "RHS": 4,
+        "repetitions_per_block": 25,
+        "median_ms": {
+          "inverse_then_multiply": 1.212618,
+          "general_solve_including_factor": 0.650398,
+          "LU_factor_and_solve": 0.403015,
+          "reuse_existing_LU_solve_only": 0.084056
+        },
+        "timing_block_samples_ms": {
+          "inverse_then_multiply": [
+            1.14213072,
+            1.15546236,
+            1.21261804,
+            1.12842548,
+            1.37005692,
+            1.3523302,
+            1.4625009199999999
+          ],
+          "general_solve_including_factor": [
+            0.68270232,
+            0.61506732,
+            0.5980717600000001,
+            0.67910428,
+            0.65039808,
+            0.62670704,
+            0.6696304000000001
+          ],
+          "LU_factor_and_solve": [
+            0.5122077199999999,
+            0.39568768,
+            0.40301464000000004,
+            0.38368356,
+            0.37768696,
+            0.45556076,
+            0.54058032
+          ],
+          "reuse_existing_LU_solve_only": [
+            0.07657604,
+            0.08405583999999999,
+            0.07915348,
+            0.0847726,
+            0.11473852000000001,
+            0.07628912,
+            0.16898956
+          ]
+        },
+        "maximum_difference": 4.996003610813204e-16
+      },
+      {
+        "n": 600,
+        "RHS": 4,
+        "repetitions_per_block": 3,
+        "median_ms": {
+          "inverse_then_multiply": 34.123223,
+          "general_solve_including_factor": 12.168152,
+          "LU_factor_and_solve": 10.128362,
+          "reuse_existing_LU_solve_only": 0.964017
+        },
+        "timing_block_samples_ms": {
+          "inverse_then_multiply": [
+            34.859974666666666,
+            33.06614166666667,
+            33.88223133333334,
+            34.123223,
+            57.60209666666666,
+            40.524737333333334,
+            34.110996666666665
+          ],
+          "general_solve_including_factor": [
+            11.528783,
+            12.207836,
+            12.367344,
+            11.824279666666666,
+            13.313226,
+            12.168152333333333,
+            11.994266
+          ],
+          "LU_factor_and_solve": [
+            10.128362333333333,
+            10.693840666666667,
+            10.098206333333334,
+            10.337742333333335,
+            9.823493666666666,
+            10.078146333333335,
+            10.202114
+          ],
+          "reuse_existing_LU_solve_only": [
+            0.964017,
+            0.9294973333333334,
+            0.944685,
+            0.9291946666666666,
+            1.0550076666666668,
+            0.979301,
+            1.001244
+          ]
+        },
+        "maximum_difference": 8.881784197001252e-16
+      }
+    ],
+    "limits": [
+      "Saved-field linear solves, not new equilibrium solves or gradient validation.",
+      "Synthetic CPU operation timings, not whole-engine speedups.",
+      "Fresh replay timings do not supersede the original conversation measurements.",
+      "No Wolfram, SymPy, GPU, training, or SHA-256 performance claim is made."
+    ]
+  },
+  "publication_receipt": {
+    "schema": "neural-research-publication-receipt/v1",
+    "record_revision": "numpy-scipy-sha256/20260909.1",
+    "verified_at_utc": "2026-09-09T03:00:07.886945+00:00",
+    "github": {
+      "repository": "ptown16801-lang/Not-a-test",
+      "branch": "main",
+      "research_commit": "809a379a47e86456e8da04b35c5620d87b7387ba",
+      "report_path": "docs/research/numpy-scipy-sha256-20260909.md",
+      "report_readback_exact_match": true
+    },
+    "moltbook": {
+      "method": "official REST API with user-supplied credential at runtime",
+      "browser_used": false,
+      "virtual_machine_used": false,
+      "interactive_login_used": false,
+      "account": "windowsidekick",
+      "submolt": "general",
+      "post_id": "b2bb1cb2-833b-4db0-bf03-3b02d00a5c55",
+      "url": "https://www.moltbook.com/post/b2bb1cb2-833b-4db0-bf03-3b02d00a5c55",
+      "created_at": "2026-09-09T02:59:03.732Z",
+      "create_http_status": 201,
+      "verification_status": "verified",
+      "public_get_http_status": 200,
+      "title_and_content_exact_match": true,
+      "published_payload_file": "moltbook-published-payload.json",
+      "content_utf8_sha256": "16ddf5dc0e131137c1b58b032a66b013ed1530e5b1d42d2cb198d891c566adb1"
+    },
+    "engine_code_modified": false,
+    "publication_scope": "Thread research findings, original measurements, distinct replay, SHA-256 compatibility, and paired histories."
+  },
+  "evidence_artifacts": [
+    {
+      "path": "docs/research/numpy-scipy-sha256-20260909.md",
+      "bytes": 11146,
+      "sha256": "a9500ddfded19872c67210f1dc286cf82c0b7f3eadb2369e581c9e4c7348f738"
+    },
+    {
+      "path": "research/numpy-scipy-sha256/20260909/moltbook-post.md",
+      "bytes": 2095,
+      "sha256": "af88f8f7d61fa037638f38828dd39fdab125a8d133f5afdc996e7418f7fb85b2"
+    },
+    {
+      "path": "research/numpy-scipy-sha256/20260909/moltbook-published-payload.json",
+      "bytes": 2300,
+      "sha256": "3c6757bb634707c6a6baf4cca5c9d1ad4de4967d9b39bd295f7315478ccdefd3"
+    },
+    {
+      "path": "research/numpy-scipy-sha256/20260909/publication-receipt.json",
+      "bytes": 1345,
+      "sha256": "cdd3be5d097a636d298f2a0209efd8f3bfab610850b93526783a84261315f63c"
+    },
+    {
+      "path": "research/numpy-scipy-sha256/20260909/publication-replay.json",
+      "bytes": 6843,
+      "sha256": "03f540fa556f95b48c323e1291c3dbbd15e316c521aacc1be0f7ae5bef2a2f54"
+    },
+    {
+      "path": "research/numpy-scipy-sha256/20260909/reproduce.py",
+      "bytes": 6141,
+      "sha256": "3e1964067d53f1aac0e2097c5637b488b6071bc11daaf64b7f3895bc2a6477f5"
+    },
+    {
+      "path": "research/numpy-scipy-sha256/20260909/source-evidence.json",
+      "bytes": 1585,
+      "sha256": "3295005f3f9af19606bc1c32e6f6423cc8aa27a2028e4f15b548c98e006bfab2"
+    },
+    {
+      "path": "research/numpy-scipy-sha256/20260909/susceptibility-corpus.json",
+      "bytes": 25120,
+      "sha256": "3c2c849e36fcffa28f46ef824c53a3f5712158fb8e9ac6c151aad1830ba80189"
+    },
+    {
+      "path": "research/numpy-scipy-sha256/20260909/thread-results.json",
+      "bytes": 4420,
+      "sha256": "135569f3dcbf41f8419218158427f37c3163a0bfea1d977881160c95b005fd47"
+    }
+  ],
+  "change_notes": [
+    "Added the research report, original conversation measurements, corpus, reproduction script, separate replay, and source fingerprints.",
+    "Published an API-authenticated Moltbook post and verified its exact text through an unauthenticated public API read.",
+    "Preserved the existing production engine, prior results, legacy aggregate JSON files, and previous histories.",
+    "This publication does not merge local Phase 1/Phase 2 engine changes."
+  ],
+  "scientific_limits": [
+    "No whole-engine speedup, new symbolic proof, gradient verification, GPU advantage, or scientific validation of learned representations is claimed.",
+    "SHA-256 provenance is separate from floating-point precision and numerical tolerance agreement.",
+    "Original-run source bytes and exact timestamps were not captured; publication-time fingerprints are labeled accordingly."
+  ]
+}

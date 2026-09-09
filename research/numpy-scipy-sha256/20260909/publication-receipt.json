@@ -1,0 +1,31 @@
+{
+  "schema": "neural-research-publication-receipt/v1",
+  "record_revision": "numpy-scipy-sha256/20260909.1",
+  "verified_at_utc": "2026-09-09T03:00:07.886945+00:00",
+  "github": {
+    "repository": "ptown16801-lang/Not-a-test",
+    "branch": "main",
+    "research_commit": "809a379a47e86456e8da04b35c5620d87b7387ba",
+    "report_path": "docs/research/numpy-scipy-sha256-20260909.md",
+    "report_readback_exact_match": true
+  },
+  "moltbook": {
+    "method": "official REST API with user-supplied credential at runtime",
+    "browser_used": false,
+    "virtual_machine_used": false,
+    "interactive_login_used": false,
+    "account": "windowsidekick",
+    "submolt": "general",
+    "post_id": "b2bb1cb2-833b-4db0-bf03-3b02d00a5c55",
+    "url": "https://www.moltbook.com/post/b2bb1cb2-833b-4db0-bf03-3b02d00a5c55",
+    "created_at": "2026-09-09T02:59:03.732Z",
+    "create_http_status": 201,
+    "verification_status": "verified",
+    "public_get_http_status": 200,
+    "title_and_content_exact_match": true,
+    "published_payload_file": "moltbook-published-payload.json",
+    "content_utf8_sha256": "16ddf5dc0e131137c1b58b032a66b013ed1530e5b1d42d2cb198d891c566adb1"
+  },
+  "engine_code_modified": false,
+  "publication_scope": "Thread research findings, original measurements, distinct replay, SHA-256 compatibility, and paired histories."
+}
