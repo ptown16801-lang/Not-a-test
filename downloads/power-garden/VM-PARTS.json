@@ -1,0 +1,27 @@
+{
+  "archive": "Power-Garden-VM.zip",
+  "archive_bytes": 105171853,
+  "archive_sha256": "717f51cda085d7e7dcb579d22f5f10773a512182792b4b204cf58a5f2c3cde04",
+  "parts": [
+    {
+      "name": "Power-Garden-VM.zip.001",
+      "bytes": 33554432,
+      "sha256": "d1c57aeb713a5e9f23cba3e92cca538fd20ff59286a7e1256bc4ced4b980bb6f"
+    },
+    {
+      "name": "Power-Garden-VM.zip.002",
+      "bytes": 33554432,
+      "sha256": "5129e86849c164ef6c0e74cbaebcad2a17205688a3b12c1ed1c3843487679f0a"
+    },
+    {
+      "name": "Power-Garden-VM.zip.003",
+      "bytes": 33554432,
+      "sha256": "2ccc7a0e0b526bbf55f5a3bb2ec88ec039ebbf8e15b7977b9e4082b10d7d8daa"
+    },
+    {
+      "name": "Power-Garden-VM.zip.004",
+      "bytes": 4508557,
+      "sha256": "b96502f4b1cb2403c036d44d478758fbe8d99c95737a2cf6415fcc6d795e0345"
+    }
+  ]
+}

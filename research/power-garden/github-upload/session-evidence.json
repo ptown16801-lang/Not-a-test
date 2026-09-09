@@ -1,0 +1,99 @@
+{
+  "event_id": "power-garden-github-publication-20260909",
+  "project": "Neural Engine / Shape Cognition",
+  "engineering_status": "source snapshot uploaded and Git tree verified; VM and exact source-history assets uploaded with matching blob hashes",
+  "scientific_status": "publication only; no new scientific or neural validation",
+  "original_source_commit": "a506ad6a8851cbfcc708b8ce15b3b699820d1d98",
+  "original_source_tree": "04cb7dcee9b6a2d886132799206f017f47d1d4fb",
+  "published_source_snapshot_commit": "8fa3865dfe77a021be79eac8687208612e9d9b4e",
+  "published_source_tree_identical": true,
+  "branch": "research/power-garden-standalone",
+  "source_code_modified": false,
+  "old_engine_executed": false,
+  "verified_assets": {
+    "downloads/power-garden/Power-Garden-Source-History.bundle": {
+      "git_blob_sha": "0491c558e26bdf498d59cb5eeb93b7e291a50d88",
+      "sha256": "46a908baf434d13f48d2cf3e209e544476aec809fd9eff7d70978bda573e54f6",
+      "bytes": 8442499
+    },
+    "downloads/power-garden/assemble-vm.py": {
+      "git_blob_sha": "099270900584a2abac4aa9861723ae5630516bfd",
+      "sha256": "5a4b16e9eba21508999892f733b2d7c2ec9bdbc0114558799de9833f41896b6d",
+      "bytes": 2919
+    },
+    "downloads/power-garden/parts/Power-Garden-VM.zip.001": {
+      "git_blob_sha": "ae716749c9251f8c142e39a1f4110c277d0b804c",
+      "sha256": "d1c57aeb713a5e9f23cba3e92cca538fd20ff59286a7e1256bc4ced4b980bb6f",
+      "bytes": 33554432
+    },
+    "downloads/power-garden/parts/Power-Garden-VM.zip.002": {
+      "git_blob_sha": "2eca1d42ec56330e4beaa0f8287fd0907c7cd224",
+      "sha256": "5129e86849c164ef6c0e74cbaebcad2a17205688a3b12c1ed1c3843487679f0a",
+      "bytes": 33554432
+    },
+    "downloads/power-garden/parts/Power-Garden-VM.zip.003": {
+      "git_blob_sha": "bba1ed7c200d0ee66d07f300b24d37f6eb7134b7",
+      "sha256": "2ccc7a0e0b526bbf55f5a3bb2ec88ec039ebbf8e15b7977b9e4082b10d7d8daa",
+      "bytes": 33554432
+    },
+    "downloads/power-garden/parts/Power-Garden-VM.zip.004": {
+      "git_blob_sha": "e335ec74744bddbd01af5e8330b86a9b57250676",
+      "sha256": "b96502f4b1cb2403c036d44d478758fbe8d99c95737a2cf6415fcc6d795e0345",
+      "bytes": 4508557
+    }
+  },
+  "packaging_change": "split the original delivered VM ZIP into four verified parts; assembly reproduces the original ZIP byte-for-byte",
+  "archive_manifest": {
+    "archive": "Power-Garden-VM.zip",
+    "archive_bytes": 105171853,
+    "archive_sha256": "717f51cda085d7e7dcb579d22f5f10773a512182792b4b204cf58a5f2c3cde04",
+    "parts": [
+      {
+        "name": "Power-Garden-VM.zip.001",
+        "bytes": 33554432,
+        "sha256": "d1c57aeb713a5e9f23cba3e92cca538fd20ff59286a7e1256bc4ced4b980bb6f"
+      },
+      {
+        "name": "Power-Garden-VM.zip.002",
+        "bytes": 33554432,
+        "sha256": "5129e86849c164ef6c0e74cbaebcad2a17205688a3b12c1ed1c3843487679f0a"
+      },
+      {
+        "name": "Power-Garden-VM.zip.003",
+        "bytes": 33554432,
+        "sha256": "2ccc7a0e0b526bbf55f5a3bb2ec88ec039ebbf8e15b7977b9e4082b10d7d8daa"
+      },
+      {
+        "name": "Power-Garden-VM.zip.004",
+        "bytes": 4508557,
+        "sha256": "b96502f4b1cb2403c036d44d478758fbe8d99c95737a2cf6415fcc6d795e0345"
+      }
+    ]
+  },
+  "executed_assembly_check": {
+    "parts_verified": 4,
+    "archive_sha256": "717f51cda085d7e7dcb579d22f5f10773a512182792b4b204cf58a5f2c3cde04",
+    "archive_bytes": 105171853,
+    "byte_identical_to_tested_vm_distribution": true,
+    "zip_crc_check_passed": true
+  },
+  "preserved_upload_failure": {
+    "isError": true,
+    "structuredContent": null,
+    "messages": [
+      "Error code: INVALID_ARGUMENT; Error: GitHub API error 422: {\"message\":\"Sorry, your input was too large to process. Consider creating the blob in a local clone of the repository and then pushing it to GitHub.\",\"documentation_url\":\"https://docs.github.com/rest/git/blobs#create-a-blob\",\"status\":\"422\"}"
+    ]
+  },
+  "plain_language_project_story": [
+    "The renderer, independent decoder, tests, actual VM capture, and both project histories were uploaded to the project GitHub repository.",
+    "The original local Git history is preserved in a verified bundle because the GitHub app created new publication commit metadata.",
+    "The downloadable VM keeps the exact tested guest and application files.",
+    "This is publication of existing engineering results, not new scientific validation."
+  ],
+  "evidence_paths": [
+    "downloads/power-garden/README.md",
+    "research/power-garden/vm/source-binding.json",
+    "research/power-garden/vm/run-04/VM-Run.json",
+    "research/power-garden/vm/replay-check/VM-Run.json"
+  ]
+}
