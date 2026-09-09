@@ -1,0 +1,36 @@
+{
+  "schema": "neural-thread-source-evidence/v1",
+  "captured_at_utc": "2026-09-09T02:55:09.618573+00:00",
+  "public_repository": "ptown16801-lang/Not-a-test",
+  "publication_base_commit": "1d89ec7e1dd818020db0f9d0b0e177e598c29dff",
+  "publication_base_version": "0.8.0",
+  "local_phase1_source_status": "version 0.9.0 with uncommitted changes; not merged by this research publication",
+  "local_phase2_observation": "Phase 2 model.py used NumPy and scipy.special.expit when inspected earlier in the thread; the full local checkout was no longer present at publication preflight",
+  "scope": "Publication-time hashes are not retroactive original-run hashes. The corpus is copied as evidence, without enabling an engine migration.",
+  "sources": [
+    {
+      "local_snapshot": "phase1-local",
+      "relative_path": "verification/phase1/corpus.json",
+      "bytes": 25120,
+      "sha256": "3c2c849e36fcffa28f46ef824c53a3f5712158fb8e9ac6c151aad1830ba80189"
+    },
+    {
+      "local_snapshot": "phase1-local",
+      "relative_path": "src/provenance.js",
+      "bytes": 7649,
+      "sha256": "aaa8119ac559376849c0287248b9993c72e189f732f13533aa968b6150149019"
+    },
+    {
+      "local_snapshot": "phase1-local",
+      "relative_path": "scripts/phase1/canonical.py",
+      "bytes": 1442,
+      "sha256": "710c825e3d2de229772032a46a80151f8a1d154b0599d082b877bca1387faa99"
+    },
+    {
+      "local_snapshot": "phase1-local",
+      "relative_path": "src/random-streams.js",
+      "bytes": 1270,
+      "sha256": "46dc89a67a72cd945a2ee9d99feedfee1690909812ea1aad5a87af285647616b"
+    }
+  ]
+}

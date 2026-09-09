@@ -1,0 +1,938 @@
+{
+  "schema": "neural-cross-runtime-corpus/v1",
+  "createdAt": "2026-09-08T08:47:34.691Z",
+  "authority": "shared explicit inputs; JavaScript expected values independently checked by Python; Mathematica pending live execution",
+  "tolerances": {
+    "state": {
+      "atol": 2e-9,
+      "rtol": 2e-8
+    },
+    "field": {
+      "atol": 2e-9,
+      "rtol": 2e-8
+    },
+    "susceptibility": {
+      "atol": 0.000002,
+      "rtol": 0.000002
+    },
+    "objective": {
+      "atol": 0.000002,
+      "rtol": 0.000002
+    },
+    "updateDirection": {
+      "atol": 0.00002,
+      "rtol": 0.00002
+    }
+  },
+  "canonicalFixtures": [
+    {
+      "value": {
+        "b": 2,
+        "a": 1
+      },
+      "canonical": "[\"ne-canonical-binary64/v1\",[\"object\",[[\"a\",[\"f64\",\"3ff0000000000000\"]],[\"b\",[\"f64\",\"4000000000000000\"]]]]]",
+      "id": "sha256:a0048d3d5dc05d2c32b4c843f29bfb594e109b5fa20e960d99fdc9b0dbc2a624"
+    },
+    {
+      "value": {
+        "a": 1,
+        "b": 2
+      },
+      "canonical": "[\"ne-canonical-binary64/v1\",[\"object\",[[\"a\",[\"f64\",\"3ff0000000000000\"]],[\"b\",[\"f64\",\"4000000000000000\"]]]]]",
+      "id": "sha256:a0048d3d5dc05d2c32b4c843f29bfb594e109b5fa20e960d99fdc9b0dbc2a624"
+    },
+    {
+      "value": {
+        "😀": "😁",
+        "€": "\n\u000f",
+        "𐀀": 1,
+        "": 2
+      },
+      "canonical": "[\"ne-canonical-binary64/v1\",[\"object\",[[\"€\",[\"str\",\"\\n\\u000f\"]],[\"𐀀\",[\"f64\",\"3ff0000000000000\"]],[\"😀\",[\"str\",\"😁\"]],[\"\",[\"f64\",\"4000000000000000\"]]]]]",
+      "id": "sha256:a6ac5cad83cb61d2b4befd4cd2c3a4e9be34f5a25f1ccdeae25a70049170c85b"
+    },
+    {
+      "value": [
+        0,
+        0,
+        5e-324,
+        1.7976931348623157e+308,
+        1e-7,
+        1e+21,
+        333333333.3333333,
+        0.1
+      ],
+      "canonical": "[\"ne-canonical-binary64/v1\",[\"array\",[[\"f64\",\"0000000000000000\"],[\"f64\",\"0000000000000000\"],[\"f64\",\"0000000000000001\"],[\"f64\",\"7fefffffffffffff\"],[\"f64\",\"3e7ad7f29abcaf48\"],[\"f64\",\"444b1ae4d6e2ef50\"],[\"f64\",\"41b3de4355555555\"],[\"f64\",\"3fb999999999999a\"]]]]",
+      "id": "sha256:c86e7d25aca268ceec9ee516f3320c23408928a9e8d48f798b99da9953011628"
+    },
+    {
+      "value": {
+        "units": "m",
+        "coordinateSystem": "cartesian-right-handed",
+        "vertices": [
+          [
+            1,
+            0.2
+          ],
+          [
+            3,
+            -4
+          ]
+        ]
+      },
+      "canonical": "[\"ne-canonical-binary64/v1\",[\"object\",[[\"coordinateSystem\",[\"str\",\"cartesian-right-handed\"]],[\"units\",[\"str\",\"m\"]],[\"vertices\",[\"array\",[[\"array\",[[\"f64\",\"3ff0000000000000\"],[\"f64\",\"3fc999999999999a\"]]],[\"array\",[[\"f64\",\"4008000000000000\"],[\"f64\",\"c010000000000000\"]]]]]]]]]",
+      "id": "sha256:5af43c184c43dd17589cc80ac4cd1574b6e5e940e2c39fb50198c9267745e831"
+    }
+  ],
+  "cases": [
+    {
+      "name": "stable-coupled",
+      "inputSize": 2,
+      "outputSize": 4,
+      "W": [
+        1,
+        0.2,
+        -0.3,
+        1,
+        0.7,
+        -0.4,
+        -0.2,
+        -0.9
+      ],
+      "K": [
+        0.1,
+        0.2,
+        0,
+        -0.1,
+        0.3,
+        0,
+        -0.2,
+        0.1,
+        0,
+        0.1,
+        0.2,
+        0.1,
+        -0.1,
+        0,
+        0.2,
+        0.1
+      ],
+      "input": [
+        0.3,
+        -0.7
+      ],
+      "settleOptions": {
+        "integrationStep": 0.5,
+        "tolerance": 1e-12,
+        "residualTolerance": 1e-12,
+        "stableIterations": 2,
+        "maxIterations": 200000,
+        "initialState": null
+      },
+      "expected": {
+        "state": [
+          0.5535206305621441,
+          0.3336965088710364,
+          0.6737752955681411,
+          0.6718553463810895
+        ],
+        "field": [
+          0.21490583019231274,
+          -0.6915133353068761,
+          0.7253102446388409,
+          0.7165885306955229
+        ],
+        "susceptibility": [
+          0.2515662754307244,
+          0.06743150534978619,
+          -0.057945109147898424,
+          0.2262756402285855,
+          0.15860154712787744,
+          -0.09155586931342405,
+          -0.043607476457535314,
+          -0.20854038717077672
+        ],
+        "objective": 2.2985332627380135,
+        "updateDirection": [
+          0.14874691006024765,
+          -0.012694472305583897,
+          0.04334621689056828,
+          -0.11911321476012166,
+          0.09776862923815591,
+          0.1652453559653607,
+          0.050815760453790375,
+          0.013905088321584783,
+          -0.0021006159863290325,
+          -0.12488510439308842,
+          -0.019097768412794952,
+          -0.06947062239645646,
+          -0.1442616910903157,
+          -0.14290938608577292,
+          -0.08169577030470869,
+          -0.00570379074093505
+        ],
+        "iterations": 44,
+        "residual": 1.8673951274195133e-13
+      },
+      "gate": {
+        "schema": "numerical-gate/v1",
+        "status": "valid",
+        "confirmatoryEligible": true,
+        "errors": [],
+        "warnings": [],
+        "metrics": {
+          "iterations": 44,
+          "fixedPointResidual": 1.8673951274195133e-13,
+          "conditionInfinity": 1.2877795467151587,
+          "localLinearStateErrorEstimate": 2.1217405639257197e-13,
+          "globalContractionBound": 0.15,
+          "continuousRealPartUpperBound": -0.8665941106970388,
+          "eulerSpectralRadiusUpperBound": 0.5667029446514806,
+          "stabilityMethod": "Gershgorin sufficient bounds, not exact eigenvalues",
+          "certifiedStateErrorBound": 2.196935444022957e-13,
+          "susceptibilityResidual": 5.551115123125783e-17,
+          "susceptibilityFiniteDifferenceRelativeError": 1.8342326214054348e-11,
+          "recurrentGradientRelativeError": 2.8285586482364326e-10,
+          "gradientCoordinates": [
+            0,
+            8,
+            15
+          ],
+          "backpropagationRelativeError": 2.596697900778476e-11
+        },
+        "policy": {
+          "schema": "numerical-policy/v1",
+          "integrationStep": 0.5,
+          "tolerance": 1e-12,
+          "residualTolerance": 1e-12,
+          "stableIterations": 2,
+          "maxIterations": 200000,
+          "conditionMax": 1000000,
+          "stateErrorMax": 1e-8,
+          "susceptibilityResidualMax": 1e-9,
+          "finiteDifferenceStep": 0.00001,
+          "derivativeErrorMax": 0.0001,
+          "nearCriticalMargin": 0.001,
+          "initialState": null
+        }
+      }
+    },
+    {
+      "name": "no-recurrence",
+      "inputSize": 2,
+      "outputSize": 4,
+      "W": [
+        1,
+        0.2,
+        -0.3,
+        1,
+        0.7,
+        -0.4,
+        -0.2,
+        -0.9
+      ],
+      "K": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "input": [
+        0.3,
+        -0.7
+      ],
+      "settleOptions": {
+        "integrationStep": 0.5,
+        "tolerance": 1e-12,
+        "residualTolerance": 1e-12,
+        "stableIterations": 2,
+        "maxIterations": 200000,
+        "initialState": null
+      },
+      "expected": {
+        "state": [
+          0.5399148845555294,
+          0.31216866941733046,
+          0.620106432342981,
+          0.6387631751487156
+        ],
+        "field": [
+          0.16,
+          -0.7899999999999999,
+          0.49,
+          0.5700000000000001
+        ],
+        "susceptibility": [
+          0.2484068019909159,
+          0.04968136039818318,
+          -0.06441581737544393,
+          0.21471939125147976,
+          0.16490211143687028,
+          -0.0942297779639259,
+          -0.04614895624452236,
+          -0.2076703031003506
+        ],
+        "objective": 2.3273145465747027,
+        "updateDirection": [
+          0.142911108934379,
+          -0.023109851421429475,
+          0.05848799086970884,
+          -0.10168850889781489,
+          0.09303842868163818,
+          0.1604410093656159,
+          0.051996331824894215,
+          0.027544990310305537,
+          0.04251154114853218,
+          -0.09285070431695887,
+          0.030476462961736055,
+          -0.0323422462629827,
+          -0.13172990755955064,
+          -0.13563295240590828,
+          -0.059473919644055566,
+          0.025066492136403787
+        ],
+        "iterations": 40,
+        "residual": 1.7080781233858033e-13
+      },
+      "gate": {
+        "schema": "numerical-gate/v1",
+        "status": "valid",
+        "confirmatoryEligible": true,
+        "errors": [],
+        "warnings": [],
+        "metrics": {
+          "iterations": 40,
+          "fixedPointResidual": 1.7080781233858033e-13,
+          "conditionInfinity": 1,
+          "localLinearStateErrorEstimate": 1.7080781233858033e-13,
+          "globalContractionBound": 0,
+          "continuousRealPartUpperBound": -1,
+          "eulerSpectralRadiusUpperBound": 0.5,
+          "stabilityMethod": "Gershgorin sufficient bounds, not exact eigenvalues",
+          "certifiedStateErrorBound": 1.7080781233858033e-13,
+          "susceptibilityResidual": 0,
+          "susceptibilityFiniteDifferenceRelativeError": 2.75095482258766e-11,
+          "recurrentGradientRelativeError": 2.6298245836693827e-10,
+          "gradientCoordinates": [
+            0,
+            8,
+            15
+          ],
+          "backpropagationRelativeError": 3.6662746189031153e-11
+        },
+        "policy": {
+          "schema": "numerical-policy/v1",
+          "integrationStep": 0.5,
+          "tolerance": 1e-12,
+          "residualTolerance": 1e-12,
+          "stableIterations": 2,
+          "maxIterations": 200000,
+          "conditionMax": 1000000,
+          "stateErrorMax": 1e-8,
+          "susceptibilityResidualMax": 1e-9,
+          "finiteDifferenceStep": 0.00001,
+          "derivativeErrorMax": 0.0001,
+          "nearCriticalMargin": 0.001,
+          "initialState": null
+        }
+      }
+    },
+    {
+      "name": "saturated-finite",
+      "inputSize": 2,
+      "outputSize": 4,
+      "W": [
+        1,
+        0.2,
+        -0.3,
+        1,
+        0.7,
+        -0.4,
+        -0.2,
+        -0.9
+      ],
+      "K": [
+        0.1,
+        0.2,
+        0,
+        -0.1,
+        0.3,
+        0,
+        -0.2,
+        0.1,
+        0,
+        0.1,
+        0.2,
+        0.1,
+        -0.1,
+        0,
+        0.2,
+        0.1
+      ],
+      "input": [
+        8,
+        -7
+      ],
+      "settleOptions": {
+        "integrationStep": 0.5,
+        "tolerance": 1e-12,
+        "residualTolerance": 1e-12,
+        "stableIterations": 2,
+        "maxIterations": 200000,
+        "initialState": null
+      },
+      "expected": {
+        "state": [
+          0.9986423264020172,
+          0.00010091676332098622,
+          0.9998333148460306,
+          0.992603782173664
+        ],
+        "field": [
+          6.600624037775499,
+          -9.201113586831235,
+          8.699237132862905,
+          4.89936280854637
+        ],
+        "susceptibility": [
+          0.001356205331387322,
+          0.0002721268515702044,
+          -0.00003024810793837757,
+          0.0001008494396738179,
+          0.00011663904043012407,
+          -0.00006677369528882969,
+          -0.0014702065103193863,
+          -0.00661251482234891
+        ],
+        "objective": 11.661311812602968,
+        "updateDirection": [
+          -0.9829671779413801,
+          -0.0001538745667194122,
+          -0.9853451513361661,
+          -0.978359180224541,
+          0.0018784100117323252,
+          3.824919730415177e-7,
+          0.0018842452092623543,
+          0.0018693517225997671,
+          -0.01039377427452386,
+          -0.000001774969941321321,
+          -0.010421165067794195,
+          -0.010344945234302832,
+          -0.9841379284977251,
+          -0.00022305968276028972,
+          -0.9851919719219087,
+          -0.9708273649527813
+        ],
+        "iterations": 41,
+        "residual": 2.37698749572246e-13
+      },
+      "gate": {
+        "schema": "numerical-gate/v1",
+        "status": "valid",
+        "confirmatoryEligible": true,
+        "errors": [],
+        "warnings": [],
+        "metrics": {
+          "iterations": 41,
+          "fixedPointResidual": 2.37698749572246e-13,
+          "conditionInfinity": 1.0044118292716755,
+          "localLinearStateErrorEstimate": 2.3839739631903117e-13,
+          "globalContractionBound": 0.15,
+          "continuousRealPartUpperBound": -0.9970633944848131,
+          "eulerSpectralRadiusUpperBound": 0.5014683027575934,
+          "stabilityMethod": "Gershgorin sufficient bounds, not exact eigenvalues",
+          "certifiedStateErrorBound": 2.7964558773205415e-13,
+          "susceptibilityResidual": 8.673617379884035e-19,
+          "susceptibilityFiniteDifferenceRelativeError": 1.2593425865483969e-9,
+          "recurrentGradientRelativeError": 5.4246295442615816e-11,
+          "gradientCoordinates": [
+            0,
+            8,
+            15
+          ],
+          "backpropagationRelativeError": 1.1879415303641765e-9
+        },
+        "policy": {
+          "schema": "numerical-policy/v1",
+          "integrationStep": 0.5,
+          "tolerance": 1e-12,
+          "residualTolerance": 1e-12,
+          "stableIterations": 2,
+          "maxIterations": 200000,
+          "conditionMax": 1000000,
+          "stateErrorMax": 1e-8,
+          "susceptibilityResidualMax": 1e-9,
+          "finiteDifferenceStep": 0.00001,
+          "derivativeErrorMax": 0.0001,
+          "nearCriticalMargin": 0.001,
+          "initialState": null
+        }
+      }
+    },
+    {
+      "name": "critical-0.9",
+      "inputSize": 4,
+      "outputSize": 4,
+      "W": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "K": [
+        2.7,
+        -0.9,
+        -0.9,
+        -0.9,
+        -0.9,
+        2.7,
+        -0.9,
+        -0.9,
+        -0.9,
+        -0.9,
+        2.7,
+        -0.9,
+        -0.9,
+        -0.9,
+        -0.9,
+        2.7
+      ],
+      "input": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "initialState": [
+        0.51,
+        0.49,
+        0.51,
+        0.49
+      ],
+      "rho": 0.9,
+      "knownState": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "settleOptions": {
+        "integrationStep": 0.5,
+        "tolerance": 1e-9,
+        "residualTolerance": 1e-9,
+        "stableIterations": 2,
+        "maxIterations": 200000,
+        "initialState": [
+          0.51,
+          0.49,
+          0.51,
+          0.49
+        ]
+      },
+      "expected": {
+        "state": [
+          0.5000000087215344,
+          0.4999999912784657,
+          0.5000000087215342,
+          0.4999999912784657
+        ],
+        "field": [
+          3.139752380310057e-8,
+          -3.1397523247989056e-8,
+          3.1397523136966754e-8,
+          -3.1397523247989056e-8
+        ],
+        "susceptibility": [
+          1.9374999999999953,
+          -0.5624999999999984,
+          -0.5624999999999987,
+          -0.5624999999999986,
+          -0.5624999999999986,
+          1.9374999999999973,
+          -0.5624999999999994,
+          -0.5624999999999993,
+          -0.5624999999999987,
+          -0.5624999999999994,
+          1.9374999999999976,
+          -0.5624999999999993,
+          -0.5624999999999986,
+          -0.5624999999999993,
+          -0.5624999999999993,
+          1.9374999999999971
+        ],
+        "objective": -1.3625778345025683,
+        "updateDirection": [
+          1.9374993916729633,
+          -0.5625006083270097,
+          -0.5625006083270311,
+          -0.5625006083270097,
+          -0.5624993916729729,
+          1.9375006083270017,
+          -0.5624993916729741,
+          -0.5624993916729949,
+          -0.5625006083270182,
+          -0.5625006083269978,
+          1.9374993916729792,
+          -0.5625006083269976,
+          -0.562499391672973,
+          -0.5624993916729947,
+          -0.5624993916729739,
+          1.9375006083270017
+        ],
+        "iterations": 272,
+        "residual": 8.721534605626857e-10
+      },
+      "gate": {
+        "schema": "numerical-gate/v1",
+        "status": "invalid",
+        "confirmatoryEligible": false,
+        "errors": [
+          "stability-not-certified",
+          "amplified-residual"
+        ],
+        "warnings": [
+          "near-critical-or-conditioned",
+          "no-global-contraction-error-bound"
+        ],
+        "metrics": {
+          "iterations": 272,
+          "fixedPointResidual": 8.721534605626857e-10,
+          "conditionInfinity": 14.499999999999984,
+          "localLinearStateErrorEstimate": 1.264622517815893e-8,
+          "globalContractionBound": 1.35,
+          "continuousRealPartUpperBound": 0.34999999999999987,
+          "eulerSpectralRadiusUpperBound": 1.1749999999999998,
+          "stabilityMethod": "Gershgorin sufficient bounds, not exact eigenvalues",
+          "certifiedStateErrorBound": null,
+          "susceptibilityResidual": 8.326672684688674e-17,
+          "susceptibilityFiniteDifferenceRelativeError": 8.767238715662278e-7,
+          "recurrentGradientRelativeError": 1.0161461641120745e-8,
+          "gradientCoordinates": [
+            0,
+            8,
+            15
+          ],
+          "backpropagationRelativeError": 8.781871378125427e-7
+        },
+        "policy": {
+          "schema": "numerical-policy/v1",
+          "integrationStep": 0.5,
+          "tolerance": 1e-9,
+          "residualTolerance": 1e-9,
+          "stableIterations": 2,
+          "maxIterations": 200000,
+          "conditionMax": 1000000,
+          "stateErrorMax": 1e-8,
+          "susceptibilityResidualMax": 1e-9,
+          "finiteDifferenceStep": 0.00001,
+          "derivativeErrorMax": 0.0001,
+          "nearCriticalMargin": 0.001,
+          "initialState": [
+            0.51,
+            0.49,
+            0.51,
+            0.49
+          ]
+        }
+      },
+      "exactExpected": {
+        "state": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "susceptibility": [
+          1.9374999999999982,
+          -0.5624999999999988,
+          -0.5624999999999997,
+          -0.5624999999999998,
+          -0.5624999999999987,
+          1.9374999999999982,
+          -0.5624999999999999,
+          -0.5624999999999999,
+          -0.5624999999999999,
+          -0.5624999999999998,
+          1.9375000000000007,
+          -0.5625000000000007,
+          -0.5624999999999998,
+          -0.5624999999999998,
+          -0.5625000000000008,
+          1.9375000000000004
+        ],
+        "objective": -1.3625778345025739,
+        "updateDirection": [
+          1.9374999999999976,
+          -0.5625,
+          -0.5625000000000009,
+          -0.5625000000000006,
+          -0.5625000000000001,
+          1.937499999999997,
+          -0.562500000000001,
+          -0.5625000000000008,
+          -0.5624999999999996,
+          -0.5624999999999997,
+          1.937500000000002,
+          -0.5625000000000007,
+          -0.5624999999999987,
+          -0.5624999999999988,
+          -0.5624999999999997,
+          1.9375000000000016
+        ]
+      },
+      "policyGradientRelativeError": 5.610141796403595e-7
+    },
+    {
+      "name": "critical-0.9999",
+      "inputSize": 4,
+      "outputSize": 4,
+      "W": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "K": [
+        2.9997,
+        -0.9999,
+        -0.9999,
+        -0.9999,
+        -0.9999,
+        2.9997,
+        -0.9999,
+        -0.9999,
+        -0.9999,
+        -0.9999,
+        2.9997,
+        -0.9999,
+        -0.9999,
+        -0.9999,
+        -0.9999,
+        2.9997
+      ],
+      "input": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "initialState": [
+        0.51,
+        0.49,
+        0.51,
+        0.49
+      ],
+      "rho": 0.9999,
+      "knownState": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "settleOptions": {
+        "integrationStep": 0.5,
+        "tolerance": 1e-9,
+        "residualTolerance": 1e-9,
+        "stableIterations": 2,
+        "maxIterations": 200000,
+        "initialState": [
+          0.51,
+          0.49,
+          0.51,
+          0.49
+        ]
+      },
+      "expected": {
+        "state": [
+          0.5000099986540822,
+          0.499990001345919,
+          0.5000099986540809,
+          0.49999000134591776
+        ],
+        "field": [
+          0.00003999061686743577,
+          -0.000039990616862439765,
+          0.0000399906168621067,
+          -0.00003999061686754679
+        ],
+        "susceptibility": [
+          1875.0550035473796,
+          -624.9350011818572,
+          -624.9350011827245,
+          -624.935001182898,
+          -624.9350011818568,
+          1875.0550035454205,
+          -624.9350011817453,
+          -624.9350011819187,
+          -624.9350011827246,
+          -624.9350011817452,
+          1875.0550035471558,
+          -624.9350011827859,
+          -624.9350011828982,
+          -624.9350011819184,
+          -624.935001182786,
+          1875.0550035475028
+        ],
+        "objective": -22.085831676699893,
+        "updateDirection": [
+          1125.196943646151,
+          -1374.763071397394,
+          -1374.7930610839521,
+          -1374.763071398433,
+          124.92305862028832,
+          2624.8830736618784,
+          124.92305862039905,
+          124.89306893453772,
+          -1374.7930609835744,
+          -1374.7630712969071,
+          1125.1969437463085,
+          -1374.7630712979455,
+          124.92305871703536,
+          124.89306903232261,
+          124.92305871714541,
+          2624.8830737617427
+        ],
+        "iterations": 129683,
+        "residual": 9.998667449551135e-10
+      },
+      "gate": {
+        "schema": "numerical-gate/v1",
+        "status": "invalid",
+        "confirmatoryEligible": false,
+        "errors": [
+          "stability-not-certified",
+          "amplified-residual",
+          "susceptibilityFiniteDifferenceRelativeError",
+          "recurrentGradientRelativeError",
+          "backpropagationRelativeError"
+        ],
+        "warnings": [
+          "near-critical-or-conditioned",
+          "no-global-contraction-error-bound"
+        ],
+        "metrics": {
+          "iterations": 129683,
+          "fixedPointResidual": 9.998667449551135e-10,
+          "conditionInfinity": 14999.440034377385,
+          "localLinearStateErrorEstimate": 0.000014997441283322331,
+          "globalContractionBound": 1.4998500000000001,
+          "continuousRealPartUpperBound": 0.49984999940034147,
+          "eulerSpectralRadiusUpperBound": 1.2499249997001707,
+          "stabilityMethod": "Gershgorin sufficient bounds, not exact eigenvalues",
+          "certifiedStateErrorBound": null,
+          "susceptibilityResidual": 8.526512829121202e-14,
+          "susceptibilityFiniteDifferenceRelativeError": 0.48838293518247217,
+          "recurrentGradientRelativeError": 1.2666047581329156,
+          "gradientCoordinates": [
+            0,
+            8,
+            15
+          ],
+          "backpropagationRelativeError": 0.4883931785555321
+        },
+        "policy": {
+          "schema": "numerical-policy/v1",
+          "integrationStep": 0.5,
+          "tolerance": 1e-9,
+          "residualTolerance": 1e-9,
+          "stableIterations": 2,
+          "maxIterations": 200000,
+          "conditionMax": 1000000,
+          "stateErrorMax": 1e-8,
+          "susceptibilityResidualMax": 1e-9,
+          "finiteDifferenceStep": 0.00001,
+          "derivativeErrorMax": 0.0001,
+          "nearCriticalMargin": 0.001,
+          "initialState": [
+            0.51,
+            0.49,
+            0.51,
+            0.49
+          ]
+        }
+      },
+      "exactExpected": {
+        "state": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "susceptibility": [
+          1875.0624999968331,
+          -624.9374999986554,
+          -624.9374999986553,
+          -624.9374999995226,
+          -624.9374999986552,
+          1875.062499996786,
+          -624.9374999986317,
+          -624.9374999994991,
+          -624.9374999986552,
+          -624.9374999986317,
+          1875.062499996786,
+          -624.9374999994991,
+          -624.9374999995227,
+          -624.937499999499,
+          -624.937499999499,
+          1875.0624999985212
+        ],
+        "objective": -22.085843671444515,
+        "updateDirection": [
+          1875.062499997725,
+          -624.937499997763,
+          -624.9374999977629,
+          -624.9374999986305,
+          -624.9374999983932,
+          1875.0624999970482,
+          -624.9374999983695,
+          -624.9374999992368,
+          -624.9374999983932,
+          -624.9374999983697,
+          1875.0624999970487,
+          -624.9374999992367,
+          -624.9375000009383,
+          -624.9375000009148,
+          -624.9375000009148,
+          1875.0624999971055
+        ]
+      },
+      "policyGradientRelativeError": 0.6926753517352203
+    }
+  ]
+}

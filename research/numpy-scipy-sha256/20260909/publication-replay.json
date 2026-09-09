@@ -1,0 +1,247 @@
+{
+  "schema": "neural-linear-algebra-replay/v1",
+  "executed_at_utc": "2026-09-09T02:56:23.227351+00:00",
+  "fresh_execution": true,
+  "runtime": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "BLAS": [
+      {
+        "internal_api": "openblas",
+        "version": "0.3.30",
+        "num_threads": 1,
+        "architecture": "Haswell"
+      },
+      {
+        "internal_api": "openblas",
+        "version": "0.3.30",
+        "num_threads": 1,
+        "architecture": "Haswell"
+      }
+    ],
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39"
+  },
+  "corpus_sha256": "3c2c849e36fcffa28f46ef824c53a3f5712158fb8e9ac6c151aad1830ba80189",
+  "reproduction_script_sha256": "3e1964067d53f1aac0e2097c5637b488b6071bc11daaf64b7f3895bc2a6477f5",
+  "method": {
+    "dtype": "float64",
+    "blas_threads": 1,
+    "rng_seed": 20260908,
+    "timing_blocks": 7,
+    "right_hand_sides": 4,
+    "includes": "SciPy default finite checks; factorization except explicitly reused-LU case",
+    "excludes": [
+      "imports",
+      "matrix construction",
+      "serialization",
+      "whole-engine execution"
+    ]
+  },
+  "cases": [
+    {
+      "case": "stable-coupled",
+      "n": 4,
+      "m": 2,
+      "max_absolute_error_vs_saved": 5.551115123125783e-17,
+      "within_corpus_tolerance": true,
+      "normalized_linear_residual": 2.1087125767588625e-17,
+      "condition_2": 1.1530525214308582
+    },
+    {
+      "case": "no-recurrence",
+      "n": 4,
+      "m": 2,
+      "max_absolute_error_vs_saved": 0.0,
+      "within_corpus_tolerance": true,
+      "normalized_linear_residual": 0.0,
+      "condition_2": 1.0
+    },
+    {
+      "case": "saturated-finite",
+      "n": 4,
+      "m": 2,
+      "max_absolute_error_vs_saved": 4.336808689942018e-19,
+      "within_corpus_tolerance": true,
+      "normalized_linear_residual": 6.704917232031943e-17,
+      "condition_2": 1.0018618928072491
+    },
+    {
+      "case": "critical-0.9",
+      "n": 4,
+      "m": 4,
+      "max_absolute_error_vs_saved": 3.3306690738754696e-16,
+      "within_corpus_tolerance": true,
+      "normalized_linear_residual": 4.763214912101482e-17,
+      "condition_2": 9.999999999999991
+    },
+    {
+      "case": "critical-0.9999",
+      "n": 4,
+      "m": 4,
+      "max_absolute_error_vs_saved": 1.609805622138083e-10,
+      "within_corpus_tolerance": true,
+      "normalized_linear_residual": 6.382256130297291e-17,
+      "condition_2": 9999.960022920275
+    }
+  ],
+  "all_saved_state_susceptibility_comparisons_passed": true,
+  "benchmarks": [
+    {
+      "n": 12,
+      "RHS": 4,
+      "repetitions_per_block": 300,
+      "median_ms": {
+        "inverse_then_multiply": 0.041427,
+        "general_solve_including_factor": 0.096594,
+        "LU_factor_and_solve": 0.057301,
+        "reuse_existing_LU_solve_only": 0.028268
+      },
+      "timing_block_samples_ms": {
+        "inverse_then_multiply": [
+          0.031795566666666664,
+          0.04306596666666667,
+          0.06387646,
+          0.06470117,
+          0.03301668,
+          0.04142671333333333,
+          0.03554956333333333
+        ],
+        "general_solve_including_factor": [
+          0.12091236,
+          0.09034964,
+          0.1399931266666667,
+          0.08484271666666666,
+          0.09659374333333333,
+          0.09074969666666667,
+          0.10448308333333332
+        ],
+        "LU_factor_and_solve": [
+          0.06468187333333333,
+          0.04978536,
+          0.07927058333333332,
+          0.08787556333333334,
+          0.05261573333333333,
+          0.05730116333333333,
+          0.05570253666666667
+        ],
+        "reuse_existing_LU_solve_only": [
+          0.03497508333333334,
+          0.025000126666666667,
+          0.056093239999999996,
+          0.027184836666666667,
+          0.027082043333333333,
+          0.030019426666666665,
+          0.028267683333333335
+        ]
+      },
+      "maximum_difference": 5.551115123125783e-17
+    },
+    {
+      "n": 142,
+      "RHS": 4,
+      "repetitions_per_block": 25,
+      "median_ms": {
+        "inverse_then_multiply": 1.212618,
+        "general_solve_including_factor": 0.650398,
+        "LU_factor_and_solve": 0.403015,
+        "reuse_existing_LU_solve_only": 0.084056
+      },
+      "timing_block_samples_ms": {
+        "inverse_then_multiply": [
+          1.14213072,
+          1.15546236,
+          1.21261804,
+          1.12842548,
+          1.37005692,
+          1.3523302,
+          1.4625009199999999
+        ],
+        "general_solve_including_factor": [
+          0.68270232,
+          0.61506732,
+          0.5980717600000001,
+          0.67910428,
+          0.65039808,
+          0.62670704,
+          0.6696304000000001
+        ],
+        "LU_factor_and_solve": [
+          0.5122077199999999,
+          0.39568768,
+          0.40301464000000004,
+          0.38368356,
+          0.37768696,
+          0.45556076,
+          0.54058032
+        ],
+        "reuse_existing_LU_solve_only": [
+          0.07657604,
+          0.08405583999999999,
+          0.07915348,
+          0.0847726,
+          0.11473852000000001,
+          0.07628912,
+          0.16898956
+        ]
+      },
+      "maximum_difference": 4.996003610813204e-16
+    },
+    {
+      "n": 600,
+      "RHS": 4,
+      "repetitions_per_block": 3,
+      "median_ms": {
+        "inverse_then_multiply": 34.123223,
+        "general_solve_including_factor": 12.168152,
+        "LU_factor_and_solve": 10.128362,
+        "reuse_existing_LU_solve_only": 0.964017
+      },
+      "timing_block_samples_ms": {
+        "inverse_then_multiply": [
+          34.859974666666666,
+          33.06614166666667,
+          33.88223133333334,
+          34.123223,
+          57.60209666666666,
+          40.524737333333334,
+          34.110996666666665
+        ],
+        "general_solve_including_factor": [
+          11.528783,
+          12.207836,
+          12.367344,
+          11.824279666666666,
+          13.313226,
+          12.168152333333333,
+          11.994266
+        ],
+        "LU_factor_and_solve": [
+          10.128362333333333,
+          10.693840666666667,
+          10.098206333333334,
+          10.337742333333335,
+          9.823493666666666,
+          10.078146333333335,
+          10.202114
+        ],
+        "reuse_existing_LU_solve_only": [
+          0.964017,
+          0.9294973333333334,
+          0.944685,
+          0.9291946666666666,
+          1.0550076666666668,
+          0.979301,
+          1.001244
+        ]
+      },
+      "maximum_difference": 8.881784197001252e-16
+    }
+  ],
+  "limits": [
+    "Saved-field linear solves, not new equilibrium solves or gradient validation.",
+    "Synthetic CPU operation timings, not whole-engine speedups.",
+    "Fresh replay timings do not supersede the original conversation measurements.",
+    "No Wolfram, SymPy, GPU, training, or SHA-256 performance claim is made."
+  ]
+}

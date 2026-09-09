@@ -1,0 +1,141 @@
+{
+  "schema": "neural-linear-algebra-thread-results/v1",
+  "recordRevision": "numpy-scipy-sha256/20260909.1",
+  "evidenceType": "retrospective_capture_of_actual_tool_output_earlier_in_this_conversation",
+  "originalRunDate": "2026-09-08",
+  "exactOriginalRunTimestamp": null,
+  "publicationDate": "2026-09-09",
+  "freshExecutionDuringPublication": false,
+  "originalRawTimingBlocksRetained": false,
+  "originalCorpusSha256RecordedAtExecution": null,
+  "runtime": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "openblas": "0.3.30",
+    "blasThreads": 1,
+    "blasArchitecture": "Haswell",
+    "dtype": "float64",
+    "sympy": "not installed; recommendation only"
+  },
+  "method": {
+    "rngSeed": 20260908,
+    "rightHandSides": 4,
+    "timingBlocks": 7,
+    "warmupCallsPerMethod": 2,
+    "statistic": "median milliseconds per call",
+    "repetitionsPerBlock": {
+      "12": 300,
+      "142": 25,
+      "600": 3
+    },
+    "methodOrder": "shuffled per block",
+    "finiteChecks": "SciPy defaults retained",
+    "excluded": [
+      "imports and startup",
+      "matrix construction",
+      "serialization",
+      "whole-engine execution"
+    ]
+  },
+  "cases": [
+    {
+      "case": "stable-coupled",
+      "n": 4,
+      "m": 2,
+      "max_absolute_error_vs_saved": 5.551115123125783e-17,
+      "within_corpus_tolerance": true,
+      "normalized_linear_residual": 2.1087125767588625e-17,
+      "condition_2": 1.1530525214308582
+    },
+    {
+      "case": "no-recurrence",
+      "n": 4,
+      "m": 2,
+      "max_absolute_error_vs_saved": 0,
+      "within_corpus_tolerance": true,
+      "normalized_linear_residual": 0,
+      "condition_2": 1
+    },
+    {
+      "case": "saturated-finite",
+      "n": 4,
+      "m": 2,
+      "max_absolute_error_vs_saved": 4.336808689942018e-19,
+      "within_corpus_tolerance": true,
+      "normalized_linear_residual": 6.704917232031943e-17,
+      "condition_2": 1.0018618928072491
+    },
+    {
+      "case": "critical-0.9",
+      "n": 4,
+      "m": 4,
+      "max_absolute_error_vs_saved": 3.3306690738754696e-16,
+      "within_corpus_tolerance": true,
+      "normalized_linear_residual": 4.763214912101482e-17,
+      "condition_2": 9.999999999999991
+    },
+    {
+      "case": "critical-0.9999",
+      "n": 4,
+      "m": 4,
+      "max_absolute_error_vs_saved": 1.609805622138083e-10,
+      "within_corpus_tolerance": true,
+      "normalized_linear_residual": 6.382256130297291e-17,
+      "condition_2": 9999.960022920275
+    }
+  ],
+  "benchmarks": [
+    {
+      "n": 12,
+      "RHS": 4,
+      "median_ms": {
+        "inverse_then_multiply": 0.032387,
+        "general_solve_including_factor": 0.0776,
+        "LU_factor_and_solve": 0.047183,
+        "reuse_existing_LU_solve_only": 0.0253
+      },
+      "maximum_difference": 5.551115123125783e-17
+    },
+    {
+      "n": 142,
+      "RHS": 4,
+      "median_ms": {
+        "inverse_then_multiply": 1.214487,
+        "general_solve_including_factor": 0.587696,
+        "LU_factor_and_solve": 0.377849,
+        "reuse_existing_LU_solve_only": 0.093461
+      },
+      "maximum_difference": 4.996003610813204e-16
+    },
+    {
+      "n": 600,
+      "RHS": 4,
+      "median_ms": {
+        "inverse_then_multiply": 35.296283,
+        "general_solve_including_factor": 11.786771,
+        "LU_factor_and_solve": 10.266627,
+        "reuse_existing_LU_solve_only": 1.041205
+      },
+      "maximum_difference": 8.881784197001252e-16
+    }
+  ],
+  "findings": {
+    "directSolve": "About 3x faster than inverse-plus-product at 600; slower at 12 in this run.",
+    "savedStateChecks": "All five saved susceptibility comparisons passed existing tolerances.",
+    "sha256": "Digest identity is separate from binary64 arithmetic; NumPy/SciPy/SymPy remain compatible.",
+    "integration": [
+      "Preserve canonical serialization across runtimes.",
+      "Treat exact hash identity separately from numerical tolerance agreement.",
+      "Preserve SHA-derived random-stream definitions."
+    ]
+  },
+  "limits": [
+    "No whole-engine speedup was measured.",
+    "Saved-state calculations do not validate new equilibrium solves or gradients.",
+    "No fresh Wolfram or SymPy validation was executed by this investigation.",
+    "No GPU or SHA-256 overhead benchmark was performed.",
+    "Full original Infomax-gradient optimization remains future work.",
+    "No production engine implementation change is published here."
+  ]
+}
